@@ -16,7 +16,7 @@ const SEL = {
   cardRows:         '.W4Efsd',
 
   // Detail panel (after clicking a card)
-  detailName:       'h1',
+  detailName:       'h1.DUwDvf',
   detailCategory:   '.DkEaL',
   detailAddress:    '[data-item-id="address"]',
   detailPhone:      'button[data-tooltip="Copy phone number"]',

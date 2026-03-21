@@ -135,7 +135,7 @@ export class MapsNavigator {
       await cards.nth(index).click();
       await randomDelay(1500, 2500);
       // Wait for detail panel h1 to confirm it opened
-      await page.waitForSelector('h1', { timeout: 8000 });
+      await page.waitForSelector('h1.DUwDvf', { timeout: 8000 });
       return true;
     } catch (err) {
       logger.warn('Failed to click listing', { index, error: (err as Error).message });
@@ -152,7 +152,7 @@ export class MapsNavigator {
       await card.scrollIntoViewIfNeeded();
       await card.click();
       await randomDelay(1500, 2500);
-      await page.waitForSelector('h1', { timeout: 8000 });
+      await page.waitForSelector('h1.DUwDvf', { timeout: 8000 });
       return true;
     } catch (err) {
       logger.warn('Failed to open listing by name', { name, error: (err as Error).message });
