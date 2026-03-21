@@ -106,19 +106,20 @@ Three endpoints wired into Express under `/api/businesses/:id/`:
 
 > CRM layer for tracking business leads through the sales pipeline.
 
-### [ ] Step 6.1 — Lead Scorer
-Pure function that scores a business 0–100 based on configurable rules (no website = +40, no reviews = +20, low rating = +15, etc.). Score maps to priority: high / medium / low. Already partially built as a dependency of the scraper.
+### [x] Step 6.1 — Lead Scorer
+Pure function that scores a business 0–100 based on configurable rules (no website = +40, no reviews = +20, low rating = +15, etc.). Score maps to priority: high / medium / low.
 
-### [ ] Step 6.2 — Lead Service (Status, Notes, CRUD)
-`LeadService` wraps the repository with business logic for status transitions, note updates, and last-contacted tracking. Validates that status transitions are meaningful (e.g. can't move from `rejected` to `new`).
+### [x] Step 6.2 — Lead Service (Status, Notes, CRUD)
+`LeadService` with validated status transitions (e.g. `new → qualified → contacted → interested → closed`), note updates, last-contacted tracking, and pipeline stats aggregation.
 
-### [ ] Step 6.3 — Lead Routes + API
-Endpoints:
+### [x] Step 6.3 — Lead Routes + API
 - `GET /api/businesses` — list with filter/sort/search/pagination
+- `GET /api/businesses/stats` — total, byStatus, byPriority, noWebsite, deployed
 - `GET /api/businesses/:id` — single business profile
-- `PATCH /api/leads/:id/status` — update lead status
-- `PATCH /api/leads/:id/notes` — update notes
-- `GET /api/leads/stats` — pipeline summary (count per status, priority distribution)
+- `PATCH /api/businesses/:id/status` — validated status transition (422 on invalid)
+- `PATCH /api/businesses/:id/notes` — update notes
+- `PATCH /api/businesses/:id/contacted` — update last contacted date
+- `DELETE /api/businesses/:id` — hard delete
 
 ---
 
