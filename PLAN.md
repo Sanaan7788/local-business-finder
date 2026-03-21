@@ -73,14 +73,8 @@ Three endpoints wired into Express:
 
 > Provider-agnostic LLM abstraction. All AI features route through this layer. Switching providers requires changing one env var.
 
-### [ ] Step 4.1 — ILLMProvider Interface + LLMFactory
-`ILLMProvider` interface with `complete(request)` method. `LLMFactory.create(provider)` returns the correct adapter. Normalized `LLMRequest` and `LLMResponse` shapes ensure consistent input/output regardless of provider.
-
-### [ ] Step 4.2 — Claude Adapter
-Implements `ILLMProvider` using the Anthropic SDK. Supports `claude-sonnet-4-6` and `claude-sonnet-3-5`. Model switchable via `CLAUDE_MODEL` env var.
-
-### [ ] Step 4.3 — OpenAI Adapter
-Implements `ILLMProvider` using the OpenAI SDK. Targets `gpt-4.1`. Structured as a second reference implementation to prove the adapter pattern works across different API shapes.
+### [x] Step 4.1 — ILLMProvider Interface + LLMFactory + All Adapters
+`ILLMProvider` interface with `complete(request)` method. `LLMFactory.create(provider)` returns the correct adapter. Normalized `LLMRequest` and `LLMResponse` shapes ensure consistent input/output regardless of provider. All three adapters implemented: DeepSeek (via NVIDIA NIM), Claude (Anthropic SDK), OpenAI (official SDK). Live DeepSeek API call verified.
 
 ### [ ] Step 4.4 — Config-Based Provider Switching + Task Overrides
 Central config maps task names to preferred providers (e.g. `websiteGeneration → claude`, `keywords → deepseek`). `LLMService` orchestrator selects the right provider per task and falls back to the default if a task override isn't configured.
