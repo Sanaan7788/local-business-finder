@@ -3,6 +3,7 @@ import cors from 'cors';
 import { loggerMiddleware } from './middleware/logger.middleware';
 import { errorMiddleware } from './middleware/error.middleware';
 import healthRoutes from './routes/health.routes';
+import scraperRoutes from './routes/scraper.routes';
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(loggerMiddleware);
 
 // Routes
 app.use('/api/health', healthRoutes);
+app.use('/api/scraper', scraperRoutes);
 
 // 404 handler
 app.use((_req, res) => {
