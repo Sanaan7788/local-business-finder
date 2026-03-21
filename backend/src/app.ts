@@ -4,6 +4,7 @@ import { loggerMiddleware } from './middleware/logger.middleware';
 import { errorMiddleware } from './middleware/error.middleware';
 import healthRoutes from './routes/health.routes';
 import scraperRoutes from './routes/scraper.routes';
+import businessesRoutes from './routes/businesses.routes';
 import analysisRoutes from './routes/analysis.routes';
 import websiteRoutes from './routes/website.routes';
 
@@ -17,6 +18,7 @@ app.use(loggerMiddleware);
 // Routes
 app.use('/api/health', healthRoutes);
 app.use('/api/scraper', scraperRoutes);
+app.use('/api/businesses', businessesRoutes);
 app.use('/api/businesses', analysisRoutes);
 app.use('/api/businesses', websiteRoutes);
 
