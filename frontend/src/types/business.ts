@@ -98,14 +98,42 @@ export interface PaginatedData<T> {
   pageSize: number;
 }
 
+export interface SavedEntry {
+  id: string;
+  name: string;
+  address: string;
+  phone: string | null;
+  priority: string;
+  priorityScore: number;
+  website: boolean;
+}
+
+export interface SkippedEntry {
+  name: string;
+  address: string;
+  reason: 'phone' | 'name+address';
+  existingId: string;
+}
+
+export interface ErrorEntry {
+  name: string;
+  message: string;
+}
+
 export interface ScraperStatus {
   running: boolean;
   zipcode: string | null;
+  category: string | null;
   found: number;
   saved: number;
   skipped: number;
   errors: number;
   startedAt: string | null;
+  finishedAt: string | null;
+  savedList: SavedEntry[];
+  skippedList: SkippedEntry[];
+  errorList: ErrorEntry[];
+  foundNames: string[];
 }
 
 // ---------------------------------------------------------------------------

@@ -71,6 +71,11 @@ export class Deduplicator {
     return null;
   }
 
+  // Check if a normalized phone number exists in the index (for skip reason detection).
+  hasPhone(normalizedPhone: string): boolean {
+    return this.phoneIndex.has(normalizedPhone);
+  }
+
   // Register a newly saved business into the in-memory index.
   // Call immediately after repo.create() to keep the index current.
   register(business: Pick<Business, 'id' | 'name' | 'address' | 'phone'>): void {

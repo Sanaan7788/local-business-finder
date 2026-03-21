@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import Dashboard from './pages/Dashboard'
 import Businesses from './pages/Businesses'
 import BusinessDetail from './pages/BusinessDetail'
+import ScraperHistory from './pages/ScraperHistory'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -32,6 +33,7 @@ function Layout({ children }: { children: React.ReactNode }) {
             <nav className="flex items-center gap-1">
               <NavLink to="/" end className={navLinkClass}>Dashboard</NavLink>
               <NavLink to="/businesses" className={navLinkClass}>Businesses</NavLink>
+              <NavLink to="/history" className={navLinkClass}>History</NavLink>
             </nav>
           </div>
         </div>
@@ -61,6 +63,7 @@ export default function App() {
             <Route path="/" element={<Dashboard />} />
             <Route path="/businesses" element={<Businesses />} />
             <Route path="/businesses/:id" element={<BusinessDetail />} />
+            <Route path="/history" element={<ScraperHistory />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Layout>

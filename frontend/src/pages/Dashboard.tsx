@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { useBusinessStats, useScraperStatus, useStartScraper, useStopScraper } from '../hooks/useBusinesses'
 
 function StatCard({ label, value, sub }: { label: string; value: number | string; sub?: string }) {
@@ -168,10 +168,73 @@ export default function Dashboard() {
 
         {error && <p className="text-red-600 text-sm mt-2">{error}</p>}
 
-        {!running && scraper?.saved !== undefined && scraper.saved > 0 && (
-          <p className="text-xs text-gray-400 mt-3">
-            Last run: saved {scraper.saved} businesses from {scraper.zipcode}
-          </p>
+        {!running && scraper?.finishedAt && (
+          <div className="mt-4 pt-4 border-t border-gray-100">
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-xs font-medium text-gray-600">Last session results</p>
+              <Link to="/history" className="text-xs text-blue-600 hover:underline">View all history →</Link>
+            </div>
+            <div className="grid grid-cols-4 gap-3 mb-3">
+              {[
+                { label: 'Found', value: scraper.found, color: 'text-gray-900' },
+                { label: 'Saved', value: scraper.saved, color: 'text-green-600' },
+                { label: 'Skipped', value: scraper.skipped, color: 'text-yellow-600' },
+                { label: 'Errors', value: scraper.errors, color: 'text-red-500' },
+              ].map(s => (
+                <div key={s.label} className="text-center bg-gray-50 rounded-lg p-2">
+                  <p className={`text-xl font-bold ${s.color}`}>{s.value}</p>
+                  <p className="text-xs text-gray-400">{s.label}</p>
+                </div>
+              ))}
+            </div>
+            {scraper.savedList.length > 0 && (
+              <details className="text-xs">
+                <summary className="cursor-pointer text-green-700 font-medium hover:underline">
+                  Saved businesses ({scraper.savedList.length})
+                </summary>
+                <div className="mt-2 space-y-1 max-h-40 overflow-y-auto">
+                  {scraper.savedList.map(b => (
+                    <Link key={b.id} to={`/businesses/${b.id}`} className="flex justify-between items-center py-1 px-2 bg-green-50 rounded hover:bg-green-100 transition-colors">
+                      <span className="text-gray-800">{b.name}</span>
+                      <span className={`text-xs ${b.priority === 'high' ? 'text-red-600' : b.priority === 'medium' ? 'text-orange-600' : 'text-gray-400'}`}>
+                        {b.priority} ({b.priorityScore})
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+              </details>
+            )}
+            {scraper.skippedList.length > 0 && (
+              <details className="text-xs mt-2">
+                <summary className="cursor-pointer text-yellow-700 font-medium hover:underline">
+                  Skipped duplicates ({scraper.skippedList.length})
+                </summary>
+                <div className="mt-2 space-y-1 max-h-40 overflow-y-auto">
+                  {scraper.skippedList.map((s, i) => (
+                    <div key={i} className="flex justify-between items-center py-1 px-2 bg-yellow-50 rounded">
+                      <span className="text-gray-800">{s.name}</span>
+                      <span className="text-yellow-600">{s.reason}</span>
+                    </div>
+                  ))}
+                </div>
+              </details>
+            )}
+            {scraper.errorList.length > 0 && (
+              <details className="text-xs mt-2">
+                <summary className="cursor-pointer text-red-600 font-medium hover:underline">
+                  Errors ({scraper.errorList.length})
+                </summary>
+                <div className="mt-2 space-y-1 max-h-40 overflow-y-auto">
+                  {scraper.errorList.map((e, i) => (
+                    <div key={i} className="py-1 px-2 bg-red-50 rounded">
+                      <span className="text-gray-800">{e.name}: </span>
+                      <span className="text-red-600">{e.message}</span>
+                    </div>
+                  ))}
+                </div>
+              </details>
+            )}
+          </div>
         )}
       </div>
     </div>

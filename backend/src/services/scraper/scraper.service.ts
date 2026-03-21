@@ -4,24 +4,12 @@ import { BrowserManager, randomDelay, withRetry } from './browser.manager';
 import { MapsNavigator } from './maps.navigator';
 import { MapsExtractor } from './maps.extractor';
 import { ScraperState, INITIAL_STATE } from './scraper.types';
+import { ScrapeHistory } from './scrape.history';
 import { Deduplicator } from '../../utils/deduplicator';
 import { getRepository } from '../../data/repository.factory';
 import { scoreLead } from '../lead/lead.scorer';
 import { logger } from '../../utils/logger';
 import { Business } from '../../types/business.types';
-
-// ---------------------------------------------------------------------------
-// ScraperService
-//
-// Orchestrates the scraping session:
-//  - Maintains session state (running, counters)
-//  - Controls the p-queue (concurrency = 1, always sequential)
-//  - Provides start / stop API
-//  - Delegates page navigation to MapsExtractor (step 3.2)
-//  - Delegates deduplication to Deduplicator (step 3.5)
-//
-// Only one scraping session can run at a time.
-// ---------------------------------------------------------------------------
 
 export class ScraperService {
   private static _instance: ScraperService | null = null;
@@ -31,7 +19,6 @@ export class ScraperService {
   private stopRequested = false;
 
   private constructor() {
-    // Concurrency 1 = never parallel, always sequential requests
     this.queue = new PQueue({ concurrency: 1 });
   }
 
@@ -46,11 +33,7 @@ export class ScraperService {
     return { ...this.state };
   }
 
-  async start(
-    zipcode: string,
-    category = 'businesses',
-    maxResults = 50,
-  ): Promise<void> {
+  async start(zipcode: string, category = 'businesses', maxResults = 50): Promise<void> {
     if (this.state.running) {
       throw new Error('A scraping session is already running. Stop it first.');
     }
@@ -66,8 +49,6 @@ export class ScraperService {
     };
 
     logger.info('Scraper started', { zipcode, category, maxResults });
-
-    // Run in background — do not await, caller gets immediate response
     this.queue.add(() => this.runSession(zipcode, category, maxResults));
   }
 
@@ -77,11 +58,7 @@ export class ScraperService {
     logger.info('Scraper stop requested');
   }
 
-  private async runSession(
-    zipcode: string,
-    category: string,
-    maxResults: number,
-  ): Promise<void> {
+  private async runSession(zipcode: string, category: string, maxResults: number): Promise<void> {
     const bm = BrowserManager.getInstance();
     const nav = new MapsNavigator();
     const extractor = new MapsExtractor();
@@ -92,30 +69,29 @@ export class ScraperService {
       await bm.launch();
       const page = await bm.newPage();
 
-      // Load existing records into deduplicator before scraping starts
       await dedup.load(repo);
 
-      // Navigate to search results
       const loaded = await nav.navigateToSearch(page, zipcode, category);
       if (!loaded) {
         logger.warn('No results loaded — possible CAPTCHA or no listings found');
         return;
       }
 
-      // Scroll to load enough cards
       const totalCards = await nav.scrollResultsToLoad(page, maxResults);
       this.state.found = totalCards;
 
-      // Pre-collect all card data in one pass before clicking anything.
-      // Clicking + re-navigating causes DOM re-renders that shift card indices.
+      // Pre-collect all card data, recording every name we found
       const cardDataList = [];
       for (let i = 0; i < Math.min(totalCards, maxResults); i++) {
         const card = await extractor.extractFromCard(page, i);
-        if (card) cardDataList.push(card);
+        if (card) {
+          cardDataList.push(card);
+          this.state.foundNames.push(card.name);
+        }
       }
       logger.info('Card data pre-collected', { count: cardDataList.length });
 
-      // Process each card: click by name → extract detail → re-navigate back
+      // Process each card
       for (const cardData of cardDataList) {
         if (this.stopRequested) break;
 
@@ -123,12 +99,14 @@ export class ScraperService {
           const opened = await nav.openListingByName(page, cardData.name);
           if (!opened) {
             this.state.errors++;
+            this.state.errorList.push({ name: cardData.name, message: 'Failed to open listing panel' });
             return;
           }
 
           const raw = await extractor.extractFromDetail(page, cardData, zipcode);
           if (!raw) {
             this.state.errors++;
+            this.state.errorList.push({ name: cardData.name, message: 'Failed to extract detail data' });
             await nav.goBackToResults(page, zipcode, category);
             return;
           }
@@ -136,8 +114,17 @@ export class ScraperService {
           // Deduplication check
           const dupId = dedup.isDuplicate(raw);
           if (dupId) {
+            // Determine which index matched for the skip reason
+            const normalizedPhone = raw.phone?.replace(/\D/g, '') ?? '';
+            const reason = (normalizedPhone && dedup.hasPhone(normalizedPhone)) ? 'phone' : 'name+address';
             logger.debug('Skipping duplicate', { name: raw.name, dupId });
             this.state.skipped++;
+            this.state.skippedList.push({
+              name: raw.name,
+              address: raw.address,
+              reason,
+              existingId: dupId,
+            });
             await nav.goBackToResults(page, zipcode, category);
             return;
           }
@@ -168,12 +155,17 @@ export class ScraperService {
           await repo.create(business);
           dedup.register(business);
           this.state.saved++;
-
-          logger.info('Business saved', {
+          this.state.savedList.push({
+            id: business.id,
             name: business.name,
+            address: business.address,
+            phone: business.phone,
             priority: business.priority,
-            score: business.priorityScore,
+            priorityScore: business.priorityScore,
+            website: business.website,
           });
+
+          logger.info('Business saved', { name: business.name, priority, score });
 
           await nav.goBackToResults(page, zipcode, category);
           await randomDelay();
@@ -185,10 +177,15 @@ export class ScraperService {
     } catch (err) {
       logger.error('Scraper session failed', { error: (err as Error).message });
       this.state.errors++;
+      this.state.errorList.push({ name: 'session', message: (err as Error).message });
     } finally {
       await bm.close();
       this.state.running = false;
       this.state.finishedAt = new Date().toISOString();
+
+      // Persist session to history
+      ScrapeHistory.save(this.state);
+
       logger.info('Scraper session finished', {
         found: this.state.found,
         saved: this.state.saved,

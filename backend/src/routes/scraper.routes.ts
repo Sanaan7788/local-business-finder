@@ -1,6 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { z } from 'zod';
 import { ScraperService } from '../services/scraper/scraper.service';
+import { ScrapeHistory } from '../services/scraper/scrape.history';
 import { validateBody } from '../middleware/validate.middleware';
 import { logger } from '../utils/logger';
 
@@ -79,6 +80,35 @@ router.post('/stop', (req: Request, res: Response) => {
 router.get('/status', (req: Request, res: Response) => {
   const scraper = ScraperService.getInstance();
   res.json({ success: true, data: scraper.getState() });
+});
+
+// ---------------------------------------------------------------------------
+// GET /api/scraper/history
+// All past scraping sessions, newest first.
+// ---------------------------------------------------------------------------
+router.get('/history', (_req: Request, res: Response) => {
+  res.json({ success: true, data: ScrapeHistory.getAll() });
+});
+
+// ---------------------------------------------------------------------------
+// GET /api/scraper/history/:id
+// Full detail of one past session including savedList, skippedList, errorList.
+// ---------------------------------------------------------------------------
+router.get('/history/:id', (req: Request, res: Response) => {
+  const entry = ScrapeHistory.getById(req.params.id);
+  if (!entry) {
+    res.status(404).json({ success: false, error: 'Session not found' });
+    return;
+  }
+  res.json({ success: true, data: entry });
+});
+
+// ---------------------------------------------------------------------------
+// GET /api/scraper/zipcodes
+// Summary of all zipcodes scraped — the "parent database" view.
+// ---------------------------------------------------------------------------
+router.get('/zipcodes', (_req: Request, res: Response) => {
+  res.json({ success: true, data: ScrapeHistory.getZipcodes() });
 });
 
 export default router;

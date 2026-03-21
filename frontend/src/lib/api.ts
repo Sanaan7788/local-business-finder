@@ -93,4 +93,18 @@ export const scraperApi = {
 
   status: () =>
     api.get<any>('/scraper/status').then(unwrap) as Promise<ScraperStatus>,
+
+  history: () =>
+    api.get<any>('/scraper/history').then(unwrap) as Promise<any[]>,
+
+  historyById: (id: string) =>
+    api.get<any>(`/scraper/history/${id}`).then(unwrap) as Promise<any>,
+
+  zipcodes: () =>
+    api.get<any>('/scraper/zipcodes').then(unwrap) as Promise<{
+      zipcode: string
+      sessions: number
+      totalSaved: number
+      lastScrapedAt: string
+    }[]>,
 }
