@@ -1,9 +1,14 @@
+import { v4 as uuidv4 } from 'uuid';
 import PQueue from 'p-queue';
 import { BrowserManager, randomDelay, withRetry } from './browser.manager';
 import { MapsNavigator } from './maps.navigator';
 import { MapsExtractor } from './maps.extractor';
 import { ScraperState, INITIAL_STATE } from './scraper.types';
+import { Deduplicator } from '../../utils/deduplicator';
+import { getRepository } from '../../data/repository.factory';
+import { scoreLead } from '../lead/lead.scorer';
 import { logger } from '../../utils/logger';
+import { Business } from '../../types/business.types';
 
 // ---------------------------------------------------------------------------
 // ScraperService
@@ -80,10 +85,15 @@ export class ScraperService {
     const bm = BrowserManager.getInstance();
     const nav = new MapsNavigator();
     const extractor = new MapsExtractor();
+    const repo = getRepository();
+    const dedup = new Deduplicator();
 
     try {
       await bm.launch();
       const page = await bm.newPage();
+
+      // Load existing records into deduplicator before scraping starts
+      await dedup.load(repo);
 
       // Navigate to search results
       const loaded = await nav.navigateToSearch(page, zipcode, category);
@@ -97,7 +107,7 @@ export class ScraperService {
       this.state.found = totalCards;
 
       // Pre-collect all card data in one pass before clicking anything.
-      // Clicking + goBack causes DOM re-renders that shift card indices.
+      // Clicking + re-navigating causes DOM re-renders that shift card indices.
       const cardDataList = [];
       for (let i = 0; i < Math.min(totalCards, maxResults); i++) {
         const card = await extractor.extractFromCard(page, i);
@@ -105,12 +115,11 @@ export class ScraperService {
       }
       logger.info('Card data pre-collected', { count: cardDataList.length });
 
-      // Process each card: click by name → extract detail → go back
+      // Process each card: click by name → extract detail → re-navigate back
       for (const cardData of cardDataList) {
         if (this.stopRequested) break;
 
         await withRetry(async () => {
-          // Open detail panel by name — resilient to DOM re-renders after goBack
           const opened = await nav.openListingByName(page, cardData.name);
           if (!opened) {
             this.state.errors++;
@@ -118,14 +127,53 @@ export class ScraperService {
           }
 
           const raw = await extractor.extractFromDetail(page, cardData, zipcode);
-
           if (!raw) {
             this.state.errors++;
-          } else {
-            // Deduplication + saving wired in step 3.5
-            logger.debug('Extracted business', { name: raw.name, phone: raw.phone });
-            this.state.saved++;
+            await nav.goBackToResults(page, zipcode, category);
+            return;
           }
+
+          // Deduplication check
+          const dupId = dedup.isDuplicate(raw);
+          if (dupId) {
+            logger.debug('Skipping duplicate', { name: raw.name, dupId });
+            this.state.skipped++;
+            await nav.goBackToResults(page, zipcode, category);
+            return;
+          }
+
+          // Score and build the full business record
+          const { score, priority } = scoreLead(raw);
+          const now = new Date().toISOString();
+
+          const business: Business = {
+            id: uuidv4(),
+            createdAt: now,
+            updatedAt: now,
+            ...raw,
+            keywords: [],
+            summary: null,
+            insights: null,
+            generatedWebsiteCode: null,
+            outreach: null,
+            githubUrl: null,
+            deployedUrl: null,
+            leadStatus: 'new',
+            priority,
+            priorityScore: score,
+            notes: null,
+            lastContactedAt: null,
+          };
+
+          await repo.create(business);
+          dedup.register(business);
+          this.state.saved++;
+
+          logger.info('Business saved', {
+            name: business.name,
+            priority: business.priority,
+            score: business.priorityScore,
+          });
 
           await nav.goBackToResults(page, zipcode, category);
           await randomDelay();
