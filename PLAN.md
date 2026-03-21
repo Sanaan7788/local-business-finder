@@ -85,20 +85,20 @@ Three endpoints wired into Express:
 
 > Uses the LLM layer to enrich business profiles with keywords, summaries, and insights. All prompts are pure functions — testable without an LLM call.
 
-### [ ] Step 5.1 — Keywords Prompt + Parser + Integration
-Generates 5–10 relevant search keywords for a business based on its name, category, and description. Parsed from JSON response. Stored in `business.keywords[]`.
+### [x] Step 5.1 — Keywords Prompt + Parser + Integration
+Generates 8 relevant local SEO keywords for a business based on its name, category, address, and description. Parsed from JSON response. Stored in `business.keywords[]`.
 
-### [ ] Step 5.2 — Summary Prompt + Parser + Integration
+### [x] Step 5.2 — Summary Prompt + Parser + Integration
 Generates a 2–3 sentence business summary suitable for outreach context. Stored in `business.summary`.
 
-### [ ] Step 5.3 — Insights Prompt + Parser + Integration
-Generates three structured fields: `whyNeedsWebsite`, `whatsMissingOnline`, and `opportunities[]`. Stored in `business.insights`. Powers the Insights tab in the frontend.
+### [x] Step 5.3 — Insights Prompt + Parser + Integration
+Generates three structured fields: `whyNeedsWebsite`, `whatsMissingOnline`, and `opportunities[]`. Stored in `business.insights`. Uses keywords from step 5.1 as context for richer output.
 
-### [ ] Step 5.4 — AI Routes + API
-Three endpoints:
-- `POST /api/business/:id/analyze` — runs keywords + summary + insights in sequence
-- `GET /api/business/:id/insights` — returns stored insights
-- `POST /api/business/:id/keywords` — regenerate keywords only
+### [x] Step 5.4 — AI Routes + API
+Three endpoints wired into Express under `/api/businesses/:id/`:
+- `POST /analyze` — runs keywords → summary → insights in sequence, saves each result
+- `GET /insights` — returns stored insights (404 if not yet generated)
+- `POST /keywords` — regenerates keywords only
 
 ---
 
