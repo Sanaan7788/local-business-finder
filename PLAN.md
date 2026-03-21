@@ -126,18 +126,18 @@ Endpoints:
 
 > Uses LLM to generate a complete single-file HTML website for a business, then assembles it for deployment.
 
-### [ ] Step 7.1 — Website Prompt Builder
-Constructs a detailed prompt using business name, category, address, phone, description, and keywords. Instructs the LLM to produce a complete, mobile-responsive single-file HTML website using Tailwind CSS CDN.
+### [x] Step 7.1 — Website Prompt Builder
+Constructs a detailed prompt using business name, category, address, phone, description, keywords, summary, and insights opportunities. Instructs the LLM to produce a complete, mobile-responsive single-file HTML website using Tailwind CSS CDN. No placeholder text allowed — all real business data.
 
-### [ ] Step 7.2 — Website Generator Service
-Calls the LLM with the website prompt, validates the response is valid HTML, and stores the code in `business.generatedWebsiteCode`.
+### [x] Step 7.2 — Website Generator Service
+Calls the LLM with the website prompt, strips markdown fences if present, validates the response is valid HTML (DOCTYPE check, closing tag check, minimum length), and stores in `business.generatedWebsiteCode`.
 
-### [ ] Step 7.3 — Project File Assembler
-Takes the generated HTML and assembles the deployment package: `index.html` + `vercel.json` (framework: null). Handles base64 encoding for GitHub API upload.
+### [x] Step 7.3 — Project File Assembler + Slug Utility
+`slugify(name, zipcode)` → URL-safe folder name (e.g. `marias-nail-salon-11201`). `assemblePackage()` returns `{ slug, indexHtml, vercelJson }` ready for GitHub/Vercel upload.
 
-### [ ] Step 7.4 — Website Routes + API
-- `POST /api/business/:id/website` — trigger website generation
-- `GET /api/business/:id/website` — return generated code
+### [x] Step 7.4 — Website Routes + API
+- `POST /api/businesses/:id/website` — trigger generation (10–60s, LLM dependent)
+- `GET /api/businesses/:id/website` — return slug + HTML + vercelJson
 
 ---
 
