@@ -76,11 +76,8 @@ Three endpoints wired into Express:
 ### [x] Step 4.1 — ILLMProvider Interface + LLMFactory + All Adapters
 `ILLMProvider` interface with `complete(request)` method. `LLMFactory.create(provider)` returns the correct adapter. Normalized `LLMRequest` and `LLMResponse` shapes ensure consistent input/output regardless of provider. All three adapters implemented: DeepSeek (via NVIDIA NIM), Claude (Anthropic SDK), OpenAI (official SDK). Live DeepSeek API call verified.
 
-### [ ] Step 4.4 — Config-Based Provider Switching + Task Overrides
-Central config maps task names to preferred providers (e.g. `websiteGeneration → claude`, `keywords → deepseek`). `LLMService` orchestrator selects the right provider per task and falls back to the default if a task override isn't configured.
-
-### [ ] Step 4.5 — LLMService Orchestrator
-High-level service that accepts a task name + input, selects the provider, builds the prompt, calls the adapter, and returns a normalized response. All AI features call this — never an adapter directly.
+### [x] Step 4.4 + 4.5 — Config-Based Provider Switching + LLMService Orchestrator
+`llm.config.ts` maps task names to providers with a fallback to `LLM_PROVIDER` env. `LLMService.complete(task, request)` is the single entry point for all AI calls — selects the right provider per task, caches adapter instances, and returns a normalized response. All AI features call this, never an adapter directly.
 
 ---
 
