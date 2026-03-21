@@ -5,6 +5,7 @@ import { errorMiddleware } from './middleware/error.middleware';
 import healthRoutes from './routes/health.routes';
 import scraperRoutes from './routes/scraper.routes';
 import analysisRoutes from './routes/analysis.routes';
+import websiteRoutes from './routes/website.routes';
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(loggerMiddleware);
 app.use('/api/health', healthRoutes);
 app.use('/api/scraper', scraperRoutes);
 app.use('/api/businesses', analysisRoutes);
+app.use('/api/businesses', websiteRoutes);
 
 // 404 handler
 app.use((_req, res) => {
