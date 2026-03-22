@@ -1,9 +1,11 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { z } from 'zod';
+import { v4 as uuidv4 } from 'uuid';
 import { getRepository } from '../data/repository.factory';
 import { LeadService } from '../services/lead/lead.service';
 import { validateBody } from '../middleware/validate.middleware';
 import { LeadStatusSchema } from '../types/business.types';
+import { scoreLead } from '../services/lead/lead.scorer';
 import { BusinessFilter, BusinessSort } from '../data/repository.interface';
 
 // ---------------------------------------------------------------------------
@@ -70,6 +72,117 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
     next(err);
   }
 });
+
+// ---------------------------------------------------------------------------
+// POST /api/businesses
+// Create a stub business manually (e.g. from a found name with no scraped detail).
+// Only name is required — all other fields are optional and default to empty.
+// ---------------------------------------------------------------------------
+const CreateBusinessSchema = z.object({
+  name:          z.string().min(1),
+  phone:         z.string().nullable().optional(),
+  address:       z.string().optional().default(''),
+  zipcode:       z.string().optional().default(''),
+  category:      z.string().optional().default(''),
+  description:   z.string().nullable().optional(),
+  website:       z.boolean().optional().default(false),
+  websiteUrl:    z.string().nullable().optional(),
+  rating:        z.number().nullable().optional(),
+  reviewCount:   z.number().int().nullable().optional(),
+  googleMapsUrl: z.string().nullable().optional(),
+});
+
+router.post(
+  '/',
+  validateBody(CreateBusinessSchema),
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const repo = getRepository();
+      const body = req.body as z.infer<typeof CreateBusinessSchema>;
+      const now = new Date().toISOString();
+      const raw = {
+        name:          body.name,
+        phone:         body.phone ?? null,
+        address:       body.address ?? '',
+        zipcode:       body.zipcode ?? '',
+        category:      body.category ?? '',
+        description:   body.description ?? null,
+        website:       body.website ?? false,
+        websiteUrl:    body.websiteUrl ?? null,
+        rating:        body.rating ?? null,
+        reviewCount:   body.reviewCount ?? null,
+        googleMapsUrl: body.googleMapsUrl ?? null,
+      };
+      const { score, priority } = scoreLead(raw);
+      const business = await repo.create({
+        id: uuidv4(),
+        createdAt: now,
+        updatedAt: now,
+        ...raw,
+        keywords: [],
+        summary: null,
+        insights: null,
+        generatedWebsiteCode: null,
+        outreach: null,
+        githubUrl: null,
+        deployedUrl: null,
+        leadStatus: 'new',
+        priority,
+        priorityScore: score,
+        notes: null,
+        lastContactedAt: null,
+      });
+      res.status(201).json({ success: true, data: business });
+    } catch (err) {
+      next(err);
+    }
+  },
+);
+
+// ---------------------------------------------------------------------------
+// PATCH /api/businesses/:id/profile
+// Full manual edit — any discoverable field (name, phone, address, etc.).
+// Used for the editable profile UI.
+// ---------------------------------------------------------------------------
+const UpdateProfileSchema = z.object({
+  name:          z.string().min(1).optional(),
+  phone:         z.string().nullable().optional(),
+  address:       z.string().optional(),
+  zipcode:       z.string().optional(),
+  category:      z.string().optional(),
+  description:   z.string().nullable().optional(),
+  website:       z.boolean().optional(),
+  websiteUrl:    z.string().nullable().optional(),
+  rating:        z.number().nullable().optional(),
+  reviewCount:   z.number().int().nullable().optional(),
+  googleMapsUrl: z.string().nullable().optional(),
+});
+
+router.patch(
+  '/:id/profile',
+  validateBody(UpdateProfileSchema),
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const repo = getRepository();
+      const existing = await repo.findById(req.params.id);
+      if (!existing) {
+        res.status(404).json({ success: false, error: `Business not found: ${req.params.id}` });
+        return;
+      }
+      // Recompute priority score if any scoring-relevant field changed
+      const merged = { ...existing, ...req.body };
+      const { score, priority } = scoreLead(merged);
+      const updated = await repo.update(req.params.id, {
+        ...req.body,
+        priorityScore: score,
+        priority,
+      });
+      res.json({ success: true, data: updated });
+    } catch (err) {
+      next(err);
+    }
+  },
+);
 
 // ---------------------------------------------------------------------------
 // GET /api/businesses/:id

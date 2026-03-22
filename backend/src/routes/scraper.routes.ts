@@ -2,8 +2,14 @@ import { Router, Request, Response, NextFunction } from 'express';
 import { z } from 'zod';
 import { ScraperService } from '../services/scraper/scraper.service';
 import { ScrapeHistory } from '../services/scraper/scrape.history';
+import { ScrapeHistoryPostgres } from '../services/scraper/scrape.history.postgres';
 import { validateBody } from '../middleware/validate.middleware';
+
 import { logger } from '../utils/logger';
+
+function getHistory() {
+  return process.env.STORAGE_BACKEND === 'postgres' ? ScrapeHistoryPostgres : ScrapeHistory;
+}
 
 const router = Router();
 
@@ -17,8 +23,18 @@ const StartScraperSchema = z.object({
     .min(4, 'Zipcode must be at least 4 characters')
     .max(10, 'Zipcode too long')
     .regex(/^[\d\s-]+$/, 'Zipcode must contain only digits'),
-  category: z.string().min(1).max(50).default('businesses'),
+  category: z.string().min(1).max(100).default('businesses'),
   maxResults: z.number().int().min(1).max(200).default(50),
+});
+
+const StartBatchSchema = z.object({
+  zipcode: z
+    .string()
+    .min(4)
+    .max(10)
+    .regex(/^[\d\s-]+$/),
+  categories: z.array(z.string().min(1).max(100)).min(1).max(50),
+  maxResults: z.number().int().min(1).max(200).default(20),
 });
 
 // ---------------------------------------------------------------------------
@@ -55,6 +71,43 @@ router.post(
 );
 
 // ---------------------------------------------------------------------------
+// POST /api/scraper/batch
+// Queue multiple categories for the same zipcode.
+// ---------------------------------------------------------------------------
+
+router.post(
+  '/batch',
+  validateBody(StartBatchSchema),
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { zipcode, categories, maxResults } = req.body as z.infer<typeof StartBatchSchema>;
+      const scraper = ScraperService.getInstance();
+
+      await scraper.startBatch(zipcode, categories, maxResults);
+
+      logger.info('Batch scraper started via API', { zipcode, jobs: categories.length, maxResults });
+
+      res.status(202).json({
+        success: true,
+        data: { message: 'Batch started', zipcode, jobs: categories.length, maxResults },
+      });
+    } catch (err) {
+      next(err);
+    }
+  },
+);
+
+// ---------------------------------------------------------------------------
+// GET /api/scraper/batch-progress
+// Returns batch queue state (how many jobs done / pending).
+// ---------------------------------------------------------------------------
+
+router.get('/batch-progress', (req: Request, res: Response) => {
+  const scraper = ScraperService.getInstance();
+  res.json({ success: true, data: scraper.getBatchProgress() });
+});
+
+// ---------------------------------------------------------------------------
 // POST /api/scraper/stop
 // Signals the running session to stop after the current listing.
 // ---------------------------------------------------------------------------
@@ -79,36 +132,50 @@ router.post('/stop', (req: Request, res: Response) => {
 
 router.get('/status', (req: Request, res: Response) => {
   const scraper = ScraperService.getInstance();
-  res.json({ success: true, data: scraper.getState() });
+  res.json({
+    success: true,
+    data: {
+      ...scraper.getState(),
+      batch: scraper.getBatchProgress(),
+    },
+  });
 });
 
 // ---------------------------------------------------------------------------
 // GET /api/scraper/history
 // All past scraping sessions, newest first.
 // ---------------------------------------------------------------------------
-router.get('/history', (_req: Request, res: Response) => {
-  res.json({ success: true, data: ScrapeHistory.getAll() });
+router.get('/history', async (_req: Request, res: Response, next: NextFunction) => {
+  try {
+    const data = await getHistory().getAll();
+    res.json({ success: true, data });
+  } catch (err) { next(err); }
 });
 
 // ---------------------------------------------------------------------------
 // GET /api/scraper/history/:id
 // Full detail of one past session including savedList, skippedList, errorList.
 // ---------------------------------------------------------------------------
-router.get('/history/:id', (req: Request, res: Response) => {
-  const entry = ScrapeHistory.getById(req.params.id);
-  if (!entry) {
-    res.status(404).json({ success: false, error: 'Session not found' });
-    return;
-  }
-  res.json({ success: true, data: entry });
+router.get('/history/:id', async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const entry = await getHistory().getById(req.params.id);
+    if (!entry) {
+      res.status(404).json({ success: false, error: 'Session not found' });
+      return;
+    }
+    res.json({ success: true, data: entry });
+  } catch (err) { next(err); }
 });
 
 // ---------------------------------------------------------------------------
 // GET /api/scraper/zipcodes
 // Summary of all zipcodes scraped — the "parent database" view.
 // ---------------------------------------------------------------------------
-router.get('/zipcodes', (_req: Request, res: Response) => {
-  res.json({ success: true, data: ScrapeHistory.getZipcodes() });
+router.get('/zipcodes', async (_req: Request, res: Response, next: NextFunction) => {
+  try {
+    const data = await getHistory().getZipcodes();
+    res.json({ success: true, data });
+  } catch (err) { next(err); }
 });
 
 export default router;

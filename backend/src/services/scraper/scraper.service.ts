@@ -5,11 +5,25 @@ import { MapsNavigator } from './maps.navigator';
 import { MapsExtractor } from './maps.extractor';
 import { ScraperState, INITIAL_STATE } from './scraper.types';
 import { ScrapeHistory } from './scrape.history';
+import { ScrapeHistoryPostgres } from './scrape.history.postgres';
 import { Deduplicator } from '../../utils/deduplicator';
 import { getRepository } from '../../data/repository.factory';
+import { IBusinessRepository } from '../../data/repository.interface';
 import { scoreLead } from '../lead/lead.scorer';
 import { logger } from '../../utils/logger';
 import { Business } from '../../types/business.types';
+
+export interface BatchJob {
+  zipcode: string;
+  category: string;
+  maxResults: number;
+}
+
+export interface BatchProgress {
+  totalJobs: number;
+  completedJobs: number;
+  pendingJobs: BatchJob[];
+}
 
 export class ScraperService {
   private static _instance: ScraperService | null = null;
@@ -17,6 +31,11 @@ export class ScraperService {
   private state: ScraperState = { ...INITIAL_STATE };
   private queue: PQueue;
   private stopRequested = false;
+
+  // Batch mode tracking
+  private batchPending: BatchJob[] = [];
+  private batchTotal = 0;
+  private batchCompleted = 0;
 
   private constructor() {
     this.queue = new PQueue({ concurrency: 1 });
@@ -33,12 +52,24 @@ export class ScraperService {
     return { ...this.state };
   }
 
+  getBatchProgress(): BatchProgress {
+    return {
+      totalJobs: this.batchTotal,
+      completedJobs: this.batchCompleted,
+      pendingJobs: [...this.batchPending],
+    };
+  }
+
   async start(zipcode: string, category = 'businesses', maxResults = 50): Promise<void> {
-    if (this.state.running) {
+    if (this.state.running || this.queue.size > 0) {
       throw new Error('A scraping session is already running. Stop it first.');
     }
 
     this.stopRequested = false;
+    this.batchTotal = 1;
+    this.batchCompleted = 0;
+    this.batchPending = [];
+
     this.state = {
       ...INITIAL_STATE,
       running: true,
@@ -52,9 +83,110 @@ export class ScraperService {
     this.queue.add(() => this.runSession(zipcode, category, maxResults));
   }
 
+  /** Queue multiple category searches for the same zipcode */
+  async startBatch(zipcode: string, categories: string[], maxResults = 20): Promise<void> {
+    if (this.state.running || this.queue.size > 0) {
+      throw new Error('A scraping session is already running. Stop it first.');
+    }
+
+    this.stopRequested = false;
+    this.batchTotal = categories.length;
+    this.batchCompleted = 0;
+    this.batchPending = categories.map(cat => ({ zipcode, category: cat, maxResults }));
+
+    // Kick off first job immediately by setting state, then queue all
+    const [first, ...rest] = this.batchPending;
+    this.batchPending = rest;
+
+    this.state = {
+      ...INITIAL_STATE,
+      running: true,
+      zipcode: first.zipcode,
+      category: first.category,
+      maxResults: first.maxResults,
+      startedAt: new Date().toISOString(),
+    };
+
+    logger.info('Batch scraper started', { zipcode, categories: categories.length, maxResults });
+
+    // Queue all jobs sequentially
+    for (const job of [first, ...rest]) {
+      this.queue.add(() => this.runBatchJob(job));
+    }
+  }
+
+  private async runBatchJob(job: BatchJob): Promise<void> {
+    if (this.stopRequested) return;
+
+    this.state = {
+      ...INITIAL_STATE,
+      running: true,
+      zipcode: job.zipcode,
+      category: job.category,
+      maxResults: job.maxResults,
+      startedAt: new Date().toISOString(),
+    };
+
+    // Remove from pending
+    this.batchPending = this.batchPending.filter(
+      j => !(j.zipcode === job.zipcode && j.category === job.category),
+    );
+
+    await this.runSession(job.zipcode, job.category, job.maxResults);
+    this.batchCompleted++;
+  }
+
+  /** Create a minimal stub record for a business that errored during scraping */
+  private async createErrorStub(
+    repo: IBusinessRepository,
+    name: string,
+    category: string,
+    zipcode: string,
+    errorMsg: string,
+  ): Promise<void> {
+    try {
+      const { score, priority } = scoreLead({ name, category, zipcode, website: false });
+      const now = new Date().toISOString();
+      const business: Business = {
+        id: uuidv4(),
+        createdAt: now,
+        updatedAt: now,
+        name,
+        phone: null,
+        address: '',
+        zipcode,
+        category,
+        description: null,
+        website: false,
+        websiteUrl: null,
+        rating: null,
+        reviewCount: null,
+        googleMapsUrl: null,
+        keywords: [],
+        summary: null,
+        insights: null,
+        generatedWebsiteCode: null,
+        outreach: null,
+        githubUrl: null,
+        deployedUrl: null,
+        leadStatus: 'new',
+        priority,
+        priorityScore: score,
+        notes: `Scrape error: ${errorMsg}`,
+        lastContactedAt: null,
+      };
+      await repo.create(business);
+      logger.debug('Created error stub', { name });
+    } catch (err) {
+      logger.warn('Failed to create error stub', { name, error: (err as Error).message });
+    }
+  }
+
   stop(): void {
     if (!this.state.running) return;
     this.stopRequested = true;
+    this.queue.clear();
+    this.batchPending = [];
     logger.info('Scraper stop requested');
   }
 
@@ -100,6 +232,7 @@ export class ScraperService {
           if (!opened) {
             this.state.errors++;
             this.state.errorList.push({ name: cardData.name, message: 'Failed to open listing panel' });
+            await this.createErrorStub(repo, cardData.name, category, zipcode, 'Failed to open listing panel');
             return;
           }
 
@@ -107,6 +240,7 @@ export class ScraperService {
           if (!raw) {
             this.state.errors++;
             this.state.errorList.push({ name: cardData.name, message: 'Failed to extract detail data' });
+            await this.createErrorStub(repo, cardData.name, category, zipcode, 'Failed to extract detail data');
             await nav.goBackToResults(page, zipcode, category);
             return;
           }
@@ -184,7 +318,11 @@ export class ScraperService {
       this.state.finishedAt = new Date().toISOString();
 
       // Persist session to history
-      ScrapeHistory.save(this.state);
+      if (process.env.STORAGE_BACKEND === 'postgres') {
+        await ScrapeHistoryPostgres.save(this.state);
+      } else {
+        ScrapeHistory.save(this.state);
+      }
 
       logger.info('Scraper session finished', {
         found: this.state.found,

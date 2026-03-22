@@ -1,23 +1,74 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
-import { scraperApi } from '../lib/api'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { scraperApi, businessApi } from '../lib/api'
 import type { SavedEntry, SkippedEntry, ErrorEntry } from '../types/business'
 
 function useHistory() {
   return useQuery({ queryKey: ['scraper', 'history'], queryFn: scraperApi.history })
 }
-
 function useZipcodes() {
   return useQuery({ queryKey: ['scraper', 'zipcodes'], queryFn: scraperApi.zipcodes })
 }
-
 function useSessionDetail(id: string | null) {
   return useQuery({
     queryKey: ['scraper', 'history', id],
     queryFn: () => scraperApi.historyById(id!),
     enabled: Boolean(id),
   })
+}
+
+// ---------------------------------------------------------------------------
+// Helpers
+// ---------------------------------------------------------------------------
+function CopyBtn({ text, label = 'Copy' }: { text: string; label?: string }) {
+  const [copied, setCopied] = useState(false)
+  return (
+    <button
+      onClick={() => { navigator.clipboard.writeText(text); setCopied(true); setTimeout(() => setCopied(false), 1500) }}
+      className="text-xs text-blue-600 hover:underline ml-1 shrink-0"
+    >
+      {copied ? 'Copied!' : label}
+    </button>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// Create-stub button — shown for found names that aren't saved yet
+// ---------------------------------------------------------------------------
+function CreateProfileBtn({
+  name,
+  zipcode,
+  category,
+  onCreated,
+}: {
+  name: string
+  zipcode: string
+  category: string
+  onCreated: (id: string) => void
+}) {
+  const qc = useQueryClient()
+  const create = useMutation({
+    mutationFn: () => businessApi.create({ name, zipcode, category }),
+    onSuccess: (business) => {
+      qc.invalidateQueries({ queryKey: ['businesses'] })
+      onCreated(business.id)
+    },
+  })
+
+  if (create.isSuccess) return (
+    <span className="text-xs text-green-600 font-medium">Created ✓</span>
+  )
+
+  return (
+    <button
+      onClick={() => create.mutate()}
+      disabled={create.isPending}
+      className="text-xs bg-blue-600 text-white px-2 py-1 rounded hover:bg-blue-700 disabled:opacity-50 transition-colors"
+    >
+      {create.isPending ? '…' : '+ Create Profile'}
+    </button>
+  )
 }
 
 // ---------------------------------------------------------------------------
@@ -32,28 +83,24 @@ function SessionDetail({ id, onClose }: { id: string; onClose: () => void }) {
   if (!data) return null
 
   const tabs = [
-    { key: 'saved', label: `Saved (${data.saved})` },
-    { key: 'skipped', label: `Skipped (${data.skipped})` },
-    { key: 'errors', label: `Errors (${data.errors})` },
-    { key: 'found', label: `Found (${data.found})` },
+    { key: 'saved',   label: `Saved (${data.saved})`,   color: data.saved   > 0 ? 'text-green-600' : '' },
+    { key: 'skipped', label: `Skipped (${data.skipped})`, color: data.skipped > 0 ? 'text-yellow-600' : '' },
+    { key: 'errors',  label: `Errors (${data.errors})`,  color: data.errors  > 0 ? 'text-red-500' : '' },
+    { key: 'found',   label: `Found (${data.found})`,    color: '' },
   ] as const
 
   return (
     <div className="bg-white rounded-xl border border-gray-200">
       <div className="flex items-center justify-between p-4 border-b border-gray-200">
         <div>
-          <h3 className="font-semibold text-gray-900">
-            {data.zipcode} — {data.category}
-          </h3>
+          <h3 className="font-semibold text-gray-900">{data.zipcode} — {data.category}</h3>
           <p className="text-xs text-gray-500 mt-0.5">
-            {new Date(data.startedAt).toLocaleString()} →{' '}
-            {data.finishedAt ? new Date(data.finishedAt).toLocaleString() : 'running'}
+            {new Date(data.startedAt).toLocaleString()} → {data.finishedAt ? new Date(data.finishedAt).toLocaleString() : 'running'}
           </p>
         </div>
         <button onClick={onClose} className="text-gray-400 hover:text-gray-600 text-xl leading-none">×</button>
       </div>
 
-      {/* Tabs */}
       <div className="flex border-b border-gray-200 px-4">
         {tabs.map(t => (
           <button
@@ -62,7 +109,7 @@ function SessionDetail({ id, onClose }: { id: string; onClose: () => void }) {
             className={`px-3 py-2.5 text-sm font-medium border-b-2 -mb-px transition-colors ${
               tab === t.key
                 ? 'border-blue-600 text-blue-600'
-                : 'border-transparent text-gray-500 hover:text-gray-700'
+                : `border-transparent ${t.color || 'text-gray-500'} hover:text-gray-700`
             }`}
           >
             {t.label}
@@ -70,84 +117,207 @@ function SessionDetail({ id, onClose }: { id: string; onClose: () => void }) {
         ))}
       </div>
 
-      <div className="p-4 max-h-96 overflow-y-auto">
+      <div className="p-4 max-h-[520px] overflow-y-auto">
+
+        {/* ---- SAVED ---- */}
         {tab === 'saved' && (
           data.savedList.length === 0
             ? <p className="text-gray-400 text-sm text-center py-6">Nothing saved this session</p>
             : <div className="space-y-2">
+                <p className="text-xs text-gray-400 mb-3">Full profiles — click name to open, copy phone for outreach.</p>
                 {data.savedList.map((b: SavedEntry) => (
-                  <div
-                    key={b.id}
-                    className="flex items-center justify-between p-2.5 bg-green-50 rounded-lg cursor-pointer hover:bg-green-100 transition-colors"
-                    onClick={() => navigate(`/businesses/${b.id}`)}
-                  >
-                    <div>
-                      <p className="text-sm font-medium text-gray-900">{b.name}</p>
-                      <p className="text-xs text-gray-500">{b.address}</p>
-                    </div>
-                    <div className="text-right shrink-0 ml-4">
-                      <span className={`text-xs px-2 py-0.5 rounded-full ${
-                        b.priority === 'high' ? 'bg-red-100 text-red-700' :
-                        b.priority === 'medium' ? 'bg-orange-100 text-orange-700' :
-                        'bg-gray-100 text-gray-600'
-                      }`}>
-                        {b.priority} ({b.priorityScore})
-                      </span>
-                      {!b.website && <p className="text-xs text-red-500 mt-0.5">no website</p>}
+                  <div key={b.id} className="border border-gray-100 rounded-lg p-3 hover:border-blue-200 transition-colors">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex-1 min-w-0">
+                        <button
+                          onClick={() => navigate(`/businesses/${b.id}`)}
+                          className="text-sm font-semibold text-blue-700 hover:underline text-left"
+                        >
+                          {b.name}
+                        </button>
+                        <p className="text-xs text-gray-500 mt-0.5">{b.address}</p>
+                        {b.phone
+                          ? <p className="text-xs text-gray-700 mt-1 font-mono">📞 {b.phone}<CopyBtn text={b.phone} /></p>
+                          : <p className="text-xs text-gray-400 mt-1">No phone</p>
+                        }
+                      </div>
+                      <div className="shrink-0 text-right">
+                        <span className={`text-xs px-2 py-0.5 rounded-full ${
+                          b.priority === 'high' ? 'bg-red-100 text-red-700' :
+                          b.priority === 'medium' ? 'bg-orange-100 text-orange-700' :
+                          'bg-gray-100 text-gray-600'
+                        }`}>
+                          {b.priority} ({b.priorityScore})
+                        </span>
+                        {!b.website && <p className="text-xs text-red-500 mt-1 font-medium">No website</p>}
+                      </div>
                     </div>
                   </div>
                 ))}
               </div>
         )}
 
+        {/* ---- SKIPPED ---- */}
         {tab === 'skipped' && (
           data.skippedList.length === 0
             ? <p className="text-gray-400 text-sm text-center py-6">No duplicates skipped</p>
             : <div className="space-y-2">
+                <p className="text-xs text-gray-400 mb-3">Already in your database — click to open existing record.</p>
                 {data.skippedList.map((s: SkippedEntry, i: number) => (
-                  <div key={i} className="flex items-center justify-between p-2.5 bg-yellow-50 rounded-lg">
-                    <div>
-                      <p className="text-sm font-medium text-gray-900">{s.name}</p>
-                      <p className="text-xs text-gray-500">{s.address}</p>
-                    </div>
-                    <div className="text-right shrink-0 ml-4">
-                      <span className="text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full">
-                        {s.reason}
-                      </span>
-                      <button
-                        onClick={() => navigate(`/businesses/${s.existingId}`)}
-                        className="block text-xs text-blue-600 hover:underline mt-0.5 ml-auto"
-                      >
-                        view existing →
-                      </button>
+                  <div key={i} className="border border-gray-100 rounded-lg p-3">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-gray-800">{s.name}</p>
+                        <p className="text-xs text-gray-500 mt-0.5">{s.address}</p>
+                      </div>
+                      <div className="shrink-0 text-right">
+                        <span className="text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full">{s.reason}</span>
+                        <button
+                          onClick={() => navigate(`/businesses/${s.existingId}`)}
+                          className="block text-xs text-blue-600 hover:underline mt-1 ml-auto"
+                        >
+                          view existing →
+                        </button>
+                      </div>
                     </div>
                   </div>
                 ))}
               </div>
         )}
 
+        {/* ---- ERRORS ---- */}
         {tab === 'errors' && (
           data.errorList.length === 0
             ? <p className="text-gray-400 text-sm text-center py-6">No errors</p>
             : <div className="space-y-2">
+                <p className="text-xs text-gray-400 mb-3">
+                  Found on Maps but couldn't scrape. Create a stub profile to track manually, or search Maps to fill in details.
+                </p>
                 {data.errorList.map((e: ErrorEntry, i: number) => (
-                  <div key={i} className="p-2.5 bg-red-50 rounded-lg">
-                    <p className="text-sm font-medium text-gray-900">{e.name}</p>
-                    <p className="text-xs text-red-600 mt-0.5">{e.message}</p>
+                  <div key={i} className="border border-red-100 rounded-lg p-3 bg-red-50">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-gray-800">{e.name}</p>
+                        <p className="text-xs text-red-600 mt-0.5">{e.message}</p>
+                      </div>
+                      <div className="flex flex-col items-end gap-1.5 shrink-0">
+                        <a
+                          href={`https://www.google.com/maps/search/${encodeURIComponent(e.name)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs text-blue-600 hover:underline"
+                        >
+                          Search Maps →
+                        </a>
+                        <CreateProfileBtn
+                          name={e.name}
+                          zipcode={data.zipcode}
+                          category={data.category}
+                          onCreated={(id) => navigate(`/businesses/${id}`)}
+                        />
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
         )}
 
+        {/* ---- FOUND (all names) ---- */}
         {tab === 'found' && (
           data.foundNames.length === 0
             ? <p className="text-gray-400 text-sm text-center py-6">No card names recorded</p>
-            : <div className="grid grid-cols-2 gap-1.5">
-                {data.foundNames.map((name: string, i: number) => (
-                  <p key={i} className="text-xs text-gray-700 bg-gray-50 px-2 py-1 rounded">{name}</p>
-                ))}
-              </div>
+            : <FoundNamesTab
+                names={data.foundNames}
+                savedList={data.savedList}
+                zipcode={data.zipcode}
+                category={data.category}
+              />
         )}
+      </div>
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// Found names tab — shows all names, with status badge and create option
+// ---------------------------------------------------------------------------
+function FoundNamesTab({
+  names,
+  savedList,
+  zipcode,
+  category,
+}: {
+  names: string[]
+  savedList: SavedEntry[]
+  zipcode: string
+  category: string
+}) {
+  const navigate = useNavigate()
+  const savedNames = new Set(savedList.map(b => b.name.toLowerCase()))
+  const [createdIds, setCreatedIds] = useState<Record<string, string>>({})
+
+  return (
+    <div>
+      <p className="text-xs text-gray-400 mb-3">
+        All {names.length} businesses found on Maps. Green = saved to DB. Others can be created as stub profiles.
+      </p>
+      <div className="space-y-1.5">
+        {names.map((name, i) => {
+          const isSaved = savedNames.has(name.toLowerCase())
+          const savedEntry = savedList.find(b => b.name.toLowerCase() === name.toLowerCase())
+          const createdId = createdIds[name]
+
+          return (
+            <div
+              key={i}
+              className={`flex items-center justify-between gap-2 px-3 py-2 rounded-lg border ${
+                isSaved ? 'bg-green-50 border-green-100' : 'bg-gray-50 border-gray-100'
+              }`}
+            >
+              <div className="flex-1 min-w-0">
+                <span className="text-sm text-gray-800">{name}</span>
+                {isSaved && savedEntry?.phone && (
+                  <span className="text-xs text-gray-500 ml-2 font-mono">{savedEntry.phone}</span>
+                )}
+              </div>
+              <div className="flex items-center gap-2 shrink-0">
+                {isSaved && savedEntry ? (
+                  <button
+                    onClick={() => navigate(`/businesses/${savedEntry.id}`)}
+                    className="text-xs text-green-700 hover:underline font-medium"
+                  >
+                    View profile →
+                  </button>
+                ) : createdId ? (
+                  <button
+                    onClick={() => navigate(`/businesses/${createdId}`)}
+                    className="text-xs text-blue-600 hover:underline font-medium"
+                  >
+                    Edit profile →
+                  </button>
+                ) : (
+                  <>
+                    <a
+                      href={`https://www.google.com/maps/search/${encodeURIComponent(name)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-gray-400 hover:text-blue-600"
+                      title="Search on Maps"
+                    >
+                      ↗
+                    </a>
+                    <CreateProfileBtn
+                      name={name}
+                      zipcode={zipcode}
+                      category={category}
+                      onCreated={(id) => setCreatedIds(prev => ({ ...prev, [name]: id }))}
+                    />
+                  </>
+                )}
+              </div>
+            </div>
+          )
+        })}
       </div>
     </div>
   )
@@ -165,14 +335,11 @@ export default function ScraperHistory() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">Scrape History</h1>
-          <p className="text-gray-500 text-sm mt-0.5">All past scraping sessions and zipcodes covered</p>
-        </div>
+      <div>
+        <h1 className="text-2xl font-bold text-gray-900">Scrape History</h1>
+        <p className="text-gray-500 text-sm mt-0.5">All past scraping sessions and locations covered</p>
       </div>
 
-      {/* View toggle */}
       <div className="flex gap-2">
         <button
           onClick={() => setView('zipcodes')}
@@ -180,7 +347,7 @@ export default function ScraperHistory() {
             view === 'zipcodes' ? 'bg-blue-600 text-white' : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
           }`}
         >
-          Zipcodes
+          Locations
         </button>
         <button
           onClick={() => setView('sessions')}
@@ -192,16 +359,15 @@ export default function ScraperHistory() {
         </button>
       </div>
 
-      {/* Zipcodes view */}
       {view === 'zipcodes' && (
         <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
           {!zipcodes || zipcodes.length === 0 ? (
-            <div className="p-12 text-center text-gray-400">No zipcodes scraped yet.</div>
+            <div className="p-12 text-center text-gray-400">No locations scraped yet.</div>
           ) : (
             <table className="w-full text-sm">
               <thead className="bg-gray-50 border-b border-gray-200">
                 <tr>
-                  <th className="text-left px-4 py-3 font-medium text-gray-600">Zipcode</th>
+                  <th className="text-left px-4 py-3 font-medium text-gray-600">Location</th>
                   <th className="text-left px-4 py-3 font-medium text-gray-600">Sessions</th>
                   <th className="text-left px-4 py-3 font-medium text-gray-600">Total Saved</th>
                   <th className="text-left px-4 py-3 font-medium text-gray-600">Last Scraped</th>
@@ -220,7 +386,7 @@ export default function ScraperHistory() {
                         onClick={() => navigate(`/businesses?zipcode=${z.zipcode}`)}
                         className="text-blue-600 hover:underline text-xs"
                       >
-                        Browse {z.zipcode} →
+                        Browse →
                       </button>
                     </td>
                   </tr>
@@ -231,7 +397,6 @@ export default function ScraperHistory() {
         </div>
       )}
 
-      {/* Sessions view */}
       {view === 'sessions' && (
         <div className="space-y-4">
           {isLoading && <div className="p-8 text-center text-gray-500">Loading…</div>}

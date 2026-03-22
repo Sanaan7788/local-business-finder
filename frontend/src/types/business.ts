@@ -120,6 +120,12 @@ export interface ErrorEntry {
   message: string;
 }
 
+export interface BatchProgress {
+  totalJobs: number;
+  completedJobs: number;
+  pendingJobs: { zipcode: string; category: string; maxResults: number }[];
+}
+
 export interface ScraperStatus {
   running: boolean;
   zipcode: string | null;
@@ -134,6 +140,7 @@ export interface ScraperStatus {
   skippedList: SkippedEntry[];
   errorList: ErrorEntry[];
   foundNames: string[];
+  batch: BatchProgress;
 }
 
 // ---------------------------------------------------------------------------

@@ -6,7 +6,7 @@
 
 ## The Scenario
 
-You want to find local businesses in zipcode **10001** (Manhattan) that don't have a website. You'll scrape them, enrich their profiles with AI, generate websites for the best leads, deploy those sites live, and reach out with personalized copy.
+You want to find local businesses in Sugar Land, TX (zipcode **77477**) that don't have a website. You'll scrape them across multiple category searches, enrich their profiles with AI, generate websites for the best leads, deploy those sites live, and reach out with personalized copy.
 
 ---
 
@@ -16,464 +16,306 @@ You want to find local businesses in zipcode **10001** (Manhattan) that don't ha
 
 The frontend loads at `http://localhost:5173`. You see:
 - A stats bar at the top: **0 businesses**, **0 no-website**, **0 deployed**, **0 hot leads**
-- A scraper control panel: zipcode input, category dropdown, max results slider
-- An empty business table below
-
-Everything is zero. The CSV file doesn't exist yet.
+- A scraper control panel with two modes: Single Search and Batch
 
 ---
 
-### You start a scrape
+### Option A — Single search
 
-You type `10001` into the zipcode field, select `restaurants` from the category dropdown, set max results to `20`, and hit **Start Scraper**.
+You type `77477`, pick `nail salons` from the searchable category dropdown, set max results to `20`, and hit **Start Scraper**.
 
-The frontend calls `POST /api/scraper/start` with:
+The frontend calls `POST /api/scraper/start`:
 ```json
-{ "zipcode": "10001", "category": "restaurants", "maxResults": 20 }
+{ "zipcode": "77477", "category": "nail salons", "maxResults": 20 }
 ```
 
-The server responds immediately with `202 Accepted`. The scrape runs in the background.
+---
+
+### Option B — Batch mode (recommended for full coverage)
+
+You switch to **Batch** mode. You type `77477`, search the category list and select: nail salons, hair salons, restaurants, auto repair, plumbers, electricians, dentists, and 20 more. You set max results to `20`.
+
+The frontend calls `POST /api/scraper/batch`:
+```json
+{
+  "zipcode": "77477",
+  "categories": ["nail salons", "hair salons", "restaurants", "auto repair", ...],
+  "maxResults": 20
+}
+```
+
+The server queues all 28 sessions. They run one at a time, automatically.
 
 ---
 
-### Behind the scenes — the scraper runs
+### Behind the scenes — one session runs
 
 **1. Browser launches**
-Playwright opens a headless Chromium window. Images, fonts, and media are blocked to speed things up. A realistic desktop user agent is set.
+Playwright opens a headless Chromium window. Images, fonts, and media are blocked.
 
 **2. Navigate to Google Maps**
-The scraper builds the URL:
+The scraper builds the search URL:
 ```
-https://www.google.com/maps/search/restaurants+near+10001
+https://www.google.com/maps/search/nail+salons+near+77477
 ```
-It waits for the results sidebar to load.
 
 **3. Scroll to load cards**
-The scraper scrolls the sidebar repeatedly, waiting for new cards to appear. It stops when 20 cards are loaded or 3 consecutive scrolls find nothing new.
+The sidebar is scrolled until 20 cards are loaded or no new cards appear after 3 consecutive scrolls.
 
 **4. Pre-collect card data**
-Before clicking anything, the scraper reads every visible card in one pass:
+Before clicking anything, every visible card is read in one pass:
 ```
-Card 0: "Joe's Pizza"         — 4.2★ — Pizza — "Best slice in NYC"
-Card 1: "Midtown Diner"       — 3.8★ — American — no description
-Card 2: "Spice Garden"        — 4.5★ — Indian — "Authentic flavors"
-... (17 more)
+Card 0: "Lucky Nail Spa"     — 4.1★ — Nail salon — "Walk-ins welcome"
+Card 1: "Elegant Nails"      — 3.9★ — Nail salon — no description
+Card 2: "Queen Nails"        — 4.4★ — Nail salon — "Best gel in Sugar Land"
+...
 ```
 
-**5. Process each card one by one**
-For "Joe's Pizza":
+**5. Process each card**
+For "Lucky Nail Spa":
 - Click the listing by name → detail panel opens
-- Extract: phone `(212) 555-1234`, address `123 W 32nd St`, website: **none**, 84 reviews
-- Check deduplicator: phone not seen before, name+address not seen before → **not a duplicate**
-- Run lead scorer:
+- Extract: phone `(281) 555-0192`, address `12345 Dairy Ashford Rd`, website: **none**, 47 reviews
+- Check deduplicator: not seen before → save
+- Lead score:
   - No website → +40
   - Has phone → +10
   - Has description → +5
-  - Rating 4.2 → +5
+  - Rating 4.1 → +5
   - **Score: 60 → priority: high**
-- Build the full Business record with a UUID, save to CSV
-- Re-navigate back to search results
-- Wait a random 1–3 seconds
-
-This repeats for all 20 cards.
+- Save to database, register in deduplicator, re-navigate to results, wait 1–3 seconds
 
 ---
 
-### You watch the scraper progress
+### You watch batch progress
 
-While the scraper runs, the frontend polls `GET /api/scraper/status` every 3 seconds:
+While the batch runs, the dashboard shows two progress bars:
 
 ```
-Running: true
-Found: 20
-Saved: 7     ← only businesses without websites
-Skipped: 2   ← duplicates from a previous session
-Errors: 0
+Batch: 3/28 jobs — 77477               11%
+[████░░░░░░░░░░░░░░░░░░░░░░░░]
+
+Currently: hair salons
+Next: restaurants, auto repair, plumbers +24 more
+
+Scraping 77477 — hair salons            65%
+[███████████████████████░░░░░]
+Found: 17  Saved: 8  Skipped: 3  Errors: 0
 ```
 
-The progress bar fills. The business table starts populating with rows as businesses are saved.
+When a session finishes, the next one starts automatically. Businesses found in earlier sessions are skipped as duplicates in later ones — no manual deduplication needed.
 
 ---
 
-### Scrape finishes
+### Batch finishes
 
-The scraper closes the browser and marks the session complete:
-
+After all 28 sessions complete:
 ```
-Found: 20 | Saved: 7 | Skipped: 2 | Errors: 0
+28/28 jobs done
+Total saved: ~280 businesses (across all categories, after deduplication)
 ```
-
-The dashboard stats update:
-- **7 businesses** discovered
-- **7 no-website** (100% — that was the filter)
-- **3 high priority** leads
-
-The business table now shows 7 rows. Each row has: name, category, address, rating, priority badge, lead status `new`.
 
 ---
 
-## Act 2 — Enrichment (AI Processing)
+## Act 2 — Reviewing Session Results
+
+### You open the History page
+
+Click **History** in the nav. Two views:
+
+**Zipcodes tab:**
+```
+Zipcode    Sessions    Total Saved    Last Scraped
+77477      28          284            Mar 21, 2026
+```
+
+**Sessions tab:**
+Each session row shows found/saved/skipped/errors. Click to expand:
+
+**Saved tab** — full contact profiles:
+```
+Lucky Nail Spa
+12345 Dairy Ashford Rd
+📞 (281) 555-0192  [Copy]
+                          high (60)  No website
+```
+
+**Errors tab** — businesses that failed extraction:
+```
+Sunrise Beauty — "Failed to open listing panel"
+                                      [Search Maps →]
+```
+You can click "Search Maps →" to look them up manually for outreach.
+
+**Found tab** — all business names collected:
+```
+Lucky Nail Spa  ↗    Queen Nails  ↗    Elegant Nails  ↗
+Pink Nail Salon ↗    ...
+```
+Each has a Maps link for manual lookup.
+
+---
+
+## Act 3 — AI Enrichment
 
 ### You open a business profile
 
-You click "Joe's Pizza" in the table. The detail page opens with 6 tabs:
+Click "Lucky Nail Spa" in the saved list. The detail page opens with 6 tabs:
 
 ```
 Overview | Insights | Website | Outreach | CRM | Deployment
 ```
 
-**Overview tab** shows:
+**Overview tab:**
 ```
-Name:        Joe's Pizza
-Address:     123 W 32nd St, New York, NY 10001
-Phone:       (212) 555-1234
-Category:    Pizza
-Rating:      4.2★ (84 reviews)
+Name:        Lucky Nail Spa
+Address:     12345 Dairy Ashford Rd, Sugar Land, TX 77477
+Phone:       (281) 555-0192
+Category:    Nail salon
+Rating:      4.1★ (47 reviews)
 Website:     None
 Priority:    HIGH (score: 60)
 Lead Status: New
 ```
 
-Everything is raw scraped data. The AI fields are empty.
-
----
-
 ### You click "Analyze"
 
-The frontend calls `POST /api/business/{id}/analyze`.
+The backend runs three LLM tasks in sequence:
 
-The backend runs three LLM tasks in sequence through `LLMService`:
+1. **Keywords** — 8 local SEO keywords for the business
+2. **Summary** — 2–3 sentence context for outreach
+3. **Insights** — why they need a website, what's missing, specific opportunities
 
-**Task 1: keywords**
-```
-System: You are a local SEO specialist.
-User:   Generate 8 SEO keywords for a pizza restaurant called "Joe's Pizza"
-        located at 123 W 32nd St, New York, NY 10001.
-        Description: "Best slice in NYC"
-        Return JSON: { "keywords": ["...", ...] }
-```
-
-Response:
-```json
-{
-  "keywords": [
-    "pizza near me", "best pizza Manhattan", "NYC pizza slice",
-    "Joe's Pizza 10001", "midtown pizza", "New York pizza restaurant",
-    "pizza delivery 10001", "affordable pizza NYC"
-  ]
-}
-```
-
-**Task 2: summary**
-```
-System: You write concise business summaries for outreach.
-User:   Write a 2-3 sentence summary for "Joe's Pizza"...
-```
-
-Response:
-```
-Joe's Pizza is a well-loved pizza spot in Midtown Manhattan with 84 reviews
-and a 4.2-star rating. Known for their classic New York slice, they've built
-a loyal local following but currently have no web presence to capture online
-orders or new customers searching nearby.
-```
-
-**Task 3: insights**
-```
-System: You are a digital marketing consultant.
-User:   Analyze why "Joe's Pizza" needs a website...
-        Return JSON: { "whyNeedsWebsite": "...", "whatsMissingOnline": "...", "opportunities": [...] }
-```
-
-Response:
-```json
-{
-  "whyNeedsWebsite": "Joe's Pizza has 84 reviews and a 4.2-star rating but no website, meaning they're losing customers who search online for pizza in Midtown and can't find a menu or order link.",
-  "whatsMissingOnline": "No website means no Google Business menu integration, no online ordering capability, and no way for customers to find their hours or location outside of Google Maps.",
-  "opportunities": [
-    "Capture 'pizza near me' searches in the 10001 area",
-    "Display the menu and daily specials",
-    "Add an online ordering or reservation link",
-    "Show photos of the food to attract new customers",
-    "Collect customer emails for promotions"
-  ]
-}
-```
-
----
-
-### The Insights tab populates
-
+The Insights tab fills in:
 ```
 Why they need a website:
-Joe's Pizza has 84 reviews and a 4.2-star rating but no website, meaning
-they're losing customers who search online for pizza in Midtown...
-
-What's missing online:
-No website means no Google Business menu integration, no online ordering...
+Lucky Nail Spa has 47 reviews and a 4.1-star rating but no website,
+meaning they're invisible to customers searching online for nail salons...
 
 Opportunities:
-  ✦ Capture 'pizza near me' searches in the 10001 area
-  ✦ Display the menu and daily specials
-  ✦ Add an online ordering or reservation link
-  ✦ Show photos of the food to attract new customers
+  ✦ Capture "nail salon near me" searches in 77477
+  ✦ Display services and pricing
+  ✦ Enable online booking
+  ✦ Showcase nail art photos
   ✦ Collect customer emails for promotions
 ```
 
 ---
 
-## Act 3 — Website Generation
+## Act 4 — Website Generation
 
 ### You click "Generate Website"
 
-The frontend calls `POST /api/business/{id}/website`.
-
-The backend sends a large prompt to the LLM:
-
-```
-System: You are an expert web developer. Generate a complete, mobile-responsive,
-        single-file HTML website using Tailwind CSS CDN.
-        The website must be production-ready with no placeholders.
-
-User:   Business: Joe's Pizza
-        Address: 123 W 32nd St, New York, NY 10001
-        Phone: (212) 555-1234
-        Category: Pizza restaurant
-        Description: Best slice in NYC
-        Keywords: pizza near me, best pizza Manhattan, NYC pizza slice...
-        Summary: Joe's Pizza is a well-loved pizza spot in Midtown Manhattan...
-
-        Generate a complete single-file HTML website.
-```
-
-The LLM returns ~200 lines of complete HTML — a fully styled pizza restaurant website with:
-- Hero section with the business name and tagline
-- About section using the AI-generated summary
-- Menu section (placeholder items, structured for easy editing)
+The LLM generates a complete single-file HTML website — fully styled nail salon site with:
+- Hero section with business name and tagline
+- Services + pricing section
 - Contact section with phone and address
-- Google Maps embed placeholder
 - Mobile-responsive Tailwind CSS layout
-- Meta tags with the SEO keywords
+- SEO meta tags using the generated keywords
+
+The Website tab shows a live iframe preview and the raw HTML.
 
 ---
 
-### The Website tab shows the generated code
-
-```
-[Preview] [Copy Code] [Deploy]
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Best pizza in Manhattan...">
-  ...
-```
-
-You can see a live iframe preview of what the website looks like.
-
----
-
-## Act 4 — Deployment
+## Act 5 — Deployment *(coming)*
 
 ### You click "Deploy"
 
-The frontend calls `POST /api/business/{id}/deploy`.
+1. Backend pushes `businesses/lucky-nail-spa-77477/index.html` to GitHub
+2. Vercel deploys it instantly
 
-**Step 1: Push to GitHub**
-
-The backend uses Octokit to create a file at:
 ```
-businesses/joes-pizza-10001/index.html
-```
-in the `local-business-sites` GitHub repository. The file contains the generated HTML.
-
-Returns:
-```
-githubUrl: https://github.com/Sanaan7788/local-business-sites/blob/main/businesses/joes-pizza-10001/index.html
+deployedUrl: https://lucky-nail-spa-77477.vercel.app
 ```
 
-**Step 2: Deploy to Vercel**
-
-The backend calls the Vercel API to deploy the `businesses/joes-pizza-10001/` folder as a new project. Vercel builds instantly (static HTML, no build step). The backend polls for completion.
-
-Returns:
-```
-deployedUrl: https://joes-pizza-10001.vercel.app
-```
+The dashboard stats update: **1 deployed**.
 
 ---
 
-### The Deployment tab shows the live links
-
-```
-Status:     Deployed ✓
-GitHub:     github.com/Sanaan7788/.../joes-pizza-10001/index.html
-Live URL:   https://joes-pizza-10001.vercel.app
-
-[Open Live Site]
-
-┌─────────────────────────────────────────┐
-│  iframe preview of the live website     │
-└─────────────────────────────────────────┘
-```
-
-The business record is updated. The dashboard stats now show: **1 deployed**.
-
----
-
-## Act 5 — Outreach
+## Act 6 — Outreach
 
 ### You click "Generate Outreach"
 
-The frontend calls `POST /api/business/{id}/outreach`.
-
-The LLM generates:
-
 **Email:**
 ```
-Subject: We built a free website for Joe's Pizza
+Subject: We built a free website for Lucky Nail Spa
 
-Hi Joe,
+Hi,
 
-I was looking for great pizza near Midtown and found Joe's Pizza on Google —
-84 reviews and a 4.2 rating is impressive. I noticed you don't have a website,
-which means people searching "pizza near me" on Google can't find your menu
-or hours.
+I was searching for nail salons in Sugar Land and found Lucky Nail Spa —
+47 reviews and a 4.1-star rating is impressive. I noticed you don't have
+a website, which means customers searching online can't find your services
+or book an appointment.
 
 I built a website for you. It's live right now:
-https://joes-pizza-10001.vercel.app
+https://lucky-nail-spa-77477.vercel.app
 
-It took me about an hour. No strings attached — it's yours to keep. If you'd
-like me to add your actual menu, update the photos, or connect a domain name,
-I'd love to chat.
-
-Best,
-[Your name]
+No strings attached — it's yours to keep...
 ```
 
 **Call Script:**
 ```
 Opener:
-"Hi, is this Joe's Pizza? Great — my name is [name], I'm a local web developer.
-I was searching for pizza in Midtown earlier and found your Google listing —
-you've got great reviews. I wanted to call because I just built a website for
-you and wanted to make sure you saw it."
+"Hi, is this Lucky Nail Spa? My name is [name]. I was searching for nail
+salons in Sugar Land and found your Google listing — great reviews. I just
+built a website for you and wanted to make sure you saw it."
 
 Value Proposition:
-"Right now when someone searches 'pizza near me' in 10001, they can't click
-through to a menu or find your hours. The site I built solves that — it's live
-at joes-pizza-10001.vercel.app. It has your address, phone, and a menu section
-ready for your items."
-
-If they say "not interested":
-"Totally fair. I just wanted to make sure you had the option — a lot of
-restaurants don't realize how many customers they're losing to competitors
-with websites. The site stays live either way."
-
-If they say "I already have one":
-"Oh great — I must have missed it on Maps. Mind if I ask where it is? I can
-make sure the one I built redirects there properly."
-
-Close:
-"Can I send you the link so you can take a look when you have a minute? There's
-no cost, and if you want to make it your own, I charge a flat rate of [price]
-to set it up on your domain."
+"Right now when someone searches 'nail salon near me' in 77477, they can't
+find your services or hours online. The site I built shows your services,
+contact info, and has a booking section ready to add your scheduling link."
 ```
 
 ---
 
-### The Outreach tab shows everything
-
-```
-[Email]              [Call Script]
-
-Subject: We built a free website for Joe's Pizza
-──────────────────────────────────────────────────
-Hi Joe,
-
-I was looking for great pizza near Midtown...
-
-[Copy Email]
-```
-
----
-
-## Act 6 — CRM Management
+## Act 7 — CRM Management
 
 ### You update the lead status
 
-After sending the email, you go to the **CRM tab**:
-- Change lead status from `New` → `Contacted`
-- Add a note: "Emailed 21 Mar. No reply yet."
+After calling, you go to the **CRM tab**:
+- Change status: `New` → `Contacted`
+- Add note: "Called 21 Mar. Owner interested, wants to see the site. Following up."
 - Set last contacted date to today
 
-The table in the Businesses list updates. The pipeline stats panel shows:
+### Two days later
 
-```
-Pipeline Summary
-────────────────
-New:         6
-Contacted:   1
-Interested:  0
-Closed:      0
-Rejected:    0
+Status → `Interested`. Add note: "Wants booking link added + custom domain."
 
-Priority Breakdown
-──────────────────
-High:    3
-Medium:  3
-Low:     1
-```
-
----
-
-### Joe calls you back
-
-You move the status to `Interested`, add a note:
-
-```
-21 Mar: Emailed. 22 Mar: Joe called back, likes the site.
-        Wants his menu added and a custom domain.
-        Following up Thursday.
-```
-
-Status → `Interested`. Priority stays `High`.
-
-Two days later you close the deal.
+### Deal closed
 
 Status → `Closed`.
 
 ---
 
-## The Full Pipeline at a Glance
+## The Full Pipeline
 
 ```
-Zipcode input
+Search target (zipcode, neighborhood, intersection, etc.)
     │
     ▼
-[Scraper] — Google Maps → 20 businesses found → 7 saved (no website)
+[Batch Scraper] — 28 category searches × 20 results → ~280 businesses
+    │            — deduplication across all sessions
+    ▼
+[Lead Scorer] — auto-scores on save → high / medium / low priority
     │
     ▼
-[Lead Scorer] — auto-scores on save → 3 high / 3 medium / 1 low
+[History Viewer] — review saved/skipped/error/found lists
+    │              — copy phone numbers for manual outreach
     │
     ▼
 [AI Analysis] — per business, on demand
-    │  keywords (SEO) → stored
-    │  summary (2-3 sentences) → stored
-    │  insights (why, what's missing, opportunities) → stored
+    │  keywords → summary → insights
     │
     ▼
-[Website Generator] — AI writes complete HTML website → stored
+[Website Generator] — complete HTML website
     │
     ▼
-[Deployment] — push to GitHub → deploy to Vercel → live URL stored
+[Deployment] — GitHub → Vercel → live URL
     │
     ▼
-[Outreach Generator] — personalized email + call script → stored
+[Outreach Generator] — personalized email + call script
     │
     ▼
-[CRM] — you manage: status, notes, last-contacted
+[CRM] — status, notes, last-contacted
     │
     ▼
 Closed deal
@@ -487,8 +329,7 @@ Closed deal
 # Terminal 1 — Backend
 cd backend
 npm run dev
-# Server starts at http://localhost:3001
-# Validates all env vars at startup — exits with clear error if anything is wrong
+# Validates env vars at startup, exits clearly on misconfiguration
 
 # Terminal 2 — Frontend
 cd frontend
@@ -496,13 +337,37 @@ npm run dev
 # App opens at http://localhost:5173
 ```
 
-To run a scrape via API directly (without the UI):
+### Setting up PostgreSQL (recommended)
+
 ```bash
+# 1. Create a free Neon database at neon.tech, copy the connection string
+
+# 2. Add to backend/.env:
+STORAGE_BACKEND=postgres
+DATABASE_URL=postgres://user:pass@host/db?sslmode=require
+
+# 3. Create the tables:
+cd backend
+npm run db:push
+
+# 4. Start the server — it now reads/writes to Postgres
+npm run dev
+```
+
+### API examples
+
+```bash
+# Single search
 curl -X POST http://localhost:3001/api/scraper/start \
   -H "Content-Type: application/json" \
-  -d '{"zipcode": "10001", "category": "restaurants", "maxResults": 20}'
+  -d '{"zipcode": "77477", "category": "nail salons", "maxResults": 20}'
 
-# Poll for status
+# Batch search
+curl -X POST http://localhost:3001/api/scraper/batch \
+  -H "Content-Type: application/json" \
+  -d '{"zipcode": "77477", "categories": ["nail salons", "restaurants", "auto repair"], "maxResults": 20}'
+
+# Poll status
 curl http://localhost:3001/api/scraper/status
 ```
 

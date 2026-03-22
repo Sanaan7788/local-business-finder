@@ -158,7 +158,11 @@ export default function Businesses() {
                 >
                   <td className="px-4 py-3">
                     <p className="font-medium text-gray-900">{b.name}</p>
-                    <p className="text-xs text-gray-400 mt-0.5">{b.address}</p>
+                    {b.notes?.startsWith('Scrape error:') ? (
+                      <p className="text-xs text-orange-500 mt-0.5">⚠ Partial data — scrape failed</p>
+                    ) : (
+                      <p className="text-xs text-gray-400 mt-0.5">{b.address}</p>
+                    )}
                   </td>
                   <td className="px-4 py-3 text-gray-600">{b.category}</td>
                   <td className="px-4 py-3 text-gray-600">

@@ -58,6 +58,28 @@ export function useScraperStatus() {
 // ---------------------------------------------------------------------------
 // Mutations
 // ---------------------------------------------------------------------------
+export function useCreateBusiness() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: (data: Parameters<typeof businessApi.create>[0]) => businessApi.create(data),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['businesses'] })
+    },
+  })
+}
+
+export function useUpdateProfile() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: ({ id, data }: { id: string; data: Parameters<typeof businessApi.updateProfile>[1] }) =>
+      businessApi.updateProfile(id, data),
+    onSuccess: (updated) => {
+      qc.setQueryData(keys.business(updated.id), updated)
+      qc.invalidateQueries({ queryKey: ['businesses'] })
+    },
+  })
+}
+
 export function useUpdateStatus() {
   const qc = useQueryClient()
   return useMutation({
@@ -107,6 +129,17 @@ export function useStartScraper() {
   return useMutation({
     mutationFn: ({ zipcode, category, maxResults }: { zipcode: string; category: string; maxResults: number }) =>
       scraperApi.start(zipcode, category, maxResults),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: keys.scraper() })
+    },
+  })
+}
+
+export function useStartBatch() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: ({ zipcode, categories, maxResults }: { zipcode: string; categories: string[]; maxResults: number }) =>
+      scraperApi.startBatch(zipcode, categories, maxResults),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: keys.scraper() })
     },

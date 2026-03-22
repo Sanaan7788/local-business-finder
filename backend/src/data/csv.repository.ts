@@ -83,7 +83,12 @@ function deserialize(row: Record<string, string>): Business {
     const val = row[col];
 
     if (val === '' || val === undefined) {
-      raw[col] = null;
+      // address and zipcode are required strings — keep as empty string, not null
+      if (col === 'address' || col === 'zipcode' || col === 'category' || col === 'name') {
+        raw[col] = '';
+      } else {
+        raw[col] = null;
+      }
       continue;
     }
 

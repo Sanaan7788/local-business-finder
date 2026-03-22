@@ -58,6 +58,12 @@ export const businessApi = {
       deployed: number
     }>,
 
+  create: (data: { name: string; phone?: string | null; address?: string; zipcode?: string; category?: string; description?: string | null; website?: boolean; websiteUrl?: string | null; rating?: number | null; reviewCount?: number | null; googleMapsUrl?: string | null }) =>
+    api.post<any>('/businesses', data).then(unwrap) as Promise<Business>,
+
+  updateProfile: (id: string, data: Partial<Pick<Business, 'name' | 'phone' | 'address' | 'zipcode' | 'category' | 'description' | 'website' | 'websiteUrl' | 'rating' | 'reviewCount' | 'googleMapsUrl'>>) =>
+    api.patch<any>(`/businesses/${id}/profile`, data).then(unwrap) as Promise<Business>,
+
   updateStatus: (id: string, status: LeadStatus) =>
     api.patch<any>(`/businesses/${id}/status`, { status }).then(unwrap) as Promise<Business>,
 
@@ -87,6 +93,9 @@ export const businessApi = {
 export const scraperApi = {
   start: (zipcode: string, category: string, maxResults: number) =>
     api.post<any>('/scraper/start', { zipcode, category, maxResults }).then(unwrap),
+
+  startBatch: (zipcode: string, categories: string[], maxResults: number) =>
+    api.post<any>('/scraper/batch', { zipcode, categories, maxResults }).then(unwrap),
 
   stop: () =>
     api.post<any>('/scraper/stop').then(unwrap),

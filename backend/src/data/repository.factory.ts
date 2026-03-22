@@ -24,7 +24,13 @@ export function getRepository(): IBusinessRepository {
     return _instance!;
   }
 
-  throw new Error(`Unknown STORAGE_BACKEND: "${backend}". Only "csv" is supported right now.`);
+  if (backend === 'postgres') {
+    const { PostgresBusinessRepository } = require('./postgres.repository');
+    _instance = new PostgresBusinessRepository();
+    return _instance!;
+  }
+
+  throw new Error(`Unknown STORAGE_BACKEND: "${backend}". Supported: "csv", "postgres".`);
 }
 
 // Exposed for testing — allows injecting a mock repository
