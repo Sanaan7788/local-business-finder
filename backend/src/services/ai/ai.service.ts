@@ -17,20 +17,29 @@ import { logger } from '../../utils/logger';
 // Keywords
 // ---------------------------------------------------------------------------
 
-function buildKeywordsPrompt(business: Business): { systemPrompt: string; userPrompt: string } {
+function buildKeywordsPrompt(business: Business, reviewSnippets: string[] = []): { systemPrompt: string; userPrompt: string } {
   return {
     systemPrompt:
-      'You are a local SEO specialist. Your job is to generate search keywords for local businesses. ' +
+      'You are a local SEO and website copywriter. Generate keywords for a local business that will be used ' +
+      'to write their website copy, meta tags, and headings. Include a mix of: service keywords, ' +
+      'location keywords, reputation keywords (from reviews if provided), and general business terms. ' +
       'Always respond with valid JSON only. No explanation, no markdown, no code fences.',
     userPrompt:
-      `Generate 8 relevant local SEO keywords for this business.\n\n` +
+      `Generate 15 relevant keywords for this local business.\n\n` +
       `Business name: ${business.name}\n` +
       `Category: ${business.category}\n` +
       `Address: ${business.address}\n` +
-      `Zipcode: ${business.zipcode}\n` +
+      `Location: ${business.zipcode}\n` +
+      (business.rating !== null ? `Rating: ${business.rating} stars\n` : '') +
+      (business.reviewCount !== null ? `Total reviews: ${business.reviewCount}\n` : '') +
       (business.description ? `Description: ${business.description}\n` : '') +
+      (reviewSnippets.length > 0
+        ? `\nReview excerpts (use these to extract what customers value):\n${reviewSnippets.map((s, i) => `${i + 1}. "${s}"`).join('\n')}\n`
+        : '') +
+      `\nInclude: specific services, location modifiers (city/neighborhood), trust signals, ` +
+      `common search phrases customers would use, and terms useful for website headings.\n` +
       `\nReturn JSON in this exact shape:\n` +
-      `{"keywords": ["keyword1", "keyword2", "keyword3", "keyword4", "keyword5", "keyword6", "keyword7", "keyword8"]}`,
+      `{"keywords": ["keyword1", "keyword2", ..., "keyword15"]}`,
   };
 }
 
@@ -119,10 +128,10 @@ function parseInsights(raw: string): Insights {
 
 export const AIService = {
 
-  async generateKeywords(business: Business): Promise<string[]> {
+  async generateKeywords(business: Business, reviewSnippets: string[] = []): Promise<string[]> {
     logger.debug('AIService: generating keywords', { id: business.id, name: business.name });
-    const prompt = buildKeywordsPrompt(business);
-    const response = await LLMService.complete('keywords', { ...prompt, temperature: 0.4, maxTokens: 256 });
+    const prompt = buildKeywordsPrompt(business, reviewSnippets);
+    const response = await LLMService.complete('keywords', { ...prompt, temperature: 0.4, maxTokens: 400 });
     const keywords = parseKeywords(response.content);
     logger.debug('AIService: keywords generated', { id: business.id, count: keywords.length });
     return keywords;
@@ -147,15 +156,15 @@ export const AIService = {
   },
 
   // Runs all three enrichments in sequence and persists results to the repository.
-  async analyzeAll(id: string): Promise<Business> {
+  async analyzeAll(id: string, reviewSnippets: string[] = []): Promise<Business> {
     const repo = getRepository();
     let business = await repo.findById(id);
     if (!business) throw new Error(`Business not found: ${id}`);
 
     logger.info('AIService: starting full analysis', { id, name: business.name });
 
-    // Step 1: keywords
-    const keywords = await AIService.generateKeywords(business);
+    // Step 1: keywords (enriched with review snippets if available)
+    const keywords = await AIService.generateKeywords(business, reviewSnippets);
     business = await repo.update(id, { keywords, updatedAt: new Date().toISOString() });
 
     // Step 2: summary (can use keywords in context)

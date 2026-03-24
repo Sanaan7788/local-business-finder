@@ -24,10 +24,13 @@ const SEL = {
   detailPhone:      'button[data-tooltip="Copy phone number"], button[aria-label*="phone" i], [data-item-id^="phone"]',
   // Website: data-item-id="authority" is stable
   detailWebsite:    'a[data-item-id="authority"]',
-  // Rating: try multiple known class names
-  detailRating:     '.F7nice, [aria-label*="stars"] + span, .ceNzKf',
-  // Review count
-  detailReviews:    '.UY7F9, [aria-label*="review" i] span, .RDApEe',
+  // Rating button — aria-label contains "X stars Y reviews", very stable
+  detailRatingBtn:  'button[aria-label*="stars"]',
+  // Fallback text selectors for rating/reviews
+  detailRating:     '.F7nice, .ceNzKf',
+  detailReviews:    '.UY7F9, .RDApEe',
+  // Reviews snippet text (shown below the star row)
+  detailReviewSnippets: '[data-review-id] .wiI7pd, .MyEned .wiI7pd',
 } as const;
 
 // ---------------------------------------------------------------------------
@@ -129,7 +132,7 @@ export class MapsExtractor {
     page: Page,
     partial: CardData,
     zipcode: string,
-  ): Promise<RawBusiness | null> {
+  ): Promise<DetailData | null> {
     try {
       // Name — use h1 in detail panel as the authoritative source
       const name = cleanText(
@@ -157,21 +160,15 @@ export class MapsExtractor {
       const websiteHref = await websiteEl.getAttribute('href').catch(() => null);
       const hasWebsite = Boolean(websiteHref);
 
-      // Rating — try text content of rating element
-      const ratingText = cleanText(
-        await page.locator(SEL.detailRating).first().textContent().catch(() => null)
-      );
-      const ratingMatch = ratingText.match(/^([\d.]+)/);
-      const rating = ratingMatch ? parseFloat(ratingMatch[1]) : partial.rating;
-
-      // Review count
-      const reviewsText = cleanText(
-        await page.locator(SEL.detailReviews).first().textContent().catch(() => null)
-      );
-      const reviewCount = reviewsText ? parseReviewCount(reviewsText) : null;
+      // Rating + review count — primary strategy: rating button aria-label
+      // Google keeps this stable: "4.3 stars  1,362 reviews"
+      const { rating, reviewCount } = await this.extractRatingAndReviews(page, partial.rating);
 
       // Use the canonical Maps URL from the current page if we navigated there directly
       const canonicalUrl = partial.googleMapsUrl ?? page.url();
+
+      // Grab visible review snippets for keyword enrichment
+      const reviewSnippets = await this.extractReviewSnippets(page);
 
       return {
         name,
@@ -185,10 +182,65 @@ export class MapsExtractor {
         rating,
         reviewCount,
         googleMapsUrl: canonicalUrl,
+        reviewSnippets,
       };
     } catch (err) {
       logger.warn('extractFromDetail failed', { name: partial.name, error: (err as Error).message });
       return null;
+    }
+  }
+
+  // Extract rating and review count — tries aria-label on rating button first,
+  // which Google keeps stable: "4.3 stars  1,362 reviews"
+  private async extractRatingAndReviews(
+    page: Page,
+    fallbackRating: number | null,
+  ): Promise<{ rating: number | null; reviewCount: number | null }> {
+    // Strategy 1: aria-label on the rating button (most stable)
+    const ratingBtn = page.locator(SEL.detailRatingBtn).first();
+    const ariaLabel = await ratingBtn.getAttribute('aria-label').catch(() => null);
+    if (ariaLabel) {
+      // e.g. "4.3 stars  1,362 reviews" or "4 stars 500 reviews"
+      const ratingMatch = ariaLabel.match(/([\d.]+)\s+stars?/i);
+      const reviewMatch = ariaLabel.match(/([\d,]+(?:\.\d+)?[Kk]?)\s+reviews?/i);
+      const rating = ratingMatch ? parseFloat(ratingMatch[1]) : null;
+      const reviewCount = reviewMatch ? parseReviewCount(reviewMatch[1]) : null;
+      if (rating !== null || reviewCount !== null) {
+        logger.debug('Rating from aria-label', { rating, reviewCount, ariaLabel });
+        return { rating: rating ?? fallbackRating, reviewCount };
+      }
+    }
+
+    // Strategy 2: text content of known rating element
+    const ratingText = cleanText(
+      await page.locator(SEL.detailRating).first().textContent().catch(() => null)
+    );
+    const ratingMatch = ratingText.match(/^([\d.]+)/);
+    const rating2 = ratingMatch ? parseFloat(ratingMatch[1]) : fallbackRating;
+
+    // Strategy 3: review count text node
+    const reviewsText = cleanText(
+      await page.locator(SEL.detailReviews).first().textContent().catch(() => null)
+    );
+    const reviewCount2 = reviewsText ? parseReviewCount(reviewsText) : null;
+
+    logger.debug('Rating from fallback selectors', { rating: rating2, reviewCount: reviewCount2 });
+    return { rating: rating2, reviewCount: reviewCount2 };
+  }
+
+  // Extract review snippet texts for keyword enrichment (up to maxSnippets)
+  async extractReviewSnippets(page: Page, maxSnippets = 5): Promise<string[]> {
+    try {
+      const els = page.locator(SEL.detailReviewSnippets);
+      const count = await els.count();
+      const snippets: string[] = [];
+      for (let i = 0; i < Math.min(count, maxSnippets); i++) {
+        const text = cleanText(await els.nth(i).textContent().catch(() => null));
+        if (text && text.length > 10) snippets.push(text);
+      }
+      return snippets;
+    } catch {
+      return [];
     }
   }
 
@@ -241,4 +293,9 @@ export interface CardData {
   addressSnippet: string;
   description: string | null;
   googleMapsUrl: string | null;
+}
+
+// Full data from the detail panel including review snippets for keyword enrichment
+export interface DetailData extends RawBusiness {
+  reviewSnippets: string[];
 }

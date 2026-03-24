@@ -2,7 +2,8 @@ import { v4 as uuidv4 } from 'uuid';
 import PQueue from 'p-queue';
 import { BrowserManager, randomDelay, withRetry } from './browser.manager';
 import { MapsNavigator } from './maps.navigator';
-import { MapsExtractor } from './maps.extractor';
+import { MapsExtractor, DetailData } from './maps.extractor';
+import { AIService } from '../ai/ai.service';
 import { ScraperState, INITIAL_STATE } from './scraper.types';
 import { ScrapeHistory } from './scrape.history';
 import { ScrapeHistoryPostgres } from './scrape.history.postgres';
@@ -247,7 +248,7 @@ export class ScraperService {
             return;
           }
 
-          const raw = await extractor.extractFromDetail(page, cardData, zipcode);
+          const raw: DetailData | null = await extractor.extractFromDetail(page, cardData, zipcode);
           if (!raw) {
             this.state.errors++;
             this.state.errorList.push({ name: cardData.name, message: 'Failed to extract detail data' });
@@ -275,12 +276,13 @@ export class ScraperService {
           // Score and build the full business record
           const { score, priority } = scoreLead(raw);
           const now = new Date().toISOString();
+          const { reviewSnippets, ...rawBusiness } = raw;
 
           const business: Business = {
             id: uuidv4(),
             createdAt: now,
             updatedAt: now,
-            ...raw,
+            ...rawBusiness,
             keywords: [],
             summary: null,
             insights: null,
@@ -297,6 +299,16 @@ export class ScraperService {
 
           await repo.create(business);
           dedup.register(business);
+
+          // Auto-generate keywords using review snippets captured from the page
+          try {
+            const keywords = await AIService.generateKeywords(business, reviewSnippets);
+            await repo.update(business.id, { keywords, updatedAt: new Date().toISOString() });
+            logger.debug('Keywords auto-generated at scrape time', { name: business.name, count: keywords.length });
+          } catch (kwErr) {
+            logger.warn('Keyword generation failed (non-fatal)', { name: business.name, error: (kwErr as Error).message });
+          }
+
           this.state.saved++;
           this.state.savedList.push({
             id: business.id,
