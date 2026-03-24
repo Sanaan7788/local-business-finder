@@ -15,14 +15,19 @@ const SEL = {
   cardStarAria:     'span[aria-label*="stars"]',
   cardRows:         '.W4Efsd',
 
-  // Detail panel (after clicking a card)
-  detailName:       'h1.DUwDvf',
-  detailCategory:   '.DkEaL',
+  // Detail panel — primary selectors (current Maps markup)
+  detailName:       'h1.DUwDvf, h1[class*="DUwDvf"]',
+  detailCategory:   '.DkEaL, [jsaction*="category"]',
+  // Address: data-item-id is stable across redesigns
   detailAddress:    '[data-item-id="address"]',
-  detailPhone:      'button[data-tooltip="Copy phone number"]',
+  // Phone: data-tooltip is stable; also try aria-label containing "phone"
+  detailPhone:      'button[data-tooltip="Copy phone number"], button[aria-label*="phone" i], [data-item-id^="phone"]',
+  // Website: data-item-id="authority" is stable
   detailWebsite:    'a[data-item-id="authority"]',
-  detailRating:     '.F7nice',
-  detailReviews:    '.UY7F9',
+  // Rating: try multiple known class names
+  detailRating:     '.F7nice, [aria-label*="stars"] + span, .ceNzKf',
+  // Review count
+  detailReviews:    '.UY7F9, [aria-label*="review" i] span, .RDApEe',
 } as const;
 
 // ---------------------------------------------------------------------------
@@ -136,38 +141,37 @@ export class MapsExtractor {
         await page.locator(SEL.detailCategory).first().textContent().catch(() => partial.category)
       ) || partial.category;
 
-      // Address
+      // Address — try aria-label first ("Address: 123 Main St"), then text content
       const addressEl = page.locator(SEL.detailAddress).first();
-      const address = cleanText(
+      const addressRaw = cleanText(
         await addressEl.getAttribute('aria-label').catch(() => null) ??
         await addressEl.textContent().catch(() => null)
-      ).replace(/^Address:\s*/i, '') || partial.addressSnippet;
+      ).replace(/^Address:\s*/i, '');
+      const address = addressRaw || partial.addressSnippet;
 
-      // Phone
-      const phoneEl = page.locator(SEL.detailPhone).first();
-      const phoneRaw = cleanText(
-        await phoneEl.getAttribute('aria-label').catch(() => null) ??
-        await phoneEl.textContent().catch(() => null)
-      ).replace(/^Phone:\s*/i, '');
-      const phone = parsePhone(phoneRaw);
+      // Phone — try aria-label ("Phone: (123) 456-7890"), then text content
+      const phone = await this.extractPhone(page);
 
       // Website
       const websiteEl = page.locator(SEL.detailWebsite).first();
       const websiteHref = await websiteEl.getAttribute('href').catch(() => null);
       const hasWebsite = Boolean(websiteHref);
 
-      // Rating + review count from detail panel
+      // Rating — try text content of rating element
       const ratingText = cleanText(
         await page.locator(SEL.detailRating).first().textContent().catch(() => null)
       );
-      // .F7nice shows "4.3(1,362)" — split on first non-digit/dot
       const ratingMatch = ratingText.match(/^([\d.]+)/);
       const rating = ratingMatch ? parseFloat(ratingMatch[1]) : partial.rating;
 
+      // Review count
       const reviewsText = cleanText(
         await page.locator(SEL.detailReviews).first().textContent().catch(() => null)
       );
       const reviewCount = reviewsText ? parseReviewCount(reviewsText) : null;
+
+      // Use the canonical Maps URL from the current page if we navigated there directly
+      const canonicalUrl = partial.googleMapsUrl ?? page.url();
 
       return {
         name,
@@ -180,12 +184,46 @@ export class MapsExtractor {
         websiteUrl: websiteHref ?? null,
         rating,
         reviewCount,
-        googleMapsUrl: partial.googleMapsUrl,
+        googleMapsUrl: canonicalUrl,
       };
     } catch (err) {
       logger.warn('extractFromDetail failed', { name: partial.name, error: (err as Error).message });
       return null;
     }
+  }
+
+  // Try multiple strategies to find the phone number
+  private async extractPhone(page: Page): Promise<string | null> {
+    // Strategy 1: button with "Copy phone number" tooltip
+    const btn = page.locator('button[data-tooltip="Copy phone number"]').first();
+    const tooltipAria = await btn.getAttribute('aria-label').catch(() => null);
+    if (tooltipAria) {
+      const p = parsePhone(tooltipAria.replace(/^Phone:\s*/i, ''));
+      if (p) return p;
+    }
+    const btnText = await btn.textContent().catch(() => null);
+    if (btnText) {
+      const p = parsePhone(btnText);
+      if (p) return p;
+    }
+
+    // Strategy 2: any element with aria-label containing "phone"
+    const phoneEl = page.locator('[aria-label*="phone" i]').first();
+    const phoneAria = await phoneEl.getAttribute('aria-label').catch(() => null);
+    if (phoneAria) {
+      const p = parsePhone(phoneAria.replace(/^Phone:\s*/i, ''));
+      if (p) return p;
+    }
+
+    // Strategy 3: data-item-id starting with "phone"
+    const phoneItem = page.locator('[data-item-id^="phone"]').first();
+    const phoneItemText = await phoneItem.textContent().catch(() => null);
+    if (phoneItemText) {
+      const p = parsePhone(phoneItemText);
+      if (p) return p;
+    }
+
+    return null;
   }
 
   // Get the Google Maps place URL from the card's anchor tag

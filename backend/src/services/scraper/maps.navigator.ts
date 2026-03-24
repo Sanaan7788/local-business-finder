@@ -15,6 +15,10 @@ const SELECTORS = {
   captcha: 'iframe[src*="recaptcha"], #captcha, .captcha',
 };
 
+// Selector that confirms the detail panel has loaded.
+// Try h1.DUwDvf first (current Maps), fall back to any h1 inside the panel.
+const DETAIL_LOADED_SELECTOR = 'h1.DUwDvf, h1[class*="DUwDvf"], [role="main"] h1';
+
 // ---------------------------------------------------------------------------
 // MapsNavigator
 //
@@ -120,48 +124,38 @@ export class MapsNavigator {
     return finalCount;
   }
 
-  // Click a specific listing card by index to open its detail panel.
-  // Returns true if the detail panel opened successfully.
-  async openListing(page: Page, index: number): Promise<boolean> {
-    const cards = page.locator(SELECTORS.listingCard);
-    const count = await cards.count();
-
-    if (index >= count) {
-      logger.warn('Listing index out of range', { index, count });
-      return false;
-    }
-
+  // Navigate directly to a listing's detail page by URL.
+  // This is far more reliable than click-then-back — no stale DOM, no wrong-card issues.
+  // Returns true if the detail panel loaded.
+  async openListingByUrl(page: Page, url: string): Promise<boolean> {
     try {
-      await cards.nth(index).click();
+      await page.goto(url, { waitUntil: 'domcontentloaded' });
       await randomDelay(1500, 2500);
-      // Wait for detail panel h1 to confirm it opened
-      await page.waitForSelector('h1.DUwDvf', { timeout: 8000 });
+      // Wait for the detail panel to confirm it loaded — try multiple selectors
+      await page.waitForSelector(DETAIL_LOADED_SELECTOR, { timeout: 12_000 });
       return true;
     } catch (err) {
-      logger.warn('Failed to click listing', { index, error: (err as Error).message });
+      logger.warn('Failed to open listing by URL', { url, error: (err as Error).message });
       return false;
     }
   }
 
-  // Click a listing card by business name (resilient to DOM re-renders after goBack).
+  // Fallback: click a listing by name when no URL is available.
   async openListingByName(page: Page, name: string): Promise<boolean> {
     try {
-      const card = page.locator(SELECTORS.listingCard)
-        .filter({ hasText: name })
-        .first();
+      const card = page.locator(SELECTORS.listingCard).filter({ hasText: name }).first();
       await card.scrollIntoViewIfNeeded();
       await card.click();
       await randomDelay(1500, 2500);
-      await page.waitForSelector('h1.DUwDvf', { timeout: 8000 });
+      await page.waitForSelector(DETAIL_LOADED_SELECTOR, { timeout: 12_000 });
       return true;
     } catch (err) {
-      logger.warn('Failed to open listing by name', { name, error: (err as Error).message });
+      logger.warn('Failed to open listing by name (fallback)', { name, error: (err as Error).message });
       return false;
     }
   }
 
-  // Return to search results by re-navigating to the search URL.
-  // goBack() doesn't work — Maps detail opens without pushState history.
+  // Return to search results page.
   async goBackToResults(page: Page, zipcode: string, category: string): Promise<void> {
     const url = MapsNavigator.buildSearchUrl(zipcode, category);
     await page.goto(url, { waitUntil: 'domcontentloaded' });

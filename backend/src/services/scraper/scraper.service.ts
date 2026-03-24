@@ -223,12 +223,23 @@ export class ScraperService {
       }
       logger.info('Card data pre-collected', { count: cardDataList.length });
 
-      // Process each card
+      // Process each card — navigate directly to its URL, no clicking needed
       for (const cardData of cardDataList) {
         if (this.stopRequested) break;
 
         await withRetry(async () => {
-          const opened = await nav.openListingByName(page, cardData.name);
+          // Prefer direct URL navigation (reliable); fall back to search-results click
+          let opened = false;
+          if (cardData.googleMapsUrl) {
+            opened = await nav.openListingByUrl(page, cardData.googleMapsUrl);
+          }
+
+          if (!opened) {
+            // Fallback: go back to results and try clicking by name
+            await nav.goBackToResults(page, zipcode, category);
+            opened = await nav.openListingByName(page, cardData.name);
+          }
+
           if (!opened) {
             this.state.errors++;
             this.state.errorList.push({ name: cardData.name, message: 'Failed to open listing panel' });
@@ -248,7 +259,6 @@ export class ScraperService {
           // Deduplication check
           const dupId = dedup.isDuplicate(raw);
           if (dupId) {
-            // Determine which index matched for the skip reason
             const normalizedPhone = raw.phone?.replace(/\D/g, '') ?? '';
             const reason = (normalizedPhone && dedup.hasPhone(normalizedPhone)) ? 'phone' : 'name+address';
             logger.debug('Skipping duplicate', { name: raw.name, dupId });
@@ -259,7 +269,6 @@ export class ScraperService {
               reason,
               existingId: dupId,
             });
-            await nav.goBackToResults(page, zipcode, category);
             return;
           }
 
@@ -300,8 +309,6 @@ export class ScraperService {
           });
 
           logger.info('Business saved', { name: business.name, priority, score });
-
-          await nav.goBackToResults(page, zipcode, category);
           await randomDelay();
         });
       }

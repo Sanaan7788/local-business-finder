@@ -8,7 +8,8 @@ import { logger } from '../../utils/logger';
 // ---------------------------------------------------------------------------
 
 export const SCRAPER_CONFIG = {
-  headless: true,               // Set false to watch the browser while debugging
+  // Set SCRAPER_DEBUG=true in .env to watch the browser while debugging
+  headless: process.env.SCRAPER_DEBUG !== 'true',
   minDelayMs: 2000,             // Min pause between page actions
   maxDelayMs: 5000,             // Max pause (randomized within range)
   navigationTimeoutMs: 30_000,  // Max time to wait for page load
