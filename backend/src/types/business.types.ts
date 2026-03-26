@@ -32,6 +32,14 @@ export const ContentBriefSchema = z.object({
   assumptions: z.string(),
 });
 
+// Categorised keywords — each group serves a different purpose in website copy
+export const KeywordsSchema = z.object({
+  serviceKeywords:    z.array(z.string()), // what they do: "gel nails", "acrylic extensions"
+  locationKeywords:   z.array(z.string()), // where they are: "nail salon Houston", "Westheimer Road nails"
+  reputationKeywords: z.array(z.string()), // trust signals from reviews: "highly rated", "walk-ins welcome"
+  searchPhrases:      z.array(z.string()), // full phrases customers search: "best nail salon near me"
+});
+
 export const OutreachSchema = z.object({
   email: z
     .object({
@@ -77,8 +85,12 @@ export const BusinessSchema = z.object({
   reviewCount: z.number().int().min(0).nullable(),
   googleMapsUrl: z.string().url().nullable(),
 
+  // Scraper extras — stored so AI can use them on any future regeneration
+  reviewSnippets: z.array(z.string()),
+
   // AI outputs — populated by LLM service
   keywords: z.array(z.string()),
+  keywordCategories: KeywordsSchema.nullable(),
   summary: z.string().nullable(),
   insights: InsightsSchema.nullable(),
   contentBrief: ContentBriefSchema.nullable(),
@@ -139,3 +151,4 @@ export type Priority = z.infer<typeof PrioritySchema>;
 export type Insights = z.infer<typeof InsightsSchema>;
 export type Outreach = z.infer<typeof OutreachSchema>;
 export type ContentBrief = z.infer<typeof ContentBriefSchema>;
+export type Keywords = z.infer<typeof KeywordsSchema>;

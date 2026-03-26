@@ -61,9 +61,9 @@ router.post('/keywords', async (req: Request, res: Response, next: NextFunction)
       res.status(404).json({ success: false, error: `Business not found: ${id}` });
       return;
     }
-    const keywords = await AIService.generateKeywords(business);
-    const updated = await repo.update(id, { keywords, updatedAt: new Date().toISOString() });
-    res.json({ success: true, data: { keywords: updated.keywords } });
+    const { flat: keywords, categories: keywordCategories } = await AIService.generateKeywords(business);
+    const updated = await repo.update(id, { keywords, keywordCategories, updatedAt: new Date().toISOString() });
+    res.json({ success: true, data: { keywords: updated.keywords, keywordCategories: updated.keywordCategories } });
   } catch (err) {
     next(err);
   }

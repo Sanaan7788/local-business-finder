@@ -163,7 +163,9 @@ export class ScraperService {
         rating: null,
         reviewCount: null,
         googleMapsUrl: null,
+        reviewSnippets: [],
         keywords: [],
+        keywordCategories: null,
         summary: null,
         insights: null,
         contentBrief: null,
@@ -284,7 +286,9 @@ export class ScraperService {
             createdAt: now,
             updatedAt: now,
             ...rawBusiness,
+            reviewSnippets,  // stored so AI can use them on future regenerations
             keywords: [],
+            keywordCategories: null,
             summary: null,
             insights: null,
             contentBrief: null,
@@ -302,10 +306,10 @@ export class ScraperService {
           await repo.create(business);
           dedup.register(business);
 
-          // Auto-generate keywords using review snippets captured from the page
+          // Auto-generate keywords at scrape time — reviewSnippets already stored on business record
           try {
-            const keywords = await AIService.generateKeywords(business, reviewSnippets);
-            await repo.update(business.id, { keywords, updatedAt: new Date().toISOString() });
+            const { flat: keywords, categories: keywordCategories } = await AIService.generateKeywords(business);
+            await repo.update(business.id, { keywords, keywordCategories, updatedAt: new Date().toISOString() });
             logger.debug('Keywords auto-generated at scrape time', { name: business.name, count: keywords.length });
           } catch (kwErr) {
             logger.warn('Keyword generation failed (non-fatal)', { name: business.name, error: (kwErr as Error).message });

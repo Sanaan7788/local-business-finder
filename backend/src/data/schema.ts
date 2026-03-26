@@ -31,11 +31,15 @@ export const businesses = pgTable('businesses', {
   reviewCount:   integer('review_count'),
   googleMapsUrl: text('google_maps_url'),
 
+  // Scraper extras
+  reviewSnippets: jsonb('review_snippets').$type<string[]>().notNull().default([]),
+
   // AI outputs
-  keywords:     jsonb('keywords').$type<string[]>().notNull().default([]),
-  summary:      text('summary'),
-  insights:     jsonb('insights'),
-  contentBrief: jsonb('content_brief'),
+  keywords:          jsonb('keywords').$type<string[]>().notNull().default([]),
+  keywordCategories: jsonb('keyword_categories'),
+  summary:           text('summary'),
+  insights:          jsonb('insights'),
+  contentBrief:      jsonb('content_brief'),
 
   // Generated content
   generatedWebsiteCode: text('generated_website_code'),
