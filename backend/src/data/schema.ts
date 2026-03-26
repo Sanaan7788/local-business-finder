@@ -32,9 +32,10 @@ export const businesses = pgTable('businesses', {
   googleMapsUrl: text('google_maps_url'),
 
   // AI outputs
-  keywords: jsonb('keywords').$type<string[]>().notNull().default([]),
-  summary:  text('summary'),
-  insights: jsonb('insights'),
+  keywords:     jsonb('keywords').$type<string[]>().notNull().default([]),
+  summary:      text('summary'),
+  insights:     jsonb('insights'),
+  contentBrief: jsonb('content_brief'),
 
   // Generated content
   generatedWebsiteCode: text('generated_website_code'),

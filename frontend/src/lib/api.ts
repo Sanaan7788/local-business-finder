@@ -79,6 +79,9 @@ export const businessApi = {
   analyze: (id: string) =>
     api.post<any>(`/businesses/${id}/analyze`).then(unwrap) as Promise<Business>,
 
+  generateContentBrief: (id: string) =>
+    api.post<any>(`/businesses/${id}/content-brief`).then(unwrap) as Promise<{ contentBrief: { confirmedFacts: string; assumptions: string } }>,
+
   generateWebsite: (id: string) =>
     api.post<any>(`/businesses/${id}/website`).then(unwrap) as Promise<{ id: string; htmlLength: number }>,
 

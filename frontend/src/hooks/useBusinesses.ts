@@ -114,6 +114,16 @@ export function useAnalyze() {
   })
 }
 
+export function useGenerateContentBrief() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: (id: string) => businessApi.generateContentBrief(id),
+    onSuccess: (_data, id) => {
+      qc.invalidateQueries({ queryKey: keys.business(id) })
+    },
+  })
+}
+
 export function useGenerateWebsite() {
   const qc = useQueryClient()
   return useMutation({

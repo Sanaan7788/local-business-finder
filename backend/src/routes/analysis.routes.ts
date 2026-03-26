@@ -5,9 +5,10 @@ import { getRepository } from '../data/repository.factory';
 // ---------------------------------------------------------------------------
 // Analysis Routes — /api/businesses/:id/...
 //
-// POST /api/businesses/:id/analyze   — run all three AI tasks in sequence
-// GET  /api/businesses/:id/insights  — return stored insights
-// POST /api/businesses/:id/keywords  — regenerate keywords only
+// POST /api/businesses/:id/analyze        — run all AI tasks in sequence
+// GET  /api/businesses/:id/insights       — return stored insights
+// POST /api/businesses/:id/keywords       — regenerate keywords only
+// POST /api/businesses/:id/content-brief  — regenerate content brief only
 // ---------------------------------------------------------------------------
 
 const router = Router({ mergeParams: true });
@@ -63,6 +64,25 @@ router.post('/keywords', async (req: Request, res: Response, next: NextFunction)
     const keywords = await AIService.generateKeywords(business);
     const updated = await repo.update(id, { keywords, updatedAt: new Date().toISOString() });
     res.json({ success: true, data: { keywords: updated.keywords } });
+  } catch (err) {
+    next(err);
+  }
+});
+
+// POST /api/businesses/:id/content-brief
+// Regenerates content brief only.
+router.post('/content-brief', async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { id } = req.params;
+    const repo = getRepository();
+    const business = await repo.findById(id);
+    if (!business) {
+      res.status(404).json({ success: false, error: `Business not found: ${id}` });
+      return;
+    }
+    const contentBrief = await AIService.generateContentBrief(business);
+    const updated = await repo.update(id, { contentBrief, updatedAt: new Date().toISOString() });
+    res.json({ success: true, data: { contentBrief: updated.contentBrief } });
   } catch (err) {
     next(err);
   }

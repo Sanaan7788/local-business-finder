@@ -25,6 +25,13 @@ export const InsightsSchema = z.object({
   opportunities: z.array(z.string()),
 });
 
+export const ContentBriefSchema = z.object({
+  // Everything we actually confirmed from scraping / reviews
+  confirmedFacts: z.string(),
+  // What we reasonably infer for this type of business (clearly labelled as assumptions)
+  assumptions: z.string(),
+});
+
 export const OutreachSchema = z.object({
   email: z
     .object({
@@ -74,6 +81,7 @@ export const BusinessSchema = z.object({
   keywords: z.array(z.string()),
   summary: z.string().nullable(),
   insights: InsightsSchema.nullable(),
+  contentBrief: ContentBriefSchema.nullable(),
 
   // Generated content — populated by website generator + outreach service
   generatedWebsiteCode: z.string().nullable(),
@@ -130,3 +138,4 @@ export type LeadStatus = z.infer<typeof LeadStatusSchema>;
 export type Priority = z.infer<typeof PrioritySchema>;
 export type Insights = z.infer<typeof InsightsSchema>;
 export type Outreach = z.infer<typeof OutreachSchema>;
+export type ContentBrief = z.infer<typeof ContentBriefSchema>;

@@ -41,22 +41,26 @@ export function slugify(name: string, zipcode: string): string {
 // ---------------------------------------------------------------------------
 
 function buildWebsitePrompt(business: Business): { systemPrompt: string; userPrompt: string } {
+  const phoneLine = business.phone ? `Phone: ${business.phone}` : '';
+  const ratingLine = business.rating !== null ? `Google rating: ${business.rating} stars` : '';
+  const reviewLine = business.reviewCount !== null ? `Review count: ${business.reviewCount} reviews` : '';
+  const descLine = business.description ? `Description: ${business.description}` : '';
   const keywordsLine = business.keywords.length > 0
-    ? `SEO keywords: ${business.keywords.join(', ')}\n`
+    ? `SEO keywords: ${business.keywords.join(', ')}`
     : '';
+  const summaryLine = business.summary ? `Business summary: ${business.summary}` : '';
 
-  const summaryLine = business.summary
-    ? `Business summary: ${business.summary}\n`
+  // Content brief provides the richest signal — use it as a dedicated section when available
+  const contentBriefSection = business.contentBrief
+    ? [
+        '',
+        '=== CONFIRMED FACTS ABOUT THIS BUSINESS ===',
+        business.contentBrief.confirmedFacts,
+        '',
+        '=== REASONABLE ASSUMPTIONS (not confirmed, but typical for this type of business) ===',
+        business.contentBrief.assumptions,
+      ].join('\n')
     : '';
-
-  const insightsLine = business.insights
-    ? `Key opportunities: ${business.insights.opportunities.slice(0, 3).join(', ')}\n`
-    : '';
-
-  const phoneLine = business.phone ? `Phone: ${business.phone}\n` : '';
-  const ratingLine = business.rating !== null ? `Google rating: ${business.rating} stars\n` : '';
-  const reviewLine = business.reviewCount !== null ? `Review count: ${business.reviewCount} reviews\n` : '';
-  const descLine = business.description ? `Description: ${business.description}\n` : '';
 
   return {
     systemPrompt: [
@@ -68,6 +72,7 @@ function buildWebsitePrompt(business: Business): { systemPrompt: string; userPro
       '- Include all meta tags (charset, viewport, description, keywords)',
       '- Sections: hero, about, services, contact',
       '- Use real business data provided — no placeholder text like [Business Name]',
+      '- If a Content Brief is provided, use the confirmed facts for real page content and assumptions only to fill gaps',
       '- Hero section must prominently show the business name and a clear tagline',
       '- Contact section must show the real phone number and address',
       '- Clean, professional design with good color contrast',
@@ -80,13 +85,13 @@ function buildWebsitePrompt(business: Business): { systemPrompt: string; userPro
       `Business name: ${business.name}`,
       `Category: ${business.category}`,
       `Address: ${business.address}`,
-      phoneLine.trim(),
-      descLine.trim(),
-      ratingLine.trim(),
-      reviewLine.trim(),
-      keywordsLine.trim(),
-      summaryLine.trim(),
-      insightsLine.trim(),
+      phoneLine,
+      descLine,
+      ratingLine,
+      reviewLine,
+      keywordsLine,
+      summaryLine,
+      contentBriefSection,
       '',
       'Generate the complete HTML website now.',
     ].filter(Boolean).join('\n'),

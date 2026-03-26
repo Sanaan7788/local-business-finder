@@ -53,6 +53,7 @@ function rowToBusiness(row: typeof businesses.$inferSelect): Business | null {
     keywords:             (row.keywords as string[]) ?? [],
     summary:              row.summary ?? null,
     insights:             (row.insights as any) ?? null,
+    contentBrief:         (row.contentBrief as any) ?? null,
     generatedWebsiteCode: row.generatedWebsiteCode ?? null,
     outreach:             (row.outreach as any) ?? null,
     githubUrl:            row.githubUrl ?? null,
@@ -96,6 +97,7 @@ function businessToInsert(b: Business): typeof businesses.$inferInsert {
     keywords:             b.keywords,
     summary:              b.summary,
     insights:             b.insights as any,
+    contentBrief:         b.contentBrief as any,
     generatedWebsiteCode: b.generatedWebsiteCode,
     outreach:             b.outreach as any,
     githubUrl:            b.githubUrl,
@@ -199,9 +201,10 @@ export class PostgresBusinessRepository implements IBusinessRepository {
     if (payload.rating !== undefined)      updateData.rating = payload.rating;
     if (payload.reviewCount !== undefined) updateData.reviewCount = payload.reviewCount;
     if (payload.googleMapsUrl !== undefined) updateData.googleMapsUrl = payload.googleMapsUrl;
-    if (payload.keywords !== undefined)    updateData.keywords = payload.keywords;
-    if (payload.summary !== undefined)     updateData.summary = payload.summary;
-    if (payload.insights !== undefined)    updateData.insights = payload.insights as any;
+    if (payload.keywords !== undefined)      updateData.keywords = payload.keywords;
+    if (payload.summary !== undefined)       updateData.summary = payload.summary;
+    if (payload.insights !== undefined)      updateData.insights = payload.insights as any;
+    if (payload.contentBrief !== undefined)  updateData.contentBrief = payload.contentBrief as any;
     if (payload.generatedWebsiteCode !== undefined) updateData.generatedWebsiteCode = payload.generatedWebsiteCode;
     if (payload.outreach !== undefined)    updateData.outreach = payload.outreach as any;
     if (payload.githubUrl !== undefined)   updateData.githubUrl = payload.githubUrl;

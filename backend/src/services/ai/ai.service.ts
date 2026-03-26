@@ -1,5 +1,5 @@
 import { LLMService } from '../llm/llm.service';
-import { Business, Insights } from '../../types/business.types';
+import { Business, Insights, ContentBrief } from '../../types/business.types';
 import { getRepository } from '../../data/repository.factory';
 import { logger } from '../../utils/logger';
 
@@ -123,6 +123,63 @@ function parseInsights(raw: string): Insights {
 }
 
 // ---------------------------------------------------------------------------
+// Content Brief
+// ---------------------------------------------------------------------------
+
+function buildContentBriefPrompt(
+  business: Business,
+  reviewSnippets: string[] = [],
+): { systemPrompt: string; userPrompt: string } {
+  return {
+    systemPrompt:
+      'You are a content strategist building a detailed content brief for a local business website. ' +
+      'Your job is to produce two sections: ' +
+      '(1) confirmedFacts — everything we actually know from the data provided; ' +
+      '(2) assumptions — what you can reasonably infer for a business of this type/category ' +
+      'that we could NOT confirm from the data. Keep the two sections strictly separate. ' +
+      'Write in rich, structured prose (use line breaks and headings within each section). ' +
+      'Always respond with valid JSON only. No explanation, no markdown, no code fences.',
+    userPrompt:
+      `Build a content brief for this local business that will be used to generate their website.\\n\\n` +
+      `Business name: ${business.name}\\n` +
+      `Category: ${business.category}\\n` +
+      `Address: ${business.address}\\n` +
+      `Location: ${business.zipcode}\\n` +
+      (business.phone ? `Phone: ${business.phone}\\n` : '') +
+      (business.rating !== null ? `Google rating: ${business.rating} stars\\n` : '') +
+      (business.reviewCount !== null ? `Total reviews: ${business.reviewCount}\\n` : '') +
+      (business.description ? `Google description: ${business.description}\\n` : '') +
+      (business.keywords.length > 0 ? `Keywords: ${business.keywords.join(', ')}\\n` : '') +
+      (business.summary ? `Summary: ${business.summary}\\n` : '') +
+      (reviewSnippets.length > 0
+        ? `\\nCustomer review excerpts:\\n${reviewSnippets.map((s, i) => `${i + 1}. "${s}"`).join('\\n')}\\n`
+        : '') +
+      `\\nReturn JSON in this exact shape:\\n` +
+      `{\\n` +
+      `  "confirmedFacts": "Detailed prose covering: what this business sells/offers (products, services, categories), ` +
+      `what customers mention in reviews (what's famous, what people love, recurring praise or complaints), ` +
+      `rating context, years/history if mentioned, any notable specialties found in the data. ` +
+      `Only include what you can confirm from the data above.",\\n` +
+      `  "assumptions": "Detailed prose covering: typical services/products a ${business.category} business would offer that aren't confirmed above, ` +
+      `likely price range, probable target customers, standard operating hours, common amenities, ` +
+      `seasonal variations, and anything else a website visitor would want to know. ` +
+      `Clearly frame these as reasonable inferences, not confirmed facts."\\n` +
+      `}`,
+  };
+}
+
+function parseContentBrief(raw: string): ContentBrief {
+  const text = raw.trim().replace(/^```json\s*/i, '').replace(/```\s*$/, '').trim();
+  const parsed = JSON.parse(text);
+  if (typeof parsed.confirmedFacts !== 'string') throw new Error('confirmedFacts missing');
+  if (typeof parsed.assumptions !== 'string') throw new Error('assumptions missing');
+  return {
+    confirmedFacts: parsed.confirmedFacts.trim(),
+    assumptions: parsed.assumptions.trim(),
+  };
+}
+
+// ---------------------------------------------------------------------------
 // Public service methods
 // ---------------------------------------------------------------------------
 
@@ -155,7 +212,16 @@ export const AIService = {
     return insights;
   },
 
-  // Runs all three enrichments in sequence and persists results to the repository.
+  async generateContentBrief(business: Business, reviewSnippets: string[] = []): Promise<ContentBrief> {
+    logger.debug('AIService: generating content brief', { id: business.id, name: business.name });
+    const prompt = buildContentBriefPrompt(business, reviewSnippets);
+    const response = await LLMService.complete('contentBrief', { ...prompt, temperature: 0.5, maxTokens: 1024 });
+    const contentBrief = parseContentBrief(response.content);
+    logger.debug('AIService: content brief generated', { id: business.id });
+    return contentBrief;
+  },
+
+  // Runs all enrichments in sequence and persists results to the repository.
   async analyzeAll(id: string, reviewSnippets: string[] = []): Promise<Business> {
     const repo = getRepository();
     let business = await repo.findById(id);
@@ -174,6 +240,10 @@ export const AIService = {
     // Step 3: insights (can use keywords + summary in context)
     const insights = await AIService.generateInsights(business);
     business = await repo.update(id, { insights, updatedAt: new Date().toISOString() });
+
+    // Step 4: content brief (uses all prior enrichments + review snippets)
+    const contentBrief = await AIService.generateContentBrief(business, reviewSnippets);
+    business = await repo.update(id, { contentBrief, updatedAt: new Date().toISOString() });
 
     logger.info('AIService: full analysis complete', { id, name: business.name });
     return business;

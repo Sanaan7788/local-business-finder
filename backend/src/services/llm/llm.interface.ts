@@ -37,5 +37,6 @@ export type LLMTask =
   | 'keywords'
   | 'summary'
   | 'insights'
+  | 'contentBrief'
   | 'websiteGeneration'
   | 'outreach';

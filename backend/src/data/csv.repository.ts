@@ -45,6 +45,7 @@ const COLUMNS: (keyof Business)[] = [
   'keywords',
   'summary',
   'insights',
+  'contentBrief',
   'generatedWebsiteCode',
   'outreach',
   'githubUrl',

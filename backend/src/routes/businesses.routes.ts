@@ -122,6 +122,7 @@ router.post(
         keywords: [],
         summary: null,
         insights: null,
+        contentBrief: null,
         generatedWebsiteCode: null,
         outreach: null,
         githubUrl: null,
