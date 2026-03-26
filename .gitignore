@@ -24,5 +24,6 @@ Thumbs.db
 .vscode/settings.json
 .idea/
 
-# Data (CSV storage - keep structure, not data)
+# Data (CSV storage and scrape history - keep structure, not data)
 backend/src/data/storage/*.csv
+backend/src/data/storage/scrape-history.json

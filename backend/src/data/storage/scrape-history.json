@@ -1,0 +1,1433 @@
+[
+  {
+    "id": "873c3391-8024-4e07-81d2-b9f5fe1bd89c",
+    "zipcode": "77063",
+    "category": "fast food",
+    "startedAt": "2026-03-26T04:52:05.941Z",
+    "finishedAt": "2026-03-26T05:25:42.749Z",
+    "found": 20,
+    "saved": 20,
+    "skipped": 0,
+    "errors": 0,
+    "savedList": [
+      {
+        "id": "8ea6dbe1-1da8-4e8e-83f8-fb0fe0189b57",
+        "name": "Raising Cane's Chicken Fingers",
+        "address": "7531 Westheimer Rd, Houston, TX 77063",
+        "phone": "(713) 780-3475",
+        "priority": "low",
+        "priorityScore": 0,
+        "website": true
+      },
+      {
+        "id": "da66b455-2e3b-4503-8139-a64aab346191",
+        "name": "Bunslut",
+        "address": "9099 Westheimer Rd Suite K, Houston, TX 77063",
+        "phone": "(346) 692-3331",
+        "priority": "low",
+        "priorityScore": 0,
+        "website": true
+      },
+      {
+        "id": "7657b99e-7a73-493f-a5b5-837528cbd4ff",
+        "name": "Jack in the Box",
+        "address": "9645 Westheimer Rd, Houston, TX 77063",
+        "phone": "(346) 327-2101",
+        "priority": "low",
+        "priorityScore": 0,
+        "website": true
+      },
+      {
+        "id": "65553266-8382-4ef1-bdb1-233febfffade",
+        "name": "Chicken Factory - Houston",
+        "address": "8383 Westheimer Rd APT 114, Houston, TX 77063",
+        "phone": "(832) 767-0245",
+        "priority": "medium",
+        "priorityScore": 30,
+        "website": true
+      },
+      {
+        "id": "997d3ad5-20aa-490f-86b4-dd2575f23701",
+        "name": "Whataburger",
+        "address": "6520 Southwest Fwy, Houston, TX 77074",
+        "phone": "(713) 953-9644",
+        "priority": "low",
+        "priorityScore": 0,
+        "website": true
+      },
+      {
+        "id": "9e9c0d9c-6339-4d1e-bbfb-3a5e468b989a",
+        "name": "Popeyes Louisiana Kitchen",
+        "address": "9287 Richmond Ave, Houston, TX 77063",
+        "phone": "(713) 784-2080",
+        "priority": "low",
+        "priorityScore": 0,
+        "website": true
+      },
+      {
+        "id": "6da6caa3-e4a6-4580-b08b-0c3aedba0422",
+        "name": "Burger King",
+        "address": "9519 Westheimer Rd, Houston, TX 77063",
+        "phone": "(713) 784-2904",
+        "priority": "low",
+        "priorityScore": 0,
+        "website": true
+      },
+      {
+        "id": "f8eb5aeb-8e86-422f-97c2-37b39f471f65",
+        "name": "McDonald's",
+        "address": "3941 Fondren Rd, Houston, TX 77063",
+        "phone": "(713) 781-5835",
+        "priority": "low",
+        "priorityScore": 0,
+        "website": true
+      },
+      {
+        "id": "02a940d6-1801-4216-af45-e9ef6407d5c0",
+        "name": "Taco Bell",
+        "address": "9601 Westheimer Rd, Houston, TX 77063",
+        "phone": "(713) 782-1508",
+        "priority": "low",
+        "priorityScore": 0,
+        "website": true
+      },
+      {
+        "id": "a9492071-e459-4a42-bbd9-4bc949b01f25",
+        "name": "Whataburger",
+        "address": "6405 San Felipe St, Houston, TX 77057",
+        "phone": "(713) 781-4040",
+        "priority": "low",
+        "priorityScore": 0,
+        "website": true
+      },
+      {
+        "id": "b304891a-8c39-413f-863a-9cdbff0da8c1",
+        "name": "Taco Bell",
+        "address": "7506 Westheimer Rd, Houston, TX 77063",
+        "phone": "(713) 789-1972",
+        "priority": "low",
+        "priorityScore": 0,
+        "website": true
+      },
+      {
+        "id": "6a5ae07d-78ae-4ec3-81c4-ac737a416e5d",
+        "name": "241 Delices (Food Truck)",
+        "address": "9545 Richmond Ave, Houston, TX 77063",
+        "phone": "(832) 682-8087",
+        "priority": "medium",
+        "priorityScore": 50,
+        "website": false
+      },
+      {
+        "id": "130b24e6-eb55-4407-95b0-f386dca9da70",
+        "name": "Al Shami",
+        "address": "7919 Westheimer Rd, Houston, TX 77063",
+        "phone": "(832) 858-7372",
+        "priority": "low",
+        "priorityScore": 10,
+        "website": true
+      },
+      {
+        "id": "a6d9a961-9806-4a56-bae0-ae08d5b79c69",
+        "name": "The Burger Den",
+        "address": "8401 Westheimer Rd #190, Houston, TX 77063",
+        "phone": "(346) 613-2180",
+        "priority": "low",
+        "priorityScore": 20,
+        "website": true
+      },
+      {
+        "id": "b09f5eb2-7791-45c2-9814-daa61788268e",
+        "name": "Chick-fil-A",
+        "address": "8609 Westheimer Rd, Houston, TX 77063",
+        "phone": "(713) 278-2300",
+        "priority": "low",
+        "priorityScore": 0,
+        "website": true
+      },
+      {
+        "id": "677164e9-5d8c-43ed-904b-4d82bb9ce3e6",
+        "name": "Whataburger",
+        "address": "2720 W Sam Houston Pkwy S, Houston, TX 77042",
+        "phone": "(713) 782-6941",
+        "priority": "low",
+        "priorityScore": 0,
+        "website": true
+      },
+      {
+        "id": "f43be506-9c87-4301-b593-14289f07401b",
+        "name": "Bases Burgers",
+        "address": "3760 S Gessner Rd, Houston, TX 77063",
+        "phone": "(713) 278-5332",
+        "priority": "high",
+        "priorityScore": 70,
+        "website": false
+      },
+      {
+        "id": "39cf09a4-66c9-49ff-8c95-12cc20623562",
+        "name": "Burger King",
+        "address": "5811 S Gessner Dr, Houston, TX 77036",
+        "phone": "(713) 977-0550",
+        "priority": "low",
+        "priorityScore": 0,
+        "website": true
+      },
+      {
+        "id": "2e2000b8-c610-422d-9ce3-974f6926e764",
+        "name": "Jack in the Box",
+        "address": "6006 Hillcroft Ave, Houston, TX 77081",
+        "phone": "(713) 271-7117",
+        "priority": "low",
+        "priorityScore": 0,
+        "website": true
+      },
+      {
+        "id": "452313ba-b409-4fc7-bf8e-94316e559b08",
+        "name": "Wendy's",
+        "address": "6101 Hillcroft St, Houston, TX 77081",
+        "phone": "(832) 410-3124",
+        "priority": "low",
+        "priorityScore": 0,
+        "website": true
+      }
+    ],
+    "skippedList": [],
+    "errorList": [],
+    "foundNames": [
+      "Raising Cane's Chicken Fingers",
+      "Bunslut",
+      "Jack in the Box",
+      "Chicken Factory - Houston",
+      "Whataburger",
+      "Popeyes Louisiana Kitchen",
+      "Burger King",
+      "McDonald's",
+      "Taco Bell",
+      "Whataburger",
+      "Taco Bell",
+      "241 Delices (Food Truck)",
+      "Al Shami",
+      "The Burger Den",
+      "Chick-fil-A",
+      "Whataburger",
+      "Bases Burgers",
+      "Burger King",
+      "Jack in the Box",
+      "Wendy's"
+    ]
+  },
+  {
+    "id": "cd3e6407-fc39-4492-b408-b07db76935ea",
+    "zipcode": "77477",
+    "category": "coffee shops",
+    "startedAt": "2026-03-24T04:19:48.418Z",
+    "finishedAt": "2026-03-24T04:35:28.761Z",
+    "found": 72,
+    "saved": 61,
+    "skipped": 11,
+    "errors": 0,
+    "savedList": [
+      {
+        "id": "c4e45422-91ce-47eb-a053-b1cbfb6fac93",
+        "name": "Mood Coffee",
+        "address": "14019 Southwest Fwy #405, Sugar Land, TX 77478",
+        "phone": "(832) 999-4273",
+        "priority": "medium",
+        "priorityScore": 30,
+        "website": true
+      },
+      {
+        "id": "585218d6-f70c-43d4-a970-2b389b7b68c3",
+        "name": "Black Rock Coffee Bar",
+        "address": "11123 W Airport Blvd, Stafford, TX 77477",
+        "phone": "(833) 843-5776",
+        "priority": "low",
+        "priorityScore": 20,
+        "website": true
+      },
+      {
+        "id": "0f47a1de-d65d-446c-b639-afc462ecfe07",
+        "name": "Cafe Khalifa (Hookah, Food, BYOB)",
+        "address": "12106 Murphy Rd, Stafford, TX 77477",
+        "phone": "(281) 748-6545",
+        "priority": "high",
+        "priorityScore": 70,
+        "website": false
+      },
+      {
+        "id": "3c03ae07-7765-4ab7-858c-dff6462004ac",
+        "name": "Day 6 Coffee Co",
+        "address": "3227 Hwy 6, Sugar Land, TX 77478",
+        "phone": "(346) 391-7586",
+        "priority": "medium",
+        "priorityScore": 30,
+        "website": true
+      },
+      {
+        "id": "105fee05-8ee9-4130-a1b6-1f75e726ba22",
+        "name": "Starbucks Coffee Company",
+        "address": "3613 S Main St, Stafford, TX 77477",
+        "phone": "(281) 840-1163",
+        "priority": "low",
+        "priorityScore": 20,
+        "website": true
+      },
+      {
+        "id": "90f95e39-8725-4ead-86ca-f5d8eace07ba",
+        "name": "Kohiko Coffee House",
+        "address": "4617 Austin Pkwy, Sugar Land, TX 77479",
+        "phone": null,
+        "priority": "medium",
+        "priorityScore": 30,
+        "website": true
+      },
+      {
+        "id": "06b868a7-c1ef-4c28-9e08-acf5a7bd79f1",
+        "name": "BigOneChoice",
+        "address": "12250 S Kirkwood Rd, Stafford, TX 77477",
+        "phone": "(410) 429-0182",
+        "priority": "high",
+        "priorityScore": 70,
+        "website": false
+      },
+      {
+        "id": "121601fc-4c01-4f4f-ab67-84418ff55c88",
+        "name": "Beans Up Coffee",
+        "address": "5405 Hwy 6 Suite 100, Missouri City, TX 77459",
+        "phone": "(346) 585-3017",
+        "priority": "medium",
+        "priorityScore": 30,
+        "website": true
+      },
+      {
+        "id": "070d47f0-41fd-4378-a62e-40d65feb3380",
+        "name": "Fellowship Coffee Co. & Catering",
+        "address": "3434 FM 1092 Rd #350, Missouri City, TX 77459",
+        "phone": "(832) 359-1273",
+        "priority": "medium",
+        "priorityScore": 30,
+        "website": true
+      },
+      {
+        "id": "835be1e6-ed00-45e7-ae68-818790234781",
+        "name": "Shipley Do-Nuts",
+        "address": "3607 S Main St Ste 100, Stafford, TX 77477",
+        "phone": "(281) 969-7160",
+        "priority": "low",
+        "priorityScore": 20,
+        "website": true
+      },
+      {
+        "id": "f813f6ad-331b-40f6-af14-0234bc9080cc",
+        "name": "Fresso Coffee & Tea",
+        "address": "4899 Hwy 6 Suite 116C, Missouri City, TX 77459",
+        "phone": "(281) 704-6433",
+        "priority": "medium",
+        "priorityScore": 30,
+        "website": true
+      },
+      {
+        "id": "73a4f6bb-7c88-4bd6-82bb-3671f535e6df",
+        "name": "Latte Factory",
+        "address": "16535 Southwest Fwy, Sugar Land, TX 77479",
+        "phone": null,
+        "priority": "medium",
+        "priorityScore": 30,
+        "website": true
+      },
+      {
+        "id": "ea8b179f-0a33-491a-bb54-ec8bbdb2f2ce",
+        "name": "Justspresso Coffee",
+        "address": "1531 Hwy 6 #140, Sugar Land, TX 77478",
+        "phone": "(832) 645-8005",
+        "priority": "medium",
+        "priorityScore": 30,
+        "website": true
+      },
+      {
+        "id": "6cfc3c6a-7d57-4c45-8db8-385b64b09a3a",
+        "name": "Don Cafe Stafford",
+        "address": "609 Dulles Ave #900, Stafford, TX 77477",
+        "phone": "(832) 539-1414",
+        "priority": "medium",
+        "priorityScore": 30,
+        "website": true
+      },
+      {
+        "id": "1ff45a8e-3678-4dd5-9b9e-a5e0e15601b1",
+        "name": "bean here coffee",
+        "address": "8215 Hwy 6, Missouri City, TX 77459",
+        "phone": "(281) 656-6692",
+        "priority": "medium",
+        "priorityScore": 30,
+        "website": true
+      },
+      {
+        "id": "53376a02-84b1-48cd-95bd-ac9b3e63e2e9",
+        "name": "BlendIn Coffee Club",
+        "address": "8410 Hwy 90 Alt Bldg B, Sugar Land, TX 77478",
+        "phone": "(346) 368-2895",
+        "priority": "low",
+        "priorityScore": 20,
+        "website": true
+      },
+      {
+        "id": "ed5ea4ab-f17e-4d67-97ca-80d879f8116e",
+        "name": "Starbucks Coffee Company",
+        "address": "11707 W Airport Blvd, Meadows Place, TX 77477",
+        "phone": "(346) 699-1325",
+        "priority": "low",
+        "priorityScore": 20,
+        "website": true
+      },
+      {
+        "id": "68fcb92c-6361-4836-a414-482224bcf23e",
+        "name": "Rang Coffee & More",
+        "address": "4634 Hwy 6, Sugar Land, TX 77478",
+        "phone": "(281) 965-9084",
+        "priority": "medium",
+        "priorityScore": 30,
+        "website": true
+      },
+      {
+        "id": "3a51f058-c09c-46bd-a7ec-4ccb3d2d25a3",
+        "name": "Snooze, an A.M. Eatery",
+        "address": "12333 Southwest Fwy Suite 400, Stafford, TX 77477",
+        "phone": "(832) 699-1460",
+        "priority": "low",
+        "priorityScore": 20,
+        "website": true
+      },
+      {
+        "id": "944feb76-56eb-45e1-8185-e2517aeb43dc",
+        "name": "Sweet Paris Crêperie & Café",
+        "address": "15911 City Walk, Sugar Land, TX 77478",
+        "phone": "(346) 368-2029",
+        "priority": "low",
+        "priorityScore": 20,
+        "website": true
+      },
+      {
+        "id": "d62d3110-1e18-4328-9c9d-bc3dca376b35",
+        "name": "Starbucks Coffee Company",
+        "address": "16511 Southwest Fwy, Sugar Land, TX 77478",
+        "phone": "(281) 243-7708",
+        "priority": "medium",
+        "priorityScore": 35,
+        "website": true
+      },
+      {
+        "id": "b43923d3-5a10-484e-ad81-c1647fce1c19",
+        "name": "Legacy Cigars and Lounge",
+        "address": "3130 S Main St, Stafford, TX 77477",
+        "phone": "(832) 539-6370",
+        "priority": "low",
+        "priorityScore": 20,
+        "website": true
+      },
+      {
+        "id": "b24d8e04-0595-4cbe-8833-d9f2ed90f3a2",
+        "name": "Westco Donuts",
+        "address": "465 Murphy Rd Unit D, Stafford, TX 77477",
+        "phone": "(832) 987-1515",
+        "priority": "high",
+        "priorityScore": 70,
+        "website": false
+      },
+      {
+        "id": "55311caf-9e05-46ea-8cf6-e2b54f90d03c",
+        "name": "MTea",
+        "address": "3701 B Hwy 6, Sugar Land, TX 77478",
+        "phone": "(281) 810-1424",
+        "priority": "medium",
+        "priorityScore": 30,
+        "website": true
+      },
+      {
+        "id": "23cdaa57-c285-47db-909c-91f1e0dccb34",
+        "name": "Shaghf Cafe - Sugar Land",
+        "address": "350 Promenade Wy Ste 100, Sugar Land, TX 77478",
+        "phone": "(945) 396-0798",
+        "priority": "medium",
+        "priorityScore": 30,
+        "website": true
+      },
+      {
+        "id": "3722e5a5-af08-4f21-9480-32e5f77762a2",
+        "name": "Cillie's Cakes Of Houston",
+        "address": "867 Dulles Ave A, Stafford, TX 77477",
+        "phone": "(281) 530-1666",
+        "priority": "low",
+        "priorityScore": 20,
+        "website": true
+      },
+      {
+        "id": "4beb6f0e-7f2d-4cad-8a16-060dc4a98985",
+        "name": "WYNN PLUS (The Wynn Network Plus)",
+        "address": "4127 Hwy 6, Sugar Land, TX 77478",
+        "phone": "(281) 302-5836",
+        "priority": "medium",
+        "priorityScore": 30,
+        "website": true
+      },
+      {
+        "id": "62514a5a-e7a7-44a6-8867-f1b5dc896bd3",
+        "name": "Boulevard Bagel & Cafe",
+        "address": "15945 Lexington Blvd, Sugar Land, TX 77479",
+        "phone": "(832) 434-2453",
+        "priority": "medium",
+        "priorityScore": 30,
+        "website": true
+      },
+      {
+        "id": "94c7799c-805e-498c-9ecc-2e6d6bc67e21",
+        "name": "The Pub Fountains",
+        "address": "12720 US-59, Stafford, TX 77477",
+        "phone": "(281) 277-9333",
+        "priority": "medium",
+        "priorityScore": 30,
+        "website": true
+      },
+      {
+        "id": "7522b0a9-2978-45c6-ab30-939c71059445",
+        "name": "FiLLi Cafe",
+        "address": "11920 S Texas 6 # 600, Sugar Land, TX 77498",
+        "phone": "(832) 532-1010",
+        "priority": "medium",
+        "priorityScore": 30,
+        "website": true
+      },
+      {
+        "id": "8fdccec7-c82c-41da-83e9-612f444a2055",
+        "name": "Southern Hospitality Coffee Co",
+        "address": "Pick Up Location/ Headquarters, 619 Borden St, Sugar Land, TX 77478",
+        "phone": "(832) 361-0866",
+        "priority": "low",
+        "priorityScore": 20,
+        "website": true
+      },
+      {
+        "id": "cf289efc-fbbb-4284-810b-a6c541ec6f2d",
+        "name": "Alpha Dessert Juice Cafe Sugar Land",
+        "address": "1531 Hwy 6 #140, Sugar Land, TX 77478",
+        "phone": "(832) 705-7722",
+        "priority": "low",
+        "priorityScore": 20,
+        "website": true
+      },
+      {
+        "id": "89178bbd-f35d-4794-a331-2976520e9ad1",
+        "name": "Shayona Café",
+        "address": "1150 Brand Ln, Stafford, TX 77477",
+        "phone": "(281) 377-6827",
+        "priority": "medium",
+        "priorityScore": 30,
+        "website": true
+      },
+      {
+        "id": "70457a60-0878-4b1f-ace2-d70da974a9e1",
+        "name": "Starbucks Coffee Company",
+        "address": "5940 Hwy 6, Missouri City, TX 77459",
+        "phone": "(281) 499-0341",
+        "priority": "low",
+        "priorityScore": 20,
+        "website": true
+      },
+      {
+        "id": "b110dece-0bae-4523-a9e2-cdc4463a3a6b",
+        "name": "Raizes",
+        "address": "345 Dulles Ave, Stafford, TX 77477",
+        "phone": "(281) 969-5211",
+        "priority": "medium",
+        "priorityScore": 30,
+        "website": true
+      },
+      {
+        "id": "a3baafbd-6357-4ac2-91c6-b544032bc1fe",
+        "name": "McDonald's",
+        "address": "3643 S Main St, Stafford, TX 77477",
+        "phone": "(281) 499-0395",
+        "priority": "medium",
+        "priorityScore": 35,
+        "website": true
+      },
+      {
+        "id": "0a82603a-2b31-480d-932c-7377a3ea2348",
+        "name": "Rising Store",
+        "address": "12507 Dairy Ashford Rd, Stafford, TX 77477",
+        "phone": "(346) 309-4224",
+        "priority": "high",
+        "priorityScore": 60,
+        "website": false
+      },
+      {
+        "id": "43fc8191-33c2-4dd6-b516-100117713194",
+        "name": "Starbucks Coffee Company",
+        "address": "18861 University Blvd, Sugar Land, TX 77479",
+        "phone": "(832) 342-9648",
+        "priority": "medium",
+        "priorityScore": 35,
+        "website": true
+      },
+      {
+        "id": "2001773d-445d-4470-845d-787547df2185",
+        "name": "Shipley Do-Nuts",
+        "address": "611 Dulles Ave, Stafford, TX 77477",
+        "phone": "(281) 261-9700",
+        "priority": "low",
+        "priorityScore": 20,
+        "website": true
+      },
+      {
+        "id": "9a0fdd65-57f3-453a-93df-e27344b7ba8b",
+        "name": "HTeaO - Sugar Land (Hwy 6 & Austin)",
+        "address": "4528 Hwy 6, Sugar Land, TX 77479",
+        "phone": "(281) 962-4610",
+        "priority": "medium",
+        "priorityScore": 30,
+        "website": true
+      },
+      {
+        "id": "83ef55fb-f4e0-4d34-9008-9c1c46405f25",
+        "name": "Water Drop Teahouse",
+        "address": "12550 Jebbia Ln, Stafford, TX 77477",
+        "phone": "(281) 495-3100",
+        "priority": "medium",
+        "priorityScore": 30,
+        "website": true
+      },
+      {
+        "id": "8a9325a0-045b-4e67-9ff6-4ad0da3c3374",
+        "name": "Dutch Bros Coffee",
+        "address": "4820 Hwy 6, Missouri City, TX 77459",
+        "phone": "(877) 899-2767",
+        "priority": "low",
+        "priorityScore": 20,
+        "website": true
+      },
+      {
+        "id": "c4994e29-b24b-4501-b224-d00389caf8e4",
+        "name": "Tim Hortons",
+        "address": "11411 W Airport Blvd, Meadows Place, Stafford, TX 77477",
+        "phone": "(346) 585-0070",
+        "priority": "low",
+        "priorityScore": 20,
+        "website": true
+      },
+      {
+        "id": "108891f5-5648-4beb-97f3-08d153696e63",
+        "name": "Gelato Picks",
+        "address": "16525 Lexington Blvd Ste. 130, Sugar Land, TX 77479",
+        "phone": "(346) 874-7494",
+        "priority": "low",
+        "priorityScore": 20,
+        "website": true
+      },
+      {
+        "id": "62a1b622-bff0-4778-8b5f-89426eb25b7f",
+        "name": "BOBITES",
+        "address": "4630 Hwy 6, Sugar Land, TX 77478",
+        "phone": "(832) 939-9893",
+        "priority": "high",
+        "priorityScore": 70,
+        "website": false
+      },
+      {
+        "id": "25c2902f-34b4-447e-b61e-4a4edf9c7e01",
+        "name": "The Teahouse",
+        "address": "3536 Hwy 6, Sugar Land, TX 77478",
+        "phone": "(281) 903-7661",
+        "priority": "medium",
+        "priorityScore": 30,
+        "website": true
+      },
+      {
+        "id": "ae9ba6ab-abdb-4ade-844b-eac0cfb5224e",
+        "name": "Soliz Casa de Tacos & Café",
+        "address": "303 Dulles Ave, Stafford, TX 77477",
+        "phone": "(281) 499-8359",
+        "priority": "medium",
+        "priorityScore": 30,
+        "website": true
+      },
+      {
+        "id": "b52a918d-ff7d-4669-b09c-c9800fd4870d",
+        "name": "PJ's Coffee",
+        "address": "17211 W Grand Pkwy S Suite L-1, Sugar Land, TX 77479",
+        "phone": "(281) 762-0207",
+        "priority": "low",
+        "priorityScore": 20,
+        "website": true
+      },
+      {
+        "id": "55b418c5-09ac-460b-97b0-71f3717fd670",
+        "name": "The Baker House Donut",
+        "address": "6311 Hwy 6, Missouri City, TX 77459",
+        "phone": "(281) 261-6404",
+        "priority": "high",
+        "priorityScore": 60,
+        "website": false
+      },
+      {
+        "id": "c2280e2e-e12e-4278-8693-7e2b1b83aa23",
+        "name": "Hirschey's Snocones",
+        "address": "3231 N Main St, Stafford, TX 77477",
+        "phone": null,
+        "priority": "medium",
+        "priorityScore": 30,
+        "website": true
+      },
+      {
+        "id": "7c8775ec-ee5b-429c-af6a-533b6e58b934",
+        "name": "Tropical Smoothie Cafe",
+        "address": "3607 S Main St Suite 114 Suite 114, Stafford, TX 77477",
+        "phone": "(281) 902-6454",
+        "priority": "medium",
+        "priorityScore": 35,
+        "website": true
+      },
+      {
+        "id": "fb844182-ce4a-44fa-a3f6-1db25686bfbe",
+        "name": "Avalon Diner",
+        "address": "12810 Southwest Fwy, Stafford, TX 77477",
+        "phone": "(281) 240-0213",
+        "priority": "medium",
+        "priorityScore": 30,
+        "website": true
+      },
+      {
+        "id": "4c707ce0-c5eb-445d-af3a-4f779191979e",
+        "name": "Taquitos Cafeteria",
+        "address": "219 Murphy Rd, Stafford, TX 77477",
+        "phone": "(281) 499-9288",
+        "priority": "high",
+        "priorityScore": 70,
+        "website": false
+      },
+      {
+        "id": "57c7f776-8a0e-4526-8d3b-2ee87a63dea8",
+        "name": "la Madeleine",
+        "address": "2675 Town Center Blvd N, Sugar Land, TX 77479",
+        "phone": "(281) 494-4400",
+        "priority": "low",
+        "priorityScore": 20,
+        "website": true
+      },
+      {
+        "id": "0725ef98-d9f3-4bdc-bcac-a904250057de",
+        "name": "Fresh & Savory Deli & Grill",
+        "address": "12999 Murphy Rd B-4, Stafford, TX 77477",
+        "phone": "(281) 879-1203",
+        "priority": "medium",
+        "priorityScore": 30,
+        "website": true
+      },
+      {
+        "id": "d7a11450-e6ba-4633-8764-0a562ffb939d",
+        "name": "Waffle House",
+        "address": "11208 W Airport Blvd, Stafford, TX 77477",
+        "phone": "(281) 933-8633",
+        "priority": "low",
+        "priorityScore": 20,
+        "website": true
+      },
+      {
+        "id": "5a579eb2-3e54-4cf1-be40-2486e79ca225",
+        "name": "Panaderia Victoria",
+        "address": "112 Avenue F suite c, Stafford, TX 77477",
+        "phone": "(281) 499-9130",
+        "priority": "medium",
+        "priorityScore": 30,
+        "website": true
+      },
+      {
+        "id": "208e8b03-f4c5-480f-a04e-4af51aafdb24",
+        "name": "Starbucks Coffee Company",
+        "address": "16300 Southwest Fwy, Sugar Land, TX 77479",
+        "phone": "(281) 340-0550",
+        "priority": "low",
+        "priorityScore": 20,
+        "website": true
+      },
+      {
+        "id": "e21a8e48-c8dc-4947-af25-f32054bfe5d5",
+        "name": "Starbucks",
+        "address": "1321 FM 1092 Rd, Missouri City, TX 77459",
+        "phone": "(346) 242-3933",
+        "priority": "low",
+        "priorityScore": 20,
+        "website": true
+      },
+      {
+        "id": "e6558eaa-98c6-427b-bc6f-e68192771cfe",
+        "name": "Starbucks Coffee Company",
+        "address": "16098 City Walk, Sugar Land, TX 77479",
+        "phone": "(281) 710-8682",
+        "priority": "low",
+        "priorityScore": 20,
+        "website": true
+      },
+      {
+        "id": "aea1c089-0e53-4db5-98c5-8934705280fe",
+        "name": "The Toasted Yolk Cafe",
+        "address": "2110 Town Square Pl, Sugar Land, TX 77479",
+        "phone": "(832) 532-0445",
+        "priority": "medium",
+        "priorityScore": 30,
+        "website": true
+      }
+    ],
+    "skippedList": [
+      {
+        "name": "VIETWICH",
+        "address": "203 Dulles Ave #100, Stafford, TX 77477",
+        "reason": "phone",
+        "existingId": "d93fbb9c-e6df-49e3-b7cf-2c8b8d24d292"
+      },
+      {
+        "name": "VIETWICH",
+        "address": "203 Dulles Ave #100, Stafford, TX 77477",
+        "reason": "phone",
+        "existingId": "d93fbb9c-e6df-49e3-b7cf-2c8b8d24d292"
+      },
+      {
+        "name": "Starbucks Coffee Company",
+        "address": "3613 S Main St, Stafford, TX 77477",
+        "reason": "phone",
+        "existingId": "105fee05-8ee9-4130-a1b6-1f75e726ba22"
+      },
+      {
+        "name": "Don Cafe Stafford",
+        "address": "609 Dulles Ave #900, Stafford, TX 77477",
+        "reason": "phone",
+        "existingId": "6cfc3c6a-7d57-4c45-8db8-385b64b09a3a"
+      },
+      {
+        "name": "Lazy Dog Restaurant & Bar",
+        "address": "12223 Southwest Fwy, Stafford, TX 77477",
+        "reason": "phone",
+        "existingId": "b5324dd7-21b7-4abe-bb82-639fdf80a7e9"
+      },
+      {
+        "name": "Snooze, an A.M. Eatery",
+        "address": "12333 Southwest Fwy Suite 400, Stafford, TX 77477",
+        "reason": "phone",
+        "existingId": "3a51f058-c09c-46bd-a7ec-4ccb3d2d25a3"
+      },
+      {
+        "name": "B AM Cocina",
+        "address": "716 Murphy Rd, Stafford, TX 77477",
+        "reason": "phone",
+        "existingId": "f0d482aa-238d-4c40-b3de-028ad34f8e14"
+      },
+      {
+        "name": "Starbucks Coffee Company",
+        "address": "11707 W Airport Blvd, Meadows Place, TX 77477",
+        "reason": "phone",
+        "existingId": "ed5ea4ab-f17e-4d67-97ca-80d879f8116e"
+      },
+      {
+        "name": "Steam Dumpling (Stafford)",
+        "address": "3607 S Main St Ste 112, Stafford, TX 77477",
+        "reason": "phone",
+        "existingId": "42f16659-b8a7-42b6-b286-301f1edff01c"
+      },
+      {
+        "name": "Fiesta Mexicana Bar and Grill",
+        "address": "435 Murphy Rd Suite D, Stafford, TX 77477",
+        "reason": "phone",
+        "existingId": "3306c74a-1db6-43ff-9005-437653a6aa4b"
+      },
+      {
+        "name": "Whiskey Cake Kitchen & Bar",
+        "address": "12575 Southwest Fwy, Stafford, TX 77477",
+        "reason": "phone",
+        "existingId": "db877b9a-913f-4094-bd37-f47c81642f90"
+      }
+    ],
+    "errorList": [],
+    "foundNames": [
+      "Lazy Dog Restaurant & Bar",
+      "Steam Dumpling (Stafford)",
+      "Home Of The Original Spicyburger",
+      "B AM Cocina",
+      "Whiskey Cake Kitchen & Bar",
+      "Legends Grill",
+      "Bombshells Restaurant & Bar",
+      "The Pub Fountains",
+      "One More Bar & Grill",
+      "VIETWICH",
+      "Fiesta Mexicana Bar and Grill",
+      "Los Valdes in the House",
+      "Lotus Seafood | Stafford",
+      "Stafford Kabab and Grill",
+      "Raizes",
+      "Brewskis",
+      "Applebee's Grill + Bar",
+      "Razzoo's Cajun Cafe",
+      "Fresh & Savory Deli & Grill",
+      "Chunk's Burger",
+      "Mood Coffee",
+      "Black Rock Coffee Bar",
+      "Cafe Khalifa (Hookah, Food, BYOB)",
+      "Day 6 Coffee Co",
+      "Starbucks Coffee Company",
+      "Kohiko Coffee House",
+      "BigOneChoice",
+      "Beans Up Coffee",
+      "Fellowship Coffee Co. & Catering",
+      "Shipley Do-Nuts",
+      "Fresso Coffee & Tea",
+      "VIETWICH",
+      "Latte Factory",
+      "Justspresso Coffee",
+      "Don Cafe Stafford",
+      "bean here coffee",
+      "BlendIn Coffee Club",
+      "Starbucks Coffee Company",
+      "Rang Coffee & More",
+      "Snooze, an A.M. Eatery",
+      "VIETWICH",
+      "Starbucks Coffee Company",
+      "Sweet Paris Crêperie & Café",
+      "Starbucks Coffee Company",
+      "Legacy Cigars and Lounge",
+      "Don Cafe Stafford",
+      "Lazy Dog Restaurant & Bar",
+      "Westco Donuts",
+      "MTea",
+      "Shaghf Cafe - Sugar Land",
+      "Cillie's Cakes Of Houston",
+      "WYNN PLUS (The Wynn Network Plus)",
+      "Boulevard Bagel & Cafe",
+      "Snooze, an A.M. Eatery",
+      "The Pub Fountains",
+      "FiLLi Cafe",
+      "Southern Hospitality Coffee Co",
+      "B AM Cocina",
+      "Alpha Dessert Juice Cafe Sugar Land",
+      "Shayona Café",
+      "Starbucks Coffee Company",
+      "Starbucks Coffee Company",
+      "Raizes",
+      "McDonald's",
+      "Rising Store",
+      "Starbucks Coffee Company",
+      "Shipley Do-Nuts",
+      "Steam Dumpling (Stafford)",
+      "HTeaO - Sugar Land (Hwy 6 & Austin)",
+      "Water Drop Teahouse",
+      "Dutch Bros Coffee",
+      "Tim Hortons",
+      "Gelato Picks",
+      "BOBITES",
+      "The Teahouse",
+      "Soliz Casa de Tacos & Café",
+      "Fiesta Mexicana Bar and Grill",
+      "Whiskey Cake Kitchen & Bar",
+      "PJ's Coffee",
+      "The Baker House Donut",
+      "Hirschey's Snocones",
+      "Tropical Smoothie Cafe",
+      "Avalon Diner",
+      "Taquitos Cafeteria",
+      "la Madeleine",
+      "Fresh & Savory Deli & Grill",
+      "Waffle House",
+      "Panaderia Victoria",
+      "Starbucks Coffee Company",
+      "Starbucks",
+      "Starbucks Coffee Company",
+      "The Toasted Yolk Cafe"
+    ]
+  },
+  {
+    "id": "3fd44981-761d-4e4d-b143-08a16bcf37ba",
+    "zipcode": "77477",
+    "category": "restaurants",
+    "startedAt": "2026-03-24T04:18:47.253Z",
+    "finishedAt": "2026-03-24T04:18:57.079Z",
+    "found": 20,
+    "saved": 0,
+    "skipped": 0,
+    "errors": 0,
+    "savedList": [],
+    "skippedList": [],
+    "errorList": [],
+    "foundNames": [
+      "Lazy Dog Restaurant & Bar",
+      "Steam Dumpling (Stafford)",
+      "Home Of The Original Spicyburger",
+      "B AM Cocina",
+      "Whiskey Cake Kitchen & Bar",
+      "Legends Grill",
+      "Bombshells Restaurant & Bar",
+      "The Pub Fountains",
+      "One More Bar & Grill",
+      "VIETWICH",
+      "Fiesta Mexicana Bar and Grill",
+      "Los Valdes in the House",
+      "Lotus Seafood | Stafford",
+      "Stafford Kabab and Grill",
+      "Raizes",
+      "Brewskis",
+      "Applebee's Grill + Bar",
+      "Razzoo's Cajun Cafe",
+      "Fresh & Savory Deli & Grill",
+      "Chunk's Burger"
+    ]
+  },
+  {
+    "id": "a1714c6b-8e3c-428f-a73f-dd7b20ee33d6",
+    "zipcode": "77054",
+    "category": "businesses",
+    "startedAt": "2026-03-21T20:45:40.912Z",
+    "finishedAt": "2026-03-21T21:27:38.332Z",
+    "found": 78,
+    "saved": 9,
+    "skipped": 0,
+    "errors": 69,
+    "savedList": [
+      {
+        "id": "4ad29d3c-3a37-4b59-9138-e47586e9b44a",
+        "name": "Lighthouse Business Services, LLC",
+        "address": "8990 Kirby Dr Ste. 220, Houston, TX 77054",
+        "phone": "(800) 817-1572",
+        "priority": "low",
+        "priorityScore": 20,
+        "website": true
+      },
+      {
+        "id": "23123b26-a50b-46ba-834a-62a9cf332416",
+        "name": "C&J Business Services",
+        "address": "1333 Old Spanish Trl, Houston, TX 77054",
+        "phone": "(281) 886-8100",
+        "priority": "high",
+        "priorityScore": 60,
+        "website": false
+      },
+      {
+        "id": "5d22b97e-f2fa-4a91-9be0-98cd7116eddf",
+        "name": "Headway Idea Labs",
+        "address": "7505 Fannin St suite 610, Houston, TX 77054",
+        "phone": null,
+        "priority": "low",
+        "priorityScore": 20,
+        "website": true
+      },
+      {
+        "id": "a9d06870-19b9-44b4-83ea-dc0b99afa570",
+        "name": "LTD Tax Services & Business Solutions",
+        "address": "2600 S Loop W #285, Houston, TX 77054",
+        "phone": "(832) 582-5758",
+        "priority": "low",
+        "priorityScore": 20,
+        "website": true
+      },
+      {
+        "id": "48d4bbf3-65ba-4ab9-80ef-43af9d6f6a53",
+        "name": "Diversified Tax Services",
+        "address": "2600 S Loop W, Houston, TX 77054",
+        "phone": "(713) 668-6760",
+        "priority": "high",
+        "priorityScore": 60,
+        "website": false
+      },
+      {
+        "id": "8b6cf95b-d176-42fc-809f-4f7008a29925",
+        "name": "Hooker CPA Firm, PLLC",
+        "address": "2656 S Loop W Suite 340, Houston, TX 77054",
+        "phone": "(281) 942-7967",
+        "priority": "low",
+        "priorityScore": 20,
+        "website": true
+      },
+      {
+        "id": "2bf0e48f-63e4-442f-926e-6ecd62aa0ac5",
+        "name": "Smarketing Business Systems",
+        "address": "2525 W Bellfort Ave, Houston, TX 77054",
+        "phone": "(713) 529-5898",
+        "priority": "medium",
+        "priorityScore": 35,
+        "website": true
+      },
+      {
+        "id": "09826940-8e93-47d6-9974-91dbc83f13a0",
+        "name": "DiPuma Printing Company & Promotional Products",
+        "address": "8179 Almeda Rd, Houston, TX 77054",
+        "phone": "(713) 667-5400",
+        "priority": "low",
+        "priorityScore": 10,
+        "website": true
+      },
+      {
+        "id": "f6f3d3d6-5ede-43a8-9b94-c13cf5d23ae8",
+        "name": "PSS Companies",
+        "address": "77001, 6960 Ardmore St, Houston, TX 77054",
+        "phone": null,
+        "priority": "high",
+        "priorityScore": 60,
+        "website": false
+      }
+    ],
+    "skippedList": [],
+    "errorList": [
+      {
+        "name": "RPS Tax & Business Solutions",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Muze Office | Virtual Office | Coworking | Office Space | Event Space",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Sysco To Go- Houston Medical Centre",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Topfinalyst Consulting",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Highpoint Business Solutions",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Intuitive",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Dr Pepper Snapple Group",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Office Depot Tech Services",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Office Depot",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "DTS- Prime Mail and Notary FEDEX UPS USPS",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "59 South Signs LLC",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "LV Business Solutions",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Flourish Finance, LLC",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Tri-County Regional Black Chamber of Commerce",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Allchem Services Inc",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "DTS- Prime Mail and Notary FEDEX UPS USPS",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "FPG Fast Printing & Graphics",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Office Depot",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Sysco To Go- Houston Medical Centre",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "59 South Signs LLC",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "The Cannon West Houston",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Office Depot Print & Copy Services",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "The Eyeglass Repair Guys",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "H&R Block",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Second Servings of Houston",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Renuity Home Improvement of Houston",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Boxer Property - NRG Office Complex",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "AVM Multiservices",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "RPS Tax & Business Solutions",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Intuitive",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Garage Storage of Missouri City",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Gadget X Repairs (Cellphone -iphone-ipad- Macbook-Laptop- Gaming Console and Accessories) We Sell and Repair",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Envision Marketing",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Cavender's Boot City",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "QuiGig Professional Community",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Grainger Industrial Supply",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Holly Knight II",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "700 Plus Credit",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Shops at Three Corners",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Citizen Law Firm PLLC",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Cemvita Factory",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "CMC Construction Services - Houston",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Gold Stars Towing LLC",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "The Law Offices of Perkins & Associates",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "THC Club South - Cannabis Dispensary",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Topfinalyst Consulting",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "SMB Integrations",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Fiesta Mart",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Re - Leaf Plant Market",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "CMC Construction Services",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "J. Davis Law & Mediation, PLLC | Probate, Wills/Trusts, Guardianship, and Business Law",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Ombrella",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Inter Vive America",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Southern Glazer's Wine & Spirits",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Pure Assure",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Al Aqsa International Groceries",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "24 HOUR TIRE RIM REPAIR ALIGNMENT",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Flexco Safety Supply LLC",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "CubeSmart Self Storage",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Awake Arise Achieve Consultancy",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "HUB htx",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Prime Bazaar: Halal Supermarket",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Kabsykreations",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Carmen's Boutique",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Caribbean Transport and Towing LLC",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "TNT Crane & Rigging",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Webwood Flowers & Gifts",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "UPS Authorized Shipping Outlet",
+        "message": "Failed to open listing panel"
+      },
+      {
+        "name": "Desi Adda Indian Grocery",
+        "message": "Failed to open listing panel"
+      }
+    ],
+    "foundNames": [
+      "Lighthouse Business Services, LLC",
+      "C&J Business Services",
+      "Headway Idea Labs",
+      "LTD Tax Services & Business Solutions",
+      "Diversified Tax Services",
+      "Hooker CPA Firm, PLLC",
+      "Smarketing Business Systems",
+      "DiPuma Printing Company & Promotional Products",
+      "PSS Companies",
+      "RPS Tax & Business Solutions",
+      "Muze Office | Virtual Office | Coworking | Office Space | Event Space",
+      "Sysco To Go- Houston Medical Centre",
+      "Topfinalyst Consulting",
+      "Highpoint Business Solutions",
+      "Intuitive",
+      "Dr Pepper Snapple Group",
+      "Office Depot Tech Services",
+      "Office Depot",
+      "DTS- Prime Mail and Notary FEDEX UPS USPS",
+      "59 South Signs LLC",
+      "LV Business Solutions",
+      "Flourish Finance, LLC",
+      "Tri-County Regional Black Chamber of Commerce",
+      "Allchem Services Inc",
+      "DTS- Prime Mail and Notary FEDEX UPS USPS",
+      "FPG Fast Printing & Graphics",
+      "Office Depot",
+      "Sysco To Go- Houston Medical Centre",
+      "59 South Signs LLC",
+      "The Cannon West Houston",
+      "Office Depot Print & Copy Services",
+      "The Eyeglass Repair Guys",
+      "H&R Block",
+      "Second Servings of Houston",
+      "Renuity Home Improvement of Houston",
+      "Boxer Property - NRG Office Complex",
+      "AVM Multiservices",
+      "RPS Tax & Business Solutions",
+      "Intuitive",
+      "Garage Storage of Missouri City",
+      "Gadget X Repairs (Cellphone -iphone-ipad- Macbook-Laptop- Gaming Console and Accessories) We Sell and Repair",
+      "Envision Marketing",
+      "Cavender's Boot City",
+      "QuiGig Professional Community",
+      "Grainger Industrial Supply",
+      "Holly Knight II",
+      "700 Plus Credit",
+      "Shops at Three Corners",
+      "Citizen Law Firm PLLC",
+      "Cemvita Factory",
+      "CMC Construction Services - Houston",
+      "Gold Stars Towing LLC",
+      "The Law Offices of Perkins & Associates",
+      "THC Club South - Cannabis Dispensary",
+      "Topfinalyst Consulting",
+      "SMB Integrations",
+      "Fiesta Mart",
+      "Re - Leaf Plant Market",
+      "CMC Construction Services",
+      "J. Davis Law & Mediation, PLLC | Probate, Wills/Trusts, Guardianship, and Business Law",
+      "Ombrella",
+      "Inter Vive America",
+      "Southern Glazer's Wine & Spirits",
+      "Pure Assure",
+      "Al Aqsa International Groceries",
+      "24 HOUR TIRE RIM REPAIR ALIGNMENT",
+      "Flexco Safety Supply LLC",
+      "CubeSmart Self Storage",
+      "Awake Arise Achieve Consultancy",
+      "HUB htx",
+      "Prime Bazaar: Halal Supermarket",
+      "Kabsykreations",
+      "Carmen's Boutique",
+      "Caribbean Transport and Towing LLC",
+      "TNT Crane & Rigging",
+      "Webwood Flowers & Gifts",
+      "UPS Authorized Shipping Outlet",
+      "Desi Adda Indian Grocery"
+    ]
+  }
+]
