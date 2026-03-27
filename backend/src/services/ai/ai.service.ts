@@ -157,6 +157,39 @@ function parseInsights(raw: string): Insights {
 }
 
 // ---------------------------------------------------------------------------
+// Business Context
+// ---------------------------------------------------------------------------
+
+function buildBusinessContextPrompt(business: Business): { systemPrompt: string; userPrompt: string } {
+  return {
+    systemPrompt:
+      'You are a business analyst who writes clear, informative overviews of business categories for non-experts. ' +
+      'Always respond with valid JSON only. No explanation, no markdown, no code fences.',
+    userPrompt:
+      `Write a business context overview for the following category: "${business.category}".\n\n` +
+      `This is NOT about the specific business — it is about the type of business in general.\n\n` +
+      `Cover the following in structured prose with clear headings:\n` +
+      `- What this type of business does and what it sells/offers\n` +
+      `- What sector/industry it belongs to\n` +
+      `- How it typically makes money (revenue model)\n` +
+      `- Who the typical customers are\n` +
+      `- What customers usually expect from this type of business\n` +
+      `- How competitive this industry typically is\n` +
+      `- Why having an online presence matters specifically for this category\n\n` +
+      `Location context: ${business.zipcode} (use this to make any local market observations if relevant).\n\n` +
+      `Return JSON in this exact shape:\n` +
+      `{"businessContext": "your structured prose with headings here"}`,
+  };
+}
+
+function parseBusinessContext(raw: string): string {
+  const text = raw.trim().replace(/^```json\s*/i, '').replace(/```\s*$/, '').trim();
+  const parsed = JSON.parse(text);
+  if (typeof parsed.businessContext !== 'string' || !parsed.businessContext) throw new Error('businessContext field missing');
+  return parsed.businessContext.trim();
+}
+
+// ---------------------------------------------------------------------------
 // Content Brief
 // ---------------------------------------------------------------------------
 
@@ -239,6 +272,15 @@ export const AIService = {
     return insights;
   },
 
+  async generateBusinessContext(business: Business): Promise<string> {
+    logger.debug('AIService: generating business context', { id: business.id, category: business.category });
+    const prompt = buildBusinessContextPrompt(business);
+    const response = await LLMService.complete('businessContext', { ...prompt, temperature: 0.5, maxTokens: 800 });
+    const businessContext = parseBusinessContext(response.content);
+    logger.debug('AIService: business context generated', { id: business.id });
+    return businessContext;
+  },
+
   async generateContentBrief(business: Business): Promise<ContentBrief> {
     logger.debug('AIService: generating content brief', { id: business.id, name: business.name });
     const prompt = buildContentBriefPrompt(business);
@@ -264,11 +306,15 @@ export const AIService = {
     const summary = await AIService.generateSummary(business);
     business = await repo.update(id, { summary, updatedAt: new Date().toISOString() });
 
-    // Step 3: insights — uses stored reviewSnippets via business record
+    // Step 3: business context (category/sector overview)
+    const businessContext = await AIService.generateBusinessContext(business);
+    business = await repo.update(id, { businessContext, updatedAt: new Date().toISOString() });
+
+    // Step 4: insights — uses stored reviewSnippets via business record
     const insights = await AIService.generateInsights(business);
     business = await repo.update(id, { insights, updatedAt: new Date().toISOString() });
 
-    // Step 4: content brief — uses stored reviewSnippets via business record
+    // Step 5: content brief — uses stored reviewSnippets via business record
     const contentBrief = await AIService.generateContentBrief(business);
     business = await repo.update(id, { contentBrief, updatedAt: new Date().toISOString() });
 

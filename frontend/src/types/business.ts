@@ -54,10 +54,16 @@ export interface Business {
   reviewCount: number | null;
   googleMapsUrl: string | null;
 
+  // Scraper extras
+  reviewSnippets: string[];
+
   // AI outputs
   keywords: string[];
+  keywordCategories: Record<string, string[]> | null;
   summary: string | null;
+  businessContext: string | null;
   insights: Insights | null;
+  contentBrief: { confirmedFacts: string; assumptions: string } | null;
 
   // Generated content
   generatedWebsiteCode: string | null;

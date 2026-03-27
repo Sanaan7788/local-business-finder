@@ -38,6 +38,7 @@ export const businesses = pgTable('businesses', {
   keywords:          jsonb('keywords').$type<string[]>().notNull().default([]),
   keywordCategories: jsonb('keyword_categories'),
   summary:           text('summary'),
+  businessContext:   text('business_context'),
   insights:          jsonb('insights'),
   contentBrief:      jsonb('content_brief'),
 

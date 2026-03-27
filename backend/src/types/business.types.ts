@@ -92,6 +92,7 @@ export const BusinessSchema = z.object({
   keywords: z.array(z.string()),
   keywordCategories: KeywordsSchema.nullable(),
   summary: z.string().nullable(),
+  businessContext: z.string().nullable(),
   insights: InsightsSchema.nullable(),
   contentBrief: ContentBriefSchema.nullable(),
 

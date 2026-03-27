@@ -54,6 +54,7 @@ function rowToBusiness(row: typeof businesses.$inferSelect): Business | null {
     keywords:             (row.keywords as string[]) ?? [],
     keywordCategories:    (row.keywordCategories as any) ?? null,
     summary:              row.summary ?? null,
+    businessContext:      row.businessContext ?? null,
     insights:             (row.insights as any) ?? null,
     contentBrief:         (row.contentBrief as any) ?? null,
     generatedWebsiteCode: row.generatedWebsiteCode ?? null,
@@ -100,6 +101,7 @@ function businessToInsert(b: Business): typeof businesses.$inferInsert {
     keywords:             b.keywords,
     keywordCategories:    b.keywordCategories as any,
     summary:              b.summary,
+    businessContext:      b.businessContext,
     insights:             b.insights as any,
     contentBrief:         b.contentBrief as any,
     generatedWebsiteCode: b.generatedWebsiteCode,
@@ -208,8 +210,9 @@ export class PostgresBusinessRepository implements IBusinessRepository {
     if (payload.reviewSnippets !== undefined)    updateData.reviewSnippets = payload.reviewSnippets;
     if (payload.keywords !== undefined)          updateData.keywords = payload.keywords;
     if (payload.keywordCategories !== undefined) updateData.keywordCategories = payload.keywordCategories as any;
-    if (payload.summary !== undefined)           updateData.summary = payload.summary;
-    if (payload.insights !== undefined)          updateData.insights = payload.insights as any;
+    if (payload.summary !== undefined)          updateData.summary = payload.summary;
+    if (payload.businessContext !== undefined)  updateData.businessContext = payload.businessContext;
+    if (payload.insights !== undefined)         updateData.insights = payload.insights as any;
     if (payload.contentBrief !== undefined)      updateData.contentBrief = payload.contentBrief as any;
     if (payload.generatedWebsiteCode !== undefined) updateData.generatedWebsiteCode = payload.generatedWebsiteCode;
     if (payload.outreach !== undefined)    updateData.outreach = payload.outreach as any;

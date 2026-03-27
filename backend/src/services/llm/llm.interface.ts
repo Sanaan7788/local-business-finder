@@ -36,6 +36,7 @@ export interface ILLMProvider {
 export type LLMTask =
   | 'keywords'
   | 'summary'
+  | 'businessContext'
   | 'insights'
   | 'contentBrief'
   | 'websiteGeneration'

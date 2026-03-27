@@ -71,6 +71,7 @@ async function main() {
       summary: null,
       insights: null,
       contentBrief: null,
+          businessContext: null,
       generatedWebsiteCode: null,
       outreach: null,
       githubUrl: null,

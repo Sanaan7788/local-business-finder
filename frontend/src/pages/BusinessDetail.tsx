@@ -258,13 +258,6 @@ function OverviewTab({ business }: { business: any }) {
         </div>
       )}
 
-      {/* AI summary (read-only) */}
-      {business.summary && (
-        <div className="bg-blue-50 rounded-lg p-4">
-          <p className="text-xs text-blue-600 font-medium mb-1">AI Summary</p>
-          <p className="text-sm text-blue-900">{business.summary}</p>
-        </div>
-      )}
 
       {/* Stub notice */}
       {!business.phone && !business.address && (
@@ -280,6 +273,52 @@ function OverviewTab({ business }: { business: any }) {
               Search Maps →
             </a>
           )}
+        </div>
+      )}
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// Summary tab
+// ---------------------------------------------------------------------------
+function SummaryTab({ business, onAnalyze, analyzing }: { business: any; onAnalyze: () => void; analyzing: boolean }) {
+  if (!business.summary && !business.businessContext) {
+    return (
+      <div className="text-center py-12">
+        <p className="text-gray-500 mb-4">No summary generated yet.</p>
+        <button
+          onClick={onAnalyze}
+          disabled={analyzing}
+          className="bg-blue-600 text-white px-6 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 disabled:opacity-50 transition-colors"
+        >
+          {analyzing ? 'Analyzing…' : 'Generate AI Analysis'}
+        </button>
+        <p className="text-xs text-gray-400 mt-2">Generates keywords, summary, business context, and insights in one go</p>
+      </div>
+    )
+  }
+  return (
+    <div className="space-y-5">
+      <div className="flex justify-end">
+        <button onClick={onAnalyze} disabled={analyzing} className="text-xs text-blue-600 hover:text-blue-800 disabled:opacity-50">
+          {analyzing ? 'Re-analyzing…' : 'Re-analyze'}
+        </button>
+      </div>
+
+      {business.summary && (
+        <div className="bg-blue-50 border border-blue-200 rounded-xl p-5">
+          <p className="text-xs font-semibold text-blue-600 uppercase tracking-wide mb-2">Business Summary</p>
+          <p className="text-sm text-blue-900 leading-relaxed">{business.summary}</p>
+        </div>
+      )}
+
+      {business.businessContext && (
+        <div className="bg-slate-50 border border-slate-200 rounded-xl p-5">
+          <p className="text-xs font-semibold text-slate-600 uppercase tracking-wide mb-3">Industry & Category Context</p>
+          <pre className="text-sm text-slate-800 whitespace-pre-wrap leading-relaxed font-sans">
+            {business.businessContext}
+          </pre>
         </div>
       )}
     </div>
@@ -720,7 +759,7 @@ function DeploymentTab({ business }: { business: any }) {
 // ---------------------------------------------------------------------------
 // Main detail page
 // ---------------------------------------------------------------------------
-const TABS = ['Overview', 'Keywords', 'Insights', 'Content Brief', 'Website', 'CRM', 'Deployment'] as const
+const TABS = ['Overview', 'Summary', 'Keywords', 'Insights', 'Content Brief', 'Website', 'CRM', 'Deployment'] as const
 type Tab = typeof TABS[number]
 
 export default function BusinessDetail() {
@@ -771,6 +810,7 @@ export default function BusinessDetail() {
               }`}
             >
               {tab}
+              {tab === 'Summary' && (business.summary || business.businessContext) && <span className="ml-1 text-xs text-green-500">✓</span>}
               {tab === 'Keywords' && business.keywords?.length > 0 && <span className="ml-1 text-xs text-green-500">✓</span>}
               {tab === 'Insights' && business.insights && <span className="ml-1 text-xs text-green-500">✓</span>}
               {tab === 'Content Brief' && business.contentBrief && <span className="ml-1 text-xs text-green-500">✓</span>}
@@ -783,6 +823,9 @@ export default function BusinessDetail() {
 
       <div className="bg-white rounded-xl border border-gray-200 p-6">
         {activeTab === 'Overview' && <OverviewTab business={business} />}
+        {activeTab === 'Summary' && (
+          <SummaryTab business={business} onAnalyze={() => analyze.mutate(id!)} analyzing={analyze.isPending} />
+        )}
         {activeTab === 'Keywords' && (
           <KeywordsTab business={business} onAnalyze={() => analyze.mutate(id!)} analyzing={analyze.isPending} />
         )}
