@@ -27,6 +27,11 @@ const StartScraperSchema = z.object({
   maxResults: z.number().int().min(1).max(200).default(50),
 });
 
+const LookupSchema = z.object({
+  businessName: z.string().min(1).max(200),
+  location: z.string().min(1).max(200),
+});
+
 const StartBatchSchema = z.object({
   zipcode: z
     .string()
@@ -36,6 +41,30 @@ const StartBatchSchema = z.object({
   categories: z.array(z.string().min(1).max(100)).min(1).max(50),
   maxResults: z.number().int().min(1).max(200).default(20),
 });
+
+// ---------------------------------------------------------------------------
+// POST /api/scraper/lookup
+// Look up a single specific business by name + location.
+// Synchronous — waits for the scrape and returns the result directly.
+// ---------------------------------------------------------------------------
+
+router.post(
+  '/lookup',
+  validateBody(LookupSchema),
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { businessName, location } = req.body as z.infer<typeof LookupSchema>;
+      const scraper = ScraperService.getInstance();
+
+      logger.info('Single business lookup requested', { businessName, location });
+      const result = await scraper.lookup(businessName, location);
+
+      res.json({ success: true, data: result });
+    } catch (err) {
+      next(err);
+    }
+  },
+);
 
 // ---------------------------------------------------------------------------
 // POST /api/scraper/start

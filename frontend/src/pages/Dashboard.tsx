@@ -6,6 +6,7 @@ import {
   useStartScraper,
   useStartBatch,
   useStopScraper,
+  useLookupBusiness,
 } from '../hooks/useBusinesses'
 
 // ---------------------------------------------------------------------------
@@ -233,8 +234,13 @@ export default function Dashboard() {
   const startScraper = useStartScraper()
   const startBatch = useStartBatch()
   const stopScraper = useStopScraper()
+  const lookupBusiness = useLookupBusiness()
 
-  const [mode, setMode] = useState<'single' | 'batch'>('single')
+  const [lookupName, setLookupName] = useState('')
+  const [lookupLocation, setLookupLocation] = useState('')
+  const [lookupResult, setLookupResult] = useState<{ status: string; businessId?: string; message: string } | null>(null)
+
+  const [mode, setMode] = useState<'single' | 'batch' | 'lookup'>('single')
   const [location, setLocation] = useState('')
   const [mapsLink, setMapsLink] = useState('')
   const [mapsLinkError, setMapsLinkError] = useState('')
@@ -282,6 +288,17 @@ export default function Dashboard() {
     : 0
 
   const isPending = startScraper.isPending || startBatch.isPending
+
+  const handleLookup = async () => {
+    if (!lookupName.trim() || !lookupLocation.trim()) return
+    setLookupResult(null)
+    try {
+      const result = await lookupBusiness.mutateAsync({ businessName: lookupName.trim(), location: lookupLocation.trim() })
+      setLookupResult(result)
+    } catch (e: any) {
+      setLookupResult({ status: 'error', message: e.message })
+    }
+  }
 
   return (
     <div className="space-y-8">
@@ -387,7 +404,7 @@ export default function Dashboard() {
                   mode === 'single' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                 }`}
               >
-                Single Search
+                Area Search
               </button>
               <button
                 onClick={() => setMode('batch')}
@@ -395,11 +412,84 @@ export default function Dashboard() {
                   mode === 'batch' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                 }`}
               >
-                Batch (multi-category)
+                Batch
+              </button>
+              <button
+                onClick={() => { setMode('lookup'); setLookupResult(null) }}
+                className={`px-3 py-1.5 text-sm rounded-lg font-medium transition-colors ${
+                  mode === 'lookup' ? 'bg-purple-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                }`}
+              >
+                Lookup One Business
               </button>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
+            {/* Lookup mode form */}
+            {mode === 'lookup' && (
+              <div className="space-y-3">
+                <p className="text-xs text-gray-500">
+                  Enter the exact business name and its location. The scraper will find that specific business on Google Maps and save its full profile.
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs text-gray-500 mb-1">Business Name</label>
+                    <input
+                      type="text"
+                      value={lookupName}
+                      onChange={e => setLookupName(e.target.value)}
+                      placeholder="e.g. Tony's Pizza, Nails by Maria"
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs text-gray-500 mb-1">Location</label>
+                    <input
+                      type="text"
+                      value={lookupLocation}
+                      onChange={e => setLookupLocation(e.target.value)}
+                      placeholder="e.g. 77477  or  Houston TX  or  Westheimer Rd Houston"
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    />
+                  </div>
+                </div>
+                <button
+                  onClick={handleLookup}
+                  disabled={lookupBusiness.isPending || !lookupName.trim() || !lookupLocation.trim()}
+                  className="bg-purple-600 text-white rounded-lg px-5 py-2 text-sm font-medium hover:bg-purple-700 disabled:opacity-50 transition-colors"
+                >
+                  {lookupBusiness.isPending ? 'Looking up…' : 'Look Up Business'}
+                </button>
+                {lookupBusiness.isPending && (
+                  <p className="text-xs text-gray-400">This may take 20–40 seconds while the scraper opens Google Maps…</p>
+                )}
+                {lookupResult && (
+                  <div className={`rounded-lg p-4 text-sm ${
+                    lookupResult.status === 'saved'     ? 'bg-green-50 border border-green-200 text-green-800' :
+                    lookupResult.status === 'duplicate' ? 'bg-yellow-50 border border-yellow-200 text-yellow-800' :
+                    lookupResult.status === 'not_found' ? 'bg-gray-50 border border-gray-200 text-gray-700' :
+                                                          'bg-red-50 border border-red-200 text-red-800'
+                  }`}>
+                    <p className="font-medium mb-1">
+                      {lookupResult.status === 'saved'     ? 'Saved' :
+                       lookupResult.status === 'duplicate' ? 'Already in database' :
+                       lookupResult.status === 'not_found' ? 'Not found' : 'Error'}
+                    </p>
+                    <p>{lookupResult.message}</p>
+                    {lookupResult.businessId && (
+                      <button
+                        onClick={() => navigate(`/businesses/${lookupResult.businessId}`)}
+                        className="mt-2 text-xs underline hover:no-underline"
+                      >
+                        View profile →
+                      </button>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Area search / batch form */}
+            {mode !== 'lookup' && <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
               {/* Location — spans 2 cols */}
               <div className="sm:col-span-2">
                 <label className="block text-xs text-gray-500 mb-1">
@@ -471,7 +561,7 @@ export default function Dashboard() {
                       : 'Start Scraper'}
                 </button>
               </div>
-            </div>
+            </div>}
 
             {/* Batch category picker */}
             {mode === 'batch' && (

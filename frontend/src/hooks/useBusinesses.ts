@@ -134,6 +134,17 @@ export function useGenerateWebsite() {
   })
 }
 
+export function useLookupBusiness() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: ({ businessName, location }: { businessName: string; location: string }) =>
+      scraperApi.lookup(businessName, location),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['businesses'] })
+    },
+  })
+}
+
 export function useStartScraper() {
   const qc = useQueryClient()
   return useMutation({

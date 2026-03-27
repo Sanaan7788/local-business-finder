@@ -94,6 +94,13 @@ export const businessApi = {
 // ---------------------------------------------------------------------------
 
 export const scraperApi = {
+  lookup: (businessName: string, location: string) =>
+    api.post<any>('/scraper/lookup', { businessName, location }).then(unwrap) as Promise<{
+      status: 'saved' | 'duplicate' | 'not_found' | 'error';
+      businessId?: string;
+      message: string;
+    }>,
+
   start: (zipcode: string, category: string, maxResults: number) =>
     api.post<any>('/scraper/start', { zipcode, category, maxResults }).then(unwrap),
 

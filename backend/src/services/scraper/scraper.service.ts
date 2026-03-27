@@ -26,6 +26,12 @@ export interface BatchProgress {
   pendingJobs: BatchJob[];
 }
 
+export interface LookupResult {
+  status: 'saved' | 'duplicate' | 'not_found' | 'error';
+  businessId?: string;   // set when saved or duplicate
+  message: string;
+}
+
 export class ScraperService {
   private static _instance: ScraperService | null = null;
 
@@ -82,6 +88,113 @@ export class ScraperService {
 
     logger.info('Scraper started', { zipcode, category, maxResults });
     this.queue.add(() => this.runSession(zipcode, category, maxResults));
+  }
+
+  /**
+   * Look up a single specific business by name + location.
+   * Synchronous — awaits completion and returns the result directly.
+   * Does NOT use the background queue or update session state.
+   */
+  async lookup(businessName: string, location: string): Promise<LookupResult> {
+    if (this.state.running || this.queue.size > 0) {
+      throw new Error('A scraping session is already running. Stop it first.');
+    }
+
+    const bm = BrowserManager.getInstance();
+    const nav = new MapsNavigator();
+    const extractor = new MapsExtractor();
+    const repo = getRepository();
+    const dedup = new Deduplicator();
+
+    try {
+      await bm.launch();
+      const page = await bm.newPage();
+      await dedup.load(repo);
+
+      // Navigate to a search for this specific business at this location
+      const loaded = await nav.navigateToSearch(page, location, businessName);
+      if (!loaded) {
+        return { status: 'not_found', message: 'No results found — possible CAPTCHA or no listings for this search.' };
+      }
+
+      // Grab only the first card — it's the most relevant result
+      const cardData = await extractor.extractFromCard(page, 0);
+      if (!cardData) {
+        return { status: 'not_found', message: 'Could not read the first result card.' };
+      }
+
+      // Open the detail panel
+      let opened = false;
+      if (cardData.googleMapsUrl) {
+        opened = await nav.openListingByUrl(page, cardData.googleMapsUrl);
+      }
+      if (!opened) {
+        await nav.goBackToResults(page, location, businessName);
+        opened = await nav.openListingByName(page, cardData.name);
+      }
+      if (!opened) {
+        return { status: 'error', message: `Found "${cardData.name}" but could not open its detail panel.` };
+      }
+
+      const raw: DetailData | null = await extractor.extractFromDetail(page, cardData, location);
+      if (!raw) {
+        return { status: 'error', message: `Found "${cardData.name}" but could not extract detail data.` };
+      }
+
+      // Dedup check — return existing record if already in DB
+      const dupId = dedup.isDuplicate(raw);
+      if (dupId) {
+        logger.info('Lookup: duplicate found', { name: raw.name, dupId });
+        return { status: 'duplicate', businessId: dupId, message: `"${raw.name}" already exists in your database.` };
+      }
+
+      // Score, build, save
+      const { score, priority } = scoreLead(raw);
+      const now = new Date().toISOString();
+      const { reviewSnippets, ...rawBusiness } = raw;
+
+      const business: Business = {
+        id: uuidv4(),
+        createdAt: now,
+        updatedAt: now,
+        ...rawBusiness,
+        reviewSnippets,
+        keywords: [],
+        keywordCategories: null,
+        summary: null,
+        insights: null,
+        contentBrief: null,
+        generatedWebsiteCode: null,
+        outreach: null,
+        githubUrl: null,
+        deployedUrl: null,
+        leadStatus: 'new',
+        priority,
+        priorityScore: score,
+        notes: null,
+        lastContactedAt: null,
+      };
+
+      await repo.create(business);
+      dedup.register(business);
+
+      // Auto-generate keywords (non-fatal)
+      try {
+        const { flat: keywords, categories: keywordCategories } = await AIService.generateKeywords(business);
+        await repo.update(business.id, { keywords, keywordCategories, updatedAt: new Date().toISOString() });
+      } catch (kwErr) {
+        logger.warn('Lookup: keyword generation failed (non-fatal)', { error: (kwErr as Error).message });
+      }
+
+      logger.info('Lookup: business saved', { name: business.name, priority, score });
+      return { status: 'saved', businessId: business.id, message: `"${business.name}" saved successfully.` };
+
+    } catch (err) {
+      logger.error('Lookup failed', { error: (err as Error).message });
+      return { status: 'error', message: (err as Error).message };
+    } finally {
+      await bm.close();
+    }
   }
 
   /** Queue multiple category searches for the same zipcode */
