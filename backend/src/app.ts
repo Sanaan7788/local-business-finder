@@ -19,8 +19,8 @@ app.use(loggerMiddleware);
 app.use('/api/health', healthRoutes);
 app.use('/api/scraper', scraperRoutes);
 app.use('/api/businesses', businessesRoutes);
-app.use('/api/businesses', analysisRoutes);
-app.use('/api/businesses', websiteRoutes);
+app.use('/api/businesses/:id', analysisRoutes);
+app.use('/api/businesses/:id', websiteRoutes);
 
 // 404 handler
 app.use((_req, res) => {
