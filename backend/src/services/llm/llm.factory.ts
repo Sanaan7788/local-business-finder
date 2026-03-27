@@ -28,10 +28,22 @@ export class LLMFactory {
         const { OpenAIAdapter } = require('./adapters/openai.adapter');
         return new OpenAIAdapter();
       }
+      case 'gemini': {
+        const { GeminiAdapter } = require('./adapters/gemini.adapter');
+        return new GeminiAdapter();
+      }
+      case 'mistral': {
+        const { MistralAdapter } = require('./adapters/mistral.adapter');
+        return new MistralAdapter();
+      }
+      case 'groq': {
+        const { GroqAdapter } = require('./adapters/groq.adapter');
+        return new GroqAdapter();
+      }
       default:
         throw new Error(
           `Unknown LLM provider: "${name}". ` +
-          `Supported: deepseek, claude, openai. ` +
+          `Supported: deepseek, claude, openai, gemini, mistral, groq. ` +
           `Set LLM_PROVIDER in .env.`
         );
     }

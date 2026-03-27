@@ -90,6 +90,26 @@ export const businessApi = {
 }
 
 // ---------------------------------------------------------------------------
+// Settings
+// ---------------------------------------------------------------------------
+
+export interface ProviderInfo {
+  id: string
+  label: string
+  model: string
+  configured: boolean
+  free?: string
+}
+
+export const settingsApi = {
+  getLlm: () =>
+    api.get<any>('/settings/llm').then(unwrap) as Promise<{ active: string; providers: ProviderInfo[] }>,
+
+  setLlm: (provider: string) =>
+    api.post<any>('/settings/llm', { provider }).then(unwrap) as Promise<{ active: string }>,
+}
+
+// ---------------------------------------------------------------------------
 // Scraper
 // ---------------------------------------------------------------------------
 
