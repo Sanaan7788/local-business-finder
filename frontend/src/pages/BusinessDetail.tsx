@@ -10,7 +10,7 @@ import {
   useGenerateWebsite,
 } from '../hooks/useBusinesses'
 import { LEAD_STATUS_LABELS, LEAD_STATUS_COLORS, PRIORITY_COLORS } from '../types/business'
-import type { LeadStatus } from '../types/business'
+import type { LeadStatus, Priority } from '../types/business'
 
 function Badge({ className, children }: { className: string; children: React.ReactNode }) {
   return (
@@ -702,7 +702,7 @@ function CRMTab({ business }: { business: any }) {
       <div className="grid grid-cols-2 gap-4 text-sm">
         <div>
           <p className="text-xs text-gray-500 mb-1">Priority Score</p>
-          <Badge className={PRIORITY_COLORS[business.priority as any]}>{business.priority} ({business.priorityScore})</Badge>
+          <Badge className={PRIORITY_COLORS[business.priority as Priority]}>{business.priority} ({business.priorityScore})</Badge>
         </div>
         <div>
           <p className="text-xs text-gray-500 mb-1">Last Contacted</p>
@@ -791,7 +791,7 @@ export default function BusinessDetail() {
             <p className="text-gray-500 text-sm mt-0.5">{business.address || <span className="italic">No address — click Edit to add</span>}</p>
           </div>
           <div className="flex gap-2 mt-1">
-            <Badge className={PRIORITY_COLORS[business.priority]}>{business.priority} priority</Badge>
+            <Badge className={PRIORITY_COLORS[business.priority as Priority]}>{business.priority} priority</Badge>
             <Badge className={LEAD_STATUS_COLORS[business.leadStatus]}>{LEAD_STATUS_LABELS[business.leadStatus]}</Badge>
           </div>
         </div>
