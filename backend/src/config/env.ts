@@ -3,7 +3,7 @@ import path from 'path';
 import { z } from 'zod';
 
 // Load .env before any validation runs
-dotenv.config({ path: path.resolve(__dirname, '../../../.env') });
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 // ---------------------------------------------------------------------------
 // Schema
