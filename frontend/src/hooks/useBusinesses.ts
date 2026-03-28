@@ -177,6 +177,27 @@ export function useStopScraper() {
   })
 }
 
+export function useAnalyzeWebsite() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: (id: string) => businessApi.analyzeWebsite(id),
+    onSuccess: (_data, id) => {
+      qc.invalidateQueries({ queryKey: keys.business(id) })
+    },
+  })
+}
+
+export function useUpdateWebsiteAnalysis() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: ({ id, data }: { id: string; data: { structured?: string; improvements?: string[] } }) =>
+      businessApi.updateWebsiteAnalysis(id, data),
+    onSuccess: (_data, { id }) => {
+      qc.invalidateQueries({ queryKey: keys.business(id) })
+    },
+  })
+}
+
 export function useDeleteBusiness() {
   const qc = useQueryClient()
   return useMutation({

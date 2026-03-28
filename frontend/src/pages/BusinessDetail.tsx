@@ -8,6 +8,8 @@ import {
   useAnalyze,
   useGenerateContentBrief,
   useGenerateWebsite,
+  useAnalyzeWebsite,
+  useUpdateWebsiteAnalysis,
 } from '../hooks/useBusinesses'
 import { LEAD_STATUS_LABELS, LEAD_STATUS_COLORS, PRIORITY_COLORS } from '../types/business'
 import type { LeadStatus, Priority } from '../types/business'
@@ -583,46 +585,286 @@ function ContentBriefTab({
 }
 
 // ---------------------------------------------------------------------------
+// Website Analysis sub-section (inside Website tab)
+// ---------------------------------------------------------------------------
+function WebsiteAnalysisSection({ business }: { business: any }) {
+  const analyzeWebsite = useAnalyzeWebsite()
+  const updateWebsiteAnalysis = useUpdateWebsiteAnalysis()
+
+  const analysis = business.websiteAnalysis as import('../types/business').WebsiteAnalysis | null
+
+  // Edit state
+  const [editingStructured, setEditingStructured] = useState(false)
+  const [structuredDraft, setStructuredDraft] = useState('')
+  const [editingImprovements, setEditingImprovements] = useState(false)
+  const [improvementsDraft, setImprovementsDraft] = useState('')
+  const [savingStructured, setSavingStructured] = useState(false)
+  const [savingImprovements, setSavingImprovements] = useState(false)
+  const [showRaw, setShowRaw] = useState(false)
+
+  const scoreColor = (s: number | null) => {
+    if (s === null) return 'bg-gray-100 text-gray-500'
+    if (s <= 4) return 'bg-red-100 text-red-700'
+    if (s <= 7) return 'bg-yellow-100 text-yellow-700'
+    return 'bg-green-100 text-green-700'
+  }
+
+  const saveStructured = async () => {
+    setSavingStructured(true)
+    await updateWebsiteAnalysis.mutateAsync({ id: business.id, data: { structured: structuredDraft } })
+    setSavingStructured(false)
+    setEditingStructured(false)
+  }
+
+  const saveImprovements = async () => {
+    setSavingImprovements(true)
+    const list = improvementsDraft.split('\n').map(l => l.replace(/^[-•*]\s*/, '').trim()).filter(Boolean)
+    await updateWebsiteAnalysis.mutateAsync({ id: business.id, data: { improvements: list } })
+    setSavingImprovements(false)
+    setEditingImprovements(false)
+  }
+
+  if (!business.websiteUrl) {
+    return (
+      <div className="bg-gray-50 border border-gray-200 rounded-xl p-5 text-center">
+        <p className="text-sm text-gray-500">No website URL — add a website URL in the Overview tab first.</p>
+      </div>
+    )
+  }
+
+  if (!analysis) {
+    return (
+      <div className="bg-gray-50 border border-gray-200 rounded-xl p-5">
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-sm font-semibold text-gray-800">Current Website Structure</p>
+            <p className="text-xs text-gray-500 mt-0.5">No analysis yet — crawl and analyse the existing website</p>
+          </div>
+          <button
+            onClick={() => analyzeWebsite.mutate(business.id)}
+            disabled={analyzeWebsite.isPending}
+            className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 disabled:opacity-50 transition-colors"
+          >
+            {analyzeWebsite.isPending ? 'Crawling… (may take 60s)' : 'Analyze Website'}
+          </button>
+        </div>
+        {analyzeWebsite.isError && (
+          <p className="text-xs text-red-600 mt-3">{(analyzeWebsite.error as any)?.response?.data?.error ?? 'Analysis failed'}</p>
+        )}
+      </div>
+    )
+  }
+
+  return (
+    <div className="space-y-5">
+      {/* Header row */}
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-sm font-semibold text-gray-800">Current Website Structure</p>
+          <p className="text-xs text-gray-500 mt-0.5">
+            {analysis.pagesVisited} page{analysis.pagesVisited !== 1 ? 's' : ''} crawled ·{' '}
+            {new Date(analysis.crawledAt).toLocaleDateString()}
+          </p>
+        </div>
+        <button
+          onClick={() => analyzeWebsite.mutate(business.id)}
+          disabled={analyzeWebsite.isPending}
+          className="text-xs text-indigo-600 border border-indigo-200 px-3 py-1.5 rounded-lg hover:bg-indigo-50 disabled:opacity-50 transition-colors"
+        >
+          {analyzeWebsite.isPending ? 'Re-crawling…' : 'Re-analyze'}
+        </button>
+      </div>
+
+      {/* Score */}
+      <div className="flex items-start gap-4 bg-white border border-gray-200 rounded-xl p-4">
+        <div className={`text-2xl font-bold px-4 py-2 rounded-lg min-w-[60px] text-center ${scoreColor(analysis.score)}`}>
+          {analysis.score ?? '—'}<span className="text-sm font-normal">/10</span>
+        </div>
+        <div>
+          <p className="text-xs font-medium text-gray-500 mb-0.5">Website Quality Score</p>
+          <p className="text-sm text-gray-700">{analysis.scoreReason ?? '—'}</p>
+        </div>
+      </div>
+
+      {/* LLM Structured Analysis */}
+      <div className="border border-indigo-200 rounded-xl overflow-hidden">
+        <div className="bg-indigo-50 px-4 py-2.5 flex items-center justify-between border-b border-indigo-200">
+          <p className="text-sm font-semibold text-indigo-800">LLM Structured Analysis</p>
+          <button
+            onClick={() => {
+              setStructuredDraft(analysis.structured ?? '')
+              setEditingStructured(e => !e)
+            }}
+            className="text-xs text-indigo-600 hover:text-indigo-800"
+          >
+            {editingStructured ? 'Cancel' : 'Edit'}
+          </button>
+        </div>
+        <div className="p-4">
+          {editingStructured ? (
+            <div className="space-y-2">
+              <textarea
+                value={structuredDraft}
+                onChange={e => setStructuredDraft(e.target.value)}
+                rows={16}
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-y"
+              />
+              <button
+                onClick={saveStructured}
+                disabled={savingStructured}
+                className="bg-indigo-600 text-white px-4 py-1.5 rounded-lg text-xs font-medium hover:bg-indigo-700 disabled:opacity-50"
+              >
+                {savingStructured ? 'Saving…' : 'Save'}
+              </button>
+            </div>
+          ) : (
+            <pre className="text-sm text-gray-800 whitespace-pre-wrap leading-relaxed font-sans">
+              {analysis.structured ?? '—'}
+            </pre>
+          )}
+        </div>
+      </div>
+
+      {/* Improvements */}
+      <div className="border border-amber-200 rounded-xl overflow-hidden">
+        <div className="bg-amber-50 px-4 py-2.5 flex items-center justify-between border-b border-amber-200">
+          <p className="text-sm font-semibold text-amber-800">Improvement Opportunities <span className="font-normal text-amber-600">(for your sales pitch)</span></p>
+          <button
+            onClick={() => {
+              setImprovementsDraft((analysis.improvements ?? []).map(i => `• ${i}`).join('\n'))
+              setEditingImprovements(e => !e)
+            }}
+            className="text-xs text-amber-600 hover:text-amber-800"
+          >
+            {editingImprovements ? 'Cancel' : 'Edit'}
+          </button>
+        </div>
+        <div className="p-4">
+          {editingImprovements ? (
+            <div className="space-y-2">
+              <p className="text-xs text-gray-500">One improvement per line</p>
+              <textarea
+                value={improvementsDraft}
+                onChange={e => setImprovementsDraft(e.target.value)}
+                rows={12}
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 resize-y"
+              />
+              <button
+                onClick={saveImprovements}
+                disabled={savingImprovements}
+                className="bg-amber-600 text-white px-4 py-1.5 rounded-lg text-xs font-medium hover:bg-amber-700 disabled:opacity-50"
+              >
+                {savingImprovements ? 'Saving…' : 'Save'}
+              </button>
+            </div>
+          ) : (
+            <ul className="space-y-2">
+              {(analysis.improvements ?? []).map((item, i) => (
+                <li key={i} className="flex items-start gap-2 text-sm text-gray-700">
+                  <span className="text-amber-500 mt-0.5 shrink-0">◆</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </div>
+
+      {/* Raw crawled data — collapsible */}
+      <div className="border border-gray-200 rounded-xl overflow-hidden">
+        <button
+          onClick={() => setShowRaw(s => !s)}
+          className="w-full bg-gray-50 px-4 py-2.5 flex items-center justify-between border-b border-gray-200 hover:bg-gray-100 transition-colors"
+        >
+          <p className="text-sm font-semibold text-gray-700">Raw Extracted Data ({analysis.pagesVisited} pages)</p>
+          <span className="text-xs text-gray-400">{showRaw ? '▲ Hide' : '▼ Show'}</span>
+        </button>
+        {showRaw && (
+          <div className="p-4 space-y-4 max-h-[600px] overflow-y-auto">
+            {analysis.rawPages.map((page, i) => (
+              <div key={i} className="border border-gray-100 rounded-lg p-3 bg-gray-50">
+                <p className="text-xs font-mono text-blue-600 mb-1 break-all">{page.url}</p>
+                <p className="text-xs font-medium text-gray-700 mb-1">{page.title}</p>
+                {page.navLinks.length > 0 && (
+                  <p className="text-xs text-gray-500 mb-1">Nav: {page.navLinks.join(' · ')}</p>
+                )}
+                {page.headings.length > 0 && (
+                  <p className="text-xs text-gray-600 mb-1">Headings: {page.headings.join(' / ')}</p>
+                )}
+                {page.paragraphs.length > 0 && (
+                  <p className="text-xs text-gray-500 line-clamp-3">{page.paragraphs.join(' ')}</p>
+                )}
+                <div className="flex gap-3 mt-1.5 text-xs text-gray-400">
+                  <span>{page.images} images</span>
+                  {page.hasContactForm && <span className="text-green-600">✓ Contact form</span>}
+                  {page.hasPhone && <span className="text-green-600">✓ Phone</span>}
+                  {page.hasEmail && <span className="text-green-600">✓ Email</span>}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------------------
 // Website tab
 // ---------------------------------------------------------------------------
 function WebsiteTab({ business, onGenerate, generating }: { business: any; onGenerate: () => void; generating: boolean }) {
   const [showCode, setShowCode] = useState(false)
-  if (!business.generatedWebsiteCode) {
-    return (
-      <div className="text-center py-12">
-        <p className="text-gray-500 mb-4">No website generated yet.</p>
-        <button
-          onClick={onGenerate}
-          disabled={generating}
-          className="bg-green-600 text-white px-6 py-2 rounded-lg text-sm font-medium hover:bg-green-700 disabled:opacity-50 transition-colors"
-        >
-          {generating ? 'Generating… (may take 1–2 min)' : 'Generate Website'}
-        </button>
-        <p className="text-xs text-gray-400 mt-2">AI will write a complete HTML website</p>
-      </div>
-    )
-  }
+
   return (
-    <div className="space-y-4">
-      <div className="flex items-center gap-3">
-        <button onClick={() => setShowCode(s => !s)} className="text-sm text-blue-600 hover:text-blue-800">
-          {showCode ? 'Hide Code' : 'Show Code'}
-        </button>
-        <CopyButton text={business.generatedWebsiteCode} />
-        <button onClick={onGenerate} disabled={generating} className="text-sm text-gray-500 hover:text-gray-700 disabled:opacity-50">
-          {generating ? 'Regenerating…' : 'Regenerate'}
-        </button>
-        <span className="text-xs text-gray-400 ml-auto">{Math.round(business.generatedWebsiteCode.length / 1024)}KB</span>
+    <div className="space-y-8">
+      {/* ── Current Website Structure ── */}
+      <div>
+        <h3 className="text-base font-semibold text-gray-900 mb-4">Current Website Structure</h3>
+        <WebsiteAnalysisSection business={business} />
       </div>
-      <div className="border border-gray-200 rounded-lg overflow-hidden">
-        <div className="bg-gray-100 px-3 py-1.5 text-xs text-gray-500 border-b border-gray-200">Preview</div>
-        <iframe srcDoc={business.generatedWebsiteCode} className="w-full h-96 bg-white" sandbox="allow-same-origin" title="Website preview" />
+
+      {/* ── Divider ── */}
+      <div className="border-t border-gray-200" />
+
+      {/* ── Generated Website ── */}
+      <div>
+        <h3 className="text-base font-semibold text-gray-900 mb-4">Generated Website</h3>
+        {!business.generatedWebsiteCode ? (
+          <div className="text-center py-10">
+            <p className="text-gray-500 mb-4">No website generated yet.</p>
+            <button
+              onClick={onGenerate}
+              disabled={generating}
+              className="bg-green-600 text-white px-6 py-2 rounded-lg text-sm font-medium hover:bg-green-700 disabled:opacity-50 transition-colors"
+            >
+              {generating ? 'Generating… (may take 1–2 min)' : 'Generate Website'}
+            </button>
+            <p className="text-xs text-gray-400 mt-2">AI will write a complete HTML website</p>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <button onClick={() => setShowCode(s => !s)} className="text-sm text-blue-600 hover:text-blue-800">
+                {showCode ? 'Hide Code' : 'Show Code'}
+              </button>
+              <CopyButton text={business.generatedWebsiteCode} />
+              <button onClick={onGenerate} disabled={generating} className="text-sm text-gray-500 hover:text-gray-700 disabled:opacity-50">
+                {generating ? 'Regenerating…' : 'Regenerate'}
+              </button>
+              <span className="text-xs text-gray-400 ml-auto">{Math.round(business.generatedWebsiteCode.length / 1024)}KB</span>
+            </div>
+            <div className="border border-gray-200 rounded-lg overflow-hidden">
+              <div className="bg-gray-100 px-3 py-1.5 text-xs text-gray-500 border-b border-gray-200">Preview</div>
+              <iframe srcDoc={business.generatedWebsiteCode} className="w-full h-96 bg-white" sandbox="allow-same-origin" title="Website preview" />
+            </div>
+            {showCode && (
+              <pre className="bg-gray-900 text-green-400 text-xs p-4 rounded-lg overflow-auto max-h-96 font-mono">
+                {business.generatedWebsiteCode}
+              </pre>
+            )}
+          </div>
+        )}
       </div>
-      {showCode && (
-        <pre className="bg-gray-900 text-green-400 text-xs p-4 rounded-lg overflow-auto max-h-96 font-mono">
-          {business.generatedWebsiteCode}
-        </pre>
-      )}
     </div>
   )
 }
@@ -716,6 +958,12 @@ function CRMTab({ business }: { business: any }) {
           <p className="text-xs text-gray-500 mb-1">Updated</p>
           <p className="text-sm">{new Date(business.updatedAt).toLocaleDateString()}</p>
         </div>
+        <div>
+          <p className="text-xs text-gray-500 mb-1">Tokens Used (lifetime)</p>
+          <p className="text-sm text-purple-700 font-medium">
+            {(business.tokensUsed ?? 0) > 0 ? (business.tokensUsed as number).toLocaleString() : '—'}
+          </p>
+        </div>
       </div>
     </div>
   )
@@ -790,9 +1038,12 @@ export default function BusinessDetail() {
             <h1 className="text-2xl font-bold text-gray-900">{business.name}</h1>
             <p className="text-gray-500 text-sm mt-0.5">{business.address || <span className="italic">No address — click Edit to add</span>}</p>
           </div>
-          <div className="flex gap-2 mt-1">
+          <div className="flex gap-2 mt-1 flex-wrap justify-end">
             <Badge className={PRIORITY_COLORS[business.priority as Priority]}>{business.priority} priority</Badge>
             <Badge className={LEAD_STATUS_COLORS[business.leadStatus]}>{LEAD_STATUS_LABELS[business.leadStatus]}</Badge>
+            {(business.tokensUsed ?? 0) > 0 && (
+              <Badge className="bg-purple-100 text-purple-700">{(business.tokensUsed as number).toLocaleString()} tokens</Badge>
+            )}
           </div>
         </div>
       </div>

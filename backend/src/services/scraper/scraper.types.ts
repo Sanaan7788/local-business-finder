@@ -33,6 +33,7 @@ export interface ScraperState {
   saved: number;    // new records written to storage
   skipped: number;  // duplicates detected and skipped
   errors: number;   // individual extraction/navigation failures
+  tokensUsed: number; // total LLM tokens consumed in this session
   startedAt: string | null;
   finishedAt: string | null;
 
@@ -52,6 +53,7 @@ export const INITIAL_STATE: ScraperState = {
   saved: 0,
   skipped: 0,
   errors: 0,
+  tokensUsed: 0,
   startedAt: null,
   finishedAt: null,
   savedList: [],
@@ -74,6 +76,7 @@ export interface ScrapeHistoryEntry {
   saved: number;
   skipped: number;
   errors: number;
+  tokensUsed: number;
   savedList: SavedEntry[];
   skippedList: SkippedEntry[];
   errorList: ErrorEntry[];

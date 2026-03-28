@@ -40,6 +40,32 @@ export const KeywordsSchema = z.object({
   searchPhrases:      z.array(z.string()), // full phrases customers search: "best nail salon near me"
 });
 
+// ---------------------------------------------------------------------------
+// Website Analysis — crawled structure + LLM analysis + score
+// ---------------------------------------------------------------------------
+
+export const CrawledPageSchema = z.object({
+  url: z.string(),
+  title: z.string(),
+  headings: z.array(z.string()),
+  paragraphs: z.array(z.string()),
+  navLinks: z.array(z.string()),
+  images: z.number(),
+  hasContactForm: z.boolean(),
+  hasPhone: z.boolean(),
+  hasEmail: z.boolean(),
+});
+
+export const WebsiteAnalysisSchema = z.object({
+  crawledAt: z.string().datetime(),
+  pagesVisited: z.number(),
+  rawPages: z.array(CrawledPageSchema),
+  structured: z.string().nullable(),       // LLM-generated clean structured summary
+  improvements: z.array(z.string()),       // LLM-generated improvement suggestions
+  score: z.number().min(0).max(10).nullable(), // 0–10 quality score
+  scoreReason: z.string().nullable(),      // brief explanation of score
+});
+
 export const OutreachSchema = z.object({
   email: z
     .object({
@@ -98,11 +124,15 @@ export const BusinessSchema = z.object({
 
   // Generated content — populated by website generator + outreach service
   generatedWebsiteCode: z.string().nullable(),
+  websiteAnalysis: WebsiteAnalysisSchema.nullable(),
   outreach: OutreachSchema.nullable(),
 
   // Deployment — populated by GitHub/Vercel services
   githubUrl: z.string().url().nullable(),
   deployedUrl: z.string().url().nullable(),
+
+  // Token tracking
+  tokensUsed: z.number().int().min(0),
 
   // CRM / Lead management
   leadStatus: LeadStatusSchema,
@@ -153,3 +183,5 @@ export type Insights = z.infer<typeof InsightsSchema>;
 export type Outreach = z.infer<typeof OutreachSchema>;
 export type ContentBrief = z.infer<typeof ContentBriefSchema>;
 export type Keywords = z.infer<typeof KeywordsSchema>;
+export type WebsiteAnalysis = z.infer<typeof WebsiteAnalysisSchema>;
+export type CrawledPage = z.infer<typeof CrawledPageSchema>;

@@ -44,11 +44,15 @@ export const businesses = pgTable('businesses', {
 
   // Generated content
   generatedWebsiteCode: text('generated_website_code'),
+  websiteAnalysis:      jsonb('website_analysis'),
   outreach:             jsonb('outreach'),
 
   // Deployment
   githubUrl:   text('github_url'),
   deployedUrl: text('deployed_url'),
+
+  // Token tracking
+  tokensUsed:      integer('tokens_used').notNull().default(0),
 
   // CRM / Lead
   leadStatus:      text('lead_status').notNull().default('new'),
@@ -72,6 +76,7 @@ export const scrapeSessions = pgTable('scrape_sessions', {
   saved:      integer('saved').notNull().default(0),
   skipped:    integer('skipped').notNull().default(0),
   errors:     integer('errors').notNull().default(0),
+  tokensUsed: integer('tokens_used').notNull().default(0),
   savedList:   jsonb('saved_list').$type<any[]>().notNull().default([]),
   skippedList: jsonb('skipped_list').$type<any[]>().notNull().default([]),
   errorList:   jsonb('error_list').$type<any[]>().notNull().default([]),

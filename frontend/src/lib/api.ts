@@ -87,6 +87,15 @@ export const businessApi = {
 
   getWebsite: (id: string) =>
     api.get<any>(`/businesses/${id}/website`).then(unwrap) as Promise<{ slug: string; html: string }>,
+
+  analyzeWebsite: (id: string) =>
+    api.post<any>(`/businesses/${id}/website-analysis`).then(unwrap) as Promise<import('../types/business').WebsiteAnalysis>,
+
+  getWebsiteAnalysis: (id: string) =>
+    api.get<any>(`/businesses/${id}/website-analysis`).then(unwrap) as Promise<import('../types/business').WebsiteAnalysis | null>,
+
+  updateWebsiteAnalysis: (id: string, data: { structured?: string; improvements?: string[] }) =>
+    api.patch<any>(`/businesses/${id}/website-analysis`, data).then(unwrap) as Promise<import('../types/business').WebsiteAnalysis>,
 }
 
 // ---------------------------------------------------------------------------
@@ -107,6 +116,9 @@ export const settingsApi = {
 
   setLlm: (provider: string) =>
     api.post<any>('/settings/llm', { provider }).then(unwrap) as Promise<{ active: string }>,
+
+  getStats: () =>
+    api.get<any>('/settings/stats').then(unwrap) as Promise<{ totalTokensUsed: number }>,
 }
 
 // ---------------------------------------------------------------------------

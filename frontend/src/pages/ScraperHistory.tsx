@@ -97,6 +97,9 @@ function SessionDetail({ id, onClose }: { id: string; onClose: () => void }) {
           <p className="text-xs text-gray-500 mt-0.5">
             {new Date(data.startedAt).toLocaleString()} → {data.finishedAt ? new Date(data.finishedAt).toLocaleString() : 'running'}
           </p>
+          {data.tokensUsed > 0 && (
+            <p className="text-xs text-purple-600 mt-0.5">{data.tokensUsed.toLocaleString()} tokens used</p>
+          )}
         </div>
         <button onClick={onClose} className="text-gray-400 hover:text-gray-600 text-xl leading-none">×</button>
       </div>
@@ -421,6 +424,9 @@ export default function ScraperHistory() {
                     <div><p className="font-bold text-green-600">{s.saved}</p><p className="text-xs text-gray-400">saved</p></div>
                     <div><p className="font-bold text-yellow-600">{s.skipped}</p><p className="text-xs text-gray-400">skipped</p></div>
                     <div><p className="font-bold text-red-500">{s.errors}</p><p className="text-xs text-gray-400">errors</p></div>
+                    {s.tokensUsed > 0 && (
+                      <div><p className="font-bold text-purple-600">{s.tokensUsed.toLocaleString()}</p><p className="text-xs text-gray-400">tokens</p></div>
+                    )}
                   </div>
                 </div>
               </div>

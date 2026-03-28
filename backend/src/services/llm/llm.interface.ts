@@ -40,4 +40,5 @@ export type LLMTask =
   | 'insights'
   | 'contentBrief'
   | 'websiteGeneration'
+  | 'websiteAnalysis'
   | 'outreach';

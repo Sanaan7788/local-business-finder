@@ -61,8 +61,8 @@ router.post('/keywords', async (req: Request, res: Response, next: NextFunction)
       res.status(404).json({ success: false, error: `Business not found: ${id}` });
       return;
     }
-    const { flat: keywords, categories: keywordCategories } = await AIService.generateKeywords(business);
-    const updated = await repo.update(id, { keywords, keywordCategories, updatedAt: new Date().toISOString() });
+    const { flat: keywords, categories: keywordCategories, tokensUsed } = await AIService.generateKeywords(business);
+    const updated = await repo.update(id, { keywords, keywordCategories, tokensUsed: business.tokensUsed + tokensUsed, updatedAt: new Date().toISOString() });
     res.json({ success: true, data: { keywords: updated.keywords, keywordCategories: updated.keywordCategories } });
   } catch (err) {
     next(err);
@@ -80,8 +80,8 @@ router.post('/content-brief', async (req: Request, res: Response, next: NextFunc
       res.status(404).json({ success: false, error: `Business not found: ${id}` });
       return;
     }
-    const contentBrief = await AIService.generateContentBrief(business);
-    const updated = await repo.update(id, { contentBrief, updatedAt: new Date().toISOString() });
+    const { contentBrief, tokensUsed } = await AIService.generateContentBrief(business);
+    const updated = await repo.update(id, { contentBrief, tokensUsed: business.tokensUsed + tokensUsed, updatedAt: new Date().toISOString() });
     res.json({ success: true, data: { contentBrief: updated.contentBrief } });
   } catch (err) {
     next(err);

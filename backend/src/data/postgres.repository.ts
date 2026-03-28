@@ -58,9 +58,11 @@ function rowToBusiness(row: typeof businesses.$inferSelect): Business | null {
     insights:             (row.insights as any) ?? null,
     contentBrief:         (row.contentBrief as any) ?? null,
     generatedWebsiteCode: row.generatedWebsiteCode ?? null,
+    websiteAnalysis:      (row.websiteAnalysis as any) ?? null,
     outreach:             (row.outreach as any) ?? null,
     githubUrl:            row.githubUrl ?? null,
     deployedUrl:          row.deployedUrl ?? null,
+    tokensUsed:           row.tokensUsed ?? 0,
     leadStatus:           row.leadStatus as any,
     priority:             row.priority as any,
     priorityScore:        row.priorityScore,
@@ -105,9 +107,11 @@ function businessToInsert(b: Business): typeof businesses.$inferInsert {
     insights:             b.insights as any,
     contentBrief:         b.contentBrief as any,
     generatedWebsiteCode: b.generatedWebsiteCode,
+    websiteAnalysis:      b.websiteAnalysis as any,
     outreach:             b.outreach as any,
     githubUrl:            b.githubUrl,
     deployedUrl:          b.deployedUrl,
+    tokensUsed:           b.tokensUsed,
     leadStatus:           b.leadStatus,
     priority:             b.priority,
     priorityScore:        b.priorityScore,
@@ -215,11 +219,13 @@ export class PostgresBusinessRepository implements IBusinessRepository {
     if (payload.insights !== undefined)         updateData.insights = payload.insights as any;
     if (payload.contentBrief !== undefined)      updateData.contentBrief = payload.contentBrief as any;
     if (payload.generatedWebsiteCode !== undefined) updateData.generatedWebsiteCode = payload.generatedWebsiteCode;
+    if (payload.websiteAnalysis !== undefined) updateData.websiteAnalysis = payload.websiteAnalysis as any;
     if (payload.outreach !== undefined)    updateData.outreach = payload.outreach as any;
     if (payload.githubUrl !== undefined)   updateData.githubUrl = payload.githubUrl;
     if (payload.deployedUrl !== undefined) updateData.deployedUrl = payload.deployedUrl;
     if (payload.leadStatus !== undefined)  updateData.leadStatus = payload.leadStatus;
     if (payload.priority !== undefined)    updateData.priority = payload.priority;
+    if (payload.tokensUsed !== undefined)   updateData.tokensUsed = payload.tokensUsed;
     if (payload.priorityScore !== undefined) updateData.priorityScore = payload.priorityScore;
     if (payload.notes !== undefined)       updateData.notes = payload.notes;
     if (payload.lastContactedAt !== undefined) {
@@ -261,6 +267,14 @@ export class PostgresBusinessRepository implements IBusinessRepository {
       .from(businesses)
       .where(conditions);
     return Number(result[0]?.count ?? 0);
+  }
+
+  async totalTokensUsed(): Promise<number> {
+    const db = getDb();
+    const result = await db
+      .select({ total: sql<number>`coalesce(sum(tokens_used), 0)` })
+      .from(businesses);
+    return Number(result[0]?.total ?? 0);
   }
 }
 

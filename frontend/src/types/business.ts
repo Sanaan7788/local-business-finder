@@ -35,6 +35,28 @@ export interface Outreach {
   } | null;
 }
 
+export interface CrawledPage {
+  url: string;
+  title: string;
+  headings: string[];
+  paragraphs: string[];
+  navLinks: string[];
+  images: number;
+  hasContactForm: boolean;
+  hasPhone: boolean;
+  hasEmail: boolean;
+}
+
+export interface WebsiteAnalysis {
+  crawledAt: string;
+  pagesVisited: number;
+  rawPages: CrawledPage[];
+  structured: string | null;
+  improvements: string[];
+  score: number | null;
+  scoreReason: string | null;
+}
+
 export interface Business {
   // Identity
   id: string;
@@ -67,11 +89,15 @@ export interface Business {
 
   // Generated content
   generatedWebsiteCode: string | null;
+  websiteAnalysis: WebsiteAnalysis | null;
   outreach: Outreach | null;
 
   // Deployment
   githubUrl: string | null;
   deployedUrl: string | null;
+
+  // Token tracking
+  tokensUsed: number;
 
   // CRM / Lead
   leadStatus: LeadStatus;

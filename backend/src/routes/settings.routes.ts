@@ -1,6 +1,7 @@
 import { Router, Request, Response } from 'express';
 import { getAllProviders, getActiveProvider, setActiveProvider } from '../services/llm/llm.config';
 import { LLMService } from '../services/llm/llm.service';
+import { getRepository } from '../data/repository.factory';
 
 const router = Router();
 
@@ -38,6 +39,18 @@ router.post('/llm', (req: Request, res: Response) => {
   LLMService.resetCache(); // clear adapter cache so next call uses the new provider
 
   res.json({ success: true, data: { active: provider } });
+});
+
+// GET /api/settings/stats
+// Returns aggregate stats — total tokens used across all businesses.
+router.get('/stats', async (_req: Request, res: Response) => {
+  try {
+    const repo = getRepository();
+    const totalTokensUsed = await repo.totalTokensUsed();
+    res.json({ success: true, data: { totalTokensUsed } });
+  } catch (err) {
+    res.status(500).json({ success: false, error: (err as Error).message });
+  }
 });
 
 export default router;

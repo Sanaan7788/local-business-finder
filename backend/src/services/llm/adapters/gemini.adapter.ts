@@ -36,31 +36,48 @@ export class GeminiAdapter implements ILLMProvider {
       userLen: request.userPrompt.length,
     });
 
-    const response = await this.client.chat.completions.create({
-      model: this.model,
-      temperature: request.temperature ?? 0.6,
-      max_tokens: request.maxTokens ?? 4096,
-      messages: [
-        { role: 'system', content: request.systemPrompt },
-        { role: 'user', content: request.userPrompt },
-      ],
-    });
+    const maxRetries = 3;
+    for (let attempt = 0; attempt <= maxRetries; attempt++) {
+      try {
+        const response = await this.client.chat.completions.create({
+          model: this.model,
+          stream: false,
+          temperature: request.temperature ?? 0.6,
+          max_tokens: request.maxTokens ?? 4096,
+          messages: [
+            { role: 'system', content: request.systemPrompt },
+            { role: 'user', content: request.userPrompt },
+          ],
+        });
 
-    const content = response.choices[0]?.message?.content ?? '';
-    const durationMs = Date.now() - start;
+        const content = response.choices[0]?.message?.content ?? '';
+        const durationMs = Date.now() - start;
 
-    logger.debug('Gemini response', {
-      tokensUsed: response.usage?.total_tokens,
-      durationMs,
-      finishReason: response.choices[0]?.finish_reason,
-    });
+        logger.debug('Gemini response', {
+          tokensUsed: response.usage?.total_tokens,
+          durationMs,
+          finishReason: response.choices[0]?.finish_reason,
+        });
 
-    return {
-      content,
-      provider: this.name,
-      model: this.model,
-      tokensUsed: response.usage?.total_tokens,
-      durationMs,
-    };
+        return {
+          content,
+          provider: this.name,
+          model: this.model,
+          tokensUsed: response.usage?.total_tokens,
+          durationMs,
+        };
+      } catch (err: any) {
+        const status = err?.status ?? err?.response?.status;
+        if (status === 429 && attempt < maxRetries) {
+          const waitMs = Math.pow(2, attempt) * 2000; // 2s, 4s, 8s
+          logger.warn(`Gemini 429 rate limit — retrying in ${waitMs}ms`, { attempt });
+          await new Promise(r => setTimeout(r, waitMs));
+        } else {
+          throw err;
+        }
+      }
+    }
+
+    throw new Error('Gemini: max retries exceeded');
   }
 }

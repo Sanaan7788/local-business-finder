@@ -172,6 +172,7 @@ export const WebsiteGeneratorService = {
 
     const updated = await repo.update(id, {
       generatedWebsiteCode: html,
+      tokensUsed: business.tokensUsed + (response.tokensUsed ?? 0),
       updatedAt: new Date().toISOString(),
     });
 

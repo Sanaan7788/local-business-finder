@@ -90,4 +90,9 @@ export interface IBusinessRepository {
    * Return the total count of businesses, optionally filtered.
    */
   count(filter?: BusinessFilter): Promise<number>;
+
+  /**
+   * Return the sum of tokensUsed across all businesses.
+   */
+  totalTokensUsed(): Promise<number>;
 }

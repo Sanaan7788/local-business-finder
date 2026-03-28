@@ -164,11 +164,13 @@ export class ScraperService {
         summary: null,
         insights: null,
         contentBrief: null,
-          businessContext: null,
+        businessContext: null,
         generatedWebsiteCode: null,
+        websiteAnalysis: null,
         outreach: null,
         githubUrl: null,
         deployedUrl: null,
+        tokensUsed: 0,
         leadStatus: 'new',
         priority,
         priorityScore: score,
@@ -283,11 +285,13 @@ export class ScraperService {
         summary: null,
         insights: null,
         contentBrief: null,
-          businessContext: null,
+        businessContext: null,
         generatedWebsiteCode: null,
+        websiteAnalysis: null,
         outreach: null,
         githubUrl: null,
         deployedUrl: null,
+        tokensUsed: 0,
         leadStatus: 'new',
         priority,
         priorityScore: score,
@@ -315,6 +319,7 @@ export class ScraperService {
     const extractor = new MapsExtractor();
     const repo = getRepository();
     const dedup = new Deduplicator();
+    let sessionTokensUsed = 0;
 
     try {
       await bm.launch();
@@ -407,11 +412,13 @@ export class ScraperService {
             summary: null,
             insights: null,
             contentBrief: null,
-          businessContext: null,
+            businessContext: null,
             generatedWebsiteCode: null,
+            websiteAnalysis: null,
             outreach: null,
             githubUrl: null,
             deployedUrl: null,
+            tokensUsed: 0,
             leadStatus: 'new',
             priority,
             priorityScore: score,
@@ -424,9 +431,11 @@ export class ScraperService {
 
           // Auto-generate keywords at scrape time — reviewSnippets already stored on business record
           try {
-            const { flat: keywords, categories: keywordCategories } = await AIService.generateKeywords(business);
-            await repo.update(business.id, { keywords, keywordCategories, updatedAt: new Date().toISOString() });
-            logger.debug('Keywords auto-generated at scrape time', { name: business.name, count: keywords.length });
+            const { flat: keywords, categories: keywordCategories, tokensUsed: kwTokens } = await AIService.generateKeywords(business);
+            await repo.update(business.id, { keywords, keywordCategories, tokensUsed: business.tokensUsed + kwTokens, updatedAt: new Date().toISOString() });
+            sessionTokensUsed += kwTokens;
+            this.state.tokensUsed = sessionTokensUsed;
+            logger.debug('Keywords auto-generated at scrape time', { name: business.name, count: keywords.length, tokens: kwTokens });
           } catch (kwErr) {
             logger.warn('Keyword generation failed (non-fatal)', { name: business.name, error: (kwErr as Error).message });
           }

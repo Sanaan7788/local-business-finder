@@ -245,49 +245,49 @@ function parseContentBrief(raw: string): ContentBrief {
 
 export const AIService = {
 
-  async generateKeywords(business: Business): Promise<{ flat: string[]; categories: Keywords }> {
+  async generateKeywords(business: Business): Promise<{ flat: string[]; categories: Keywords; tokensUsed: number }> {
     logger.debug('AIService: generating keywords', { id: business.id, name: business.name });
     const prompt = buildKeywordsPrompt(business);
     const response = await LLMService.complete('keywords', { ...prompt, temperature: 0.4, maxTokens: 600 });
     const result = parseKeywords(response.content);
-    logger.debug('AIService: keywords generated', { id: business.id, total: result.flat.length });
-    return result;
+    logger.debug('AIService: keywords generated', { id: business.id, total: result.flat.length, tokens: response.tokensUsed });
+    return { ...result, tokensUsed: response.tokensUsed ?? 0 };
   },
 
-  async generateSummary(business: Business): Promise<string> {
+  async generateSummary(business: Business): Promise<{ summary: string; tokensUsed: number }> {
     logger.debug('AIService: generating summary', { id: business.id, name: business.name });
     const prompt = buildSummaryPrompt(business);
     const response = await LLMService.complete('summary', { ...prompt, temperature: 0.6, maxTokens: 256 });
     const summary = parseSummary(response.content);
-    logger.debug('AIService: summary generated', { id: business.id });
-    return summary;
+    logger.debug('AIService: summary generated', { id: business.id, tokens: response.tokensUsed });
+    return { summary, tokensUsed: response.tokensUsed ?? 0 };
   },
 
-  async generateInsights(business: Business): Promise<Insights> {
+  async generateInsights(business: Business): Promise<{ insights: Insights; tokensUsed: number }> {
     logger.debug('AIService: generating insights', { id: business.id, name: business.name });
     const prompt = buildInsightsPrompt(business);
     const response = await LLMService.complete('insights', { ...prompt, temperature: 0.5, maxTokens: 600 });
     const insights = parseInsights(response.content);
-    logger.debug('AIService: insights generated', { id: business.id, opportunities: insights.opportunities.length });
-    return insights;
+    logger.debug('AIService: insights generated', { id: business.id, opportunities: insights.opportunities.length, tokens: response.tokensUsed });
+    return { insights, tokensUsed: response.tokensUsed ?? 0 };
   },
 
-  async generateBusinessContext(business: Business): Promise<string> {
+  async generateBusinessContext(business: Business): Promise<{ businessContext: string; tokensUsed: number }> {
     logger.debug('AIService: generating business context', { id: business.id, category: business.category });
     const prompt = buildBusinessContextPrompt(business);
     const response = await LLMService.complete('businessContext', { ...prompt, temperature: 0.5, maxTokens: 800 });
     const businessContext = parseBusinessContext(response.content);
-    logger.debug('AIService: business context generated', { id: business.id });
-    return businessContext;
+    logger.debug('AIService: business context generated', { id: business.id, tokens: response.tokensUsed });
+    return { businessContext, tokensUsed: response.tokensUsed ?? 0 };
   },
 
-  async generateContentBrief(business: Business): Promise<ContentBrief> {
+  async generateContentBrief(business: Business): Promise<{ contentBrief: ContentBrief; tokensUsed: number }> {
     logger.debug('AIService: generating content brief', { id: business.id, name: business.name });
     const prompt = buildContentBriefPrompt(business);
     const response = await LLMService.complete('contentBrief', { ...prompt, temperature: 0.5, maxTokens: 2048 });
     const contentBrief = parseContentBrief(response.content);
-    logger.debug('AIService: content brief generated', { id: business.id });
-    return contentBrief;
+    logger.debug('AIService: content brief generated', { id: business.id, tokens: response.tokensUsed });
+    return { contentBrief, tokensUsed: response.tokensUsed ?? 0 };
   },
 
   // Runs all enrichments in sequence and persists results to the repository.
@@ -297,28 +297,39 @@ export const AIService = {
     if (!business) throw new Error(`Business not found: ${id}`);
 
     logger.info('AIService: starting full analysis', { id, name: business.name });
+    let sessionTokens = 0;
 
-    // Step 1: keywords — uses stored reviewSnippets from business record
-    const { flat: keywords, categories: keywordCategories } = await AIService.generateKeywords(business);
-    business = await repo.update(id, { keywords, keywordCategories, updatedAt: new Date().toISOString() });
+    // Step 1: keywords
+    const { flat: keywords, categories: keywordCategories, tokensUsed: t1 } = await AIService.generateKeywords(business);
+    sessionTokens += t1;
+    business = await repo.update(id, { keywords, keywordCategories, tokensUsed: business.tokensUsed + sessionTokens, updatedAt: new Date().toISOString() });
 
     // Step 2: summary
-    const summary = await AIService.generateSummary(business);
-    business = await repo.update(id, { summary, updatedAt: new Date().toISOString() });
+    const { summary, tokensUsed: t2 } = await AIService.generateSummary(business);
+    sessionTokens += t2;
+    business = await repo.update(id, { summary, tokensUsed: business.tokensUsed + t2, updatedAt: new Date().toISOString() });
 
-    // Step 3: business context (category/sector overview)
-    const businessContext = await AIService.generateBusinessContext(business);
-    business = await repo.update(id, { businessContext, updatedAt: new Date().toISOString() });
+    // Step 3: business context
+    const { businessContext, tokensUsed: t3 } = await AIService.generateBusinessContext(business);
+    sessionTokens += t3;
+    business = await repo.update(id, { businessContext, tokensUsed: business.tokensUsed + t3, updatedAt: new Date().toISOString() });
 
-    // Step 4: insights — uses stored reviewSnippets via business record
-    const insights = await AIService.generateInsights(business);
-    business = await repo.update(id, { insights, updatedAt: new Date().toISOString() });
+    // Step 4: insights
+    const { insights, tokensUsed: t4 } = await AIService.generateInsights(business);
+    sessionTokens += t4;
+    business = await repo.update(id, { insights, tokensUsed: business.tokensUsed + t4, updatedAt: new Date().toISOString() });
 
-    // Step 5: content brief — uses stored reviewSnippets via business record
-    const contentBrief = await AIService.generateContentBrief(business);
-    business = await repo.update(id, { contentBrief, updatedAt: new Date().toISOString() });
+    // Step 5: content brief
+    const { contentBrief, tokensUsed: t5 } = await AIService.generateContentBrief(business);
+    sessionTokens += t5;
+    business = await repo.update(id, { contentBrief, tokensUsed: business.tokensUsed + t5, updatedAt: new Date().toISOString() });
 
-    logger.info('AIService: full analysis complete', { id, name: business.name });
+    logger.info('AIService: full analysis complete', { id, name: business.name, totalTokens: sessionTokens });
     return business;
+  },
+
+  // Returns tokens used — for callers that track externally (e.g. scraper)
+  async generateKeywordsForScraper(business: Business): Promise<{ flat: string[]; categories: Keywords; tokensUsed: number }> {
+    return AIService.generateKeywords(business);
   },
 };

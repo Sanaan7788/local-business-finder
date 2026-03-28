@@ -317,4 +317,8 @@ export class CsvBusinessRepository implements IBusinessRepository {
     }
     return businesses.length;
   }
+
+  async totalTokensUsed(): Promise<number> {
+    return this.readAll().reduce((sum, b) => sum + (b.tokensUsed ?? 0), 0);
+  }
 }

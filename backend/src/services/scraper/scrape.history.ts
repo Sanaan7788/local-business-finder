@@ -46,6 +46,7 @@ export const ScrapeHistory = {
       saved: state.saved,
       skipped: state.skipped,
       errors: state.errors,
+      tokensUsed: state.tokensUsed,
       savedList: state.savedList,
       skippedList: state.skippedList,
       errorList: state.errorList,
