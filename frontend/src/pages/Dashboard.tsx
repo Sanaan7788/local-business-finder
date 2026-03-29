@@ -192,6 +192,7 @@ export default function Dashboard() {
   const [mapsLink, setMapsLink] = useState('')
   const [mapsLinkError, setMapsLinkError] = useState('')
   const [error, setError] = useState('')
+  const [locationType, setLocationType] = useState<'zipcode' | 'address' | 'mapslink'>('zipcode')
 
   // Search type toggle: 'category' = area/batch, 'business' = lookup
   const [searchType, setSearchType] = useState<'category' | 'business'>('category')
@@ -344,35 +345,64 @@ export default function Dashboard() {
 
             {/* Row 1: Location */}
             <div>
-              <label className="block text-xs text-gray-500 mb-1">
-                Location
-                <span className="text-gray-400 font-normal ml-1">— zipcode, address, neighborhood, or landmark</span>
-              </label>
-              <input
-                type="text"
-                value={location}
-                onChange={e => setLocation(e.target.value)}
-                placeholder="e.g. 77477  or  Montrose Houston TX  or  Main St & 1st Ave Houston"
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              {/* Maps URL extractor */}
-              <div className="mt-1.5 flex gap-1.5">
-                <input
-                  type="text"
-                  value={mapsLink}
-                  onChange={e => { setMapsLink(e.target.value); setMapsLinkError('') }}
-                  placeholder="Or paste a Google Maps link to extract location…"
-                  className="flex-1 border border-gray-200 rounded-lg px-2 py-1 text-xs text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-400 placeholder:text-gray-400"
-                />
-                <button
-                  onClick={handleMapsLinkExtract}
-                  disabled={!mapsLink.trim()}
-                  className="text-xs bg-gray-100 text-gray-700 px-2.5 py-1 rounded-lg hover:bg-gray-200 disabled:opacity-40 transition-colors whitespace-nowrap"
+              <label className="block text-xs text-gray-500 mb-1">Location</label>
+              <div className="flex gap-2">
+                <select
+                  value={locationType}
+                  onChange={e => {
+                    setLocationType(e.target.value as 'zipcode' | 'address' | 'mapslink')
+                    setLocation('')
+                    setMapsLink('')
+                    setMapsLinkError('')
+                  }}
+                  className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white shrink-0"
                 >
-                  Extract
-                </button>
+                  <option value="zipcode">Zipcode</option>
+                  <option value="address">Address</option>
+                  <option value="mapslink">Google Maps Link</option>
+                </select>
+
+                {locationType === 'zipcode' && (
+                  <input
+                    type="text"
+                    value={location}
+                    onChange={e => setLocation(e.target.value)}
+                    placeholder="e.g. 77477"
+                    className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                )}
+                {locationType === 'address' && (
+                  <input
+                    type="text"
+                    value={location}
+                    onChange={e => setLocation(e.target.value)}
+                    placeholder="e.g. Montrose Houston TX"
+                    className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                )}
+                {locationType === 'mapslink' && (
+                  <div className="flex-1 flex gap-1.5">
+                    <input
+                      type="text"
+                      value={mapsLink}
+                      onChange={e => { setMapsLink(e.target.value); setMapsLinkError('') }}
+                      placeholder="Paste a Google Maps link…"
+                      className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                    <button
+                      onClick={handleMapsLinkExtract}
+                      disabled={!mapsLink.trim()}
+                      className="text-sm bg-gray-100 text-gray-700 px-3 py-2 rounded-lg hover:bg-gray-200 disabled:opacity-40 transition-colors whitespace-nowrap"
+                    >
+                      Extract
+                    </button>
+                  </div>
+                )}
               </div>
               {mapsLinkError && <p className="text-xs text-red-500 mt-1">{mapsLinkError}</p>}
+              {locationType === 'mapslink' && location && (
+                <p className="text-xs text-green-600 mt-1">✓ Extracted: {location}</p>
+              )}
             </div>
 
             {/* Row 2: What to find — toggle */}
