@@ -17,7 +17,6 @@ export default function Businesses() {
   const [searchParams, setSearchParams] = useSearchParams()
   const deleteBusiness = useDeleteBusiness()
 
-  // Filters from URL params
   const [search, setSearch] = useState(searchParams.get('search') ?? '')
   const [leadStatus, setLeadStatus] = useState<LeadStatus | ''>(
     (searchParams.get('leadStatus') as LeadStatus) ?? ''
@@ -28,7 +27,6 @@ export default function Businesses() {
   const [sortField, setSortField] = useState('createdAt')
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc')
 
-  // Sync search param changes
   useEffect(() => {
     const status = searchParams.get('leadStatus')
     if (status) setLeadStatus(status as LeadStatus)
@@ -118,7 +116,10 @@ export default function Businesses() {
       {/* Table */}
       <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
         {isLoading && (
-          <div className="p-12 text-center text-gray-500">Loading…</div>
+          <div className="p-12 text-center">
+            <div className="inline-block w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin mb-3" />
+            <p className="text-gray-400 text-sm">Loading businesses…</p>
+          </div>
         )}
         {isError && (
           <div className="p-12 text-center text-red-500">Failed to load businesses. Is the backend running?</div>
