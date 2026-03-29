@@ -6,6 +6,13 @@ import { api, unwrap } from './client'
 // ---------------------------------------------------------------------------
 
 export const scraperApi = {
+  importFromUrl: (websiteUrl: string) =>
+    api.post<any>('/scraper/import-url', { websiteUrl }).then(unwrap) as Promise<{
+      status: 'saved' | 'duplicate' | 'not_found' | 'error';
+      businessId?: string;
+      message: string;
+    }>,
+
   lookup: (businessName: string, location: string) =>
     api.post<any>('/scraper/lookup', { businessName, location }).then(unwrap) as Promise<{
       status: 'saved' | 'duplicate' | 'not_found' | 'error';

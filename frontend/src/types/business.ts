@@ -89,6 +89,7 @@ export interface Business {
 
   // Generated content
   generatedWebsiteCode: string | null;
+  websitePrompt: string | null;
   websiteAnalysis: WebsiteAnalysis | null;
   outreach: Outreach | null;
 

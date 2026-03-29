@@ -3,6 +3,7 @@ import PQueue from 'p-queue';
 import { BrowserManager, randomDelay, withRetry } from './browser.manager';
 import { MapsNavigator } from './maps.navigator';
 import { MapsExtractor, DetailData } from './maps.extractor';
+import { WebsiteExtractor } from './website.extractor';
 import { AIService } from '../ai/ai.service';
 import { ScraperState, INITIAL_STATE } from './scraper.types';
 import { ScrapeHistory } from './scrape.history';
@@ -302,6 +303,93 @@ export class ScraperService {
       logger.debug('Created error stub', { name });
     } catch (err) {
       logger.warn('Failed to create error stub', { name, error: (err as Error).message });
+    }
+  }
+
+  /**
+   * Import a business from its existing website URL.
+   * Fetches the page, extracts business info, saves a profile, then runs full AI analysis.
+   */
+  async importFromUrl(websiteUrl: string): Promise<LookupResult> {
+    const extractor = new WebsiteExtractor();
+    const repo = getRepository();
+    const dedup = new Deduplicator();
+
+    try {
+      await dedup.load(repo);
+
+      const extracted = await extractor.extract(websiteUrl);
+      if (!extracted) {
+        return { status: 'error', message: 'Could not fetch the website. Check the URL and try again.' };
+      }
+
+      const name = extracted.name ?? new URL(websiteUrl).hostname.replace(/^www\./, '');
+      const address = extracted.address ?? '';
+
+      // Dedup check by name + address
+      const dupId = dedup.isDuplicate({ name, address, phone: extracted.phone ?? null });
+      if (dupId) {
+        return { status: 'duplicate', businessId: dupId, message: `"${name}" already exists in your database.` };
+      }
+
+      const raw = {
+        name,
+        phone: extracted.phone ?? null,
+        address,
+        zipcode: '',
+        category: extracted.category ?? 'business',
+        description: extracted.description ?? null,
+        website: true,
+        websiteUrl,
+      };
+
+      const { score, priority } = scoreLead(raw);
+      const now = new Date().toISOString();
+
+      const business: Business = {
+        id: uuidv4(),
+        createdAt: now,
+        updatedAt: now,
+        ...raw,
+        rating: null,
+        reviewCount: null,
+        googleMapsUrl: null,
+        reviewSnippets: [],
+        keywords: [],
+        keywordCategories: null,
+        summary: null,
+        insights: null,
+        contentBrief: null,
+        businessContext: null,
+        generatedWebsiteCode: null,
+        websiteAnalysis: null,
+        outreach: null,
+        githubUrl: null,
+        deployedUrl: null,
+        tokensUsed: 0,
+        leadStatus: 'new',
+        priority,
+        priorityScore: score,
+        notes: null,
+        lastContactedAt: null,
+      };
+
+      await repo.create(business);
+      dedup.register(business);
+
+      // Run full AI analysis (keywords → summary → insights → content brief)
+      try {
+        await AIService.analyzeAll(business.id);
+      } catch (aiErr) {
+        logger.warn('importFromUrl: AI analysis failed (non-fatal)', { error: (aiErr as Error).message });
+      }
+
+      logger.info('importFromUrl: business saved', { name, websiteUrl, priority, score });
+      return { status: 'saved', businessId: business.id, message: `"${name}" saved and analysed successfully.` };
+
+    } catch (err) {
+      logger.error('importFromUrl failed', { error: (err as Error).message });
+      return { status: 'error', message: (err as Error).message };
     }
   }
 

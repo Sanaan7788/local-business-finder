@@ -7,6 +7,7 @@ import {
   useStartBatch,
   useStopScraper,
   useLookupBusiness,
+  useImportFromUrl,
 } from '../hooks/useScraper'
 
 // ---------------------------------------------------------------------------
@@ -186,6 +187,7 @@ export default function Dashboard() {
   const startBatch = useStartBatch()
   const stopScraper = useStopScraper()
   const lookupBusiness = useLookupBusiness()
+  const importFromUrl = useImportFromUrl()
 
   // Shared
   const [location, setLocation] = useState('')
@@ -194,8 +196,12 @@ export default function Dashboard() {
   const [error, setError] = useState('')
   const [locationType, setLocationType] = useState<'zipcode' | 'address' | 'mapslink'>('zipcode')
 
-  // Search type toggle: 'category' = area/batch, 'business' = lookup
-  const [searchType, setSearchType] = useState<'category' | 'business'>('category')
+  // Search type toggle: 'category' = area/batch, 'business' = lookup, 'url' = import from website
+  const [searchType, setSearchType] = useState<'category' | 'business' | 'url'>('category')
+
+  // Import from URL mode
+  const [importUrl, setImportUrl] = useState('')
+  const [importResult, setImportResult] = useState<{ status: string; businessId?: string; message: string } | null>(null)
 
   // Category mode
   const [categories, setCategories] = useState<string[]>(['restaurants'])
@@ -232,6 +238,19 @@ export default function Dashboard() {
     }
   }
 
+  const handleImport = async () => {
+    const url = importUrl.trim()
+    if (!url) { setError('Website URL is required'); return }
+    setError('')
+    setImportResult(null)
+    try {
+      const result = await importFromUrl.mutateAsync(url)
+      setImportResult(result)
+    } catch (e: any) {
+      setImportResult({ status: 'error', message: e.message })
+    }
+  }
+
   const handleLookup = async () => {
     const loc = location.trim()
     const name = lookupName.trim()
@@ -253,7 +272,7 @@ export default function Dashboard() {
     ? Math.round((scraper.saved + scraper.skipped + scraper.errors) / scraper.found * 100)
     : 0
   const batchProgress = isBatch ? Math.round((batch.completedJobs / batch.totalJobs) * 100) : 0
-  const isPending = startScraper.isPending || startBatch.isPending || lookupBusiness.isPending
+  const isPending = startScraper.isPending || startBatch.isPending || lookupBusiness.isPending || importFromUrl.isPending
   const isBatchMode = categories.length > 1
 
   return (
@@ -343,8 +362,8 @@ export default function Dashboard() {
         {!running && (
           <div className="space-y-4">
 
-            {/* Row 1: Location */}
-            <div>
+            {/* Row 1: Location — only shown for category/business search, not URL import */}
+            <div className={searchType === 'url' ? 'hidden' : ''}>
               <label className="block text-xs text-gray-500 mb-1">Location</label>
               <div className="flex flex-col sm:flex-row gap-2">
                 <select
@@ -407,9 +426,9 @@ export default function Dashboard() {
 
             {/* Row 2: What to find — toggle */}
             <div>
-              <div className="flex gap-1 mb-3">
+              <div className="flex flex-wrap gap-1 mb-3">
                 <button
-                  onClick={() => { setSearchType('category'); setLookupResult(null) }}
+                  onClick={() => { setSearchType('category'); setLookupResult(null); setImportResult(null) }}
                   className={`flex-1 sm:flex-none px-3 py-2 text-sm rounded-lg font-medium transition-colors ${
                     searchType === 'category' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                   }`}
@@ -417,12 +436,20 @@ export default function Dashboard() {
                   Search by Category
                 </button>
                 <button
-                  onClick={() => { setSearchType('business'); setLookupResult(null) }}
+                  onClick={() => { setSearchType('business'); setLookupResult(null); setImportResult(null) }}
                   className={`flex-1 sm:flex-none px-3 py-2 text-sm rounded-lg font-medium transition-colors ${
                     searchType === 'business' ? 'bg-purple-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                   }`}
                 >
                   Find Specific Business
+                </button>
+                <button
+                  onClick={() => { setSearchType('url'); setLookupResult(null); setImportResult(null) }}
+                  className={`flex-1 sm:flex-none px-3 py-2 text-sm rounded-lg font-medium transition-colors ${
+                    searchType === 'url' ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  }`}
+                >
+                  Import from Website
                 </button>
               </div>
 
@@ -501,6 +528,56 @@ export default function Dashboard() {
                       {lookupResult.businessId && (
                         <button
                           onClick={() => navigate(`/businesses/${lookupResult.businessId}`)}
+                          className="ml-2 underline hover:no-underline text-xs"
+                        >
+                          View profile →
+                        </button>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
+              {/* Import from URL mode */}
+              {searchType === 'url' && (
+                <div className="space-y-3">
+                  <p className="text-xs text-gray-500">
+                    Paste the business's existing website URL. We'll extract its name, phone, address and run full AI analysis automatically.
+                  </p>
+                  <div className="space-y-2">
+                    <label className="block text-xs text-gray-500">Website URL</label>
+                    <input
+                      type="url"
+                      value={importUrl}
+                      onChange={e => setImportUrl(e.target.value)}
+                      onKeyDown={e => e.key === 'Enter' && handleImport()}
+                      placeholder="https://www.example.com"
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                    />
+                    <button
+                      onClick={handleImport}
+                      disabled={isPending || !importUrl.trim()}
+                      className="w-full bg-green-600 text-white rounded-lg px-5 py-2.5 text-sm font-medium hover:bg-green-700 disabled:opacity-50 transition-colors"
+                    >
+                      {importFromUrl.isPending ? 'Importing & analysing…' : 'Import Business'}
+                    </button>
+                  </div>
+                  {importFromUrl.isPending && (
+                    <p className="text-xs text-gray-400">Fetching website and running AI analysis — this may take 30–60 seconds…</p>
+                  )}
+                  {importResult && (
+                    <div className={`rounded-lg p-3 text-sm ${
+                      importResult.status === 'saved'     ? 'bg-green-50 border border-green-200 text-green-800' :
+                      importResult.status === 'duplicate' ? 'bg-yellow-50 border border-yellow-200 text-yellow-800' :
+                                                            'bg-red-50 border border-red-200 text-red-800'
+                    }`}>
+                      <span className="font-medium">
+                        {importResult.status === 'saved'     ? 'Saved — ' :
+                         importResult.status === 'duplicate' ? 'Already in database — ' : 'Error — '}
+                      </span>
+                      {importResult.message}
+                      {importResult.businessId && (
+                        <button
+                          onClick={() => navigate(`/businesses/${importResult.businessId}`)}
                           className="ml-2 underline hover:no-underline text-xs"
                         >
                           View profile →

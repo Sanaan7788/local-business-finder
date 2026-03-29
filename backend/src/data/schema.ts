@@ -44,6 +44,7 @@ export const businesses = pgTable('businesses', {
 
   // Generated content
   generatedWebsiteCode: text('generated_website_code'),
+  websitePrompt:        text('website_prompt'),
   websiteAnalysis:      jsonb('website_analysis'),
   outreach:             jsonb('outreach'),
 

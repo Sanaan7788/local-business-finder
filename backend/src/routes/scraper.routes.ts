@@ -32,6 +32,10 @@ const LookupSchema = z.object({
   location: z.string().min(1).max(200),
 });
 
+const ImportUrlSchema = z.object({
+  websiteUrl: z.string().url('Must be a valid URL'),
+});
+
 const StartBatchSchema = z.object({
   zipcode: z
     .string()
@@ -41,6 +45,30 @@ const StartBatchSchema = z.object({
   categories: z.array(z.string().min(1).max(100)).min(1).max(50),
   maxResults: z.number().int().min(1).max(200).default(20),
 });
+
+// ---------------------------------------------------------------------------
+// POST /api/scraper/import-url
+// Import a business from its existing website URL.
+// Fetches the page, extracts business info, creates a profile, runs AI analysis.
+// ---------------------------------------------------------------------------
+
+router.post(
+  '/import-url',
+  validateBody(ImportUrlSchema),
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { websiteUrl } = req.body as z.infer<typeof ImportUrlSchema>;
+      const scraper = ScraperService.getInstance();
+
+      logger.info('Import from URL requested', { websiteUrl });
+      const result = await scraper.importFromUrl(websiteUrl);
+
+      res.json({ success: true, data: result });
+    } catch (err) {
+      next(err);
+    }
+  },
+);
 
 // ---------------------------------------------------------------------------
 // POST /api/scraper/lookup

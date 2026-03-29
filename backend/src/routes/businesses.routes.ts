@@ -287,6 +287,33 @@ router.patch(
 );
 
 // ---------------------------------------------------------------------------
+// PATCH /api/businesses/:id/website-prompt
+// Save or update the editable website generation prompt.
+// ---------------------------------------------------------------------------
+const UpdateWebsitePromptSchema = z.object({
+  websitePrompt: z.string().nullable(),
+});
+
+router.patch(
+  '/:id/website-prompt',
+  validateBody(UpdateWebsitePromptSchema),
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const repo = getRepository();
+      const updated = await repo.update(req.params.id, { websitePrompt: req.body.websitePrompt });
+      res.json({ success: true, data: updated });
+    } catch (err) {
+      const msg = (err as Error).message;
+      if (msg.startsWith('Business not found')) {
+        res.status(404).json({ success: false, error: msg });
+        return;
+      }
+      next(err);
+    }
+  },
+);
+
+// ---------------------------------------------------------------------------
 // DELETE /api/businesses/:id
 // ---------------------------------------------------------------------------
 router.delete('/:id', async (req: Request, res: Response, next: NextFunction) => {

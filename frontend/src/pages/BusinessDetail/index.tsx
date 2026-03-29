@@ -14,11 +14,12 @@ import { SummaryTab } from './tabs/SummaryTab'
 import { KeywordsTab } from './tabs/KeywordsTab'
 import { InsightsTab } from './tabs/InsightsTab'
 import { ContentBriefTab } from './tabs/ContentBriefTab'
+import { PromptTab } from './tabs/PromptTab'
 import { WebsiteTab } from './tabs/WebsiteTab'
 import { CRMTab } from './tabs/CRMTab'
 import { DeploymentTab } from './tabs/DeploymentTab'
 
-const TABS = ['Overview', 'Summary', 'Keywords', 'Insights', 'Content Brief', 'Website', 'CRM', 'Deployment'] as const
+const TABS = ['Overview', 'Summary', 'Keywords', 'Insights', 'Content Brief', 'Prompt', 'Website', 'CRM', 'Deployment'] as const
 type Tab = typeof TABS[number]
 
 export default function BusinessDetail() {
@@ -76,6 +77,7 @@ export default function BusinessDetail() {
               {tab === 'Keywords' && business.keywords?.length > 0 && <span className="ml-1 text-xs text-green-500">✓</span>}
               {tab === 'Insights' && business.insights && <span className="ml-1 text-xs text-green-500">✓</span>}
               {tab === 'Content Brief' && business.contentBrief && <span className="ml-1 text-xs text-green-500">✓</span>}
+              {tab === 'Prompt' && business.websitePrompt && <span className="ml-1 text-xs text-amber-500">✏</span>}
               {tab === 'Website' && business.generatedWebsiteCode && <span className="ml-1 text-xs text-green-500">✓</span>}
               {tab === 'Deployment' && business.deployedUrl && <span className="ml-1 text-xs text-green-500">✓</span>}
             </button>
@@ -101,6 +103,7 @@ export default function BusinessDetail() {
             generating={generateContentBrief.isPending}
           />
         )}
+        {activeTab === 'Prompt' && <PromptTab business={business} />}
         {activeTab === 'Website' && (
           <WebsiteTab business={business} onGenerate={() => generateWebsite.mutate(id!)} generating={generateWebsite.isPending} />
         )}

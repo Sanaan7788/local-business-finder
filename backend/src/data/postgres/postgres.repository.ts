@@ -113,6 +113,7 @@ export class PostgresBusinessRepository implements IBusinessRepository {
     if (payload.insights !== undefined)         updateData.insights = payload.insights as any;
     if (payload.contentBrief !== undefined)      updateData.contentBrief = payload.contentBrief as any;
     if (payload.generatedWebsiteCode !== undefined) updateData.generatedWebsiteCode = payload.generatedWebsiteCode;
+    if (payload.websitePrompt !== undefined)        updateData.websitePrompt = payload.websitePrompt;
     if (payload.websiteAnalysis !== undefined) updateData.websiteAnalysis = payload.websiteAnalysis as any;
     if (payload.outreach !== undefined)    updateData.outreach = payload.outreach as any;
     if (payload.githubUrl !== undefined)   updateData.githubUrl = payload.githubUrl;

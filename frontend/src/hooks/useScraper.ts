@@ -55,3 +55,13 @@ export function useLookupBusiness() {
     },
   })
 }
+
+export function useImportFromUrl() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: (websiteUrl: string) => scraperApi.importFromUrl(websiteUrl),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['businesses'] })
+    },
+  })
+}

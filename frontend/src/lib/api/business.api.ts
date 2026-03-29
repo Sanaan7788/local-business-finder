@@ -75,4 +75,7 @@ export const businessApi = {
 
   updateWebsiteAnalysis: (id: string, data: { structured?: string; improvements?: string[] }) =>
     api.patch<any>(`/businesses/${id}/website-analysis`, data).then(unwrap) as Promise<import('../../types/business').WebsiteAnalysis>,
+
+  updateWebsitePrompt: (id: string, websitePrompt: string | null) =>
+    api.patch<any>(`/businesses/${id}/website-prompt`, { websitePrompt }).then(unwrap) as Promise<Business>,
 }

@@ -124,6 +124,7 @@ export const BusinessSchema = z.object({
 
   // Generated content — populated by website generator + outreach service
   generatedWebsiteCode: z.string().nullable(),
+  websitePrompt: z.string().nullable(),
   websiteAnalysis: WebsiteAnalysisSchema.nullable(),
   outreach: OutreachSchema.nullable(),
 

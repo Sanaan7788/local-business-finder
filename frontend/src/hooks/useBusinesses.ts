@@ -136,6 +136,17 @@ export function useUpdateWebsiteAnalysis() {
   })
 }
 
+export function useUpdateWebsitePrompt() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: ({ id, websitePrompt }: { id: string; websitePrompt: string | null }) =>
+      businessApi.updateWebsitePrompt(id, websitePrompt),
+    onSuccess: (updated) => {
+      qc.setQueryData(keys.business(updated.id), updated)
+    },
+  })
+}
+
 export function useDeleteBusiness() {
   const qc = useQueryClient()
   return useMutation({
