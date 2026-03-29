@@ -193,7 +193,7 @@ export default function Businesses() {
                         e.stopPropagation()
                         if (confirm(`Delete ${b.name}?`)) deleteBusiness.mutate(b.id)
                       }}
-                      className="text-gray-400 hover:text-red-500 transition-colors text-xs"
+                      className="text-xs text-gray-400 hover:text-red-500 font-medium px-2 py-1 rounded-lg hover:bg-red-50 transition-colors"
                     >
                       Delete
                     </button>
