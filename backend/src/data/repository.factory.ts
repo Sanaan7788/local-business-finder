@@ -25,7 +25,7 @@ export function getRepository(): IBusinessRepository {
   }
 
   if (backend === 'postgres') {
-    const { PostgresBusinessRepository } = require('./postgres.repository');
+    const { PostgresBusinessRepository } = require('./postgres/postgres.repository');
     _instance = new PostgresBusinessRepository();
     return _instance!;
   }

@@ -1,13 +1,13 @@
 import { useState, useMemo, useRef } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
+import { useBusinessStats } from '../hooks/useBusinesses'
 import {
-  useBusinessStats,
   useScraperStatus,
   useStartScraper,
   useStartBatch,
   useStopScraper,
   useLookupBusiness,
-} from '../hooks/useBusinesses'
+} from '../hooks/useScraper'
 
 // ---------------------------------------------------------------------------
 // Full category list — Google Maps search terms
