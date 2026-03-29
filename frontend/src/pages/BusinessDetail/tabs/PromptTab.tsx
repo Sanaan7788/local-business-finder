@@ -116,14 +116,15 @@ export function PromptTab({ business }: { business: Business }) {
   const [copied, setCopied] = useState(false)
   const [saved, setSaved] = useState(false)
 
-  // The active prompt: saved value takes priority, otherwise auto-build
-  const autoPrompt = buildPrompt(business)
-  const activePrompt = business.websitePrompt ?? autoPrompt
-
   // Seed draft when entering edit mode
   useEffect(() => {
-    if (editing) setDraft(activePrompt)
+    if (editing) setDraft(business.websitePrompt ?? '')
   }, [editing])
+
+  const handleGenerate = async () => {
+    const prompt = buildPrompt(business)
+    await updatePrompt.mutateAsync({ id: business.id, websitePrompt: prompt })
+  }
 
   const handleSave = async () => {
     await updatePrompt.mutateAsync({ id: business.id, websitePrompt: draft })
@@ -133,17 +134,50 @@ export function PromptTab({ business }: { business: Business }) {
   }
 
   const handleReset = async () => {
-    if (!confirm('Reset to auto-generated prompt? Your edits will be lost.')) return
+    if (!confirm('Delete the saved prompt? You can generate a fresh one after.')) return
     await updatePrompt.mutateAsync({ id: business.id, websitePrompt: null })
     setEditing(false)
   }
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(activePrompt)
+    navigator.clipboard.writeText(business.websitePrompt ?? '')
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
 
+  // --- Empty state: no prompt generated yet ---
+  if (!business.websitePrompt) {
+    return (
+      <div className="text-center py-14">
+        <p className="text-gray-500 mb-2 font-medium">No prompt generated yet.</p>
+        <p className="text-xs text-gray-400 mb-6 max-w-sm mx-auto">
+          Generates a structured prompt from all available data — summary, keywords,
+          insights, content brief, website analysis, and reviews. Use it in any AI to build the website.
+        </p>
+        <button
+          onClick={handleGenerate}
+          disabled={updatePrompt.isPending}
+          className="bg-indigo-600 text-white px-6 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 disabled:opacity-50 transition-colors"
+        >
+          {updatePrompt.isPending ? 'Generating…' : 'Generate Prompt'}
+        </button>
+        <div className="flex flex-wrap justify-center gap-2 mt-6">
+          <span className="text-xs text-gray-400">Will include:</span>
+          {business.summary && <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Summary</span>}
+          {business.contentBrief && <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Content Brief</span>}
+          {business.keywords?.length > 0 && <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Keywords</span>}
+          {business.insights && <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Insights</span>}
+          {business.websiteAnalysis && <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Website Analysis</span>}
+          {business.reviewSnippets?.length > 0 && <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Reviews ({business.reviewSnippets.length})</span>}
+          {!business.summary && !business.contentBrief && !business.insights && (
+            <span className="text-xs text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">Run AI Analysis first for a richer prompt</span>
+          )}
+        </div>
+      </div>
+    )
+  }
+
+  // --- Prompt exists ---
   return (
     <div className="space-y-4">
       {/* Header */}
@@ -151,19 +185,17 @@ export function PromptTab({ business }: { business: Business }) {
         <div>
           <p className="text-sm font-semibold text-gray-900">Website Generation Prompt</p>
           <p className="text-xs text-gray-500 mt-0.5">
-            Auto-built from all available data. Copy into any AI to generate the website, or edit it to customise.
+            Copy into any AI to generate the website, or edit to customise.
           </p>
         </div>
         <div className="flex items-center gap-2 shrink-0">
-          {business.websitePrompt && (
-            <button
-              onClick={handleReset}
-              disabled={updatePrompt.isPending}
-              className="text-xs text-gray-400 hover:text-gray-600 border border-gray-200 px-2 py-1 rounded-lg transition-colors"
-            >
-              Reset
-            </button>
-          )}
+          <button
+            onClick={handleReset}
+            disabled={updatePrompt.isPending}
+            className="text-xs text-gray-400 hover:text-gray-600 border border-gray-200 px-2 py-1 rounded-lg transition-colors"
+          >
+            Delete
+          </button>
           {editing ? (
             <>
               <button
@@ -199,15 +231,7 @@ export function PromptTab({ business }: { business: Business }) {
         </div>
       </div>
 
-      {saved && (
-        <p className="text-xs text-green-600 font-medium">✓ Prompt saved</p>
-      )}
-
-      {business.websitePrompt && !editing && (
-        <p className="text-xs text-amber-600 bg-amber-50 border border-amber-200 rounded-lg px-3 py-1.5">
-          ✏ This prompt has been manually edited. Click Reset to restore the auto-generated version.
-        </p>
-      )}
+      {saved && <p className="text-xs text-green-600 font-medium">✓ Prompt saved</p>}
 
       {/* Prompt display or editor */}
       {editing ? (
@@ -218,23 +242,9 @@ export function PromptTab({ business }: { business: Business }) {
         />
       ) : (
         <pre className="w-full font-mono text-xs text-gray-700 bg-gray-50 border border-gray-200 rounded-xl p-4 whitespace-pre-wrap leading-relaxed overflow-auto max-h-[600px]">
-          {activePrompt}
+          {business.websitePrompt}
         </pre>
       )}
-
-      {/* Data coverage badges */}
-      <div className="flex flex-wrap gap-2 pt-1">
-        <span className="text-xs text-gray-500">Data included:</span>
-        {business.summary && <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Summary</span>}
-        {business.contentBrief && <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Content Brief</span>}
-        {business.keywords?.length > 0 && <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Keywords</span>}
-        {business.insights && <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Insights</span>}
-        {business.websiteAnalysis && <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Website Analysis</span>}
-        {business.reviewSnippets?.length > 0 && <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">Reviews ({business.reviewSnippets.length})</span>}
-        {!business.summary && !business.contentBrief && !business.insights && (
-          <span className="text-xs text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">Run AI Analysis for richer prompt</span>
-        )}
-      </div>
     </div>
   )
 }
