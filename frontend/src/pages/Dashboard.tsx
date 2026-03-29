@@ -257,7 +257,7 @@ export default function Dashboard() {
   const isBatchMode = categories.length > 1
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-5 sm:space-y-8">
       <div>
         <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
         <p className="text-gray-500 mt-1">Overview of your lead pipeline</p>
@@ -273,7 +273,7 @@ export default function Dashboard() {
 
       {/* Pipeline breakdown */}
       {stats && stats.total > 0 && (
-        <div className="bg-white rounded-xl border border-gray-200 p-5">
+        <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5">
           <h2 className="text-sm font-semibold text-gray-700 mb-4">Pipeline Status</h2>
           <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
             {Object.entries(stats.byStatus).map(([status, count]) => (
@@ -291,7 +291,7 @@ export default function Dashboard() {
       )}
 
       {/* Scraper control */}
-      <div className="bg-white rounded-xl border border-gray-200 p-5">
+      <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5">
         <h2 className="text-sm font-semibold text-gray-700 mb-4">Scraper</h2>
 
         {/* Running: batch progress */}
@@ -346,7 +346,7 @@ export default function Dashboard() {
             {/* Row 1: Location */}
             <div>
               <label className="block text-xs text-gray-500 mb-1">Location</label>
-              <div className="flex gap-2">
+              <div className="flex flex-col sm:flex-row gap-2">
                 <select
                   value={locationType}
                   onChange={e => {
@@ -355,7 +355,7 @@ export default function Dashboard() {
                     setMapsLink('')
                     setMapsLinkError('')
                   }}
-                  className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white shrink-0"
+                  className="w-full sm:w-auto border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
                 >
                   <option value="zipcode">Zipcode</option>
                   <option value="address">Address</option>
@@ -407,10 +407,10 @@ export default function Dashboard() {
 
             {/* Row 2: What to find — toggle */}
             <div>
-              <div className="flex items-center gap-1 mb-3">
+              <div className="flex gap-1 mb-3">
                 <button
                   onClick={() => { setSearchType('category'); setLookupResult(null) }}
-                  className={`px-3 py-1.5 text-sm rounded-lg font-medium transition-colors ${
+                  className={`flex-1 sm:flex-none px-3 py-2 text-sm rounded-lg font-medium transition-colors ${
                     searchType === 'category' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                   }`}
                 >
@@ -418,7 +418,7 @@ export default function Dashboard() {
                 </button>
                 <button
                   onClick={() => { setSearchType('business'); setLookupResult(null) }}
-                  className={`px-3 py-1.5 text-sm rounded-lg font-medium transition-colors ${
+                  className={`flex-1 sm:flex-none px-3 py-2 text-sm rounded-lg font-medium transition-colors ${
                     searchType === 'business' ? 'bg-purple-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                   }`}
                 >
@@ -441,21 +441,19 @@ export default function Dashboard() {
                     )}
                   </div>
 
-                  <div className="flex gap-3 items-center">
-                    <div className="flex-1">
-                      <label className="block text-xs text-gray-500 mb-1">Max results per category: {maxResults}</label>
-                      <input
-                        type="range"
-                        min={5} max={200} step={5}
-                        value={maxResults}
-                        onChange={e => setMaxResults(Number(e.target.value))}
-                        className="w-full"
-                      />
-                    </div>
+                  <div className="space-y-2">
+                    <label className="block text-xs text-gray-500">Max results per category: {maxResults}</label>
+                    <input
+                      type="range"
+                      min={5} max={200} step={5}
+                      value={maxResults}
+                      onChange={e => setMaxResults(Number(e.target.value))}
+                      className="w-full"
+                    />
                     <button
                       onClick={handleStart}
                       disabled={isPending || categories.length === 0}
-                      className="bg-blue-600 text-white rounded-lg px-5 py-2 text-sm font-medium hover:bg-blue-700 disabled:opacity-50 transition-colors whitespace-nowrap"
+                      className="w-full bg-blue-600 text-white rounded-lg px-5 py-2.5 text-sm font-medium hover:bg-blue-700 disabled:opacity-50 transition-colors"
                     >
                       {isPending ? 'Starting…' : isBatchMode ? `Start Batch (${categories.length})` : 'Start Scraper'}
                     </button>
@@ -466,22 +464,20 @@ export default function Dashboard() {
               {/* Lookup mode */}
               {searchType === 'business' && (
                 <div className="space-y-3">
-                  <div className="flex gap-3 items-end">
-                    <div className="flex-1">
-                      <label className="block text-xs text-gray-500 mb-1">Business Name</label>
-                      <input
-                        type="text"
-                        value={lookupName}
-                        onChange={e => setLookupName(e.target.value)}
-                        onKeyDown={e => e.key === 'Enter' && handleLookup()}
-                        placeholder="e.g. Tony's Pizza, Nails by Maria, Joe's Barbershop"
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
-                      />
-                    </div>
+                  <div className="space-y-2">
+                    <label className="block text-xs text-gray-500">Business Name</label>
+                    <input
+                      type="text"
+                      value={lookupName}
+                      onChange={e => setLookupName(e.target.value)}
+                      onKeyDown={e => e.key === 'Enter' && handleLookup()}
+                      placeholder="e.g. Tony's Pizza, Nails by Maria, Joe's Barbershop"
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    />
                     <button
                       onClick={handleLookup}
                       disabled={isPending || !lookupName.trim() || !location.trim()}
-                      className="bg-purple-600 text-white rounded-lg px-5 py-2 text-sm font-medium hover:bg-purple-700 disabled:opacity-50 transition-colors whitespace-nowrap"
+                      className="w-full bg-purple-600 text-white rounded-lg px-5 py-2.5 text-sm font-medium hover:bg-purple-700 disabled:opacity-50 transition-colors"
                     >
                       {lookupBusiness.isPending ? 'Looking up…' : 'Look Up'}
                     </button>
@@ -523,7 +519,7 @@ export default function Dashboard() {
         {running && (
           <button
             onClick={() => stopScraper.mutate()}
-            className="mt-3 bg-red-100 text-red-700 rounded-lg px-4 py-2 text-sm font-medium hover:bg-red-200 transition-colors"
+            className="mt-3 w-full sm:w-auto bg-red-100 text-red-700 rounded-lg px-4 py-2.5 text-sm font-medium hover:bg-red-200 transition-colors"
           >
             Stop Scraper
           </button>
