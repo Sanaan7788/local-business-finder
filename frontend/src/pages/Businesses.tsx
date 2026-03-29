@@ -72,7 +72,7 @@ export default function Businesses() {
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-xl border border-gray-200 p-4">
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
           <input
             type="text"
@@ -114,7 +114,7 @@ export default function Businesses() {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
         {isLoading && (
           <div className="p-12 text-center">
             <div className="inline-block w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin mb-3" />
@@ -126,7 +126,12 @@ export default function Businesses() {
         )}
         {!isLoading && !isError && businesses.length === 0 && (
           <div className="p-12 text-center text-gray-400">
-            No businesses found. Run the scraper to get started.
+            <p className="font-medium text-gray-500">No businesses found</p>
+            <p className="text-sm mt-1">
+              {(search || leadStatus || priority || hasWebsite !== 'all')
+                ? 'Try adjusting your filters'
+                : 'Run the scraper to get started'}
+            </p>
           </div>
         )}
         {businesses.length > 0 && (
@@ -154,7 +159,7 @@ export default function Businesses() {
               {businesses.map(b => (
                 <tr
                   key={b.id}
-                  className="hover:bg-gray-50 cursor-pointer transition-colors"
+                  className="hover:bg-blue-50/40 cursor-pointer transition-colors"
                   onClick={() => navigate(`/businesses/${b.id}`)}
                 >
                   <td className="px-4 py-3">
@@ -207,23 +212,34 @@ export default function Businesses() {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-between text-sm text-gray-600">
-          <span>Page {page} of {totalPages} ({total} total)</span>
-          <div className="flex gap-2">
+        <div className="flex items-center justify-between">
+          <p className="text-sm text-gray-400">
+            Showing {((page - 1) * 25) + 1}–{Math.min(page * 25, total)} of {total.toLocaleString()}
+          </p>
+          <div className="flex items-center gap-1">
+            <button
+              onClick={() => setPage(1)}
+              disabled={page === 1}
+              className="px-2 py-1.5 text-xs border border-gray-200 rounded-lg disabled:opacity-30 hover:bg-gray-50 transition-colors"
+            >«</button>
             <button
               onClick={() => setPage(p => Math.max(1, p - 1))}
               disabled={page === 1}
-              className="px-3 py-1 border border-gray-300 rounded-lg disabled:opacity-40 hover:bg-gray-50 transition-colors"
-            >
-              Previous
-            </button>
+              className="px-3 py-1.5 text-sm border border-gray-200 rounded-lg disabled:opacity-30 hover:bg-gray-50 transition-colors"
+            >Prev</button>
+            <span className="px-3 py-1.5 text-sm font-medium text-blue-600 bg-blue-50 rounded-lg">
+              {page} / {totalPages}
+            </span>
             <button
               onClick={() => setPage(p => Math.min(totalPages, p + 1))}
               disabled={page === totalPages}
-              className="px-3 py-1 border border-gray-300 rounded-lg disabled:opacity-40 hover:bg-gray-50 transition-colors"
-            >
-              Next
-            </button>
+              className="px-3 py-1.5 text-sm border border-gray-200 rounded-lg disabled:opacity-30 hover:bg-gray-50 transition-colors"
+            >Next</button>
+            <button
+              onClick={() => setPage(totalPages)}
+              disabled={page === totalPages}
+              className="px-2 py-1.5 text-xs border border-gray-200 rounded-lg disabled:opacity-30 hover:bg-gray-50 transition-colors"
+            >»</button>
           </div>
         </div>
       )}
