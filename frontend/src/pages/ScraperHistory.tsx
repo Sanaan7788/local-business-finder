@@ -7,9 +7,7 @@ import type { SavedEntry, SkippedEntry, ErrorEntry } from '../types/business'
 function useHistory() {
   return useQuery({ queryKey: ['scraper', 'history'], queryFn: scraperApi.history })
 }
-function useZipcodes() {
-  return useQuery({ queryKey: ['scraper', 'zipcodes'], queryFn: scraperApi.zipcodes })
-}
+
 function useSessionDetail(id: string | null) {
   return useQuery({
     queryKey: ['scraper', 'history', id],
@@ -331,10 +329,7 @@ function FoundNamesTab({
 // ---------------------------------------------------------------------------
 export default function ScraperHistory() {
   const { data: sessions, isLoading } = useHistory()
-  const { data: zipcodes } = useZipcodes()
-  const navigate = useNavigate()
   const [selectedSession, setSelectedSession] = useState<string | null>(null)
-  const [view, setView] = useState<'sessions' | 'zipcodes'>('zipcodes')
 
   return (
     <div className="space-y-6">
@@ -343,65 +338,7 @@ export default function ScraperHistory() {
         <p className="text-gray-500 text-sm mt-0.5">All past scraping sessions and locations covered</p>
       </div>
 
-      <div className="flex gap-2">
-        <button
-          onClick={() => setView('zipcodes')}
-          className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-            view === 'zipcodes' ? 'bg-blue-600 text-white' : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
-          }`}
-        >
-          Locations
-        </button>
-        <button
-          onClick={() => setView('sessions')}
-          className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-            view === 'sessions' ? 'bg-blue-600 text-white' : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
-          }`}
-        >
-          Sessions
-        </button>
-      </div>
-
-      {view === 'zipcodes' && (
-        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-          {!zipcodes || zipcodes.length === 0 ? (
-            <div className="p-12 text-center text-gray-400">No locations scraped yet.</div>
-          ) : (
-            <table className="w-full text-sm">
-              <thead className="bg-gray-50 border-b border-gray-200">
-                <tr>
-                  <th className="text-left px-4 py-3 font-medium text-gray-600">Location</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-600">Sessions</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-600">Total Saved</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-600">Last Scraped</th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-600">View Businesses</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {zipcodes.map(z => (
-                  <tr key={z.zipcode} className="hover:bg-gray-50 transition-colors">
-                    <td className="px-4 py-3 font-mono font-medium text-gray-900">{z.zipcode}</td>
-                    <td className="px-4 py-3 text-gray-600">{z.sessions}</td>
-                    <td className="px-4 py-3 text-gray-600">{z.totalSaved}</td>
-                    <td className="px-4 py-3 text-gray-500 text-xs">{new Date(z.lastScrapedAt).toLocaleString()}</td>
-                    <td className="px-4 py-3">
-                      <button
-                        onClick={() => navigate(`/businesses?zipcode=${z.zipcode}`)}
-                        className="text-blue-600 hover:underline text-xs"
-                      >
-                        Browse →
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-        </div>
-      )}
-
-      {view === 'sessions' && (
-        <div className="space-y-4">
+      <div className="space-y-4">
           {isLoading && <div className="p-8 text-center text-gray-500">Loading…</div>}
           {sessions && sessions.length === 0 && (
             <div className="p-12 text-center text-gray-400 bg-white rounded-xl border border-gray-200">
@@ -438,7 +375,6 @@ export default function ScraperHistory() {
             </div>
           ))}
         </div>
-      )}
     </div>
   )
 }

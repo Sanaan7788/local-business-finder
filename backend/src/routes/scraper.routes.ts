@@ -20,9 +20,8 @@ const router = Router();
 const StartScraperSchema = z.object({
   zipcode: z
     .string()
-    .min(4, 'Zipcode must be at least 4 characters')
-    .max(10, 'Zipcode too long')
-    .regex(/^[\d\s-]+$/, 'Zipcode must contain only digits'),
+    .min(2, 'Location must be at least 2 characters')
+    .max(50, 'Location too long'),
   category: z.string().min(1).max(100).default('businesses'),
   maxResults: z.number().int().min(1).max(200).default(50),
 });
@@ -39,9 +38,8 @@ const ImportUrlSchema = z.object({
 const StartBatchSchema = z.object({
   zipcode: z
     .string()
-    .min(4)
-    .max(10)
-    .regex(/^[\d\s-]+$/),
+    .min(2)
+    .max(50),
   categories: z.array(z.string().min(1).max(100)).min(1).max(50),
   maxResults: z.number().int().min(1).max(200).default(20),
 });

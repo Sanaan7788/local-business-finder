@@ -73,6 +73,7 @@ async function main() {
       contentBrief: null,
           businessContext: null,
       generatedWebsiteCode: null,
+      websitePrompt: null,
       websiteAnalysis: null,
       outreach: null,
       githubUrl: null,

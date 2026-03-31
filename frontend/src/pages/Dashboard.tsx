@@ -15,11 +15,8 @@ import {
 // ---------------------------------------------------------------------------
 
 export const ALL_CATEGORIES = [
-  // Food & Drink
-  'restaurants', 'fast food', 'pizza', 'chinese restaurants', 'mexican restaurants',
-  'italian restaurants', 'thai restaurants', 'indian restaurants', 'sushi restaurants',
-  'burger joints', 'sandwich shops', 'coffee shops', 'bakeries', 'dessert shops',
-  'ice cream shops', 'bars', 'nightclubs', 'food trucks', 'catering',
+  // Food & Drink (consolidated)
+  'food',
   // Beauty & Personal Care
   'nail salons', 'hair salons', 'barbershops', 'spas', 'massage therapy',
   'tattoo shops', 'tanning salons', 'eyebrow threading', 'lash studios', 'makeup artists',
@@ -194,7 +191,9 @@ export default function Dashboard() {
   const [mapsLink, setMapsLink] = useState('')
   const [mapsLinkError, setMapsLinkError] = useState('')
   const [error, setError] = useState('')
-  const [locationType, setLocationType] = useState<'zipcode' | 'address' | 'mapslink'>('zipcode')
+  const [locationType, setLocationType] = useState<'zipcode' | 'address' | 'mapslink' | 'live'>('zipcode')
+  const [liveStatus, setLiveStatus] = useState<'idle' | 'fetching' | 'done' | 'error'>('idle')
+  const [liveError, setLiveError] = useState('')
 
   // Search type toggle: 'category' = area/batch, 'business' = lookup, 'url' = import from website
   const [searchType, setSearchType] = useState<'category' | 'business' | 'url'>('category')
@@ -204,12 +203,34 @@ export default function Dashboard() {
   const [importResult, setImportResult] = useState<{ status: string; businessId?: string; message: string } | null>(null)
 
   // Category mode
-  const [categories, setCategories] = useState<string[]>(['restaurants'])
+  const [categories, setCategories] = useState<string[]>([])
   const [maxResults, setMaxResults] = useState(20)
 
   // Lookup mode
   const [lookupName, setLookupName] = useState('')
   const [lookupResult, setLookupResult] = useState<{ status: string; businessId?: string; message: string } | null>(null)
+
+  const handleGetLiveLocation = () => {
+    if (!navigator.geolocation) {
+      setLiveError('Geolocation is not supported by your browser.')
+      setLiveStatus('error')
+      return
+    }
+    setLiveStatus('fetching')
+    setLiveError('')
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const { latitude, longitude } = pos.coords
+        setLocation(`${latitude.toFixed(6)},${longitude.toFixed(6)}`)
+        setLiveStatus('done')
+      },
+      (err) => {
+        setLiveError(err.message || 'Could not get your location.')
+        setLiveStatus('error')
+      },
+      { timeout: 10000, enableHighAccuracy: false }
+    )
+  }
 
   const handleMapsLinkExtract = () => {
     const extracted = extractLocationFromMapsUrl(mapsLink.trim())
@@ -225,11 +246,10 @@ export default function Dashboard() {
   const handleStart = async () => {
     const loc = location.trim()
     if (!loc) { setError('Location is required'); return }
-    if (categories.length === 0) { setError('Add at least one category'); return }
     setError('')
     try {
-      if (categories.length === 1) {
-        await startScraper.mutateAsync({ zipcode: loc, category: categories[0], maxResults })
+      if (categories.length <= 1) {
+        await startScraper.mutateAsync({ zipcode: loc, category: categories[0] ?? 'businesses', maxResults })
       } else {
         await startBatch.mutateAsync({ zipcode: loc, categories, maxResults })
       }
@@ -369,16 +389,19 @@ export default function Dashboard() {
                 <select
                   value={locationType}
                   onChange={e => {
-                    setLocationType(e.target.value as 'zipcode' | 'address' | 'mapslink')
+                    setLocationType(e.target.value as 'zipcode' | 'address' | 'mapslink' | 'live')
                     setLocation('')
                     setMapsLink('')
                     setMapsLinkError('')
+                    setLiveStatus('idle')
+                    setLiveError('')
                   }}
                   className="w-full sm:w-auto border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
                 >
                   <option value="zipcode">Zipcode</option>
                   <option value="address">Address</option>
                   <option value="mapslink">Google Maps Link</option>
+                  <option value="live">📍 Live Location</option>
                 </select>
 
                 {locationType === 'zipcode' && (
@@ -398,6 +421,19 @@ export default function Dashboard() {
                     placeholder="e.g. Montrose Houston TX"
                     className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
+                )}
+                {locationType === 'live' && (
+                  <button
+                    onClick={handleGetLiveLocation}
+                    disabled={liveStatus === 'fetching'}
+                    className="flex-1 text-sm border border-gray-300 rounded-lg px-3 py-2 bg-white hover:bg-gray-50 disabled:opacity-50 transition-colors text-left text-gray-600"
+                  >
+                    {liveStatus === 'fetching'
+                      ? '⏳ Getting location…'
+                      : liveStatus === 'done' && location
+                      ? `📍 ${location} — tap to refresh`
+                      : '📍 Tap to get current location'}
+                  </button>
                 )}
                 {locationType === 'mapslink' && (
                   <div className="flex-1 flex gap-1.5">
@@ -421,6 +457,12 @@ export default function Dashboard() {
               {mapsLinkError && <p className="text-xs text-red-500 mt-1">{mapsLinkError}</p>}
               {locationType === 'mapslink' && location && (
                 <p className="text-xs text-green-600 mt-1">✓ Extracted: {location}</p>
+              )}
+              {locationType === 'live' && liveStatus === 'error' && (
+                <p className="text-xs text-red-500 mt-1">{liveError}</p>
+              )}
+              {locationType === 'live' && liveStatus === 'done' && location && (
+                <p className="text-xs text-green-600 mt-1">✓ Location: {location}</p>
               )}
             </div>
 
@@ -460,11 +502,14 @@ export default function Dashboard() {
                     <label className="block text-xs text-gray-500 mb-1">
                       {isBatchMode
                         ? `Categories (${categories.length}) — will run as batch`
-                        : 'Category'}
+                        : 'Category (optional — leave empty for all nearby businesses)'}
                     </label>
                     <CategoryTagInput selected={categories} onChange={setCategories} />
                     {isBatchMode && (
                       <p className="text-xs text-gray-400 mt-1">~{categories.length * maxResults} businesses max</p>
+                    )}
+                    {categories.length === 0 && (
+                      <p className="text-xs text-gray-400 mt-1">No category — will search "businesses near [location]"</p>
                     )}
                   </div>
 
@@ -479,10 +524,10 @@ export default function Dashboard() {
                     />
                     <button
                       onClick={handleStart}
-                      disabled={isPending || categories.length === 0}
+                      disabled={isPending}
                       className="w-full bg-blue-600 text-white rounded-lg px-5 py-2.5 text-sm font-medium hover:bg-blue-700 disabled:opacity-50 transition-colors"
                     >
-                      {isPending ? 'Starting…' : isBatchMode ? `Start Batch (${categories.length})` : 'Start Scraper'}
+                      {isPending ? 'Starting…' : isBatchMode ? `Start Batch (${categories.length})` : categories.length === 0 ? 'Start Scraper (All Nearby)' : 'Start Scraper'}
                     </button>
                   </div>
                 </div>

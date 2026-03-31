@@ -167,6 +167,7 @@ export class ScraperService {
         contentBrief: null,
         businessContext: null,
         generatedWebsiteCode: null,
+        websitePrompt: null,
         websiteAnalysis: null,
         outreach: null,
         githubUrl: null,
@@ -288,6 +289,7 @@ export class ScraperService {
         contentBrief: null,
         businessContext: null,
         generatedWebsiteCode: null,
+        websitePrompt: null,
         websiteAnalysis: null,
         outreach: null,
         githubUrl: null,
@@ -362,6 +364,7 @@ export class ScraperService {
         contentBrief: null,
         businessContext: null,
         generatedWebsiteCode: null,
+        websitePrompt: null,
         websiteAnalysis: null,
         outreach: null,
         githubUrl: null,
@@ -398,7 +401,11 @@ export class ScraperService {
     this.stopRequested = true;
     this.queue.clear();
     this.batchPending = [];
-    logger.info('Scraper stop requested');
+    logger.info('Scraper stop requested — closing browser immediately');
+    // Close the browser immediately so any in-flight page.goto / waitForSelector
+    // throws and the runSession loop exits instead of waiting for the current
+    // listing to finish (which can take 10-30s with retries + delays).
+    BrowserManager.getInstance().close().catch(() => {});
   }
 
   private async runSession(zipcode: string, category: string, maxResults: number): Promise<void> {
@@ -502,6 +509,7 @@ export class ScraperService {
             contentBrief: null,
             businessContext: null,
             generatedWebsiteCode: null,
+            websitePrompt: null,
             websiteAnalysis: null,
             outreach: null,
             githubUrl: null,
