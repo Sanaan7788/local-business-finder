@@ -302,8 +302,8 @@ DATABASE_URL=postgres://... # required when STORAGE_BACKEND=postgres
 # LLM — which provider to use by default
 LLM_PROVIDER=deepseek       # deepseek | claude | openai
 
-# DeepSeek via NVIDIA NIM
-DEEPSEEK_API_KEY=nvapi-...
+# DeepSeek API key (get from your LLM provider)
+DEEPSEEK_API_KEY=your-api-key-here
 DEEPSEEK_BASE_URL=https://integrate.api.nvidia.com/v1
 DEEPSEEK_MODEL=deepseek-ai/deepseek-v3.2
 
