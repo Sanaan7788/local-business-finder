@@ -1,0 +1,2 @@
+CREATE UNIQUE INDEX "businesses_phone_unique" ON "businesses" USING btree ("phone") WHERE "businesses"."phone" IS NOT NULL;--> statement-breakpoint
+CREATE UNIQUE INDEX "businesses_name_address_unique" ON "businesses" USING btree (lower(trim("name")),lower(trim("address")));
