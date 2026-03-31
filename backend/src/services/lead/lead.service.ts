@@ -13,7 +13,7 @@ import { logger } from '../../utils/logger';
 // Valid forward transitions — prevents nonsensical moves
 const ALLOWED_TRANSITIONS: Record<LeadStatus, LeadStatus[]> = {
   new:        ['qualified', 'rejected'],
-  qualified:  ['contacted', 'rejected'],
+  qualified:  ['new', 'contacted', 'rejected'],
   contacted:  ['interested', 'rejected', 'qualified'],
   interested: ['closed', 'rejected', 'contacted'],
   closed:     [],

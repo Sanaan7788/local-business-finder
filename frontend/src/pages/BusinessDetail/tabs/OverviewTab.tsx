@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { useUpdateProfile } from '../../../hooks/useBusinesses'
+import { useUpdateProfile, useUpdateStatus } from '../../../hooks/useBusinesses'
 import { EditableField } from '../../../components/ui/EditableField'
 import { CopyButton } from '../../../components/ui/CopyButton'
 
 export function OverviewTab({ business }: { business: any }) {
   const updateProfile = useUpdateProfile()
+  const updateStatus = useUpdateStatus()
   const [editing, setEditing] = useState(false)
   const [saved, setSaved] = useState(false)
 
@@ -67,10 +68,18 @@ export function OverviewTab({ business }: { business: any }) {
   return (
     <div className="space-y-5">
       {/* Edit toggle */}
-      <div className="flex items-center justify-between">
-        <p className="text-xs text-gray-500">
-          {editing ? 'Editing — fill in any missing details manually' : 'Click Edit to update any field manually'}
-        </p>
+      <div className="flex items-center justify-between gap-2">
+        <button
+          onClick={() => updateStatus.mutate({ id: business.id, status: business.leadStatus === 'qualified' ? 'new' : 'qualified' })}
+          disabled={updateStatus.isPending}
+          className={`text-xs px-3 py-1.5 rounded-lg border font-medium transition-colors disabled:opacity-50 ${
+            business.leadStatus === 'qualified'
+              ? 'bg-purple-100 text-purple-700 border-purple-200 hover:bg-purple-200'
+              : 'bg-white text-gray-500 border-gray-200 hover:bg-purple-50 hover:text-purple-600 hover:border-purple-200'
+          }`}
+        >
+          {business.leadStatus === 'qualified' ? '★ Shortlisted — click to remove' : '☆ Add to Shortlist'}
+        </button>
         <div className="flex items-center gap-2">
           {saved && <span className="text-xs text-green-600">Saved ✓</span>}
           {editing ? (

@@ -69,6 +69,7 @@ export function useUpdateStatus() {
     onSuccess: (updated) => {
       qc.setQueryData(keys.business(updated.id), updated)
       qc.invalidateQueries({ queryKey: ['businesses'] })
+      qc.invalidateQueries({ queryKey: keys.business(updated.id) })
     },
   })
 }

@@ -6,7 +6,9 @@ import {
   integer,
   timestamp,
   jsonb,
+  uniqueIndex,
 } from 'drizzle-orm/pg-core';
+import { sql } from 'drizzle-orm';
 
 // ---------------------------------------------------------------------------
 // businesses table — mirrors Business type exactly
@@ -61,7 +63,17 @@ export const businesses = pgTable('businesses', {
   priorityScore:   integer('priority_score').notNull().default(0),
   notes:           text('notes'),
   lastContactedAt: timestamp('last_contacted_at', { withTimezone: true }),
-});
+}, (table) => [
+  // Unique index on phone (when not null) — phones are the cleanest dedup key.
+  // Partial: only enforced when phone is present, so null phones don't conflict.
+  uniqueIndex('businesses_phone_unique').on(table.phone).where(sql`${table.phone} IS NOT NULL`),
+  // Unique index on (name, address) using lowercased, trimmed values to handle
+  // minor formatting differences. Catches businesses with no phone number.
+  uniqueIndex('businesses_name_address_unique').on(
+    sql`lower(trim(${table.name}))`,
+    sql`lower(trim(${table.address}))`,
+  ),
+]);
 
 // ---------------------------------------------------------------------------
 // scrape_sessions table — replaces scrape-history.json

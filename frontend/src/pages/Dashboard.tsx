@@ -45,6 +45,7 @@ export const ALL_CATEGORIES = [
   // Other
   'hotels', 'car rentals', 'laundromats', 'storage units', 'pharmacies',
   'dry cleaning', 'tutoring', 'child care', 'event venues', 'churches',
+  'phone repair',
 ]
 
 // ---------------------------------------------------------------------------

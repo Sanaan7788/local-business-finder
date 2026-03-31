@@ -182,7 +182,7 @@ export interface ScraperStatus {
 
 export const LEAD_STATUS_LABELS: Record<LeadStatus, string> = {
   new: 'New',
-  qualified: 'Qualified',
+  qualified: 'Shortlisted',
   contacted: 'Contacted',
   interested: 'Interested',
   closed: 'Closed',
