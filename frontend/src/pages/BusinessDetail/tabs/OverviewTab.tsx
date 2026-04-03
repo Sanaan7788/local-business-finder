@@ -181,6 +181,13 @@ export function OverviewTab({ business }: { business: any }) {
         )}
       </div>
 
+      {/* Token usage */}
+      {business.tokensUsed > 0 && (
+        <p className="text-xs text-gray-400">
+          {business.tokensUsed.toLocaleString()} AI tokens used on this profile
+        </p>
+      )}
+
       {/* Phone quick-copy */}
       {!editing && business.phone && (
         <div className="flex items-center gap-2 bg-gray-50 rounded-lg px-3 py-2">
