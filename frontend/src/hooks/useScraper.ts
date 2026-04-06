@@ -56,6 +56,16 @@ export function useLookupBusiness() {
   })
 }
 
+export function useLookupByMapsUrl() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: (mapsUrl: string) => scraperApi.lookupByMapsUrl(mapsUrl),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['businesses'] })
+    },
+  })
+}
+
 export function useImportFromUrl() {
   const qc = useQueryClient()
   return useMutation({

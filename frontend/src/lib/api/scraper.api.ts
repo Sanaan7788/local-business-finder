@@ -20,6 +20,13 @@ export const scraperApi = {
       message: string;
     }>,
 
+  lookupByMapsUrl: (mapsUrl: string) =>
+    api.post<any>('/scraper/lookup-maps-url', { mapsUrl }).then(unwrap) as Promise<{
+      status: 'saved' | 'duplicate' | 'not_found' | 'error';
+      businessId?: string;
+      message: string;
+    }>,
+
   start: (zipcode: string, category: string, maxResults: number) =>
     api.post<any>('/scraper/start', { zipcode, category, maxResults }).then(unwrap),
 

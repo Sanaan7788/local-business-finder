@@ -180,7 +180,16 @@ export class ScraperService {
         lastContactedAt: null,
       };
 
-      await repo.create(business);
+      try {
+        await repo.create(business);
+      } catch (createErr) {
+        const msg = (createErr as Error).message ?? '';
+        if (msg.includes('unique') || msg.includes('duplicate') || msg.includes('already exists')) {
+          const existing = await repo.findDuplicate(raw).catch(() => null);
+          return { status: 'duplicate', businessId: existing?.id, message: `"${business.name}" already exists in your database.` };
+        }
+        throw createErr;
+      }
       dedup.register(business);
 
       // Auto-generate keywords (non-fatal)
@@ -305,6 +314,109 @@ export class ScraperService {
       logger.debug('Created error stub', { name });
     } catch (err) {
       logger.warn('Failed to create error stub', { name, error: (err as Error).message });
+    }
+  }
+
+  /**
+   * Look up a specific business by its Google Maps URL.
+   * Navigates directly to the listing — no search, no guessing.
+   */
+  async lookupByMapsUrl(mapsUrl: string): Promise<LookupResult> {
+    if (this.state.running || this.queue.size > 0) {
+      throw new Error('A scraping session is already running. Stop it first.');
+    }
+
+    const bm = BrowserManager.getInstance();
+    const nav = new MapsNavigator();
+    const extractor = new MapsExtractor();
+    const repo = getRepository();
+    const dedup = new Deduplicator();
+
+    try {
+      await bm.launch();
+      const page = await bm.newPage();
+      await dedup.load(repo);
+
+      // Navigate directly to the Maps listing URL
+      const opened = await nav.openListingByUrl(page, mapsUrl);
+      if (!opened) {
+        return { status: 'not_found', message: 'Could not load the Google Maps listing. Check the URL and try again.' };
+      }
+
+      // Extract a minimal cardData stub — name comes from the detail panel
+      const cardData = { name: '', googleMapsUrl: mapsUrl, rating: null, reviewCount: null, category: '', addressSnippet: '', description: null };
+      const raw: DetailData | null = await extractor.extractFromDetail(page, cardData, '');
+      if (!raw) {
+        return { status: 'error', message: 'Could not extract business details from this listing.' };
+      }
+
+      // Dedup check
+      const dupId = dedup.isDuplicate(raw);
+      if (dupId) {
+        logger.info('LookupByMapsUrl: duplicate found', { name: raw.name, dupId });
+        return { status: 'duplicate', businessId: dupId, message: `"${raw.name}" already exists in your database.` };
+      }
+
+      const { score, priority } = scoreLead(raw);
+      const now = new Date().toISOString();
+      const { reviewSnippets, ...rawBusiness } = raw;
+
+      const business: Business = {
+        id: uuidv4(),
+        createdAt: now,
+        updatedAt: now,
+        ...rawBusiness,
+        googleMapsUrl: mapsUrl,
+        reviewSnippets,
+        keywords: [],
+        keywordCategories: null,
+        summary: null,
+        insights: null,
+        contentBrief: null,
+        businessContext: null,
+        generatedWebsiteCode: null,
+        websitePrompt: null,
+        websiteAnalysis: null,
+        outreach: null,
+        githubUrl: null,
+        deployedUrl: null,
+        tokensUsed: 0,
+        leadStatus: 'new',
+        priority,
+        priorityScore: score,
+        notes: null,
+        lastContactedAt: null,
+      };
+
+      try {
+        await repo.create(business);
+      } catch (createErr) {
+        const msg = (createErr as Error).message ?? '';
+        if (msg.includes('unique') || msg.includes('duplicate') || msg.includes('already exists')) {
+          logger.info('LookupByMapsUrl: DB unique constraint — already exists', { name: business.name });
+          const existing = await repo.findDuplicate(raw).catch(() => null);
+          return { status: 'duplicate', businessId: existing?.id, message: `"${business.name}" already exists in your database.` };
+        }
+        throw createErr;
+      }
+      dedup.register(business);
+
+      // Auto-generate keywords (non-fatal)
+      try {
+        const { flat: keywords, categories: keywordCategories, tokensUsed: kwTokens } = await AIService.generateKeywords(business);
+        await repo.update(business.id, { keywords, keywordCategories, tokensUsed: kwTokens, updatedAt: new Date().toISOString() });
+      } catch (kwErr) {
+        logger.warn('LookupByMapsUrl: keyword generation failed (non-fatal)', { error: (kwErr as Error).message });
+      }
+
+      logger.info('LookupByMapsUrl: business saved', { name: business.name, priority, score });
+      return { status: 'saved', businessId: business.id, message: `"${business.name}" saved successfully.` };
+
+    } catch (err) {
+      logger.error('LookupByMapsUrl failed', { error: (err as Error).message });
+      return { status: 'error', message: (err as Error).message };
+    } finally {
+      await bm.close();
     }
   }
 

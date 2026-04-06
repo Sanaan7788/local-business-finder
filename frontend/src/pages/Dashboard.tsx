@@ -6,7 +6,7 @@ import {
   useStartScraper,
   useStartBatch,
   useStopScraper,
-  useLookupBusiness,
+  useLookupByMapsUrl,
   useImportFromUrl,
 } from '../hooks/useScraper'
 
@@ -184,7 +184,7 @@ export default function Dashboard() {
   const startScraper = useStartScraper()
   const startBatch = useStartBatch()
   const stopScraper = useStopScraper()
-  const lookupBusiness = useLookupBusiness()
+  const lookupByMapsUrl = useLookupByMapsUrl()
   const importFromUrl = useImportFromUrl()
 
   // Shared
@@ -273,13 +273,12 @@ export default function Dashboard() {
   }
 
   const handleLookup = async () => {
-    const loc = location.trim()
-    const name = lookupName.trim()
-    if (!loc || !name) { setError('Both business name and location are required'); return }
+    const url = lookupName.trim()
+    if (!url) { setError('Please enter a Google Maps URL'); return }
     setError('')
     setLookupResult(null)
     try {
-      const result = await lookupBusiness.mutateAsync({ businessName: name, location: loc })
+      const result = await lookupByMapsUrl.mutateAsync(url)
       setLookupResult(result)
     } catch (e: any) {
       setLookupResult({ status: 'error', message: e.message })
@@ -293,7 +292,7 @@ export default function Dashboard() {
     ? Math.round((scraper.saved + scraper.skipped + scraper.errors) / scraper.found * 100)
     : 0
   const batchProgress = isBatch ? Math.round((batch.completedJobs / batch.totalJobs) * 100) : 0
-  const isPending = startScraper.isPending || startBatch.isPending || lookupBusiness.isPending || importFromUrl.isPending
+  const isPending = startScraper.isPending || startBatch.isPending || lookupByMapsUrl.isPending || importFromUrl.isPending
   const isBatchMode = categories.length > 1
 
   return (
@@ -538,24 +537,25 @@ export default function Dashboard() {
               {searchType === 'business' && (
                 <div className="space-y-3">
                   <div className="space-y-2">
-                    <label className="block text-xs text-gray-500">Business Name</label>
+                    <label className="block text-xs text-gray-500">Google Maps URL</label>
                     <input
-                      type="text"
+                      type="url"
                       value={lookupName}
                       onChange={e => setLookupName(e.target.value)}
                       onKeyDown={e => e.key === 'Enter' && handleLookup()}
-                      placeholder="e.g. Tony's Pizza, Nails by Maria, Joe's Barbershop"
+                      placeholder="https://maps.google.com/maps/place/..."
                       className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
                     />
+                    <p className="text-xs text-gray-400">Open the business on Google Maps, copy the URL from your browser, and paste it here.</p>
                     <button
                       onClick={handleLookup}
-                      disabled={isPending || !lookupName.trim() || !location.trim()}
+                      disabled={isPending || !lookupName.trim()}
                       className="w-full bg-purple-600 text-white rounded-lg px-5 py-2.5 text-sm font-medium hover:bg-purple-700 disabled:opacity-50 transition-colors"
                     >
-                      {lookupBusiness.isPending ? 'Looking up…' : 'Look Up'}
+                      {lookupByMapsUrl.isPending ? 'Looking up…' : 'Look Up'}
                     </button>
                   </div>
-                  {lookupBusiness.isPending && (
+                  {lookupByMapsUrl.isPending && (
                     <p className="text-xs text-gray-400">Opening Google Maps — this takes 20–40 seconds…</p>
                   )}
                   {lookupResult && (

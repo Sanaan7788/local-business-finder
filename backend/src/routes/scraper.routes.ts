@@ -31,6 +31,10 @@ const LookupSchema = z.object({
   location: z.string().min(1).max(200),
 });
 
+const LookupMapsUrlSchema = z.object({
+  mapsUrl: z.string().url('Must be a valid URL'),
+});
+
 const ImportUrlSchema = z.object({
   websiteUrl: z.string().url('Must be a valid URL'),
 });
@@ -85,6 +89,27 @@ router.post(
       logger.info('Single business lookup requested', { businessName, location });
       const result = await scraper.lookup(businessName, location);
 
+      res.json({ success: true, data: result });
+    } catch (err) {
+      next(err);
+    }
+  },
+);
+
+// ---------------------------------------------------------------------------
+// POST /api/scraper/lookup-maps-url
+// Look up a specific business by its Google Maps URL — no search, direct navigation.
+// ---------------------------------------------------------------------------
+
+router.post(
+  '/lookup-maps-url',
+  validateBody(LookupMapsUrlSchema),
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { mapsUrl } = req.body as z.infer<typeof LookupMapsUrlSchema>;
+      const scraper = ScraperService.getInstance();
+      logger.info('Maps URL lookup requested', { mapsUrl });
+      const result = await scraper.lookupByMapsUrl(mapsUrl);
       res.json({ success: true, data: result });
     } catch (err) {
       next(err);
