@@ -8,18 +8,15 @@ import {
 } from '../../hooks/useBusinesses'
 import { Badge } from '../../components/ui/Badge'
 import { LEAD_STATUS_LABELS, LEAD_STATUS_COLORS, PRIORITY_COLORS } from '../../types/business'
-import type { LeadStatus, Priority } from '../../types/business'
+import type { Priority } from '../../types/business'
 import { OverviewTab } from './tabs/OverviewTab'
-import { SummaryTab } from './tabs/SummaryTab'
-import { KeywordsTab } from './tabs/KeywordsTab'
-import { InsightsTab } from './tabs/InsightsTab'
+import { AIAnalysisTab } from './tabs/AIAnalysisTab'
 import { ContentBriefTab } from './tabs/ContentBriefTab'
-import { PromptTab } from './tabs/PromptTab'
 import { WebsiteTab } from './tabs/WebsiteTab'
 import { CRMTab } from './tabs/CRMTab'
 import { DeploymentTab } from './tabs/DeploymentTab'
 
-const TABS = ['Overview', 'Summary', 'Keywords', 'Insights', 'Content Brief', 'Prompt', 'Website', 'CRM', 'Deployment'] as const
+const TABS = ['Overview', 'AI Analysis', 'Content Brief', 'Website', 'CRM', 'Deployment'] as const
 type Tab = typeof TABS[number]
 
 export default function BusinessDetail() {
@@ -73,11 +70,8 @@ export default function BusinessDetail() {
               }`}
             >
               {tab}
-              {tab === 'Summary' && (business.summary || business.businessContext) && <span className="ml-1 text-xs text-green-500">✓</span>}
-              {tab === 'Keywords' && business.keywords?.length > 0 && <span className="ml-1 text-xs text-green-500">✓</span>}
-              {tab === 'Insights' && business.insights && <span className="ml-1 text-xs text-green-500">✓</span>}
+              {tab === 'AI Analysis' && (business.summary || business.keywords?.length > 0 || business.insights) && <span className="ml-1 text-xs text-green-500">✓</span>}
               {tab === 'Content Brief' && business.contentBrief && <span className="ml-1 text-xs text-green-500">✓</span>}
-              {tab === 'Prompt' && business.websitePrompt && <span className="ml-1 text-xs text-amber-500">✏</span>}
               {tab === 'Website' && business.generatedWebsiteCode && <span className="ml-1 text-xs text-green-500">✓</span>}
               {tab === 'Deployment' && business.deployedUrl && <span className="ml-1 text-xs text-green-500">✓</span>}
             </button>
@@ -87,14 +81,8 @@ export default function BusinessDetail() {
 
       <div className="bg-white rounded-xl border border-gray-200 p-6">
         {activeTab === 'Overview' && <OverviewTab business={business} />}
-        {activeTab === 'Summary' && (
-          <SummaryTab business={business} onAnalyze={() => analyze.mutate(id!)} analyzing={analyze.isPending} />
-        )}
-        {activeTab === 'Keywords' && (
-          <KeywordsTab business={business} onAnalyze={() => analyze.mutate(id!)} analyzing={analyze.isPending} />
-        )}
-        {activeTab === 'Insights' && (
-          <InsightsTab business={business} onAnalyze={() => analyze.mutate(id!)} analyzing={analyze.isPending} />
+        {activeTab === 'AI Analysis' && (
+          <AIAnalysisTab business={business} onAnalyze={() => analyze.mutate(id!)} analyzing={analyze.isPending} />
         )}
         {activeTab === 'Content Brief' && (
           <ContentBriefTab
@@ -103,7 +91,6 @@ export default function BusinessDetail() {
             generating={generateContentBrief.isPending}
           />
         )}
-        {activeTab === 'Prompt' && <PromptTab business={business} />}
         {activeTab === 'Website' && (
           <WebsiteTab business={business} onGenerate={() => generateWebsite.mutate(id!)} generating={generateWebsite.isPending} />
         )}

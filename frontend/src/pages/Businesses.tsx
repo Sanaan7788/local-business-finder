@@ -187,6 +187,19 @@ export default function Businesses() {
             <option value="yes">Has Website</option>
           </select>
         </div>
+        {(search || leadStatus || priority || hasWebsite !== 'all') && (
+          <div className="mt-3 flex items-center gap-2">
+            <button
+              onClick={() => { setSearch(''); setLeadStatus(''); setPriority(''); setHasWebsite('all'); setPage(1); setSearchParams({}) }}
+              className="text-xs text-gray-500 hover:text-gray-800 border border-gray-200 px-3 py-1 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              ✕ Clear filters
+            </button>
+            {leadStatus === 'qualified' && (
+              <span className="text-xs text-purple-600 font-medium">Showing Shortlisted only</span>
+            )}
+          </div>
+        )}
       </div>
 
       {/* ------------------------------------------------------------------ */}
