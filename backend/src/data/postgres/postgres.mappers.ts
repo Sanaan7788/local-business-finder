@@ -115,6 +115,7 @@ export function buildConditions(filter: BusinessFilter) {
   if (filter.leadStatus) parts.push(eq(businesses.leadStatus, filter.leadStatus));
   if (filter.priority)   parts.push(eq(businesses.priority, filter.priority));
   if (filter.hasWebsite !== undefined) parts.push(eq(businesses.website, filter.hasWebsite));
+  if (filter.category)   parts.push(ilike(businesses.category, filter.category));
   if (filter.search) {
     const q = `%${filter.search}%`;
     parts.push(

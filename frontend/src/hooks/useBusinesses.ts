@@ -36,6 +36,14 @@ export function useBusinessStats() {
   })
 }
 
+export function useBusinessCategories() {
+  return useQuery({
+    queryKey: ['businesses', 'categories'],
+    queryFn: () => businessApi.categories(),
+    staleTime: 60_000,
+  })
+}
+
 // ---------------------------------------------------------------------------
 // Mutations
 // ---------------------------------------------------------------------------

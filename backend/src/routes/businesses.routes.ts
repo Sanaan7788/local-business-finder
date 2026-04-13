@@ -23,6 +23,27 @@ import { BusinessFilter, BusinessSort } from '../data/repository.interface';
 const router = Router();
 
 // ---------------------------------------------------------------------------
+// GET /api/businesses/categories
+// Returns distinct categories with counts, ordered by count desc.
+// Must be defined BEFORE /:id or Express will treat "categories" as an id param.
+// ---------------------------------------------------------------------------
+router.get('/categories', async (_req: Request, res: Response, next: NextFunction) => {
+  try {
+    const db = (await import('../data/postgres/postgres.connection')).getDb();
+    const { businesses: bTable } = await import('../data/schema');
+    const { sql, desc: descFn } = await import('drizzle-orm');
+    const rows = await db
+      .select({ category: bTable.category, count: sql<number>`count(*)` })
+      .from(bTable)
+      .groupBy(bTable.category)
+      .orderBy(descFn(sql<number>`count(*)`));
+    res.json({ success: true, data: rows.map(r => ({ category: r.category, count: Number(r.count) })) });
+  } catch (err) {
+    next(err);
+  }
+});
+
+// ---------------------------------------------------------------------------
 // GET /api/businesses/stats
 // Must be defined BEFORE /:id or Express will treat "stats" as an id param.
 // ---------------------------------------------------------------------------
@@ -42,7 +63,7 @@ router.get('/stats', async (_req: Request, res: Response, next: NextFunction) =>
 router.get('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const {
-      zipcode, leadStatus, priority, hasWebsite, search,
+      zipcode, leadStatus, priority, hasWebsite, search, category,
       page = '1', pageSize = '50',
       sortField = 'createdAt', sortOrder = 'desc',
     } = req.query as Record<string, string>;
@@ -53,6 +74,7 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
     if (priority)    filter.priority = priority as any;
     if (hasWebsite !== undefined) filter.hasWebsite = hasWebsite === 'true';
     if (search)      filter.search = search;
+    if (category)    filter.category = category;
 
     const sort: BusinessSort = {
       field: sortField as any,

@@ -15,6 +15,7 @@ export interface BusinessListParams {
   priority?: string
   hasWebsite?: boolean
   search?: string
+  category?: string
   page?: number
   pageSize?: number
   sortField?: string
@@ -24,6 +25,9 @@ export interface BusinessListParams {
 export const businessApi = {
   list: (params: BusinessListParams = {}) =>
     api.get<any>('/businesses', { params }).then(unwrap) as Promise<PaginatedData<Business>>,
+
+  categories: () =>
+    api.get<any>('/businesses/categories').then(unwrap) as Promise<{ category: string; count: number }[]>,
 
   get: (id: string) =>
     api.get<any>(`/businesses/${id}`).then(unwrap) as Promise<Business>,

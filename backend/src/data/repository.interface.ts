@@ -16,6 +16,7 @@ export interface BusinessFilter {
   priority?: Priority;
   hasWebsite?: boolean;
   search?: string; // matches against name, address, category
+  category?: string;
 }
 
 export interface BusinessSort {

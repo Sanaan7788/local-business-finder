@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { useBusinesses, useDeleteBusiness } from '../hooks/useBusinesses'
+import { useBusinesses, useDeleteBusiness, useBusinessCategories } from '../hooks/useBusinesses'
 import type { Business, LeadStatus, Priority } from '../types/business'
 import { LEAD_STATUS_LABELS, LEAD_STATUS_COLORS, PRIORITY_COLORS } from '../types/business'
 
@@ -46,10 +46,96 @@ function RowMenu({ onDelete }: { onDelete: () => void }) {
   )
 }
 
+// ---------------------------------------------------------------------------
+// Searchable category dropdown
+// ---------------------------------------------------------------------------
+function CategoryDropdown({
+  value,
+  onChange,
+  categories,
+}: {
+  value: string
+  onChange: (v: string) => void
+  categories: { category: string; count: number }[]
+}) {
+  const [open, setOpen] = useState(false)
+  const [query, setQuery] = useState('')
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [])
+
+  const filtered = query
+    ? categories.filter(c => c.category.toLowerCase().includes(query.toLowerCase()))
+    : categories
+
+  const label = value || 'All Categories'
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        type="button"
+        onClick={() => { setOpen(o => !o); setQuery('') }}
+        className="w-full text-left border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white flex items-center justify-between gap-2"
+      >
+        <span className={value ? 'text-gray-900' : 'text-gray-400'} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          {label}
+        </span>
+        <span className="text-gray-400 flex-shrink-0">{open ? '▲' : '▼'}</span>
+      </button>
+
+      {open && (
+        <div className="absolute z-50 mt-1 w-full bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden">
+          <div className="p-2 border-b border-gray-100">
+            <input
+              autoFocus
+              type="text"
+              placeholder="Search categories…"
+              value={query}
+              onChange={e => setQuery(e.target.value)}
+              className="w-full text-sm px-2 py-1 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div className="max-h-56 overflow-y-auto">
+            <button
+              type="button"
+              onClick={() => { onChange(''); setOpen(false) }}
+              className={`w-full text-left px-3 py-2 text-sm hover:bg-blue-50 transition-colors ${!value ? 'text-blue-600 font-medium' : 'text-gray-500'}`}
+            >
+              All Categories
+            </button>
+            {filtered.map(({ category, count }) => (
+              <button
+                key={category}
+                type="button"
+                onClick={() => { onChange(category); setOpen(false) }}
+                className={`w-full text-left px-3 py-2 text-sm hover:bg-blue-50 transition-colors flex items-center justify-between ${value === category ? 'text-blue-600 font-medium bg-blue-50' : 'text-gray-700'}`}
+              >
+                <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{category}</span>
+                <span className="text-xs text-gray-400 flex-shrink-0 ml-2">{count}</span>
+              </button>
+            ))}
+            {filtered.length === 0 && (
+              <p className="text-sm text-gray-400 px-3 py-2">No matches</p>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
 export default function Businesses() {
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
   const deleteBusiness = useDeleteBusiness()
+  const { data: categoriesData } = useBusinessCategories()
+  const categories = categoriesData ?? []
 
   const [search, setSearch] = useState(searchParams.get('search') ?? '')
   const [leadStatus, setLeadStatus] = useState<LeadStatus | ''>(
@@ -57,6 +143,7 @@ export default function Businesses() {
   )
   const [priority, setPriority] = useState<Priority | ''>('')
   const [hasWebsite, setHasWebsite] = useState<'all' | 'yes' | 'no'>('all')
+  const [category, setCategory] = useState('')
   const [page, setPage] = useState(1)
   const [sortField, setSortField] = useState('createdAt')
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc')
@@ -71,6 +158,7 @@ export default function Businesses() {
     leadStatus: leadStatus || undefined,
     priority: priority || undefined,
     hasWebsite: hasWebsite === 'all' ? undefined : hasWebsite === 'yes',
+    category: category || undefined,
     page,
     pageSize: 25,
     sortField,
@@ -118,7 +206,7 @@ export default function Businesses() {
     <div className="p-12 text-center text-gray-400">
       <p className="font-medium text-gray-500">No businesses found</p>
       <p className="text-sm mt-1">
-        {(search || leadStatus || priority || hasWebsite !== 'all')
+        {(search || leadStatus || priority || hasWebsite !== 'all' || category)
           ? 'Try adjusting your filters'
           : 'Run the scraper to get started'}
       </p>
@@ -158,13 +246,18 @@ export default function Businesses() {
 
       {/* Filters */}
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-6 gap-3">
           <input
             type="text"
             placeholder="Search name, address…"
             value={search}
             onChange={e => { setSearch(e.target.value); setPage(1) }}
             className="col-span-2 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <CategoryDropdown
+            value={category}
+            onChange={v => { setCategory(v); setPage(1) }}
+            categories={categories}
           />
           <select value={leadStatus} onChange={e => { setLeadStatus(e.target.value as LeadStatus | ''); setPage(1) }}
             className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -187,10 +280,10 @@ export default function Businesses() {
             <option value="yes">Has Website</option>
           </select>
         </div>
-        {(search || leadStatus || priority || hasWebsite !== 'all') && (
+        {(search || leadStatus || priority || hasWebsite !== 'all' || category) && (
           <div className="mt-3 flex items-center gap-2">
             <button
-              onClick={() => { setSearch(''); setLeadStatus(''); setPriority(''); setHasWebsite('all'); setPage(1); setSearchParams({}) }}
+              onClick={() => { setSearch(''); setLeadStatus(''); setPriority(''); setHasWebsite('all'); setCategory(''); setPage(1); setSearchParams({}) }}
               className="text-xs text-gray-500 hover:text-gray-800 border border-gray-200 px-3 py-1 rounded-lg hover:bg-gray-50 transition-colors"
             >
               ✕ Clear filters
