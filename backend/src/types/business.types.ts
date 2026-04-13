@@ -87,6 +87,21 @@ export const OutreachSchema = z.object({
 });
 
 // ---------------------------------------------------------------------------
+// Menu types — scraped from Google Maps Menu tab
+// ---------------------------------------------------------------------------
+
+export const MenuItemSchema = z.object({
+  name: z.string(),
+  price: z.string().nullable(),
+  description: z.string().nullable(),
+});
+
+export const MenuSectionSchema = z.object({
+  section: z.string(),
+  items: z.array(MenuItemSchema),
+});
+
+// ---------------------------------------------------------------------------
 // Core Business Schema
 // Single source of truth for the entire business profile.
 // All services, the repository, and the frontend share this contract.
@@ -113,6 +128,7 @@ export const BusinessSchema = z.object({
 
   // Scraper extras — stored so AI can use them on any future regeneration
   reviewSnippets: z.array(z.string()),
+  menu: z.array(MenuSectionSchema),
 
   // AI outputs — populated by LLM service
   keywords: z.array(z.string()),
@@ -176,6 +192,8 @@ export const UpdateBusinessSchema = z.object({
 // ---------------------------------------------------------------------------
 
 export type Business = z.infer<typeof BusinessSchema>;
+export type MenuItem = z.infer<typeof MenuItemSchema>;
+export type MenuSection = z.infer<typeof MenuSectionSchema>;
 export type RawBusiness = z.infer<typeof RawBusinessSchema>;
 export type UpdateBusiness = z.infer<typeof UpdateBusinessSchema>;
 export type LeadStatus = z.infer<typeof LeadStatusSchema>;

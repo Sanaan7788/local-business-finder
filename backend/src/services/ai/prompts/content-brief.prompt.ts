@@ -1,11 +1,26 @@
-import { Business, ContentBrief } from '../../../types/business.types';
+import { Business, ContentBrief, MenuSection } from '../../../types/business.types';
 
 // ---------------------------------------------------------------------------
 // Content Brief
 // ---------------------------------------------------------------------------
 
+function formatMenuForPrompt(menu: MenuSection[]): string {
+  if (!menu || menu.length === 0) return '';
+  const lines: string[] = ['\nActual menu scraped from Google Maps:'];
+  for (const section of menu) {
+    lines.push(`${section.section}:`);
+    for (const item of section.items) {
+      const price = item.price ? ` — ${item.price}` : '';
+      const desc = item.description ? ` (${item.description})` : '';
+      lines.push(`  • ${item.name}${price}${desc}`);
+    }
+  }
+  return lines.join('\n');
+}
+
 export function buildContentBriefPrompt(business: Business): { systemPrompt: string; userPrompt: string } {
   const snippets = business.reviewSnippets ?? [];
+  const menuText = formatMenuForPrompt(business.menu ?? []);
 
   return {
     systemPrompt:
@@ -31,9 +46,10 @@ export function buildContentBriefPrompt(business: Business): { systemPrompt: str
       (snippets.length > 0
         ? `\nCustomer review excerpts:\n${snippets.map((s, i) => `${i + 1}. "${s}"`).join('\n')}\n`
         : '') +
+      (menuText ? menuText + '\n' : '') +
       `\nReturn JSON in this exact shape:\n` +
       `{\n` +
-      `  "confirmedFacts": "Structured prose with headings covering: what this business sells/offers, what customers mention in reviews (what's famous, what people love, recurring themes), rating context, any notable specialties confirmed by the data. Use headings like 'Services:', 'What Customers Love:', 'Reputation:'. Only confirmed facts.",\n` +
+      `  "confirmedFacts": "Structured prose with headings covering: what this business sells/offers, what customers mention in reviews (what's famous, what people love, recurring themes), rating context, any notable specialties confirmed by the data. If a menu was provided, include a 'Menu Highlights:' section listing key items and prices. Use headings like 'Services:', 'Menu Highlights:', 'What Customers Love:', 'Reputation:'. Only confirmed facts.",\n` +
       `  "assumptions": "Structured prose with headings covering: typical services/products a ${business.category} would offer that aren't confirmed above, likely price range, probable target customers, standard operating hours, common amenities, seasonal offerings. Use headings like 'Likely Services:', 'Estimated Price Range:', 'Target Customers:', 'Probable Hours:'. Frame everything as reasonable inference."\n` +
       `}`,
   };

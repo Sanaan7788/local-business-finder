@@ -31,6 +31,13 @@ const SEL = {
   detailReviews:    '.UY7F9, .RDApEe',
   // Reviews snippet text (shown below the star row)
   detailReviewSnippets: '[data-review-id] .wiI7pd, .MyEned .wiI7pd',
+  // Menu tab button in the detail panel tab bar
+  menuTab:          'button[aria-label*="Menu" i], [role="tab"][aria-label*="Menu" i]',
+  // Menu items inside the menu panel — each item is a section/row
+  menuSection:      '.LTs0Rc, [class*="menu"] [class*="section"]',
+  menuItemName:     '.uUawF, .O4a2xb, [class*="item-name"]',
+  menuItemPrice:    '.kkXMic, .lXkSp, [class*="price"]',
+  menuItemDesc:     '.HlvMq, [class*="item-desc"]',
 } as const;
 
 // ---------------------------------------------------------------------------
@@ -170,6 +177,9 @@ export class MapsExtractor {
       // Grab visible review snippets for keyword enrichment
       const reviewSnippets = await this.extractReviewSnippets(page);
 
+      // Try to scrape the Menu tab (restaurants/cafes — non-fatal if absent)
+      const menu = await this.extractMenu(page);
+
       return {
         name,
         phone,
@@ -183,6 +193,7 @@ export class MapsExtractor {
         reviewCount,
         googleMapsUrl: canonicalUrl,
         reviewSnippets,
+        menu,
       };
     } catch (err) {
       logger.warn('extractFromDetail failed', { name: partial.name, error: (err as Error).message });
@@ -244,6 +255,74 @@ export class MapsExtractor {
     }
   }
 
+  // Try to click the Menu tab and extract menu sections + items.
+  // Returns empty array if no menu tab exists or scraping fails.
+  async extractMenu(page: Page): Promise<MenuSection[]> {
+    try {
+      // Check if a Menu tab button exists
+      const menuBtn = page.locator(SEL.menuTab).first();
+      const menuBtnVisible = await menuBtn.isVisible().catch(() => false);
+      if (!menuBtnVisible) return [];
+
+      await menuBtn.click();
+      // Wait briefly for menu content to load
+      await page.waitForTimeout(2000);
+
+      // Strategy 1: structured section + item selectors
+      const sections = page.locator(SEL.menuSection);
+      const sectionCount = await sections.count().catch(() => 0);
+
+      if (sectionCount > 0) {
+        const result: MenuSection[] = [];
+        for (let s = 0; s < Math.min(sectionCount, 10); s++) {
+          const sec = sections.nth(s);
+          const sectionName = cleanText(await sec.locator('h2, h3, [class*="section-title"], [class*="header"]').first().textContent().catch(() => null)) || `Section ${s + 1}`;
+          const itemEls = sec.locator(SEL.menuItemName);
+          const itemCount = await itemEls.count().catch(() => 0);
+          const items: MenuItem[] = [];
+          for (let i = 0; i < Math.min(itemCount, 20); i++) {
+            const itemEl = itemEls.nth(i);
+            const name = cleanText(await itemEl.textContent().catch(() => null));
+            if (!name) continue;
+            const priceEl = sec.locator(SEL.menuItemPrice).nth(i);
+            const price = cleanText(await priceEl.textContent().catch(() => null)) || null;
+            const descEl = sec.locator(SEL.menuItemDesc).nth(i);
+            const description = cleanText(await descEl.textContent().catch(() => null)) || null;
+            items.push({ name, price, description });
+          }
+          if (items.length > 0) result.push({ section: sectionName, items });
+        }
+        if (result.length > 0) {
+          logger.debug('Menu scraped via sections', { sections: result.length });
+          return result;
+        }
+      }
+
+      // Strategy 2: flat list — grab all visible item + price pairs in the menu panel
+      const allItems = page.locator('[role="main"] ' + SEL.menuItemName);
+      const allCount = await allItems.count().catch(() => 0);
+      if (allCount > 0) {
+        const items: MenuItem[] = [];
+        const allPrices = page.locator('[role="main"] ' + SEL.menuItemPrice);
+        for (let i = 0; i < Math.min(allCount, 40); i++) {
+          const name = cleanText(await allItems.nth(i).textContent().catch(() => null));
+          if (!name) continue;
+          const price = cleanText(await allPrices.nth(i).textContent().catch(() => null)) || null;
+          items.push({ name, price, description: null });
+        }
+        if (items.length > 0) {
+          logger.debug('Menu scraped via flat list', { items: items.length });
+          return [{ section: 'Menu', items }];
+        }
+      }
+
+      return [];
+    } catch (err) {
+      logger.debug('extractMenu failed (non-fatal)', { error: (err as Error).message });
+      return [];
+    }
+  }
+
   // Try multiple strategies to find the phone number
   private async extractPhone(page: Page): Promise<string | null> {
     // Strategy 1: button with "Copy phone number" tooltip
@@ -295,7 +374,19 @@ export interface CardData {
   googleMapsUrl: string | null;
 }
 
+export interface MenuItem {
+  name: string;
+  price: string | null;
+  description: string | null;
+}
+
+export interface MenuSection {
+  section: string;
+  items: MenuItem[];
+}
+
 // Full data from the detail panel including review snippets for keyword enrichment
 export interface DetailData extends RawBusiness {
   reviewSnippets: string[];
+  menu: MenuSection[];
 }

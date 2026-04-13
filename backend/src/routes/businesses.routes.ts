@@ -120,6 +120,7 @@ router.post(
         updatedAt: now,
         ...raw,
         reviewSnippets: [],
+        menu: [],
         keywords: [],
         keywordCategories: null,
         summary: null,

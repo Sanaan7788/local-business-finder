@@ -152,7 +152,7 @@ export class ScraperService {
       // Score, build, save
       const { score, priority } = scoreLead(raw);
       const now = new Date().toISOString();
-      const { reviewSnippets, ...rawBusiness } = raw;
+      const { reviewSnippets, menu, ...rawBusiness } = raw;
 
       const business: Business = {
         id: uuidv4(),
@@ -160,6 +160,7 @@ export class ScraperService {
         updatedAt: now,
         ...rawBusiness,
         reviewSnippets,
+        menu,
         keywords: [],
         keywordCategories: null,
         summary: null,
@@ -291,6 +292,7 @@ export class ScraperService {
         reviewCount: null,
         googleMapsUrl: null,
         reviewSnippets: [],
+        menu: [],
         keywords: [],
         keywordCategories: null,
         summary: null,
@@ -359,7 +361,7 @@ export class ScraperService {
 
       const { score, priority } = scoreLead(raw);
       const now = new Date().toISOString();
-      const { reviewSnippets, ...rawBusiness } = raw;
+      const { reviewSnippets, menu, ...rawBusiness } = raw;
 
       const business: Business = {
         id: uuidv4(),
@@ -368,6 +370,7 @@ export class ScraperService {
         ...rawBusiness,
         googleMapsUrl: mapsUrl,
         reviewSnippets,
+        menu,
         keywords: [],
         keywordCategories: null,
         summary: null,
@@ -469,6 +472,7 @@ export class ScraperService {
         reviewCount: null,
         googleMapsUrl: null,
         reviewSnippets: [],
+        menu: [],
         keywords: [],
         keywordCategories: null,
         summary: null,
@@ -606,14 +610,15 @@ export class ScraperService {
           // Score and build the full business record
           const { score, priority } = scoreLead(raw);
           const now = new Date().toISOString();
-          const { reviewSnippets, ...rawBusiness } = raw;
+          const { reviewSnippets, menu, ...rawBusiness } = raw;
 
           const business: Business = {
             id: uuidv4(),
             createdAt: now,
             updatedAt: now,
             ...rawBusiness,
-            reviewSnippets,  // stored so AI can use them on future regenerations
+            reviewSnippets,
+            menu,
             keywords: [],
             keywordCategories: null,
             summary: null,

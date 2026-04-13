@@ -40,6 +40,20 @@ export function slugify(name: string, zipcode: string): string {
 // Prompt builder (Step 7.1)
 // ---------------------------------------------------------------------------
 
+function formatMenu(business: Business): string {
+  if (!business.menu || business.menu.length === 0) return '';
+  const lines: string[] = ['', '=== ACTUAL MENU (scraped from Google Maps) ==='];
+  for (const section of business.menu) {
+    lines.push(`\n${section.section}:`);
+    for (const item of section.items) {
+      const price = item.price ? ` — ${item.price}` : '';
+      const desc = item.description ? ` (${item.description})` : '';
+      lines.push(`  • ${item.name}${price}${desc}`);
+    }
+  }
+  return lines.join('\n');
+}
+
 function buildWebsitePrompt(business: Business): { systemPrompt: string; userPrompt: string } {
   const phoneLine = business.phone ? `Phone: ${business.phone}` : '';
   const ratingLine = business.rating !== null ? `Google rating: ${business.rating} stars` : '';
@@ -49,6 +63,7 @@ function buildWebsitePrompt(business: Business): { systemPrompt: string; userPro
     ? `SEO keywords: ${business.keywords.join(', ')}`
     : '';
   const summaryLine = business.summary ? `Business summary: ${business.summary}` : '';
+  const menuSection = formatMenu(business);
 
   // Content brief provides the richest signal — use it as a dedicated section when available
   const contentBriefSection = business.contentBrief
@@ -62,6 +77,8 @@ function buildWebsitePrompt(business: Business): { systemPrompt: string; userPro
       ].join('\n')
     : '';
 
+  const hasMenu = menuSection.length > 0;
+
   return {
     systemPrompt: [
       'You are an expert web developer specializing in local business websites.',
@@ -70,16 +87,21 @@ function buildWebsitePrompt(business: Business): { systemPrompt: string; userPro
       '- Use Tailwind CSS via CDN: <script src="https://cdn.tailwindcss.com"></script>',
       '- Mobile-first, fully responsive',
       '- Include all meta tags (charset, viewport, description, keywords)',
-      '- Sections: hero, about, services, contact',
+      hasMenu
+        ? '- Sections: hero, about, menu (with real items and prices), contact'
+        : '- Sections: hero, about, services, contact',
       '- Use real business data provided — no placeholder text like [Business Name]',
       '- If a Content Brief is provided, use the confirmed facts for real page content and assumptions only to fill gaps',
+      hasMenu
+        ? '- Menu section MUST show the actual menu items and prices scraped from Google Maps — do not invent or generalise'
+        : '',
       '- Hero section must prominently show the business name and a clear tagline',
       '- Contact section must show the real phone number and address',
       '- Clean, professional design with good color contrast',
       '- No external images — use emoji or CSS shapes for visual interest',
       '- Output ONLY the raw HTML starting with <!DOCTYPE html>',
       '- Do NOT wrap in markdown code fences or add any explanation',
-    ].join('\n'),
+    ].filter(Boolean).join('\n'),
 
     userPrompt: [
       `Business name: ${business.name}`,
@@ -91,6 +113,7 @@ function buildWebsitePrompt(business: Business): { systemPrompt: string; userPro
       reviewLine,
       keywordsLine,
       summaryLine,
+      menuSection,
       contentBriefSection,
       '',
       'Generate the complete HTML website now.',

@@ -66,6 +66,7 @@ async function main() {
       reviewCount: null,
       googleMapsUrl: null,
       reviewSnippets: [],
+      menu: [],
       keywords: [],
       keywordCategories: null,
       summary: null,
