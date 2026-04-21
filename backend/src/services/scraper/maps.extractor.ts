@@ -33,11 +33,6 @@ const SEL = {
   detailReviewSnippets: '[data-review-id] .wiI7pd, .MyEned .wiI7pd',
   // Menu tab button in the detail panel tab bar
   menuTab:          'button[aria-label*="Menu" i], [role="tab"][aria-label*="Menu" i]',
-  // Menu items inside the menu panel — each item is a section/row
-  menuSection:      '.LTs0Rc, [class*="menu"] [class*="section"]',
-  menuItemName:     '.uUawF, .O4a2xb, [class*="item-name"]',
-  menuItemPrice:    '.kkXMic, .lXkSp, [class*="price"]',
-  menuItemDesc:     '.HlvMq, [class*="item-desc"]',
 } as const;
 
 // ---------------------------------------------------------------------------
@@ -256,66 +251,99 @@ export class MapsExtractor {
   }
 
   // Try to click the Menu tab and extract menu sections + items.
+  // Uses page.evaluate so we are not coupled to Google's obfuscated class names.
   // Returns empty array if no menu tab exists or scraping fails.
   async extractMenu(page: Page): Promise<MenuSection[]> {
     try {
       // Check if a Menu tab button exists
       const menuBtn = page.locator(SEL.menuTab).first();
       const menuBtnVisible = await menuBtn.isVisible().catch(() => false);
-      if (!menuBtnVisible) return [];
+      if (!menuBtnVisible) {
+        logger.debug('extractMenu: no Menu tab found');
+        return [];
+      }
 
       await menuBtn.click();
-      // Wait briefly for menu content to load
-      await page.waitForTimeout(2000);
+      // Give the menu panel time to fully render
+      await page.waitForTimeout(3000);
 
-      // Strategy 1: structured section + item selectors
-      const sections = page.locator(SEL.menuSection);
-      const sectionCount = await sections.count().catch(() => 0);
+      // Use page.evaluate so we work directly on the DOM — no fragile class selectors.
+      // Strategy: find all list-like containers inside [role="main"] that look like menu items.
+      // A menu item row typically contains: a name (non-numeric text) + optionally a price ($xx.xx).
+      const result = await page.evaluate(() => {
+        const priceRe = /^\$[\d.,]+$/;
+        const sections: { section: string; items: { name: string; price: string | null; description: string | null }[] }[] = [];
 
-      if (sectionCount > 0) {
-        const result: MenuSection[] = [];
-        for (let s = 0; s < Math.min(sectionCount, 10); s++) {
-          const sec = sections.nth(s);
-          const sectionName = cleanText(await sec.locator('h2, h3, [class*="section-title"], [class*="header"]').first().textContent().catch(() => null)) || `Section ${s + 1}`;
-          const itemEls = sec.locator(SEL.menuItemName);
-          const itemCount = await itemEls.count().catch(() => 0);
-          const items: MenuItem[] = [];
-          for (let i = 0; i < Math.min(itemCount, 20); i++) {
-            const itemEl = itemEls.nth(i);
-            const name = cleanText(await itemEl.textContent().catch(() => null));
-            if (!name) continue;
-            const priceEl = sec.locator(SEL.menuItemPrice).nth(i);
-            const price = cleanText(await priceEl.textContent().catch(() => null)) || null;
-            const descEl = sec.locator(SEL.menuItemDesc).nth(i);
-            const description = cleanText(await descEl.textContent().catch(() => null)) || null;
-            items.push({ name, price, description });
+        // Look for section headers (h2/h3) inside the main panel
+        const main = document.querySelector('[role="main"]');
+        if (!main) return sections;
+
+        // Try structured approach: find headings followed by item lists
+        const headings = Array.from(main.querySelectorAll('h2, h3'));
+        if (headings.length > 0) {
+          for (const heading of headings.slice(0, 15)) {
+            const sectionName = heading.textContent?.trim() || 'Menu';
+            const items: { name: string; price: string | null; description: string | null }[] = [];
+
+            // Walk siblings after the heading until next heading
+            let el: Element | null = heading.nextElementSibling;
+            let safetyCount = 0;
+            while (el && safetyCount < 30) {
+              safetyCount++;
+              if (el.tagName === 'H2' || el.tagName === 'H3') break;
+
+              // Each item row: look for children with a text node (name) and optionally a price
+              const texts = Array.from(el.querySelectorAll('*'))
+                .map(n => n.childNodes)
+                .reduce((acc: string[], nodes) => {
+                  nodes.forEach(n => {
+                    if (n.nodeType === 3) {
+                      const t = n.textContent?.trim() ?? '';
+                      if (t.length > 1) acc.push(t);
+                    }
+                  });
+                  return acc;
+                }, []);
+
+              const price = texts.find(t => priceRe.test(t)) ?? null;
+              const name = texts.find(t => !priceRe.test(t) && t.length > 1 && t.length < 120) ?? null;
+              if (name) items.push({ name, price, description: null });
+
+              el = el.nextElementSibling;
+            }
+
+            if (items.length > 0) sections.push({ section: sectionName, items: items.slice(0, 30) });
           }
-          if (items.length > 0) result.push({ section: sectionName, items });
+          if (sections.length > 0) return sections;
         }
-        if (result.length > 0) {
-          logger.debug('Menu scraped via sections', { sections: result.length });
-          return result;
+
+        // Fallback: scan all leaf-ish elements for price patterns and treat their
+        // siblings/parents as item rows
+        const allEls = Array.from(main.querySelectorAll('li, [role="listitem"]'));
+        const items: { name: string; price: string | null; description: string | null }[] = [];
+        for (const el of allEls.slice(0, 60)) {
+          const text = el.textContent?.trim() ?? '';
+          if (!text || text.length > 200) continue;
+          // Price regex inside the element
+          const priceMatch = text.match(/\$[\d.,]+/);
+          const price = priceMatch ? priceMatch[0] : null;
+          const name = text.replace(/\$[\d.,]+/g, '').trim();
+          if (name.length > 1 && name.length < 100) {
+            items.push({ name, price, description: null });
+          }
         }
+        if (items.length > 0) return [{ section: 'Menu', items: items.slice(0, 40) }];
+
+        return sections;
+      });
+
+      if (result.length > 0) {
+        const totalItems = result.reduce((a, s) => a + s.items.length, 0);
+        logger.debug('extractMenu: scraped successfully', { sections: result.length, items: totalItems });
+        return result;
       }
 
-      // Strategy 2: flat list — grab all visible item + price pairs in the menu panel
-      const allItems = page.locator('[role="main"] ' + SEL.menuItemName);
-      const allCount = await allItems.count().catch(() => 0);
-      if (allCount > 0) {
-        const items: MenuItem[] = [];
-        const allPrices = page.locator('[role="main"] ' + SEL.menuItemPrice);
-        for (let i = 0; i < Math.min(allCount, 40); i++) {
-          const name = cleanText(await allItems.nth(i).textContent().catch(() => null));
-          if (!name) continue;
-          const price = cleanText(await allPrices.nth(i).textContent().catch(() => null)) || null;
-          items.push({ name, price, description: null });
-        }
-        if (items.length > 0) {
-          logger.debug('Menu scraped via flat list', { items: items.length });
-          return [{ section: 'Menu', items }];
-        }
-      }
-
+      logger.debug('extractMenu: Menu tab found but no items extracted');
       return [];
     } catch (err) {
       logger.debug('extractMenu failed (non-fatal)', { error: (err as Error).message });

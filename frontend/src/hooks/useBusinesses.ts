@@ -156,6 +156,27 @@ export function useUpdateWebsitePrompt() {
   })
 }
 
+export function useMenuFromImages() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: ({ id, files }: { id: string; files: File[] }) => businessApi.menuFromImages(id, files),
+    onSuccess: (_data, { id }) => {
+      qc.invalidateQueries({ queryKey: keys.business(id) })
+    },
+  })
+}
+
+export function useRescrape() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: (id: string) => businessApi.rescrape(id),
+    onSuccess: (updated) => {
+      qc.setQueryData(keys.business(updated.id), updated)
+      qc.invalidateQueries({ queryKey: ['businesses'] })
+    },
+  })
+}
+
 export function useGenerateOutreachEmail() {
   const qc = useQueryClient()
   return useMutation({

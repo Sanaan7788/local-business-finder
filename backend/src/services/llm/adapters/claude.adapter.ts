@@ -1,5 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk';
-import { ILLMProvider, LLMRequest, LLMResponse } from '../llm.interface';
+import { ILLMProvider, LLMRequest, LLMResponse, LLMImageInput } from '../llm.interface';
 import { config } from '../../../config';
 import { logger } from '../../../utils/logger';
 
@@ -37,12 +37,26 @@ export class ClaudeAdapter implements ILLMProvider {
       userLen: request.userPrompt.length,
     });
 
+    // Build user content — plain text or text + images for vision requests
+    type ContentBlock = Anthropic.TextBlockParam | Anthropic.ImageBlockParam;
+    const userContent: ContentBlock[] = [];
+
+    if (request.images && request.images.length > 0) {
+      for (const img of request.images) {
+        userContent.push({
+          type: 'image',
+          source: { type: 'base64', media_type: img.mediaType, data: img.base64 },
+        });
+      }
+    }
+    userContent.push({ type: 'text', text: request.userPrompt });
+
     const message = await this.client.messages.create({
       model: this.model,
       max_tokens: request.maxTokens ?? 4096,
       temperature: request.temperature ?? 0.6,
       system: request.systemPrompt,
-      messages: [{ role: 'user', content: request.userPrompt }],
+      messages: [{ role: 'user', content: userContent }],
     });
 
     const block = message.content[0];

@@ -427,6 +427,70 @@ export class ScraperService {
   }
 
   /**
+   * Re-scrape an existing business in place using its stored Google Maps URL.
+   * Updates phone, address, rating, reviewCount, reviewSnippets, menu, and description.
+   * Preserves all AI outputs, CRM fields, and generated content.
+   */
+  async rescrape(businessId: string): Promise<{ updated: Business }> {
+    if (this.state.running || this.queue.size > 0) {
+      throw new Error('A scraping session is already running. Stop it first.');
+    }
+
+    const repo = getRepository();
+    const existing = await repo.findById(businessId);
+    if (!existing) throw new Error(`Business not found: ${businessId}`);
+    if (!existing.googleMapsUrl) throw new Error('This business has no Google Maps URL — cannot re-scrape.');
+
+    const bm = BrowserManager.getInstance();
+    const nav = new MapsNavigator();
+    const extractor = new MapsExtractor();
+
+    try {
+      await bm.launch();
+      const page = await bm.newPage();
+
+      const opened = await nav.openListingByUrl(page, existing.googleMapsUrl);
+      if (!opened) throw new Error('Could not load the Google Maps listing.');
+
+      const cardData = {
+        name: existing.name,
+        googleMapsUrl: existing.googleMapsUrl,
+        rating: existing.rating,
+        reviewCount: existing.reviewCount,
+        category: existing.category,
+        addressSnippet: existing.address,
+        description: existing.description,
+      };
+      const raw: DetailData | null = await extractor.extractFromDetail(page, cardData, existing.zipcode);
+      if (!raw) throw new Error('Could not extract business details from this listing.');
+
+      const { score, priority } = scoreLead(raw);
+      const updated = await repo.update(businessId, {
+        name:            raw.name || existing.name,
+        phone:           raw.phone ?? existing.phone,
+        address:         raw.address || existing.address,
+        zipcode:         raw.zipcode || existing.zipcode,
+        category:        raw.category || existing.category,
+        description:     raw.description ?? existing.description,
+        websiteUrl:      raw.websiteUrl ?? existing.websiteUrl,
+        website:         raw.website ?? existing.website,
+        rating:          raw.rating ?? existing.rating,
+        reviewCount:     raw.reviewCount ?? existing.reviewCount,
+        reviewSnippets:  raw.reviewSnippets,
+        menu:            raw.menu,
+        priorityScore:   score,
+        priority,
+        updatedAt:       new Date().toISOString(),
+      });
+
+      logger.info('Rescrape complete', { id: businessId, name: updated.name, menuSections: raw.menu.length });
+      return { updated };
+    } finally {
+      await bm.close();
+    }
+  }
+
+  /**
    * Import a business from its existing website URL.
    * Fetches the page, extracts business info, saves a profile, then runs full AI analysis.
    */

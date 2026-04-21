@@ -85,4 +85,15 @@ export const businessApi = {
 
   generateOutreachEmail: (id: string) =>
     api.post<any>(`/businesses/${id}/outreach-email`).then(unwrap) as Promise<{ outreach: { email: { subject: string; body: string } | null; callScript: null } }>,
+
+  rescrape: (id: string) =>
+    api.post<any>(`/businesses/${id}/rescrape`).then(unwrap) as Promise<Business>,
+
+  menuFromImages: (id: string, files: File[]) => {
+    const form = new FormData()
+    files.forEach(f => form.append('images', f))
+    return api.post<any>(`/businesses/${id}/menu-from-images`, form, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    }).then(unwrap) as Promise<{ menu: any[]; sectionsExtracted: number; itemsExtracted: number; tokensUsed: number }>
+  },
 }

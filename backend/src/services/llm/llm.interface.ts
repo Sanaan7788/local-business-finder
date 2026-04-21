@@ -6,12 +6,18 @@
 // Services never import a concrete adapter — only this interface.
 // ---------------------------------------------------------------------------
 
+export interface LLMImageInput {
+  base64: string;          // base64-encoded image data
+  mediaType: 'image/jpeg' | 'image/png' | 'image/gif' | 'image/webp';
+}
+
 export interface LLMRequest {
   systemPrompt: string;
   userPrompt: string;
   temperature?: number;   // 0.0–1.0, default varies per adapter
   maxTokens?: number;     // default varies per adapter
   jsonMode?: boolean;     // hint to return valid JSON (supported by some providers)
+  images?: LLMImageInput[]; // optional images for vision requests (Claude only)
 }
 
 export interface LLMResponse {
@@ -43,4 +49,5 @@ export type LLMTask =
   | 'websiteStructure'
   | 'websiteAnalysis'
   | 'outreach'
-  | 'outreachEmail';
+  | 'outreachEmail'
+  | 'menuExtraction';
