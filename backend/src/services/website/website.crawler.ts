@@ -90,12 +90,19 @@ export const WebsiteCrawlerService = {
             var bodyText = document.body ? document.body.innerText : '';
             var hasContactForm = !!document.querySelector('form input[type="email"], form textarea');
             var hasPhone = /\\(?\\d{3}\\)?[\\s.-]\\d{3}[\\s.-]\\d{4}/.test(bodyText);
-            var hasEmail = /[a-zA-Z0-9._%+\\-]+@[a-zA-Z0-9.\\-]+\\.[a-zA-Z]{2,}/.test(bodyText);
+            var emailRegex = /[a-zA-Z0-9._%+\\-]+@[a-zA-Z0-9.\\-]+\\.[a-zA-Z]{2,}/g;
+            var hasEmail = emailRegex.test(bodyText);
+            emailRegex.lastIndex = 0;
+            var emailMatches = bodyText.match(/[a-zA-Z0-9._%+\\-]+@[a-zA-Z0-9.\\-]+\\.[a-zA-Z]{2,}/g) || [];
+            var mailtoEmails = Array.from(document.querySelectorAll('a[href^="mailto:"]'))
+              .map(function(a) { return a.getAttribute('href').replace('mailto:', '').split('?')[0].trim(); });
+            var allEmails = Array.from(new Set(emailMatches.concat(mailtoEmails)))
+              .filter(function(e) { return e.length > 5 && !e.endsWith('.png') && !e.endsWith('.jpg') && !e.includes('example.com') && !e.includes('yourdomain'); });
             var images = document.querySelectorAll('img').length;
             var title = document.title ? document.title.trim() : '';
-            return { headings: headings, paragraphs: paragraphs, navLinks: navLinks, allLinks: allLinks, hasContactForm: hasContactForm, hasPhone: hasPhone, hasEmail: hasEmail, images: images, title: title };
+            return { headings: headings, paragraphs: paragraphs, navLinks: navLinks, allLinks: allLinks, hasContactForm: hasContactForm, hasPhone: hasPhone, hasEmail: hasEmail, emails: allEmails, images: images, title: title };
           })()`
-          ) as { headings: string[]; paragraphs: string[]; navLinks: string[]; allLinks: string[]; hasContactForm: boolean; hasPhone: boolean; hasEmail: boolean; images: number; title: string };
+          ) as { headings: string[]; paragraphs: string[]; navLinks: string[]; allLinks: string[]; hasContactForm: boolean; hasPhone: boolean; hasEmail: boolean; emails: string[]; images: number; title: string };
 
           results.push({
             url,
@@ -107,6 +114,7 @@ export const WebsiteCrawlerService = {
             hasContactForm: data.hasContactForm,
             hasPhone: data.hasPhone,
             hasEmail: data.hasEmail,
+            emails: data.emails ?? [],
           });
 
           // Enqueue same-domain links (match www/non-www variants)

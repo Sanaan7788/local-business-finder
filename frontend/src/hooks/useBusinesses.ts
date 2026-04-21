@@ -156,6 +156,16 @@ export function useUpdateWebsitePrompt() {
   })
 }
 
+export function useGenerateOutreachEmail() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: (id: string) => businessApi.generateOutreachEmail(id),
+    onSuccess: (_data, id) => {
+      qc.invalidateQueries({ queryKey: keys.business(id) })
+    },
+  })
+}
+
 export function useDeleteBusiness() {
   const qc = useQueryClient()
   return useMutation({

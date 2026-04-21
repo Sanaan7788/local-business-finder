@@ -88,4 +88,34 @@ router.post('/content-brief', async (req: Request, res: Response, next: NextFunc
   }
 });
 
+// POST /api/businesses/:id/outreach-email
+// Generates (or regenerates) a personalised outreach email based on website improvements.
+// Stores result in outreach.email so it persists without re-generating.
+router.post('/outreach-email', async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { id } = req.params;
+    const repo = getRepository();
+    const business = await repo.findById(id);
+    if (!business) {
+      res.status(404).json({ success: false, error: `Business not found: ${id}` });
+      return;
+    }
+    if (!business.websiteAnalysis?.improvements?.length) {
+      res.status(422).json({ success: false, error: 'Run website analysis first to generate improvement opportunities.' });
+      return;
+    }
+    const { subject, body, tokensUsed } = await AIService.generateOutreachEmail(business);
+    const outreach = { ...(business.outreach ?? { callScript: null }), email: { subject, body } };
+    const updated = await repo.update(id, { outreach, tokensUsed: business.tokensUsed + tokensUsed, updatedAt: new Date().toISOString() });
+    res.json({ success: true, data: { outreach: updated.outreach } });
+  } catch (err) {
+    const msg = (err as Error).message;
+    if (msg.startsWith('Business not found')) {
+      res.status(404).json({ success: false, error: msg });
+      return;
+    }
+    next(err);
+  }
+});
+
 export default router;

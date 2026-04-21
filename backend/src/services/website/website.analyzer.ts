@@ -106,7 +106,10 @@ export const WebsiteAnalyzerService = {
     });
     const { score, scoreReason, improvements } = parseAnalysis(analysisResponse.content);
 
-    // Step 3: Persist
+    // Step 3: Collect all unique emails found across crawled pages
+    const allEmails = Array.from(new Set(pages.flatMap(p => p.emails ?? [])));
+
+    // Step 4: Persist
     const analysis: WebsiteAnalysis = {
       crawledAt: new Date().toISOString(),
       pagesVisited: pages.length,
@@ -117,7 +120,11 @@ export const WebsiteAnalyzerService = {
       scoreReason,
     };
 
-    await repo.update(businessId, { websiteAnalysis: analysis, updatedAt: new Date().toISOString() });
+    await repo.update(businessId, {
+      websiteAnalysis: analysis,
+      scrapedEmails: allEmails,
+      updatedAt: new Date().toISOString(),
+    });
 
     logger.info('WebsiteAnalyzer: analysis complete', { id: businessId, score, pages: pages.length });
     return analysis;

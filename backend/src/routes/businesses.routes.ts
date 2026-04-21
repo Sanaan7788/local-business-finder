@@ -143,6 +143,7 @@ router.post(
         ...raw,
         reviewSnippets: [],
         menu: [],
+        scrapedEmails: [],
         keywords: [],
         keywordCategories: null,
         summary: null,

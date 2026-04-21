@@ -36,6 +36,7 @@ export const businesses = pgTable('businesses', {
   // Scraper extras
   reviewSnippets: jsonb('review_snippets').$type<string[]>().notNull().default([]),
   menu:           jsonb('menu').$type<any[]>().notNull().default([]),
+  scrapedEmails:  jsonb('scraped_emails').$type<string[]>().notNull().default([]),
 
   // AI outputs
   keywords:          jsonb('keywords').$type<string[]>().notNull().default([]),

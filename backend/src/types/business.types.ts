@@ -30,6 +30,8 @@ export const ContentBriefSchema = z.object({
   confirmedFacts: z.string(),
   // What we reasonably infer for this type of business (clearly labelled as assumptions)
   assumptions: z.string(),
+  // When this brief was generated — used to detect staleness vs website analysis
+  generatedAt: z.string().datetime().optional(),
 });
 
 // Categorised keywords — each group serves a different purpose in website copy
@@ -54,6 +56,7 @@ export const CrawledPageSchema = z.object({
   hasContactForm: z.boolean(),
   hasPhone: z.boolean(),
   hasEmail: z.boolean(),
+  emails: z.array(z.string()).optional().default([]),
 });
 
 export const WebsiteAnalysisSchema = z.object({
@@ -129,6 +132,7 @@ export const BusinessSchema = z.object({
   // Scraper extras — stored so AI can use them on any future regeneration
   reviewSnippets: z.array(z.string()),
   menu: z.array(MenuSectionSchema),
+  scrapedEmails: z.array(z.string()).optional().default([]),
 
   // AI outputs — populated by LLM service
   keywords: z.array(z.string()),

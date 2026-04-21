@@ -7,6 +7,7 @@ import { buildSummaryPrompt, parseSummary } from './prompts/summary.prompt';
 import { buildInsightsPrompt, parseInsights } from './prompts/insights.prompt';
 import { buildBusinessContextPrompt, parseBusinessContext } from './prompts/business-context.prompt';
 import { buildContentBriefPrompt, parseContentBrief } from './prompts/content-brief.prompt';
+import { buildOutreachEmailPrompt, parseOutreachEmail } from './prompts/outreach-email.prompt';
 
 // ---------------------------------------------------------------------------
 // AIService
@@ -105,6 +106,18 @@ export const AIService = {
 
     logger.info('AIService: full analysis complete', { id, name: business.name, totalTokens: sessionTokens });
     return business;
+  },
+
+  async generateOutreachEmail(business: Business): Promise<{ subject: string; body: string; tokensUsed: number }> {
+    if (!business.websiteAnalysis?.improvements?.length) {
+      throw new Error('Website analysis with improvements is required before generating an outreach email');
+    }
+    logger.debug('AIService: generating outreach email', { id: business.id, name: business.name });
+    const prompt = buildOutreachEmailPrompt(business);
+    const response = await LLMService.complete('outreachEmail', { ...prompt, temperature: 0.7, maxTokens: 600 });
+    const { subject, body } = parseOutreachEmail(response.content);
+    logger.debug('AIService: outreach email generated', { id: business.id, tokens: response.tokensUsed });
+    return { subject, body, tokensUsed: response.tokensUsed ?? 0 };
   },
 
   // Returns tokens used — for callers that track externally (e.g. scraper)

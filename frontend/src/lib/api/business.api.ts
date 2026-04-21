@@ -82,4 +82,7 @@ export const businessApi = {
 
   updateWebsitePrompt: (id: string, websitePrompt: string | null) =>
     api.patch<any>(`/businesses/${id}/website-prompt`, { websitePrompt }).then(unwrap) as Promise<Business>,
+
+  generateOutreachEmail: (id: string) =>
+    api.post<any>(`/businesses/${id}/outreach-email`).then(unwrap) as Promise<{ outreach: { email: { subject: string; body: string } | null; callScript: null } }>,
 }

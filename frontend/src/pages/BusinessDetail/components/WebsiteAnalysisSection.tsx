@@ -1,12 +1,15 @@
 import { useState } from 'react'
-import { useAnalyzeWebsite, useUpdateWebsiteAnalysis } from '../../../hooks/useBusinesses'
+import { useAnalyzeWebsite, useUpdateWebsiteAnalysis, useGenerateOutreachEmail } from '../../../hooks/useBusinesses'
 import type { WebsiteAnalysis } from '../../../types/business'
 
 export function WebsiteAnalysisSection({ business }: { business: any }) {
   const analyzeWebsite = useAnalyzeWebsite()
   const updateWebsiteAnalysis = useUpdateWebsiteAnalysis()
+  const generateOutreachEmail = useGenerateOutreachEmail()
 
   const analysis = business.websiteAnalysis as WebsiteAnalysis | null
+  const outreachEmail = business.outreach?.email as { subject: string; body: string } | null
+  const scrapedEmails: string[] = business.scrapedEmails ?? []
 
   // Edit state
   const [editingStructured, setEditingStructured] = useState(false)
@@ -16,6 +19,15 @@ export function WebsiteAnalysisSection({ business }: { business: any }) {
   const [savingStructured, setSavingStructured] = useState(false)
   const [savingImprovements, setSavingImprovements] = useState(false)
   const [showRaw, setShowRaw] = useState(false)
+  const [copiedSubject, setCopiedSubject] = useState(false)
+  const [copiedBody, setCopiedBody] = useState(false)
+  const [copiedEmail, setCopiedEmail] = useState<string | null>(null)
+
+  const copy = (text: string, cb: (v: boolean) => void) => {
+    navigator.clipboard.writeText(text)
+    cb(true)
+    setTimeout(() => cb(false), 2000)
+  }
 
   const scoreColor = (s: number | null) => {
     if (s === null) return 'bg-gray-100 text-gray-500'
@@ -181,6 +193,88 @@ export function WebsiteAnalysisSection({ business }: { business: any }) {
                 </li>
               ))}
             </ul>
+          )}
+        </div>
+      </div>
+
+      {/* Outreach Email */}
+      <div className="border border-blue-200 rounded-xl overflow-hidden">
+        <div className="bg-blue-50 px-4 py-2.5 flex items-center justify-between border-b border-blue-200">
+          <div>
+            <p className="text-sm font-semibold text-blue-800">Outreach Email</p>
+            <p className="text-xs text-blue-600 mt-0.5">Personalised cold email based on the improvement opportunities above</p>
+          </div>
+          <button
+            onClick={() => generateOutreachEmail.mutate(business.id)}
+            disabled={generateOutreachEmail.isPending}
+            className="text-xs bg-blue-600 text-white px-3 py-1.5 rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
+          >
+            {generateOutreachEmail.isPending ? 'Generating…' : outreachEmail ? 'Regenerate' : 'Generate Email'}
+          </button>
+        </div>
+
+        <div className="p-4 space-y-4">
+          {/* Scraped email addresses */}
+          {scrapedEmails.length > 0 && (
+            <div>
+              <p className="text-xs font-medium text-gray-500 mb-2">Email addresses found on their website:</p>
+              <div className="flex flex-wrap gap-2">
+                {scrapedEmails.map((email, i) => (
+                  <div key={i} className="flex items-center gap-1.5 bg-gray-100 border border-gray-200 rounded-lg px-3 py-1">
+                    <span className="text-sm text-gray-800 font-mono">{email}</span>
+                    <button
+                      onClick={() => { navigator.clipboard.writeText(email); setCopiedEmail(email); setTimeout(() => setCopiedEmail(null), 2000) }}
+                      className="text-xs text-gray-400 hover:text-blue-600 transition-colors"
+                    >
+                      {copiedEmail === email ? '✓' : 'Copy'}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          {scrapedEmails.length === 0 && !outreachEmail && (
+            <p className="text-xs text-gray-400">No email addresses found on the website. You may need to find the owner's email manually.</p>
+          )}
+          {scrapedEmails.length === 0 && outreachEmail && (
+            <p className="text-xs text-amber-600 bg-amber-50 border border-amber-200 rounded-lg px-3 py-1.5">No email addresses were found on the website — find the owner's contact manually before sending.</p>
+          )}
+
+          {generateOutreachEmail.isError && (
+            <p className="text-xs text-red-600">{(generateOutreachEmail.error as any)?.response?.data?.error ?? 'Generation failed'}</p>
+          )}
+
+          {/* Generated email */}
+          {outreachEmail && (
+            <div className="space-y-3">
+              {/* Subject */}
+              <div className="bg-white border border-gray-200 rounded-lg p-3">
+                <div className="flex items-center justify-between mb-1">
+                  <p className="text-xs font-medium text-gray-500">Subject</p>
+                  <button
+                    onClick={() => copy(outreachEmail.subject, setCopiedSubject)}
+                    className="text-xs text-gray-400 hover:text-blue-600 transition-colors"
+                  >
+                    {copiedSubject ? '✓ Copied' : 'Copy'}
+                  </button>
+                </div>
+                <p className="text-sm text-gray-900 font-medium">{outreachEmail.subject}</p>
+              </div>
+
+              {/* Body */}
+              <div className="bg-white border border-gray-200 rounded-lg p-3">
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-xs font-medium text-gray-500">Email body</p>
+                  <button
+                    onClick={() => copy(outreachEmail.body, setCopiedBody)}
+                    className="text-xs text-gray-400 hover:text-blue-600 transition-colors"
+                  >
+                    {copiedBody ? '✓ Copied' : 'Copy'}
+                  </button>
+                </div>
+                <pre className="text-sm text-gray-800 whitespace-pre-wrap leading-relaxed font-sans">{outreachEmail.body}</pre>
+              </div>
+            </div>
           )}
         </div>
       </div>

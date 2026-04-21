@@ -78,6 +78,8 @@ export interface Business {
 
   // Scraper extras
   reviewSnippets: string[];
+  scrapedEmails: string[];
+  menu: any[];
 
   // AI outputs
   keywords: string[];

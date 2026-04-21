@@ -11,13 +11,19 @@ export function ContentBriefTab({
 }) {
   const [copiedFacts, setCopiedFacts] = useState(false)
   const [copiedAssumptions, setCopiedAssumptions] = useState(false)
-  const brief = business.contentBrief as { confirmedFacts: string; assumptions: string } | null
+  const brief = business.contentBrief as { confirmedFacts: string; assumptions: string; generatedAt?: string } | null
 
   const copyText = (text: string, setCopied: (v: boolean) => void) => {
     navigator.clipboard.writeText(text)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
+
+  const websiteCrawledAt = business.websiteAnalysis?.crawledAt ? new Date(business.websiteAnalysis.crawledAt) : null
+  const briefGeneratedAt = brief?.generatedAt ? new Date(brief.generatedAt) : null
+  // Show stale banner if website was analyzed after the brief was last generated (or brief has no timestamp)
+  const hasWebsiteAnalysis = !!business.websiteAnalysis
+  const briefIsStale = hasWebsiteAnalysis && (!briefGeneratedAt || (websiteCrawledAt && websiteCrawledAt > briefGeneratedAt))
 
   if (!brief) {
     return (
@@ -27,6 +33,11 @@ export function ContentBriefTab({
           The content brief describes the business in detail — what it sells, what customers love,
           and reasonable assumptions. It feeds directly into website generation.
         </p>
+        {hasWebsiteAnalysis && (
+          <p className="text-xs text-blue-600 bg-blue-50 border border-blue-200 rounded-lg px-4 py-2 mb-4 max-w-sm mx-auto">
+            Website analysis is available — generating now will include the crawled site content in confirmed facts.
+          </p>
+        )}
         <button
           onClick={onGenerate}
           disabled={generating}
@@ -43,6 +54,18 @@ export function ContentBriefTab({
 
   return (
     <div className="space-y-6">
+      {briefIsStale && (
+        <div className="flex items-center justify-between bg-amber-50 border border-amber-200 rounded-lg px-4 py-2.5 text-sm">
+          <span className="text-amber-800">Website was analyzed after this brief was generated — regenerate to include crawled site content in confirmed facts.</span>
+          <button
+            onClick={onGenerate}
+            disabled={generating}
+            className="ml-4 shrink-0 text-xs bg-amber-600 text-white px-3 py-1 rounded-lg hover:bg-amber-700 disabled:opacity-50 transition-colors"
+          >
+            {generating ? 'Regenerating…' : 'Regenerate Now'}
+          </button>
+        </div>
+      )}
       <div className="flex items-center justify-between">
         <div>
           <p className="text-sm font-medium text-gray-900">Content Brief</p>

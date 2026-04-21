@@ -42,4 +42,5 @@ export type LLMTask =
   | 'websiteGeneration'
   | 'websiteStructure'
   | 'websiteAnalysis'
-  | 'outreach';
+  | 'outreach'
+  | 'outreachEmail';

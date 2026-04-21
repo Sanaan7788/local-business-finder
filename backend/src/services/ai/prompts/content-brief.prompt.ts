@@ -77,5 +77,6 @@ export function parseContentBrief(raw: string): ContentBrief {
   return {
     confirmedFacts: parsed.confirmedFacts.trim(),
     assumptions: parsed.assumptions.trim(),
+    generatedAt: new Date().toISOString(),
   };
 }
