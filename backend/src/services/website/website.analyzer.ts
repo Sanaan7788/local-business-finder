@@ -3,13 +3,15 @@ import { WebsiteCrawlerService } from './website.crawler';
 import { getRepository } from '../../data/repository.factory';
 import { CrawledPage, WebsiteAnalysis } from '../../types/business.types';
 import { logger } from '../../utils/logger';
+import { buildWebsiteStructurePrompt, parseWebsiteStructure } from '../ai/prompts/website-structure.prompt';
 
 // ---------------------------------------------------------------------------
 // WebsiteAnalyzerService
 //
 // 1. Crawls the business website (multi-page)
-// 2. Sends raw crawl data to LLM for structured analysis, score + improvements
-// 3. Persists result to DB as websiteAnalysis JSON field
+// 2. Step A — structure prompt: extracts site structure & content
+// 3. Step B — analysis prompt: scores the site and lists improvements
+// 4. Persists combined result to DB as websiteAnalysis JSON field
 // ---------------------------------------------------------------------------
 
 function buildAnalysisPrompt(
@@ -22,8 +24,8 @@ function buildAnalysisPrompt(
       `--- Page ${i + 1}: ${p.url} ---`,
       `Title: ${p.title || '(none)'}`,
     ];
-    if (p.navLinks.length)  lines.push(`Nav links: ${p.navLinks.slice(0, 10).join(' | ')}`);
-    if (p.headings.length)  lines.push(`Headings: ${p.headings.slice(0, 10).join(' / ')}`);
+    if (p.navLinks.length)   lines.push(`Nav links: ${p.navLinks.slice(0, 10).join(' | ')}`);
+    if (p.headings.length)   lines.push(`Headings: ${p.headings.slice(0, 10).join(' / ')}`);
     if (p.paragraphs.length) lines.push(`Content:\n${p.paragraphs.slice(0, 15).join('\n')}`);
     lines.push(`Images: ${p.images} | Contact form: ${p.hasContactForm} | Phone visible: ${p.hasPhone} | Email visible: ${p.hasEmail}`);
     return lines.join('\n');
@@ -36,17 +38,13 @@ function buildAnalysisPrompt(
       'Always respond with valid JSON only. No explanation, no markdown, no code fences.',
 
     userPrompt:
-      `Analyse this small business website and produce a detailed report.\n\n` +
+      `Analyse this small business website and produce a scoring report.\n\n` +
       `Business: ${businessName}\n` +
       `Website: ${websiteUrl}\n` +
       `Pages crawled: ${pages.length}\n\n` +
       `RAW CRAWLED DATA:\n${pagesText}\n\n` +
       `Produce a JSON response with this exact shape:\n` +
       `{\n` +
-      `  "structured": "A detailed, well-organised written report of the website structure. ` +
-      `Cover: site-wide structure (navbar, footer, pages found), what each page contains (headings, sections, services/products listed), ` +
-      `contact details present, testimonials, calls-to-action, media (images/videos), and overall organisation. ` +
-      `Use clear headings like '## Homepage', '## Services Page', '## Footer', etc. Be thorough.",\n` +
       `  "score": <integer 1–10 rating of the website quality and completeness>,\n` +
       `  "scoreReason": "1–2 sentences explaining the score — what it does well and what drags it down",\n` +
       `  "improvements": [\n` +
@@ -58,15 +56,13 @@ function buildAnalysisPrompt(
   };
 }
 
-function parseAnalysis(raw: string): { structured: string; score: number; scoreReason: string; improvements: string[] } {
+function parseAnalysis(raw: string): { score: number; scoreReason: string; improvements: string[] } {
   const text = raw.trim().replace(/^```json\s*/i, '').replace(/```\s*$/, '').trim();
   const parsed = JSON.parse(text);
-  if (typeof parsed.structured !== 'string') throw new Error('structured field missing');
   if (typeof parsed.score !== 'number') throw new Error('score field missing');
   if (typeof parsed.scoreReason !== 'string') throw new Error('scoreReason field missing');
   if (!Array.isArray(parsed.improvements)) throw new Error('improvements field missing');
   return {
-    structured: parsed.structured.trim(),
     score: Math.min(10, Math.max(0, Math.round(parsed.score))),
     scoreReason: parsed.scoreReason.trim(),
     improvements: parsed.improvements.filter((i: unknown) => typeof i === 'string'),
@@ -90,16 +86,25 @@ export const WebsiteAnalyzerService = {
       throw new Error(`Could not crawl website — no pages accessible at ${business.websiteUrl}`);
     }
 
-    // Step 2: LLM analysis
-    logger.debug('WebsiteAnalyzer: sending to LLM', { pages: pages.length });
-    const prompt = buildAnalysisPrompt(business.name, business.websiteUrl, pages);
-    const response = await LLMService.complete('websiteAnalysis', {
-      ...prompt,
-      temperature: 0.4,
-      maxTokens: 4096,
+    // Step 2a: Structure prompt — extract site content & structure
+    logger.debug('WebsiteAnalyzer: running structure prompt', { pages: pages.length });
+    const structurePrompt = buildWebsiteStructurePrompt(business.name, business.websiteUrl, pages);
+    const structureResponse = await LLMService.complete('websiteStructure', {
+      ...structurePrompt,
+      temperature: 0.3,
+      maxTokens: 2048,
     });
+    const structured = parseWebsiteStructure(structureResponse.content);
 
-    const { structured, score, scoreReason, improvements } = parseAnalysis(response.content);
+    // Step 2b: Analysis prompt — score + improvements
+    logger.debug('WebsiteAnalyzer: running analysis prompt', { pages: pages.length });
+    const analysisPrompt = buildAnalysisPrompt(business.name, business.websiteUrl, pages);
+    const analysisResponse = await LLMService.complete('websiteAnalysis', {
+      ...analysisPrompt,
+      temperature: 0.4,
+      maxTokens: 2048,
+    });
+    const { score, scoreReason, improvements } = parseAnalysis(analysisResponse.content);
 
     // Step 3: Persist
     const analysis: WebsiteAnalysis = {

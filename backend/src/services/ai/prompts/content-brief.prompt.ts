@@ -21,18 +21,24 @@ function formatMenuForPrompt(menu: MenuSection[]): string {
 export function buildContentBriefPrompt(business: Business): { systemPrompt: string; userPrompt: string } {
   const snippets = business.reviewSnippets ?? [];
   const menuText = formatMenuForPrompt(business.menu ?? []);
+  const websiteStructure = business.websiteAnalysis?.structured ?? null;
 
   return {
     systemPrompt:
-      'You are a content strategist building a detailed content brief for a local business website. ' +
-      'Your job is to produce two sections: ' +
-      '(1) confirmedFacts — everything we actually know from the data provided; ' +
-      '(2) assumptions — what you can reasonably infer for a business of this type/category ' +
-      'that we could NOT confirm from the data. Keep the two sections strictly separate. ' +
-      'Write in rich, structured prose — use clear headings within each section (e.g. "Services:", "What Customers Love:", "Price Range:"). ' +
+      'You are a content strategist building a content brief for a specific local business. ' +
+      'You must work ONLY from the data provided in this prompt. ' +
+      'Do NOT use any knowledge from previous requests, other businesses, or general assumptions about business names. ' +
+      'This business is: ' + business.name + ' (' + business.category + '). ' +
+      'Produce two sections: ' +
+      '(1) confirmedFacts — ONLY what is explicitly stated in the data provided below; ' +
+      '(2) assumptions — what you can reasonably infer for a business of this specific category ' +
+      'that is NOT already confirmed by the data. Keep the two sections strictly separate. ' +
+      'Write in rich, structured prose — use clear headings within each section. ' +
       'Always respond with valid JSON only. No explanation, no markdown, no code fences.',
+
     userPrompt:
-      `Build a content brief for this local business that will be used to generate their website.\n\n` +
+      `Build a content brief for this specific business only. Use only the data provided below — do not mix in data from any other business.\n\n` +
+      `=== BUSINESS IDENTITY ===\n` +
       `Business name: ${business.name}\n` +
       `Category: ${business.category}\n` +
       `Address: ${business.address}\n` +
@@ -44,13 +50,21 @@ export function buildContentBriefPrompt(business: Business): { systemPrompt: str
       (business.keywords.length > 0 ? `Keywords: ${business.keywords.join(', ')}\n` : '') +
       (business.summary ? `Summary: ${business.summary}\n` : '') +
       (snippets.length > 0
-        ? `\nCustomer review excerpts:\n${snippets.map((s, i) => `${i + 1}. "${s}"`).join('\n')}\n`
+        ? `\n=== CUSTOMER REVIEWS ===\n${snippets.map((s, i) => `${i + 1}. "${s}"`).join('\n')}\n`
         : '') +
-      (menuText ? menuText + '\n' : '') +
-      `\nReturn JSON in this exact shape:\n` +
+      (menuText ? `\n=== MENU ===\n${menuText}\n` : '') +
+      (websiteStructure
+        ? `\n=== EXISTING WEBSITE CONTENT (crawled) ===\n${websiteStructure}\n`
+        : '') +
+      `\n=== INSTRUCTIONS ===\n` +
+      `Return JSON in this exact shape:\n` +
       `{\n` +
-      `  "confirmedFacts": "Structured prose with headings covering: what this business sells/offers, what customers mention in reviews (what's famous, what people love, recurring themes), rating context, any notable specialties confirmed by the data. If a menu was provided, include a 'Menu Highlights:' section listing key items and prices. Use headings like 'Services:', 'Menu Highlights:', 'What Customers Love:', 'Reputation:'. Only confirmed facts.",\n` +
-      `  "assumptions": "Structured prose with headings covering: typical services/products a ${business.category} would offer that aren't confirmed above, likely price range, probable target customers, standard operating hours, common amenities, seasonal offerings. Use headings like 'Likely Services:', 'Estimated Price Range:', 'Target Customers:', 'Probable Hours:'. Frame everything as reasonable inference."\n` +
+      `  "confirmedFacts": "Structured prose covering ONLY facts confirmed by the data above. ` +
+      `Include sections for: Services/What they offer, Contact details, Ratings & reputation, What customers say, ` +
+      (websiteStructure ? `What their existing website contains, ` : '') +
+      `any menu highlights if provided. Use headings like 'Services:', 'Contact:', 'Reputation:', 'What Customers Say:'. Only confirmed facts — nothing invented.",\n` +
+      `  "assumptions": "Structured prose covering reasonable inferences for a ${business.category} that are NOT already confirmed above. ` +
+      `Use headings like 'Likely Services:', 'Estimated Price Range:', 'Target Customers:', 'Probable Hours:'. Frame everything as inference."\n` +
       `}`,
   };
 }
