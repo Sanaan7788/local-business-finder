@@ -92,6 +92,10 @@ router.post('/website-analysis', async (req: Request, res: Response, next: NextF
       res.status(400).json({ success: false, error: msg });
       return;
     }
+    if (msg.includes('404') || msg.toLowerCase().includes('page not found') || msg.toLowerCase().includes('net::err')) {
+      res.status(400).json({ success: false, error: `Website returned an error when crawling — the URL may be invalid or the site may be down. (${msg})` });
+      return;
+    }
     next(err);
   }
 });
