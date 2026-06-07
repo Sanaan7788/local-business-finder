@@ -29,7 +29,7 @@ export const ALL_CATEGORIES = [
   'auto repair', 'oil change', 'car wash', 'tire shops', 'auto body shops',
   'transmission repair', 'towing', 'auto detailing', 'windshield repair',
   // Health & Medical
-  'dentists', 'chiropractors', 'physical therapy', 'optometrists', 'urgent care',
+  'dentists', 'dental clinics', 'chiropractors', 'physical therapy', 'optometrists', 'urgent care',
   'veterinarians', 'acupuncture', 'mental health counseling', 'pediatricians',
   // Retail
   'clothing stores', 'shoe stores', 'jewelry stores', 'flower shops',

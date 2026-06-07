@@ -5,6 +5,7 @@ import Businesses from './pages/Businesses'
 import BusinessDetail from './pages/BusinessDetail'
 import ScraperHistory from './pages/ScraperHistory'
 import { Layout, NotFound } from './components/layout/Layout'
+import { DarkModeProvider } from './context/DarkModeContext'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -17,6 +18,7 @@ const queryClient = new QueryClient({
 
 export default function App() {
   return (
+    <DarkModeProvider>
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <Layout>
@@ -30,5 +32,6 @@ export default function App() {
         </Layout>
       </BrowserRouter>
     </QueryClientProvider>
+    </DarkModeProvider>
   )
 }
