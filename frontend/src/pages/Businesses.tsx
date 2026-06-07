@@ -28,12 +28,13 @@ function RowMenu({ onDelete }: { onDelete: () => void }) {
     <div ref={ref} className="relative" onClick={e => e.stopPropagation()}>
       <button
         onClick={() => setOpen(o => !o)}
-        className="w-7 h-7 flex items-center justify-center rounded-lg text-gray-500 hover:text-gray-900 hover:bg-gray-200 bg-gray-100 transition-colors text-lg leading-none font-bold"
+        className="w-7 h-7 flex items-center justify-center rounded-lg transition-colors text-lg leading-none font-bold"
+        style={{ color: 'var(--text-3)', backgroundColor: 'var(--bg-subtle)' }}
       >
         ⋮
       </button>
       {open && (
-        <div className="absolute right-0 mt-1 w-40 bg-white border border-gray-100 rounded-xl shadow-lg z-50 py-1">
+        <div className="absolute right-0 mt-1 w-40 rounded-xl shadow-lg z-50 py-1" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)' }}>
           <button
             onClick={() => { onDelete(); setOpen(false) }}
             className="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-red-50 transition-colors"
@@ -81,31 +82,34 @@ function CategoryDropdown({
       <button
         type="button"
         onClick={() => { setOpen(o => !o); setQuery('') }}
-        className="w-full text-left border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white flex items-center justify-between gap-2"
+        className="w-full text-left rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center justify-between gap-2"
+        style={{ border: '1px solid var(--border-md)', backgroundColor: 'var(--bg-card)', color: value ? 'var(--text)' : 'var(--text-3)' }}
       >
-        <span className={value ? 'text-gray-900' : 'text-gray-400'} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+        <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
           {label}
         </span>
-        <span className="text-gray-400 flex-shrink-0">{open ? '▲' : '▼'}</span>
+        <span className="flex-shrink-0" style={{ color: 'var(--text-3)' }}>{open ? '▲' : '▼'}</span>
       </button>
 
       {open && (
-        <div className="absolute z-50 mt-1 w-full bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden">
-          <div className="p-2 border-b border-gray-100">
+        <div className="absolute z-50 mt-1 w-full rounded-xl shadow-lg overflow-hidden" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)' }}>
+          <div className="p-2" style={{ borderBottom: '1px solid var(--border)' }}>
             <input
               autoFocus
               type="text"
               placeholder="Search categories…"
               value={query}
               onChange={e => setQuery(e.target.value)}
-              className="w-full text-sm px-2 py-1 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-sm px-2 py-1 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              style={{ border: '1px solid var(--border)', backgroundColor: 'var(--bg)', color: 'var(--text)' }}
             />
           </div>
           <div className="max-h-56 overflow-y-auto">
             <button
               type="button"
               onClick={() => { onChange(''); setOpen(false) }}
-              className={`w-full text-left px-3 py-2 text-sm hover:bg-blue-50 transition-colors ${!value ? 'text-blue-600 font-medium' : 'text-gray-500'}`}
+              className={`w-full text-left px-3 py-2 text-sm hover:bg-blue-50 transition-colors ${!value ? 'text-blue-600 font-medium' : ''}`}
+              style={value ? { color: 'var(--text-2)' } : {}}
             >
               All Categories
             </button>
@@ -114,14 +118,15 @@ function CategoryDropdown({
                 key={category}
                 type="button"
                 onClick={() => { onChange(category); setOpen(false) }}
-                className={`w-full text-left px-3 py-2 text-sm hover:bg-blue-50 transition-colors flex items-center justify-between ${value === category ? 'text-blue-600 font-medium bg-blue-50' : 'text-gray-700'}`}
+                className={`w-full text-left px-3 py-2 text-sm hover:bg-blue-50 transition-colors flex items-center justify-between ${value === category ? 'text-blue-600 font-medium bg-blue-50' : ''}`}
+                style={value !== category ? { color: 'var(--text-2)' } : {}}
               >
                 <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{category}</span>
-                <span className="text-xs text-gray-400 flex-shrink-0 ml-2">{count}</span>
+                <span className="text-xs flex-shrink-0 ml-2" style={{ color: 'var(--text-3)' }}>{count}</span>
               </button>
             ))}
             {filtered.length === 0 && (
-              <p className="text-sm text-gray-400 px-3 py-2">No matches</p>
+              <p className="text-sm px-3 py-2" style={{ color: 'var(--text-3)' }}>No matches</p>
             )}
           </div>
         </div>
@@ -218,34 +223,40 @@ export default function Businesses() {
   // ---------------------------------------------------------------------------
   const pagination = totalPages > 1 && (
     <div className="flex items-center justify-between">
-      <p className="text-sm text-gray-400">
+      <p className="text-sm" style={{ color: 'var(--text-3)' }}>
         Showing {((page - 1) * 25) + 1}–{Math.min(page * 25, total)} of {total.toLocaleString()}
       </p>
       <div className="flex items-center gap-1">
         <button onClick={() => setPage(1)} disabled={page === 1}
-          className="px-2 py-1.5 text-xs border border-gray-200 rounded-lg disabled:opacity-30 hover:bg-gray-50 transition-colors">«</button>
+          className="px-2 py-1.5 text-xs rounded-lg disabled:opacity-30 transition-colors"
+          style={{ border: '1px solid var(--border)', color: 'var(--text-2)', backgroundColor: 'var(--bg-card)' }}>«</button>
         <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1}
-          className="px-3 py-1.5 text-sm border border-gray-200 rounded-lg disabled:opacity-30 hover:bg-gray-50 transition-colors">Prev</button>
+          className="px-3 py-1.5 text-sm rounded-lg disabled:opacity-30 transition-colors"
+          style={{ border: '1px solid var(--border)', color: 'var(--text-2)', backgroundColor: 'var(--bg-card)' }}>Prev</button>
         <span className="px-3 py-1.5 text-sm font-medium text-blue-600 bg-blue-50 rounded-lg">{page} / {totalPages}</span>
         <button onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages}
-          className="px-3 py-1.5 text-sm border border-gray-200 rounded-lg disabled:opacity-30 hover:bg-gray-50 transition-colors">Next</button>
+          className="px-3 py-1.5 text-sm rounded-lg disabled:opacity-30 transition-colors"
+          style={{ border: '1px solid var(--border)', color: 'var(--text-2)', backgroundColor: 'var(--bg-card)' }}>Next</button>
         <button onClick={() => setPage(totalPages)} disabled={page === totalPages}
-          className="px-2 py-1.5 text-xs border border-gray-200 rounded-lg disabled:opacity-30 hover:bg-gray-50 transition-colors">»</button>
+          className="px-2 py-1.5 text-xs rounded-lg disabled:opacity-30 transition-colors"
+          style={{ border: '1px solid var(--border)', color: 'var(--text-2)', backgroundColor: 'var(--bg-card)' }}>»</button>
       </div>
     </div>
   )
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
 
       {/* Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900">Businesses</h1>
-        <p className="text-gray-500 mt-0.5 text-sm">{total} total</p>
+      <div className="flex items-end justify-between">
+        <div>
+          <h1 className="text-xl font-semibold" style={{ color: 'var(--text)' }}>Businesses</h1>
+          <p className="text-sm mt-0.5" style={{ color: 'var(--text-3)' }}>{total.toLocaleString()} total</p>
+        </div>
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
+      <div className="rounded-xl border shadow-sm p-4" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border)' }}>
         <div className="grid grid-cols-2 sm:grid-cols-6 gap-3">
           <input
             type="text"
@@ -298,47 +309,50 @@ export default function Businesses() {
       {/* ------------------------------------------------------------------ */}
       {/* DESKTOP — table (hidden on mobile)                                  */}
       {/* ------------------------------------------------------------------ */}
-      <div className="hidden sm:block bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+      <div className="hidden sm:block rounded-xl border shadow-sm overflow-hidden" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border)' }}>
         {isLoading && loadingState}
         {isError && errorState}
         {!isLoading && !isError && businesses.length === 0 && emptyState}
         {businesses.length > 0 && (
           <table className="w-full text-sm">
-            <thead className="bg-gray-50 border-b border-gray-200">
+            <thead style={{ backgroundColor: 'var(--bg-subtle)', borderBottom: '1px solid var(--border)' }}>
               <tr>
-                <th className="text-left px-4 py-3 font-medium text-gray-600 cursor-pointer" onClick={() => handleSort('name')}>
+                <th className="text-left px-4 py-3 font-medium cursor-pointer" style={{ color: 'var(--text-2)' }} onClick={() => handleSort('name')}>
                   Name <SortIcon field="name" />
                 </th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Category</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600 cursor-pointer" onClick={() => handleSort('rating')}>
+                <th className="text-left px-4 py-3 font-medium" style={{ color: 'var(--text-2)' }}>Category</th>
+                <th className="text-left px-4 py-3 font-medium cursor-pointer" style={{ color: 'var(--text-2)' }} onClick={() => handleSort('rating')}>
                   Rating <SortIcon field="rating" />
                 </th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Website</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600 cursor-pointer" onClick={() => handleSort('priorityScore')}>
+                <th className="text-left px-4 py-3 font-medium" style={{ color: 'var(--text-2)' }}>Website</th>
+                <th className="text-left px-4 py-3 font-medium cursor-pointer" style={{ color: 'var(--text-2)' }} onClick={() => handleSort('priorityScore')}>
                   Score <SortIcon field="priorityScore" />
                 </th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600 cursor-pointer" onClick={() => handleSort('leadStatus')}>
+                <th className="text-left px-4 py-3 font-medium cursor-pointer" style={{ color: 'var(--text-2)' }} onClick={() => handleSort('leadStatus')}>
                   Status <SortIcon field="leadStatus" />
                 </th>
                 <th className="px-4 py-3" />
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
-              {businesses.map(b => (
+            <tbody>
+              {businesses.map((b, i) => (
                 <tr key={b.id}
-                  className="hover:bg-blue-50/40 cursor-pointer transition-colors"
+                  className="cursor-pointer transition-colors"
+                  style={{ borderTop: i > 0 ? '1px solid var(--border)' : undefined }}
+                  onMouseEnter={e => (e.currentTarget.style.backgroundColor = 'var(--bg-subtle)')}
+                  onMouseLeave={e => (e.currentTarget.style.backgroundColor = '')}
                   onClick={() => navigate(`/businesses/${b.id}`)}>
                   <td className="px-4 py-3">
-                    <p className="font-medium text-gray-900">{b.name}</p>
+                    <p className="font-medium" style={{ color: 'var(--text)' }}>{b.name}</p>
                     {b.notes?.startsWith('Scrape error:')
                       ? <p className="text-xs text-orange-500 mt-0.5">⚠ Partial data — scrape failed</p>
-                      : <p className="text-xs text-gray-400 mt-0.5">{b.address}</p>
+                      : <p className="text-xs mt-0.5" style={{ color: 'var(--text-3)' }}>{b.address}</p>
                     }
                   </td>
-                  <td className="px-4 py-3 text-gray-600">{b.category}</td>
-                  <td className="px-4 py-3 text-gray-600">
+                  <td className="px-4 py-3" style={{ color: 'var(--text-2)' }}>{b.category}</td>
+                  <td className="px-4 py-3" style={{ color: 'var(--text-2)' }}>
                     {b.rating !== null
-                      ? <span>{b.rating}★ {b.reviewCount !== null && <span className="text-gray-400 text-xs">({b.reviewCount})</span>}</span>
+                      ? <span>{b.rating}★ {b.reviewCount !== null && <span className="text-xs" style={{ color: 'var(--text-3)' }}>({b.reviewCount})</span>}</span>
                       : '—'}
                   </td>
                   <td className="px-4 py-3">
@@ -367,17 +381,17 @@ export default function Businesses() {
       {/* ------------------------------------------------------------------ */}
       <div className="sm:hidden space-y-3">
         {isLoading && (
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
+          <div className="rounded-xl border shadow-sm" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border)' }}>
             {loadingState}
           </div>
         )}
         {isError && (
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
+          <div className="rounded-xl border shadow-sm" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border)' }}>
             {errorState}
           </div>
         )}
         {!isLoading && !isError && businesses.length === 0 && (
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
+          <div className="rounded-xl border shadow-sm" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border)' }}>
             {emptyState}
           </div>
         )}
@@ -385,15 +399,16 @@ export default function Businesses() {
           <div
             key={b.id}
             onClick={() => navigate(`/businesses/${b.id}`)}
-            className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 cursor-pointer active:bg-blue-50/40 transition-colors"
+            className="rounded-xl border shadow-sm p-4 cursor-pointer transition-colors"
+            style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border)' }}
           >
             {/* Top row: name + menu */}
             <div className="flex items-start justify-between gap-2">
               <div className="min-w-0">
-                <p className="font-semibold text-gray-900 text-sm leading-snug">{b.name}</p>
+                <p className="font-semibold text-sm leading-snug" style={{ color: 'var(--text)' }}>{b.name}</p>
                 {b.notes?.startsWith('Scrape error:')
                   ? <p className="text-xs text-orange-500 mt-0.5">⚠ Partial data</p>
-                  : <p className="text-xs text-gray-400 mt-0.5 truncate">{b.address}</p>
+                  : <p className="text-xs mt-0.5 truncate" style={{ color: 'var(--text-3)' }}>{b.address}</p>
                 }
               </div>
               <RowMenu onDelete={() => menuDelete(b)} />
@@ -401,10 +416,10 @@ export default function Businesses() {
 
             {/* Middle row: category + rating */}
             <div className="flex items-center gap-3 mt-2.5">
-              <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">{b.category}</span>
+              <span className="text-xs px-2 py-0.5 rounded-full" style={{ color: 'var(--text-2)', backgroundColor: 'var(--bg-subtle)' }}>{b.category}</span>
               {b.rating !== null && (
-                <span className="text-xs text-gray-600">
-                  {b.rating}★ {b.reviewCount !== null && <span className="text-gray-400">({b.reviewCount})</span>}
+                <span className="text-xs" style={{ color: 'var(--text-2)' }}>
+                  {b.rating}★ {b.reviewCount !== null && <span style={{ color: 'var(--text-3)' }}>({b.reviewCount})</span>}
                 </span>
               )}
             </div>

@@ -4,36 +4,48 @@ import { TotalTokensCounter } from './TotalTokensCounter'
 import { useDarkMode } from '../../context/DarkModeContext'
 
 export const navLinkClass = ({ isActive }: { isActive: boolean }) =>
-  `px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+  `px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-150 ${
     isActive
-      ? 'bg-blue-600 text-white'
-      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-700'
+      ? 'bg-blue-600 text-white shadow-sm'
+      : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-gray-100 dark:hover:bg-gray-700'
   }`
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const { dark, toggle } = useDarkMode()
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
-      <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-sm sticky top-0 z-10">
+    <div className="min-h-screen flex flex-col" style={{ backgroundColor: 'var(--bg)', color: 'var(--text)' }}>
+      <header style={{ backgroundColor: 'var(--bg-card)', borderBottom: '1px solid var(--border)' }} className="sticky top-0 z-10 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14">
-            <span className="text-base font-bold text-blue-700 dark:text-blue-400 tracking-tight">
-              Local Business Finder
-            </span>
-            <div className="flex items-center gap-3">
-              <nav className="flex items-center gap-1">
+            {/* Logo */}
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center">
+                <span className="text-white text-xs font-bold">LB</span>
+              </div>
+              <span className="text-sm font-semibold" style={{ color: 'var(--text)' }}>
+                Local Business Finder
+              </span>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <nav className="flex items-center gap-0.5">
                 <NavLink to="/" end className={navLinkClass}>Dashboard</NavLink>
                 <NavLink to="/businesses" className={navLinkClass}>Businesses</NavLink>
                 <NavLink to="/history" className={navLinkClass}>History</NavLink>
               </nav>
+
+              <div style={{ width: 1, height: 20, backgroundColor: 'var(--border)', margin: '0 4px' }} />
+
               <TotalTokensCounter />
               <LLMSelector />
+
+              {/* Dark mode toggle */}
               <button
                 onClick={toggle}
                 title={dark ? 'Switch to light mode' : 'Switch to dark mode'}
-                className={`relative inline-flex items-center w-14 h-7 rounded-full transition-colors duration-300 focus:outline-none ${dark ? 'bg-blue-600' : 'bg-gray-300'}`}
+                className={`relative inline-flex items-center w-12 h-6 rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 ${dark ? 'bg-blue-600' : 'bg-gray-200'}`}
               >
-                <span className={`inline-flex items-center justify-center w-6 h-6 rounded-full bg-white shadow-md transform transition-transform duration-300 text-sm ${dark ? 'translate-x-7' : 'translate-x-1'}`}>
+                <span className={`inline-flex items-center justify-center w-5 h-5 rounded-full bg-white shadow transform transition-transform duration-300 text-xs ${dark ? 'translate-x-6' : 'translate-x-0.5'}`}>
                   {dark ? '🌙' : '☀️'}
                 </span>
               </button>
@@ -41,9 +53,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       </header>
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {children}
       </main>
+
+      <footer style={{ borderTop: '1px solid var(--border)', color: 'var(--text-3)' }} className="text-center text-xs py-4">
+        Local Business Finder
+      </footer>
     </div>
   )
 }

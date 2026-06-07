@@ -78,10 +78,10 @@ function extractLocationFromMapsUrl(url: string): string | null {
 
 function StatCard({ label, value, sub }: { label: string; value: number | string; sub?: string }) {
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-5">
-      <p className="text-sm text-gray-500 mb-1">{label}</p>
-      <p className="text-3xl font-bold text-gray-900">{value}</p>
-      {sub && <p className="text-xs text-gray-400 mt-1">{sub}</p>}
+    <div className="rounded-xl border p-5 shadow-sm" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border)' }}>
+      <p className="text-sm mb-1" style={{ color: 'var(--text-2)' }}>{label}</p>
+      <p className="text-3xl font-bold" style={{ color: 'var(--text)' }}>{value}</p>
+      {sub && <p className="text-xs mt-1" style={{ color: 'var(--text-3)' }}>{sub}</p>}
     </div>
   )
 }
@@ -125,7 +125,8 @@ function CategoryTagInput({
   return (
     <div className="relative">
       <div
-        className="min-h-[42px] w-full border border-gray-300 rounded-lg px-2 py-1.5 flex flex-wrap gap-1.5 items-center cursor-text focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-500"
+        className="min-h-[42px] w-full rounded-lg px-2 py-1.5 flex flex-wrap gap-1.5 items-center cursor-text focus-within:ring-2 focus-within:ring-blue-500"
+        style={{ border: '1px solid var(--border-md)', backgroundColor: 'var(--bg-card)' }}
         onClick={() => { inputRef.current?.focus(); setShowDropdown(true) }}
       >
         {selected.map(cat => (
@@ -149,19 +150,21 @@ function CategoryTagInput({
           onBlur={() => setTimeout(() => setShowDropdown(false), 150)}
           onKeyDown={handleKeyDown}
           placeholder={selected.length === 0 ? 'e.g. nail salons, restaurants, plumbers…' : ''}
-          className="flex-1 min-w-[120px] text-sm outline-none bg-transparent placeholder:text-gray-400"
+          className="flex-1 min-w-[120px] text-sm outline-none bg-transparent"
+          style={{ color: 'var(--text)' }}
         />
       </div>
 
       {showDropdown && (
-        <div className="absolute z-20 mt-1 w-full bg-white border border-gray-200 rounded-lg shadow-lg max-h-48 overflow-y-auto">
+        <div className="absolute z-20 mt-1 w-full rounded-lg shadow-lg max-h-48 overflow-y-auto" style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)' }}>
           {filtered.length === 0
-            ? <p className="text-xs text-gray-400 px-3 py-2">No match — press Enter to use custom category</p>
+            ? <p className="text-xs px-3 py-2" style={{ color: 'var(--text-3)' }}>No match — press Enter to use custom category</p>
             : filtered.map(cat => (
               <button
                 key={cat}
                 onMouseDown={() => add(cat)}
-                className="w-full text-left text-sm px-3 py-1.5 hover:bg-blue-50 capitalize text-gray-700"
+                className="w-full text-left text-sm px-3 py-1.5 hover:bg-blue-50 capitalize"
+                style={{ color: 'var(--text-2)' }}
               >
                 {cat}
               </button>
@@ -298,8 +301,8 @@ export default function Dashboard() {
   return (
     <div className="space-y-5 sm:space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-gray-500 mt-1">Overview of your lead pipeline</p>
+        <h1 className="text-xl font-semibold" style={{ color: 'var(--text)' }}>Dashboard</h1>
+        <p className="mt-0.5 text-sm" style={{ color: 'var(--text-3)' }}>Overview of your lead pipeline</p>
       </div>
 
       {/* Stats */}
@@ -312,17 +315,20 @@ export default function Dashboard() {
 
       {/* Pipeline breakdown */}
       {stats && stats.total > 0 && (
-        <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5">
-          <h2 className="text-sm font-semibold text-gray-700 mb-4">Pipeline Status</h2>
+        <div className="rounded-xl border p-4 sm:p-5 shadow-sm" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border)' }}>
+          <h2 className="text-sm font-semibold mb-4" style={{ color: 'var(--text-2)' }}>Pipeline Status</h2>
           <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
             {Object.entries(stats.byStatus).map(([status, count]) => (
               <button
                 key={status}
                 onClick={() => navigate(`/businesses?leadStatus=${status}`)}
-                className="text-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                className="text-center p-3 rounded-lg transition-colors"
+                style={{ backgroundColor: 'var(--bg-subtle)' }}
+                onMouseEnter={e => (e.currentTarget.style.backgroundColor = 'var(--border)')}
+                onMouseLeave={e => (e.currentTarget.style.backgroundColor = 'var(--bg-subtle)')}
               >
-                <p className="text-xl font-bold text-gray-900">{count}</p>
-                <p className="text-xs text-gray-500 capitalize mt-1">{status}</p>
+                <p className="text-xl font-bold" style={{ color: 'var(--text)' }}>{count}</p>
+                <p className="text-xs capitalize mt-1" style={{ color: 'var(--text-3)' }}>{status}</p>
               </button>
             ))}
           </div>
@@ -330,8 +336,8 @@ export default function Dashboard() {
       )}
 
       {/* Scraper control */}
-      <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5">
-        <h2 className="text-sm font-semibold text-gray-700 mb-4">Scraper</h2>
+      <div className="rounded-xl border p-4 sm:p-5 shadow-sm" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border)' }}>
+        <h2 className="text-sm font-semibold mb-4" style={{ color: 'var(--text-2)' }}>Scraper</h2>
 
         {/* Running: batch progress */}
         {running && isBatch && batch && (
@@ -650,21 +656,21 @@ export default function Dashboard() {
 
         {/* Last session results */}
         {!running && scraper?.finishedAt && (
-          <div className="mt-4 pt-4 border-t border-gray-100">
+          <div className="mt-4 pt-4" style={{ borderTop: '1px solid var(--border)' }}>
             <div className="flex items-center justify-between mb-3">
-              <p className="text-xs font-medium text-gray-600">Last session results</p>
+              <p className="text-xs font-medium" style={{ color: 'var(--text-2)' }}>Last session results</p>
               <Link to="/history" className="text-xs text-blue-600 hover:underline">View all history →</Link>
             </div>
             <div className="grid grid-cols-4 gap-3 mb-3">
               {[
-                { label: 'Found',   value: scraper.found,   color: 'text-gray-900' },
-                { label: 'Saved',   value: scraper.saved,   color: 'text-green-600' },
-                { label: 'Skipped', value: scraper.skipped, color: 'text-yellow-600' },
-                { label: 'Errors',  value: scraper.errors,  color: 'text-red-500' },
+                { label: 'Found',   value: scraper.found,   color: 'var(--text)' },
+                { label: 'Saved',   value: scraper.saved,   color: '#16a34a' },
+                { label: 'Skipped', value: scraper.skipped, color: '#d97706' },
+                { label: 'Errors',  value: scraper.errors,  color: '#ef4444' },
               ].map(s => (
-                <div key={s.label} className="text-center bg-gray-50 rounded-lg p-2">
-                  <p className={`text-xl font-bold ${s.color}`}>{s.value}</p>
-                  <p className="text-xs text-gray-400">{s.label}</p>
+                <div key={s.label} className="text-center rounded-lg p-2" style={{ backgroundColor: 'var(--bg-subtle)' }}>
+                  <p className="text-xl font-bold" style={{ color: s.color }}>{s.value}</p>
+                  <p className="text-xs" style={{ color: 'var(--text-3)' }}>{s.label}</p>
                 </div>
               ))}
             </div>

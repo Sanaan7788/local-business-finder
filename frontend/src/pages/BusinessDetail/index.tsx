@@ -28,7 +28,15 @@ export default function BusinessDetail() {
   const generateWebsite = useGenerateWebsite()
   const [activeTab, setActiveTab] = useState<Tab>('Overview')
 
-  if (isLoading) return <div className="p-12 text-center text-gray-500">Loading…</div>
+  if (isLoading) return (
+    <div className="flex items-center justify-center py-24">
+      <div className="flex flex-col items-center gap-3">
+        <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+        <p className="text-sm text-gray-400">Loading…</p>
+      </div>
+    </div>
+  )
+
   if (isError || !business) return (
     <div className="p-12 text-center">
       <p className="text-red-500 mb-4">Business not found.</p>
@@ -38,16 +46,22 @@ export default function BusinessDetail() {
 
   return (
     <div className="space-y-6">
+      {/* Back + header */}
       <div>
-        <button onClick={() => navigate(-1)} className="text-sm text-gray-500 hover:text-gray-700 mb-3 flex items-center gap-1">
+        <button
+          onClick={() => navigate(-1)}
+          className="text-sm text-gray-400 hover:text-gray-600 mb-4 flex items-center gap-1 transition-colors"
+        >
           ← Back
         </button>
-        <div className="flex items-start justify-between">
+        <div className="flex items-start justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">{business.name}</h1>
-            <p className="text-gray-500 text-sm mt-0.5">{business.address || <span className="italic">No address — click Edit to add</span>}</p>
+            <h1 className="text-2xl font-bold" style={{ color: 'var(--text)' }}>{business.name}</h1>
+            <p className="text-sm mt-1" style={{ color: 'var(--text-2)' }}>
+              {business.address || <span className="italic">No address — click Edit to add</span>}
+            </p>
           </div>
-          <div className="flex gap-2 mt-1 flex-wrap justify-end">
+          <div className="flex gap-2 mt-1 flex-wrap justify-end shrink-0">
             <Badge className={PRIORITY_COLORS[business.priority as Priority]}>{business.priority} priority</Badge>
             <Badge className={LEAD_STATUS_COLORS[business.leadStatus]}>{LEAD_STATUS_LABELS[business.leadStatus]}</Badge>
             {(business.tokensUsed ?? 0) > 0 && (
@@ -57,29 +71,43 @@ export default function BusinessDetail() {
         </div>
       </div>
 
-      <div className="border-b border-gray-200">
-        <nav className="flex gap-0">
+      {/* Tabs */}
+      <div style={{ borderBottom: '1px solid var(--border)' }}>
+        <nav className="flex gap-0 -mb-px">
           {TABS.map(tab => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-4 py-2.5 text-sm font-medium border-b-2 transition-colors -mb-px ${
+              className={`px-4 py-2.5 text-sm font-medium border-b-2 transition-all duration-150 whitespace-nowrap ${
                 activeTab === tab
                   ? 'border-blue-600 text-blue-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                  : 'border-transparent hover:border-gray-300'
               }`}
+              style={activeTab !== tab ? { color: 'var(--text-2)' } : {}}
             >
               {tab}
-              {tab === 'AI Analysis' && (business.summary || business.keywords?.length > 0 || business.insights) && <span className="ml-1 text-xs text-green-500">✓</span>}
-              {tab === 'Content Brief' && business.contentBrief && <span className="ml-1 text-xs text-green-500">✓</span>}
-              {tab === 'Website' && business.generatedWebsiteCode && <span className="ml-1 text-xs text-green-500">✓</span>}
-              {tab === 'Deployment' && business.deployedUrl && <span className="ml-1 text-xs text-green-500">✓</span>}
+              {tab === 'AI Analysis' && (business.summary || business.keywords?.length > 0 || business.insights) && (
+                <span className="ml-1.5 inline-flex w-1.5 h-1.5 rounded-full bg-green-500" />
+              )}
+              {tab === 'Content Brief' && business.contentBrief && (
+                <span className="ml-1.5 inline-flex w-1.5 h-1.5 rounded-full bg-green-500" />
+              )}
+              {tab === 'Website' && business.generatedWebsiteCode && (
+                <span className="ml-1.5 inline-flex w-1.5 h-1.5 rounded-full bg-green-500" />
+              )}
+              {tab === 'Deployment' && business.deployedUrl && (
+                <span className="ml-1.5 inline-flex w-1.5 h-1.5 rounded-full bg-green-500" />
+              )}
             </button>
           ))}
         </nav>
       </div>
 
-      <div className="bg-white rounded-xl border border-gray-200 p-6">
+      {/* Tab content */}
+      <div
+        className="rounded-xl p-6 shadow-sm"
+        style={{ backgroundColor: 'var(--bg-card)', border: '1px solid var(--border)' }}
+      >
         {activeTab === 'Overview' && <OverviewTab business={business} />}
         {activeTab === 'AI Analysis' && (
           <AIAnalysisTab business={business} onAnalyze={() => analyze.mutate(id!)} analyzing={analyze.isPending} />
