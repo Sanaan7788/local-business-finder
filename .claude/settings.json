@@ -1,7 +1,6 @@
 {
   "permissions": {
     "allow": [
-      "Bash(curl -s \"http://localhost:3000/api/businesses?search=mood\")",
       "Bash(python3 -c \"import json,sys; data=json.load\\(sys.stdin\\); print\\(json.dumps\\(data, indent=2\\)\\)\")"
     ]
   }
