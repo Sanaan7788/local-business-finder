@@ -1,142 +1,50 @@
-import { Router, Request, Response, NextFunction } from 'express';
+import { Router } from 'express';
+import { z } from 'zod';
 import { WebsiteGeneratorService } from '../services/website/website.generator';
 import { WebsiteAnalyzerService } from '../services/website/website.analyzer';
-import { getRepository } from '../data/repository.factory';
+import { validateBody } from '../middleware/validate.middleware';
+import { asyncHandler } from '../middleware/async.handler';
 
 // ---------------------------------------------------------------------------
 // Website Routes — mounted at /api/businesses/:id
 //
-// POST /api/businesses/:id/website  — generate website via LLM, save HTML
-// GET  /api/businesses/:id/website  — return stored HTML + slug + vercel.json
+// POST  /website-prompt/generate — build + save the default website prompt
+// POST  /website                 — generate the site from the saved prompt (or default)
+// POST  /website-analysis        — crawl the existing site and analyse it
+// PATCH /website-analysis        — save manual edits to the analysis
 // ---------------------------------------------------------------------------
 
 const router = Router({ mergeParams: true });
 
-// POST /api/businesses/:id/website
-// Triggers website generation. May take 10–30s (large LLM output).
-router.post('/website', async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const { id } = req.params;
-    const business = await WebsiteGeneratorService.generate(id);
-    res.json({
-      success: true,
-      data: {
-        id: business.id,
-        name: business.name,
-        htmlLength: business.generatedWebsiteCode?.length ?? 0,
-        updatedAt: business.updatedAt,
-      },
-    });
-  } catch (err) {
-    const msg = (err as Error).message;
-    if (msg.startsWith('Business not found')) {
-      res.status(404).json({ success: false, error: msg });
-      return;
-    }
-    next(err);
-  }
+router.post('/website-prompt/generate', asyncHandler(async (req, res) => {
+  res.json({ success: true, data: await WebsiteGeneratorService.generatePrompt(req.params.id) });
+}));
+
+router.post('/website', asyncHandler(async (req, res) => {
+  const business = await WebsiteGeneratorService.generate(req.params.id);
+  res.json({
+    success: true,
+    data: {
+      id: business.id,
+      name: business.name,
+      htmlLength: business.generatedWebsiteCode?.length ?? 0,
+      updatedAt: business.updatedAt,
+    },
+  });
+}));
+
+router.post('/website-analysis', asyncHandler(async (req, res) => {
+  res.json({ success: true, data: await WebsiteAnalyzerService.analyze(req.params.id) });
+}));
+
+const UpdateAnalysisSchema = z.object({
+  structured: z.string().optional(),
+  improvements: z.array(z.string()).optional(),
 });
 
-// GET /api/businesses/:id/website
-// Returns the generated HTML, slug, and vercel.json for deployment.
-router.get('/website', async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const { id } = req.params;
-    const repo = getRepository();
-    const business = await repo.findById(id);
-
-    if (!business) {
-      res.status(404).json({ success: false, error: `Business not found: ${id}` });
-      return;
-    }
-
-    if (!business.generatedWebsiteCode) {
-      res.status(404).json({
-        success: false,
-        error: 'Website not yet generated. Call POST /website first.',
-      });
-      return;
-    }
-
-    const pkg = await WebsiteGeneratorService.getPackage(id);
-    res.json({
-      success: true,
-      data: {
-        slug: pkg.slug,
-        html: pkg.indexHtml,
-        vercelJson: pkg.vercelJson,
-        htmlLength: pkg.indexHtml.length,
-      },
-    });
-  } catch (err) {
-    next(err);
-  }
-});
-
-// ---------------------------------------------------------------------------
-// POST /api/businesses/:id/website-analysis
-// Crawls the business website and runs LLM analysis. May take 30–90s.
-// ---------------------------------------------------------------------------
-router.post('/website-analysis', async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const { id } = req.params;
-    const analysis = await WebsiteAnalyzerService.analyze(id);
-    res.json({ success: true, data: analysis });
-  } catch (err) {
-    const msg = (err as Error).message;
-    if (msg.startsWith('Business not found')) {
-      res.status(404).json({ success: false, error: msg });
-      return;
-    }
-    if (msg.startsWith('Business has no website URL') || msg.startsWith('Could not crawl')) {
-      res.status(400).json({ success: false, error: msg });
-      return;
-    }
-    if (msg.includes('404') || msg.toLowerCase().includes('page not found') || msg.toLowerCase().includes('net::err')) {
-      res.status(400).json({ success: false, error: `Website returned an error when crawling — the URL may be invalid or the site may be down. (${msg})` });
-      return;
-    }
-    next(err);
-  }
-});
-
-// ---------------------------------------------------------------------------
-// GET /api/businesses/:id/website-analysis
-// Returns stored analysis (no re-crawl).
-// ---------------------------------------------------------------------------
-router.get('/website-analysis', async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const { id } = req.params;
-    const repo = getRepository();
-    const business = await repo.findById(id);
-    if (!business) {
-      res.status(404).json({ success: false, error: `Business not found: ${id}` });
-      return;
-    }
-    res.json({ success: true, data: business.websiteAnalysis ?? null });
-  } catch (err) {
-    next(err);
-  }
-});
-
-// ---------------------------------------------------------------------------
-// PATCH /api/businesses/:id/website-analysis
-// Saves manual edits to structured text or improvements list.
-// ---------------------------------------------------------------------------
-router.patch('/website-analysis', async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const { id } = req.params;
-    const { structured, improvements } = req.body as { structured?: string; improvements?: string[] };
-    const updated = await WebsiteAnalyzerService.updateAnalysis(id, { structured, improvements });
-    res.json({ success: true, data: updated });
-  } catch (err) {
-    const msg = (err as Error).message;
-    if (msg.startsWith('Business not found') || msg.startsWith('No website analysis')) {
-      res.status(404).json({ success: false, error: msg });
-      return;
-    }
-    next(err);
-  }
-});
+router.patch('/website-analysis', validateBody(UpdateAnalysisSchema), asyncHandler(async (req, res) => {
+  const patch = req.body as z.infer<typeof UpdateAnalysisSchema>;
+  res.json({ success: true, data: await WebsiteAnalyzerService.updateAnalysis(req.params.id, patch) });
+}));
 
 export default router;

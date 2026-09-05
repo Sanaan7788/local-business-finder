@@ -1,4 +1,6 @@
 import { CrawledPage } from '../../../types/business.types';
+import { parseLlmJson } from './llm-json';
+import { UpstreamError } from '../../../utils/errors';
 
 // ---------------------------------------------------------------------------
 // Website Structure & Content Prompt
@@ -52,8 +54,7 @@ export function buildWebsiteStructurePrompt(
 }
 
 export function parseWebsiteStructure(raw: string): string {
-  const text = raw.trim().replace(/^```json\s*/i, '').replace(/```\s*$/, '').trim();
-  const parsed = JSON.parse(text);
-  if (typeof parsed.structured !== 'string') throw new Error('structured field missing');
+  const parsed = parseLlmJson(raw);
+  if (typeof parsed.structured !== 'string') throw new UpstreamError('structured field missing');
   return parsed.structured.trim();
 }

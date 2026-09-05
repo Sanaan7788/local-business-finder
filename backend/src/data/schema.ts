@@ -6,6 +6,7 @@ import {
   integer,
   timestamp,
   jsonb,
+  index,
   uniqueIndex,
 } from 'drizzle-orm/pg-core';
 import { sql } from 'drizzle-orm';
@@ -52,7 +53,8 @@ export const businesses = pgTable('businesses', {
   websiteAnalysis:      jsonb('website_analysis'),
   outreach:             jsonb('outreach'),
 
-  // Deployment
+  // Legacy, unused — the deployment feature was never built. Kept so
+  // drizzle-kit never emits a DROP COLUMN; nothing reads or writes them.
   githubUrl:   text('github_url'),
   deployedUrl: text('deployed_url'),
 
@@ -75,10 +77,17 @@ export const businesses = pgTable('businesses', {
     sql`lower(trim(${table.name}))`,
     sql`lower(trim(${table.address}))`,
   ),
+  // Filter / sort columns used by the list and stats queries
+  index('businesses_lead_status_idx').on(table.leadStatus),
+  index('businesses_priority_idx').on(table.priority),
+  index('businesses_website_idx').on(table.website),
+  index('businesses_category_idx').on(table.category),
+  index('businesses_zipcode_idx').on(table.zipcode),
+  index('businesses_created_at_idx').on(table.createdAt),
 ]);
 
 // ---------------------------------------------------------------------------
-// scrape_sessions table — replaces scrape-history.json
+// scrape_sessions table — one row per completed scrape session
 // ---------------------------------------------------------------------------
 
 export const scrapeSessions = pgTable('scrape_sessions', {
@@ -96,4 +105,6 @@ export const scrapeSessions = pgTable('scrape_sessions', {
   skippedList: jsonb('skipped_list').$type<any[]>().notNull().default([]),
   errorList:   jsonb('error_list').$type<any[]>().notNull().default([]),
   foundNames:  jsonb('found_names').$type<string[]>().notNull().default([]),
-});
+}, (table) => [
+  index('scrape_sessions_started_at_idx').on(table.startedAt),
+]);

@@ -1,56 +1,38 @@
-import { Router, Request, Response } from 'express';
+import { Router } from 'express';
+import { z } from 'zod';
 import { getAllProviders, getActiveProvider, setActiveProvider } from '../services/llm/llm.config';
-import { LLMService } from '../services/llm/llm.service';
+import { PROVIDER_IDS, ProviderId } from '../services/llm/llm.interface';
 import { getRepository } from '../data/repository.factory';
+import { validateBody } from '../middleware/validate.middleware';
+import { asyncHandler } from '../middleware/async.handler';
+import { ValidationError } from '../utils/errors';
+
+// ---------------------------------------------------------------------------
+// Settings Routes — /api/settings
+//
+// GET  /llm    — all providers + the active one
+// POST /llm    — switch the active provider at runtime (in-memory)
+// GET  /stats  — total LLM tokens used across all businesses
+// ---------------------------------------------------------------------------
 
 const router = Router();
 
-// GET /api/settings/llm
-// Returns all providers and the currently active one.
-router.get('/llm', (_req: Request, res: Response) => {
-  res.json({
-    success: true,
-    data: {
-      active: getActiveProvider(),
-      providers: getAllProviders(),
-    },
-  });
+router.get('/llm', (_req, res) => {
+  res.json({ success: true, data: { active: getActiveProvider(), providers: getAllProviders() } });
 });
 
-// POST /api/settings/llm
-// Body: { provider: 'deepseek' | 'claude' | 'openai' | 'gemini' | 'mistral' | 'groq' }
-// Switches the active LLM provider at runtime (no restart needed).
-router.post('/llm', (req: Request, res: Response) => {
-  const { provider } = req.body as { provider: string };
-  const known = getAllProviders().map(p => p.id);
-
-  if (!provider || !known.includes(provider)) {
-    res.status(400).json({ success: false, error: `Unknown provider "${provider}". Supported: ${known.join(', ')}` });
-    return;
+router.post('/llm', validateBody(z.object({ provider: z.enum(PROVIDER_IDS) })), asyncHandler(async (req, res) => {
+  const { provider } = req.body as { provider: ProviderId };
+  const info = getAllProviders().find((p) => p.id === provider);
+  if (!info?.configured) {
+    throw new ValidationError(`Provider "${provider}" is not configured — add its API key to backend/.env first.`);
   }
-
-  const providerInfo = getAllProviders().find(p => p.id === provider)!;
-  if (!providerInfo.configured) {
-    res.status(400).json({ success: false, error: `Provider "${provider}" is not configured — add its API key to .env first.` });
-    return;
-  }
-
   setActiveProvider(provider);
-  LLMService.resetCache(); // clear adapter cache so next call uses the new provider
-
   res.json({ success: true, data: { active: provider } });
-});
+}));
 
-// GET /api/settings/stats
-// Returns aggregate stats — total tokens used across all businesses.
-router.get('/stats', async (_req: Request, res: Response) => {
-  try {
-    const repo = getRepository();
-    const totalTokensUsed = await repo.totalTokensUsed();
-    res.json({ success: true, data: { totalTokensUsed } });
-  } catch (err) {
-    res.status(500).json({ success: false, error: (err as Error).message });
-  }
-});
+router.get('/stats', asyncHandler(async (_req, res) => {
+  res.json({ success: true, data: { totalTokensUsed: await getRepository().totalTokensUsed() } });
+}));
 
 export default router;

@@ -1,7 +1,7 @@
 import winston from 'winston';
 import { config } from '../config';
 
-const { combine, timestamp, colorize, printf, json } = winston.format;
+const { combine, timestamp, colorize, printf, json, errors } = winston.format;
 
 const devFormat = printf(({ level, message, timestamp, ...meta }) => {
   const metaStr = Object.keys(meta).length ? ` ${JSON.stringify(meta)}` : '';
@@ -10,7 +10,7 @@ const devFormat = printf(({ level, message, timestamp, ...meta }) => {
 
 export const logger = winston.createLogger({
   level: config.server.nodeEnv === 'production' ? 'info' : 'debug',
-  format: combine(timestamp({ format: 'YYYY-MM-DD HH:mm:ss' })),
+  format: combine(errors({ stack: true }), timestamp({ format: 'YYYY-MM-DD HH:mm:ss' })),
   transports: [
     new winston.transports.Console({
       format:

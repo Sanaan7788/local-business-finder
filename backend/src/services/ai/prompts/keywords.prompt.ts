@@ -1,4 +1,5 @@
 import { Business, Keywords } from '../../../types/business.types';
+import { parseLlmJson } from './llm-json';
 
 // ---------------------------------------------------------------------------
 // Keywords (categorised)
@@ -41,8 +42,7 @@ export function buildKeywordsPrompt(business: Business): { systemPrompt: string;
 }
 
 export function parseKeywords(raw: string): { flat: string[]; categories: Keywords } {
-  const text = raw.trim().replace(/^```json\s*/i, '').replace(/```\s*$/, '').trim();
-  const parsed = JSON.parse(text);
+  const parsed = parseLlmJson(raw);
 
   const categories: Keywords = {
     serviceKeywords:    Array.isArray(parsed.serviceKeywords)    ? parsed.serviceKeywords.filter((k: unknown) => typeof k === 'string')    : [],

@@ -4,8 +4,14 @@ import { env } from './env';
 // All values here are guaranteed to be present and correctly typed.
 export const config = {
   server: {
-    port: parseInt(env.PORT, 10),
+    port: env.PORT,
     nodeEnv: env.NODE_ENV,
+  },
+  db: {
+    url: env.DATABASE_URL,
+  },
+  scraper: {
+    debug: env.SCRAPER_DEBUG,
   },
   llm: {
     provider: env.LLM_PROVIDER,
@@ -19,14 +25,4 @@ export const config = {
     mistralApiKey: env.MISTRAL_API_KEY,
     groqApiKey: env.GROQ_API_KEY,
   },
-  github: {
-    token: env.GITHUB_TOKEN,
-    owner: env.GITHUB_OWNER,
-    repo: env.GITHUB_REPO,
-    repoId: env.GITHUB_REPO_ID,
-  },
-  vercel: {
-    token: env.VERCEL_TOKEN,
-    teamId: env.VERCEL_TEAM_ID,
-  },
-};
+} as const;

@@ -1,4 +1,6 @@
 import { Business, Insights } from '../../../types/business.types';
+import { parseLlmJson } from './llm-json';
+import { UpstreamError } from '../../../utils/errors';
 
 // ---------------------------------------------------------------------------
 // Insights
@@ -38,11 +40,10 @@ export function buildInsightsPrompt(business: Business): { systemPrompt: string;
 }
 
 export function parseInsights(raw: string): Insights {
-  const text = raw.trim().replace(/^```json\s*/i, '').replace(/```\s*$/, '').trim();
-  const parsed = JSON.parse(text);
-  if (typeof parsed.whyNeedsWebsite !== 'string') throw new Error('whyNeedsWebsite missing');
-  if (typeof parsed.whatsMissingOnline !== 'string') throw new Error('whatsMissingOnline missing');
-  if (!Array.isArray(parsed.opportunities)) throw new Error('opportunities must be an array');
+  const parsed = parseLlmJson(raw);
+  if (typeof parsed.whyNeedsWebsite !== 'string') throw new UpstreamError('whyNeedsWebsite missing');
+  if (typeof parsed.whatsMissingOnline !== 'string') throw new UpstreamError('whatsMissingOnline missing');
+  if (!Array.isArray(parsed.opportunities)) throw new UpstreamError('opportunities must be an array');
   return {
     whyNeedsWebsite: parsed.whyNeedsWebsite.trim(),
     whatsMissingOnline: parsed.whatsMissingOnline.trim(),

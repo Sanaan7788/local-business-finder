@@ -1,68 +1,54 @@
-import { ILLMProvider, LLMRequest, LLMResponse, LLMTask } from './llm.interface';
-import { LLMFactory } from './llm.factory';
-import { getProviderForTask } from './llm.config';
+import { ILLMProvider, LLMRequest, LLMResponse, LLMTask, ProviderId } from './llm.interface';
+import { createAdapter } from './llm.factory';
+import { getActiveProvider } from './llm.config';
+import { UnprocessableError } from '../../utils/errors';
 import { logger } from '../../utils/logger';
 
 // ---------------------------------------------------------------------------
-// LLMService
+// LLMService — the single entry point for all LLM calls.
 //
-// The single entry point for all LLM calls in the application.
-// Services call complete() with a task name — never an adapter directly.
+//   const response = await LLMService.complete('keywords', { systemPrompt, userPrompt });
 //
-// Usage:
-//   const response = await LLMService.complete('keywords', {
-//     systemPrompt: '...',
-//     userPrompt: '...',
-//   });
+// `task` is a log label so token spend can be traced back to a call site.
+// Pass `{ provider }` to pin a call to one provider (menu extraction → Claude).
 // ---------------------------------------------------------------------------
 
 export class LLMService {
-  // Cache adapters so we don't re-instantiate on every call.
-  private static cache = new Map<string, ILLMProvider>();
+  private static cache = new Map<ProviderId, ILLMProvider>();
 
-  private static getAdapter(providerName: string): ILLMProvider {
-    if (!LLMService.cache.has(providerName)) {
-      LLMService.cache.set(providerName, LLMFactory.create(providerName));
+  static getAdapter(id: ProviderId = getActiveProvider()): ILLMProvider {
+    let adapter = LLMService.cache.get(id);
+    if (!adapter) {
+      adapter = createAdapter(id);
+      LLMService.cache.set(id, adapter);
     }
-    return LLMService.cache.get(providerName)!;
+    return adapter;
   }
 
-  /**
-   * Run an LLM request for a given task.
-   * Provider is selected by task config, falling back to LLM_PROVIDER env.
-   */
-  static async complete(task: LLMTask, request: LLMRequest): Promise<LLMResponse> {
-    const providerName = getProviderForTask(task);
-    const adapter = LLMService.getAdapter(providerName);
+  static async complete(
+    task: LLMTask,
+    request: LLMRequest,
+    opts: { provider?: ProviderId } = {},
+  ): Promise<LLMResponse> {
+    const adapter = LLMService.getAdapter(opts.provider ?? getActiveProvider());
 
-    logger.debug('LLMService dispatch', {
-      task,
-      provider: adapter.name,
-      model: adapter.model,
-    });
+    if (request.images?.length && !adapter.supportsImages) {
+      throw new UnprocessableError(`${adapter.name} does not support image input`);
+    }
 
+    logger.debug('LLM request', { task, provider: adapter.name, model: adapter.model });
     const response = await adapter.complete(request);
-
-    logger.debug('LLMService response', {
+    logger.debug('LLM response', {
       task,
       provider: response.provider,
       tokensUsed: response.tokensUsed,
       durationMs: response.durationMs,
+      truncated: response.truncated,
     });
 
     return response;
   }
 
-  /**
-   * Returns which provider will handle a given task (useful for logging/UI).
-   */
-  static providerForTask(task: LLMTask): string {
-    return getProviderForTask(task);
-  }
-
-  /**
-   * Clears the adapter cache — useful in tests to reset state between runs.
-   */
   static resetCache(): void {
     LLMService.cache.clear();
   }

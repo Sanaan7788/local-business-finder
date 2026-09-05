@@ -1,4 +1,6 @@
 import { Business } from '../../../types/business.types';
+import { parseLlmJson } from './llm-json';
+import { UpstreamError } from '../../../utils/errors';
 
 // ---------------------------------------------------------------------------
 // Business Context
@@ -27,8 +29,7 @@ export function buildBusinessContextPrompt(business: Business): { systemPrompt: 
 }
 
 export function parseBusinessContext(raw: string): string {
-  const text = raw.trim().replace(/^```json\s*/i, '').replace(/```\s*$/, '').trim();
-  const parsed = JSON.parse(text);
-  if (typeof parsed.businessContext !== 'string' || !parsed.businessContext) throw new Error('businessContext field missing');
+  const parsed = parseLlmJson(raw);
+  if (typeof parsed.businessContext !== 'string' || !parsed.businessContext) throw new UpstreamError('businessContext field missing');
   return parsed.businessContext.trim();
 }

@@ -1,180 +1,103 @@
-import { Router, Request, Response, NextFunction } from 'express';
+import { Router } from 'express';
 import { z } from 'zod';
-import { v4 as uuidv4 } from 'uuid';
 import { getRepository } from '../data/repository.factory';
 import { LeadService } from '../services/lead/lead.service';
-import { validateBody } from '../middleware/validate.middleware';
-import { LeadStatusSchema } from '../types/business.types';
+import { buildBusiness } from '../services/lead/business.factory';
 import { scoreLead } from '../services/lead/lead.scorer';
+import { validateBody } from '../middleware/validate.middleware';
+import { asyncHandler } from '../middleware/async.handler';
+import { NotFoundError, ValidationError } from '../utils/errors';
+import { BUSINESS_LIST_FIELDS, LeadStatusSchema, PrioritySchema } from '../types/business.types';
 import { BusinessFilter, BusinessSort } from '../data/repository.interface';
 
 // ---------------------------------------------------------------------------
-// Business + Lead Routes
+// Business + Lead Routes — /api/businesses
 //
-// GET    /api/businesses              — list with filter/sort/search/pagination
-// GET    /api/businesses/stats        — pipeline summary stats
-// GET    /api/businesses/:id          — single business profile
-// PATCH  /api/businesses/:id/status   — update lead status
-// PATCH  /api/businesses/:id/notes    — update notes
-// PATCH  /api/businesses/:id/contacted — set last contacted date
-// DELETE /api/businesses/:id          — delete a business
+// GET    /categories           — distinct categories with counts
+// GET    /stats                — pipeline summary
+// GET    /                     — list (light projection) with filter/sort/pagination
+// POST   /                     — create a stub business by hand
+// GET    /:id                  — full profile
+// PATCH  /:id/profile          — edit discoverable fields, rescored
+// PATCH  /:id/status           — lead status transition
+// PATCH  /:id/notes            — CRM notes
+// PATCH  /:id/website-prompt   — save the editable website prompt
+// DELETE /:id                  — hard delete
 // ---------------------------------------------------------------------------
 
 const router = Router();
 
-// ---------------------------------------------------------------------------
-// GET /api/businesses/categories
-// Returns distinct categories with counts, ordered by count desc.
-// Must be defined BEFORE /:id or Express will treat "categories" as an id param.
-// ---------------------------------------------------------------------------
-router.get('/categories', async (_req: Request, res: Response, next: NextFunction) => {
-  try {
-    const db = (await import('../data/postgres/postgres.connection')).getDb();
-    const { businesses: bTable } = await import('../data/schema');
-    const { sql, desc: descFn } = await import('drizzle-orm');
-    const rows = await db
-      .select({ category: bTable.category, count: sql<number>`count(*)` })
-      .from(bTable)
-      .groupBy(bTable.category)
-      .orderBy(descFn(sql<number>`count(*)`));
-    res.json({ success: true, data: rows.map(r => ({ category: r.category, count: Number(r.count) })) });
-  } catch (err) {
-    next(err);
-  }
+// Static paths must be declared before /:id
+router.get('/categories', asyncHandler(async (_req, res) => {
+  res.json({ success: true, data: await getRepository().categoryCounts() });
+}));
+
+router.get('/stats', asyncHandler(async (_req, res) => {
+  res.json({ success: true, data: await LeadService.getStats() });
+}));
+
+const ListQuerySchema = z.object({
+  zipcode:    z.string().optional(),
+  leadStatus: LeadStatusSchema.optional(),
+  priority:   PrioritySchema.optional(),
+  hasWebsite: z.enum(['true', 'false']).optional(),
+  search:     z.string().optional(),
+  category:   z.string().optional(),
+  page:       z.coerce.number().int().min(1).default(1),
+  pageSize:   z.coerce.number().int().min(1).max(200).default(50),
+  sortField:  z.enum(BUSINESS_LIST_FIELDS).default('createdAt'),
+  sortOrder:  z.enum(['asc', 'desc']).default('desc'),
 });
 
-// ---------------------------------------------------------------------------
-// GET /api/businesses/stats
-// Must be defined BEFORE /:id or Express will treat "stats" as an id param.
-// ---------------------------------------------------------------------------
-router.get('/stats', async (_req: Request, res: Response, next: NextFunction) => {
-  try {
-    const stats = await LeadService.getStats();
-    res.json({ success: true, data: stats });
-  } catch (err) {
-    next(err);
-  }
-});
+router.get('/', asyncHandler(async (req, res) => {
+  // Treat empty query values as absent so "?priority=" means "any"
+  const query = Object.fromEntries(Object.entries(req.query).filter(([, v]) => v !== ''));
+  const parsed = ListQuerySchema.safeParse(query);
+  if (!parsed.success) throw new ValidationError('Invalid query', parsed.error.flatten().fieldErrors);
 
-// ---------------------------------------------------------------------------
-// GET /api/businesses
-// Query params: zipcode, leadStatus, priority, hasWebsite, search, page, pageSize, sortField, sortOrder
-// ---------------------------------------------------------------------------
-router.get('/', async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const {
-      zipcode, leadStatus, priority, hasWebsite, search, category,
-      page = '1', pageSize = '50',
-      sortField = 'createdAt', sortOrder = 'desc',
-    } = req.query as Record<string, string>;
+  const { zipcode, leadStatus, priority, hasWebsite, search, category, page, pageSize, sortField, sortOrder } = parsed.data;
+  const filter: BusinessFilter = {
+    zipcode, leadStatus, priority, search, category,
+    hasWebsite: hasWebsite === undefined ? undefined : hasWebsite === 'true',
+  };
+  const sort: BusinessSort = { field: sortField, order: sortOrder };
 
-    const filter: BusinessFilter = {};
-    if (zipcode)     filter.zipcode = zipcode;
-    if (leadStatus)  filter.leadStatus = leadStatus as any;
-    if (priority)    filter.priority = priority as any;
-    if (hasWebsite !== undefined) filter.hasWebsite = hasWebsite === 'true';
-    if (search)      filter.search = search;
-    if (category)    filter.category = category;
+  const result = await getRepository().findAll({ filter, sort, page, pageSize, view: 'list' });
+  res.json({ success: true, data: result });
+}));
 
-    const sort: BusinessSort = {
-      field: sortField as any,
-      order: (sortOrder === 'asc' ? 'asc' : 'desc'),
-    };
-
-    const repo = getRepository();
-    const result = await repo.findAll({
-      filter,
-      sort,
-      page: Math.max(1, parseInt(page, 10)),
-      pageSize: Math.min(200, Math.max(1, parseInt(pageSize, 10))),
-    });
-
-    res.json({ success: true, data: result });
-  } catch (err) {
-    next(err);
-  }
-});
-
-// ---------------------------------------------------------------------------
-// POST /api/businesses
-// Create a stub business manually (e.g. from a found name with no scraped detail).
-// Only name is required — all other fields are optional and default to empty.
-// ---------------------------------------------------------------------------
 const CreateBusinessSchema = z.object({
   name:          z.string().min(1),
   phone:         z.string().nullable().optional(),
-  address:       z.string().optional().default(''),
-  zipcode:       z.string().optional().default(''),
-  category:      z.string().optional().default(''),
+  address:       z.string().default(''),
+  zipcode:       z.string().default(''),
+  category:      z.string().default(''),
   description:   z.string().nullable().optional(),
-  website:       z.boolean().optional().default(false),
+  website:       z.boolean().default(false),
   websiteUrl:    z.string().nullable().optional(),
   rating:        z.number().nullable().optional(),
   reviewCount:   z.number().int().nullable().optional(),
   googleMapsUrl: z.string().nullable().optional(),
 });
 
-router.post(
-  '/',
-  validateBody(CreateBusinessSchema),
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const repo = getRepository();
-      const body = req.body as z.infer<typeof CreateBusinessSchema>;
-      const now = new Date().toISOString();
-      const raw = {
-        name:          body.name,
-        phone:         body.phone ?? null,
-        address:       body.address ?? '',
-        zipcode:       body.zipcode ?? '',
-        category:      body.category ?? '',
-        description:   body.description ?? null,
-        website:       body.website ?? false,
-        websiteUrl:    body.websiteUrl ?? null,
-        rating:        body.rating ?? null,
-        reviewCount:   body.reviewCount ?? null,
-        googleMapsUrl: body.googleMapsUrl ?? null,
-      };
-      const { score, priority } = scoreLead(raw);
-      const business = await repo.create({
-        id: uuidv4(),
-        createdAt: now,
-        updatedAt: now,
-        ...raw,
-        reviewSnippets: [],
-        menu: [],
-        scrapedEmails: [],
-        keywords: [],
-        keywordCategories: null,
-        summary: null,
-        insights: null,
-        contentBrief: null,
-          businessContext: null,
-        generatedWebsiteCode: null,
-        websitePrompt: null,
-        websiteAnalysis: null,
-        outreach: null,
-        githubUrl: null,
-        deployedUrl: null,
-        tokensUsed: 0,
-        leadStatus: 'new',
-        priority,
-        priorityScore: score,
-        notes: null,
-        lastContactedAt: null,
-      });
-      res.status(201).json({ success: true, data: business });
-    } catch (err) {
-      next(err);
-    }
-  },
-);
+router.post('/', validateBody(CreateBusinessSchema), asyncHandler(async (req, res) => {
+  const body = req.body as z.infer<typeof CreateBusinessSchema>;
+  const business = await getRepository().create(buildBusiness({
+    name:          body.name,
+    phone:         body.phone ?? null,
+    address:       body.address,
+    zipcode:       body.zipcode,
+    category:      body.category,
+    description:   body.description ?? null,
+    website:       body.website,
+    websiteUrl:    body.websiteUrl ?? null,
+    rating:        body.rating ?? null,
+    reviewCount:   body.reviewCount ?? null,
+    googleMapsUrl: body.googleMapsUrl ?? null,
+  }));
+  res.status(201).json({ success: true, data: business });
+}));
 
-// ---------------------------------------------------------------------------
-// PATCH /api/businesses/:id/profile
-// Full manual edit — any discoverable field (name, phone, address, etc.).
-// Used for the editable profile UI.
-// ---------------------------------------------------------------------------
 const UpdateProfileSchema = z.object({
   name:          z.string().min(1).optional(),
   phone:         z.string().nullable().optional(),
@@ -189,171 +112,38 @@ const UpdateProfileSchema = z.object({
   googleMapsUrl: z.string().nullable().optional(),
 });
 
-router.patch(
-  '/:id/profile',
-  validateBody(UpdateProfileSchema),
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const repo = getRepository();
-      const existing = await repo.findById(req.params.id);
-      if (!existing) {
-        res.status(404).json({ success: false, error: `Business not found: ${req.params.id}` });
-        return;
-      }
-      // Recompute priority score if any scoring-relevant field changed
-      const merged = { ...existing, ...req.body };
-      const { score, priority } = scoreLead(merged);
-      const updated = await repo.update(req.params.id, {
-        ...req.body,
-        priorityScore: score,
-        priority,
-      });
-      res.json({ success: true, data: updated });
-    } catch (err) {
-      next(err);
-    }
-  },
-);
+router.patch('/:id/profile', validateBody(UpdateProfileSchema), asyncHandler(async (req, res) => {
+  const repo = getRepository();
+  const existing = await repo.findById(req.params.id);
+  if (!existing) throw new NotFoundError('Business', req.params.id);
 
-// ---------------------------------------------------------------------------
-// GET /api/businesses/:id
-// ---------------------------------------------------------------------------
-router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const repo = getRepository();
-    const business = await repo.findById(req.params.id);
-    if (!business) {
-      res.status(404).json({ success: false, error: `Business not found: ${req.params.id}` });
-      return;
-    }
-    res.json({ success: true, data: business });
-  } catch (err) {
-    next(err);
-  }
-});
+  const patch = req.body as z.infer<typeof UpdateProfileSchema>;
+  const { score, priority } = scoreLead({ ...existing, ...patch }); // rescore on edited fields
+  const updated = await repo.update(req.params.id, { ...patch, priorityScore: score, priority });
+  res.json({ success: true, data: updated });
+}));
 
-// ---------------------------------------------------------------------------
-// PATCH /api/businesses/:id/status
-// ---------------------------------------------------------------------------
-const UpdateStatusSchema = z.object({
-  status: LeadStatusSchema,
-});
+router.get('/:id', asyncHandler(async (req, res) => {
+  const business = await getRepository().findById(req.params.id);
+  if (!business) throw new NotFoundError('Business', req.params.id);
+  res.json({ success: true, data: business });
+}));
 
-router.patch(
-  '/:id/status',
-  validateBody(UpdateStatusSchema),
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const business = await LeadService.updateStatus(req.params.id, req.body.status);
-      res.json({ success: true, data: business });
-    } catch (err) {
-      const msg = (err as Error).message;
-      if (msg.startsWith('Business not found')) {
-        res.status(404).json({ success: false, error: msg });
-        return;
-      }
-      if (msg.startsWith('Invalid transition')) {
-        res.status(422).json({ success: false, error: msg });
-        return;
-      }
-      next(err);
-    }
-  },
-);
+router.patch('/:id/status', validateBody(z.object({ status: LeadStatusSchema })), asyncHandler(async (req, res) => {
+  res.json({ success: true, data: await LeadService.updateStatus(req.params.id, req.body.status) });
+}));
 
-// ---------------------------------------------------------------------------
-// PATCH /api/businesses/:id/notes
-// ---------------------------------------------------------------------------
-const UpdateNotesSchema = z.object({
-  notes: z.string().nullable(),
-});
+router.patch('/:id/notes', validateBody(z.object({ notes: z.string().nullable() })), asyncHandler(async (req, res) => {
+  res.json({ success: true, data: await LeadService.updateNotes(req.params.id, req.body.notes) });
+}));
 
-router.patch(
-  '/:id/notes',
-  validateBody(UpdateNotesSchema),
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const business = await LeadService.updateNotes(req.params.id, req.body.notes);
-      res.json({ success: true, data: business });
-    } catch (err) {
-      const msg = (err as Error).message;
-      if (msg.startsWith('Business not found')) {
-        res.status(404).json({ success: false, error: msg });
-        return;
-      }
-      next(err);
-    }
-  },
-);
+router.patch('/:id/website-prompt', validateBody(z.object({ websitePrompt: z.string().nullable() })), asyncHandler(async (req, res) => {
+  res.json({ success: true, data: await getRepository().update(req.params.id, { websitePrompt: req.body.websitePrompt }) });
+}));
 
-// ---------------------------------------------------------------------------
-// PATCH /api/businesses/:id/contacted
-// ---------------------------------------------------------------------------
-const UpdateContactedSchema = z.object({
-  lastContactedAt: z.string().datetime().nullable(),
-});
-
-router.patch(
-  '/:id/contacted',
-  validateBody(UpdateContactedSchema),
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const business = await LeadService.updateLastContacted(req.params.id, req.body.lastContactedAt);
-      res.json({ success: true, data: business });
-    } catch (err) {
-      const msg = (err as Error).message;
-      if (msg.startsWith('Business not found')) {
-        res.status(404).json({ success: false, error: msg });
-        return;
-      }
-      next(err);
-    }
-  },
-);
-
-// ---------------------------------------------------------------------------
-// PATCH /api/businesses/:id/website-prompt
-// Save or update the editable website generation prompt.
-// ---------------------------------------------------------------------------
-const UpdateWebsitePromptSchema = z.object({
-  websitePrompt: z.string().nullable(),
-});
-
-router.patch(
-  '/:id/website-prompt',
-  validateBody(UpdateWebsitePromptSchema),
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const repo = getRepository();
-      const updated = await repo.update(req.params.id, { websitePrompt: req.body.websitePrompt });
-      res.json({ success: true, data: updated });
-    } catch (err) {
-      const msg = (err as Error).message;
-      if (msg.startsWith('Business not found')) {
-        res.status(404).json({ success: false, error: msg });
-        return;
-      }
-      next(err);
-    }
-  },
-);
-
-// ---------------------------------------------------------------------------
-// DELETE /api/businesses/:id
-// ---------------------------------------------------------------------------
-router.delete('/:id', async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const repo = getRepository();
-    await repo.delete(req.params.id);
-    res.json({ success: true, data: { deleted: req.params.id } });
-  } catch (err) {
-    const msg = (err as Error).message;
-    if (msg.startsWith('Business not found')) {
-      res.status(404).json({ success: false, error: msg });
-      return;
-    }
-    next(err);
-  }
-});
+router.delete('/:id', asyncHandler(async (req, res) => {
+  await getRepository().delete(req.params.id);
+  res.json({ success: true, data: { deleted: req.params.id } });
+}));
 
 export default router;

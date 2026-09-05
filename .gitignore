@@ -1,16 +1,15 @@
 # Environment
 .env
 .env.local
+*.local
 
 # Dependencies
 node_modules/
-*/node_modules/
 
 # Build output
 dist/
+dist-ssr/
 build/
-*/dist/
-*/build/
 
 # Logs
 logs/
@@ -21,9 +20,9 @@ logs/
 Thumbs.db
 
 # IDE
-.vscode/settings.json
+.vscode/*
+!.vscode/extensions.json
 .idea/
 
-# Data (CSV storage and scrape history - keep structure, not data)
-backend/src/data/storage/*.csv
-backend/src/data/storage/scrape-history.json
+# Local Claude Code settings
+.claude/settings.local.json

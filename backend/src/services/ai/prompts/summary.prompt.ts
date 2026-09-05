@@ -1,4 +1,6 @@
 import { Business } from '../../../types/business.types';
+import { parseLlmJson } from './llm-json';
+import { UpstreamError } from '../../../utils/errors';
 
 // ---------------------------------------------------------------------------
 // Summary
@@ -25,8 +27,7 @@ export function buildSummaryPrompt(business: Business): { systemPrompt: string; 
 }
 
 export function parseSummary(raw: string): string {
-  const text = raw.trim().replace(/^```json\s*/i, '').replace(/```\s*$/, '').trim();
-  const parsed = JSON.parse(text);
-  if (typeof parsed.summary !== 'string' || !parsed.summary) throw new Error('summary field missing or not a string');
+  const parsed = parseLlmJson(raw);
+  if (typeof parsed.summary !== 'string' || !parsed.summary) throw new UpstreamError('summary field missing or not a string');
   return parsed.summary.trim();
 }

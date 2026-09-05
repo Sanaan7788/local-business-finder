@@ -1,7 +1,8 @@
 import {
   Business,
+  BusinessListItem,
+  BusinessUpdate,
   RawBusiness,
-  UpdateBusiness,
   LeadStatus,
   Priority,
 } from '../types/business.types';
@@ -20,7 +21,7 @@ export interface BusinessFilter {
 }
 
 export interface BusinessSort {
-  field: keyof Business;
+  field: keyof BusinessListItem; // only real scalar columns are sortable
   order: 'asc' | 'desc';
 }
 
@@ -31,69 +32,62 @@ export interface FindAllOptions {
   pageSize?: number;
 }
 
-export interface FindAllResult {
-  items: Business[];
+export interface FindAllResult<T = Business> {
+  items: T[];
   total: number;
   page: number;
   pageSize: number;
 }
 
+/** The three fields the deduplicator indexes on. */
+export interface DedupKey {
+  id: string;
+  name: string;
+  address: string;
+  phone: string | null;
+}
+
+export interface CategoryCount {
+  category: string;
+  count: number;
+}
+
+export interface PipelineStats {
+  total: number;
+  byStatus: Record<LeadStatus, number>;
+  byPriority: Record<Priority, number>;
+  noWebsite: number;
+}
+
 // ---------------------------------------------------------------------------
-// IBusinessRepository
-//
-// Every storage implementation (CSV, SQLite, Postgres) must satisfy this
-// interface. Services depend only on this contract — never on a concrete class.
-// Swapping storage = swapping the implementation, zero service changes.
+// IBusinessRepository — services depend only on this contract.
 // ---------------------------------------------------------------------------
 
 export interface IBusinessRepository {
-  /**
-   * Persist a new business built from raw scraped data.
-   * ID, timestamps, lead defaults, and priority score are
-   * assigned by the service layer before calling this.
-   */
+  /** Persist a fully built Business (see buildBusiness). */
   create(business: Business): Promise<Business>;
 
-  /**
-   * Return all businesses with optional filtering, sorting, pagination.
-   */
-  findAll(options?: FindAllOptions): Promise<FindAllResult>;
+  /** Filtered, sorted, paginated list. `view: 'list'` returns the light projection. */
+  findAll(options: FindAllOptions & { view: 'list' }): Promise<FindAllResult<BusinessListItem>>;
+  findAll(options?: FindAllOptions & { view?: 'full' }): Promise<FindAllResult<Business>>;
 
-  /**
-   * Return a single business by UUID. Null if not found.
-   */
   findById(id: string): Promise<Business | null>;
 
-  /**
-   * Check for an existing record matching name+address or phone.
-   * Used by the deduplication service before creating a new record.
-   */
-  findDuplicate(raw: RawBusiness): Promise<Business | null>;
+  /** Id of an existing record matching phone or name+address, if any. */
+  findDuplicateId(raw: Pick<RawBusiness, 'name' | 'address' | 'phone'>): Promise<string | null>;
 
-  /**
-   * Merge partial updates into an existing business and return the updated record.
-   * Only fields present in the payload are changed — others are preserved.
-   */
-  update(id: string, payload: Partial<Business>): Promise<Business>;
+  /** Every row's dedup keys — loaded once per scrape session. */
+  findDedupKeys(): Promise<DedupKey[]>;
 
-  /**
-   * Apply CRM-only fields (status, notes, lastContactedAt).
-   * Convenience wrapper around update() with a restricted type.
-   */
-  updateLead(id: string, payload: UpdateBusiness): Promise<Business>;
+  /** Merge a partial update. Throws NotFoundError when the id does not exist. */
+  update(id: string, payload: BusinessUpdate): Promise<Business>;
 
-  /**
-   * Hard delete a business by ID.
-   */
+  /** Hard delete. Throws NotFoundError when the id does not exist. */
   delete(id: string): Promise<void>;
 
-  /**
-   * Return the total count of businesses, optionally filtered.
-   */
-  count(filter?: BusinessFilter): Promise<number>;
+  getStats(filter?: BusinessFilter): Promise<PipelineStats>;
 
-  /**
-   * Return the sum of tokensUsed across all businesses.
-   */
+  categoryCounts(): Promise<CategoryCount[]>;
+
   totalTokensUsed(): Promise<number>;
 }

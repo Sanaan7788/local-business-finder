@@ -20,7 +20,7 @@ export interface SkippedEntry {
 }
 
 export interface ErrorEntry {
-  name: string;    // card name (or "unknown" if card extraction failed)
+  name: string;    // card name (or "session" if the whole session failed)
   message: string; // what went wrong
 }
 
@@ -63,7 +63,7 @@ export const INITIAL_STATE: ScraperState = {
 };
 
 // ---------------------------------------------------------------------------
-// Scrape history — one record per completed session, persisted to disk
+// Scrape history — one record per completed session, persisted to Postgres
 // ---------------------------------------------------------------------------
 
 export interface ScrapeHistoryEntry {
@@ -82,3 +82,9 @@ export interface ScrapeHistoryEntry {
   errorList: ErrorEntry[];
   foundNames: string[];
 }
+
+// The list view — counts only, no per-business lists
+export type ScrapeSessionSummary = Omit<
+  ScrapeHistoryEntry,
+  'savedList' | 'skippedList' | 'errorList' | 'foundNames'
+>;

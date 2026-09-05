@@ -1,5 +1,5 @@
 import { Page, Locator } from 'playwright';
-import { RawBusiness } from '../../types/business.types';
+import { RawBusiness, MenuItem, MenuSection } from '../../types/business.types';
 import { logger } from '../../utils/logger';
 
 // ---------------------------------------------------------------------------
@@ -102,6 +102,11 @@ export class MapsExtractor {
       const rows = await card.locator(SEL.cardRows).allTextContents();
       const rowsClean = rows.map(cleanText).filter(Boolean);
 
+      // Review count from the rating row, e.g. "4.6(2,068)"
+      const ratingRow = rowsClean.find(r => /^\d(\.\d)?\(/.test(r));
+      const countMatch = ratingRow?.match(/\(([\d,.]+[Kk]?)\)/);
+      const reviewCount = countMatch ? parseReviewCount(countMatch[1]) : null;
+
       // Find the row that contains the category — it has '·' but does NOT start
       // with a digit (rating rows start with digits like "4.6(2,068)")
       const categoryRow = rowsClean.find(r =>
@@ -122,7 +127,7 @@ export class MapsExtractor {
 
       const googleMapsUrl = await this.getCardUrl(card);
 
-      return { name, rating, category, addressSnippet, description, googleMapsUrl };
+      return { name, rating, reviewCount, category, addressSnippet, description, googleMapsUrl };
     } catch (err) {
       logger.warn('extractFromCard failed', { index, error: (err as Error).message });
       return null;
@@ -164,7 +169,7 @@ export class MapsExtractor {
 
       // Rating + review count — primary strategy: rating button aria-label
       // Google keeps this stable: "4.3 stars  1,362 reviews"
-      const { rating, reviewCount } = await this.extractRatingAndReviews(page, partial.rating);
+      const { rating, reviewCount } = await this.extractRatingAndReviews(page, partial.rating, partial.reviewCount);
 
       // Use the canonical Maps URL from the current page if we navigated there directly
       const canonicalUrl = partial.googleMapsUrl ?? page.url();
@@ -201,6 +206,7 @@ export class MapsExtractor {
   private async extractRatingAndReviews(
     page: Page,
     fallbackRating: number | null,
+    fallbackReviewCount: number | null,
   ): Promise<{ rating: number | null; reviewCount: number | null }> {
     // Strategy 1: aria-label on the rating button (most stable)
     const ratingBtn = page.locator(SEL.detailRatingBtn).first();
@@ -213,7 +219,7 @@ export class MapsExtractor {
       const reviewCount = reviewMatch ? parseReviewCount(reviewMatch[1]) : null;
       if (rating !== null || reviewCount !== null) {
         logger.debug('Rating from aria-label', { rating, reviewCount, ariaLabel });
-        return { rating: rating ?? fallbackRating, reviewCount };
+        return { rating: rating ?? fallbackRating, reviewCount: reviewCount ?? fallbackReviewCount };
       }
     }
 
@@ -228,7 +234,7 @@ export class MapsExtractor {
     const reviewsText = cleanText(
       await page.locator(SEL.detailReviews).first().textContent().catch(() => null)
     );
-    const reviewCount2 = reviewsText ? parseReviewCount(reviewsText) : null;
+    const reviewCount2 = (reviewsText ? parseReviewCount(reviewsText) : null) ?? fallbackReviewCount;
 
     logger.debug('Rating from fallback selectors', { rating: rating2, reviewCount: reviewCount2 });
     return { rating: rating2, reviewCount: reviewCount2 };
@@ -396,21 +402,11 @@ export class MapsExtractor {
 export interface CardData {
   name: string;
   rating: number | null;
+  reviewCount: number | null;
   category: string;
   addressSnippet: string;
   description: string | null;
   googleMapsUrl: string | null;
-}
-
-export interface MenuItem {
-  name: string;
-  price: string | null;
-  description: string | null;
-}
-
-export interface MenuSection {
-  section: string;
-  items: MenuItem[];
 }
 
 // Full data from the detail panel including review snippets for keyword enrichment

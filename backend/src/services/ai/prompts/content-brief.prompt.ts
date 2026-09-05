@@ -1,4 +1,6 @@
 import { Business, ContentBrief, MenuSection } from '../../../types/business.types';
+import { parseLlmJson } from './llm-json';
+import { UpstreamError } from '../../../utils/errors';
 
 // ---------------------------------------------------------------------------
 // Content Brief
@@ -70,10 +72,9 @@ export function buildContentBriefPrompt(business: Business): { systemPrompt: str
 }
 
 export function parseContentBrief(raw: string): ContentBrief {
-  const text = raw.trim().replace(/^```json\s*/i, '').replace(/```\s*$/, '').trim();
-  const parsed = JSON.parse(text);
-  if (typeof parsed.confirmedFacts !== 'string') throw new Error('confirmedFacts missing');
-  if (typeof parsed.assumptions !== 'string') throw new Error('assumptions missing');
+  const parsed = parseLlmJson(raw);
+  if (typeof parsed.confirmedFacts !== 'string') throw new UpstreamError('confirmedFacts missing');
+  if (typeof parsed.assumptions !== 'string') throw new UpstreamError('assumptions missing');
   return {
     confirmedFacts: parsed.confirmedFacts.trim(),
     assumptions: parsed.assumptions.trim(),

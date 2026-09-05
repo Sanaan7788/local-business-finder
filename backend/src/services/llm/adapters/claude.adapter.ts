@@ -1,83 +1,73 @@
 import Anthropic from '@anthropic-ai/sdk';
-import { ILLMProvider, LLMRequest, LLMResponse, LLMImageInput } from '../llm.interface';
-import { config } from '../../../config';
+import { ILLMProvider, LLMRequest, LLMResponse } from '../llm.interface';
+import { LLM_TIMEOUT_MS, ProviderSpec } from '../llm.config';
+import { UnprocessableError, UpstreamError } from '../../../utils/errors';
 import { logger } from '../../../utils/logger';
 
 // ---------------------------------------------------------------------------
-// ClaudeAdapter
-//
-// Anthropic Claude via the official SDK.
-// Model switchable via CLAUDE_MODEL env var:
-//   claude-sonnet-4-6  (default, latest)
-//   claude-sonnet-3-5  (older, cheaper)
+// ClaudeAdapter — Anthropic via the official SDK. The only adapter with
+// vision support, which menu extraction relies on.
 // ---------------------------------------------------------------------------
 
+// Sonnet 5, Opus 4.7+ and the Fable/Mythos family reject sampling parameters
+// (temperature/top_p/top_k) with HTTP 400, so they are omitted for those.
+const SAMPLING_UNSUPPORTED = /^claude-(sonnet-5|opus-(4-7|4-8|5)|fable|mythos)/;
+
 export class ClaudeAdapter implements ILLMProvider {
-  readonly name = 'claude';
+  readonly name = 'claude' as const;
   readonly model: string;
+  readonly supportsImages = true;
 
-  private client: Anthropic;
+  private readonly client: Anthropic;
 
-  constructor() {
-    this.model = config.llm.claudeModel;
-
-    if (!config.llm.anthropicApiKey) {
-      throw new Error('ANTHROPIC_API_KEY is not set in .env');
+  constructor(spec: ProviderSpec) {
+    if (!spec.apiKey) {
+      throw new UnprocessableError('Claude: ANTHROPIC_API_KEY is not set in backend/.env');
     }
-
-    this.client = new Anthropic({ apiKey: config.llm.anthropicApiKey });
+    this.model = spec.model;
+    this.client = new Anthropic({ apiKey: spec.apiKey, timeout: LLM_TIMEOUT_MS });
   }
 
   async complete(request: LLMRequest): Promise<LLMResponse> {
     const start = Date.now();
 
-    logger.debug('Claude request', {
+    logger.debug('claude request', {
       model: this.model,
       systemLen: request.systemPrompt.length,
       userLen: request.userPrompt.length,
+      images: request.images?.length ?? 0,
     });
 
-    // Build user content — plain text or text + images for vision requests
     type ContentBlock = Anthropic.TextBlockParam | Anthropic.ImageBlockParam;
-    const userContent: ContentBlock[] = [];
-
-    if (request.images && request.images.length > 0) {
-      for (const img of request.images) {
-        userContent.push({
-          type: 'image',
-          source: { type: 'base64', media_type: img.mediaType, data: img.base64 },
-        });
-      }
-    }
+    const userContent: ContentBlock[] = (request.images ?? []).map((img) => ({
+      type: 'image',
+      source: { type: 'base64', media_type: img.mediaType, data: img.base64 },
+    }));
     userContent.push({ type: 'text', text: request.userPrompt });
 
     const message = await this.client.messages.create({
       model: this.model,
       max_tokens: request.maxTokens ?? 4096,
-      temperature: request.temperature ?? 0.6,
+      ...(SAMPLING_UNSUPPORTED.test(this.model) ? {} : { temperature: request.temperature ?? 0.6 }),
       system: request.systemPrompt,
       messages: [{ role: 'user', content: userContent }],
     });
 
-    const block = message.content[0];
-    if (block.type !== 'text') {
-      throw new Error(`Unexpected Claude response block type: ${block.type}`);
-    }
+    const block = message.content.find((b): b is Anthropic.TextBlock => b.type === 'text');
+    if (!block) throw new UpstreamError('Claude returned no text content');
 
+    const tokensUsed = message.usage.input_tokens + message.usage.output_tokens;
     const durationMs = Date.now() - start;
 
-    logger.debug('Claude response', {
-      tokensUsed: message.usage.input_tokens + message.usage.output_tokens,
-      durationMs,
-      stopReason: message.stop_reason,
-    });
+    logger.debug('claude response', { tokensUsed, durationMs, stopReason: message.stop_reason });
 
     return {
       content: block.text,
       provider: this.name,
       model: this.model,
-      tokensUsed: message.usage.input_tokens + message.usage.output_tokens,
+      tokensUsed,
       durationMs,
+      truncated: message.stop_reason === 'max_tokens',
     };
   }
 }

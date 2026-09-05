@@ -1,97 +1,96 @@
-import fs from 'fs';
-import path from 'path';
+import { desc, eq } from 'drizzle-orm';
 import { v4 as uuidv4 } from 'uuid';
-import { ScrapeHistoryEntry, ScraperState } from './scraper.types';
+import { scrapeSessions } from '../../data/schema';
+import { getDb } from '../../data/postgres/postgres.connection';
+import {
+  ErrorEntry,
+  SavedEntry,
+  ScrapeHistoryEntry,
+  ScrapeSessionSummary,
+  ScraperState,
+  SkippedEntry,
+} from './scraper.types';
 import { logger } from '../../utils/logger';
 
 // ---------------------------------------------------------------------------
-// ScrapeHistory
-//
-// Persists one JSON record per completed scraping session.
-// Stored in backend/src/data/storage/scrape-history.json
-//
-// This answers: "which zipcodes have I scraped, when, and what did I find?"
-// Each entry contains the full savedList/skippedList/errorList so you can
-// review the detail of any past session at any time.
+// Scrape session history (Postgres)
 // ---------------------------------------------------------------------------
 
-const STORAGE_DIR = path.resolve(__dirname, '../../data/storage');
-const HISTORY_PATH = path.join(STORAGE_DIR, 'scrape-history.json');
+const toIso = (d: Date | string): string => (d instanceof Date ? d.toISOString() : d);
 
-function readAll(): ScrapeHistoryEntry[] {
-  if (!fs.existsSync(HISTORY_PATH)) return [];
-  try {
-    return JSON.parse(fs.readFileSync(HISTORY_PATH, 'utf8'));
-  } catch {
-    logger.warn('scrape-history.json is corrupt — resetting');
-    return [];
-  }
+const SUMMARY_COLUMNS = {
+  id:         scrapeSessions.id,
+  zipcode:    scrapeSessions.zipcode,
+  category:   scrapeSessions.category,
+  startedAt:  scrapeSessions.startedAt,
+  finishedAt: scrapeSessions.finishedAt,
+  found:      scrapeSessions.found,
+  saved:      scrapeSessions.saved,
+  skipped:    scrapeSessions.skipped,
+  errors:     scrapeSessions.errors,
+  tokensUsed: scrapeSessions.tokensUsed,
+};
+
+type SummaryRow = Pick<typeof scrapeSessions.$inferSelect, keyof typeof SUMMARY_COLUMNS>;
+
+function rowToSummary(row: SummaryRow): ScrapeSessionSummary {
+  return {
+    id:         row.id,
+    zipcode:    row.zipcode,
+    category:   row.category,
+    startedAt:  toIso(row.startedAt),
+    finishedAt: toIso(row.finishedAt),
+    found:      row.found,
+    saved:      row.saved,
+    skipped:    row.skipped,
+    errors:     row.errors,
+    tokensUsed: row.tokensUsed ?? 0,
+  };
 }
 
-function writeAll(entries: ScrapeHistoryEntry[]): void {
-  if (!fs.existsSync(STORAGE_DIR)) fs.mkdirSync(STORAGE_DIR, { recursive: true });
-  fs.writeFileSync(HISTORY_PATH, JSON.stringify(entries, null, 2), 'utf8');
+function rowToEntry(row: typeof scrapeSessions.$inferSelect): ScrapeHistoryEntry {
+  return {
+    ...rowToSummary(row),
+    savedList:   (row.savedList as SavedEntry[]) ?? [],
+    skippedList: (row.skippedList as SkippedEntry[]) ?? [],
+    errorList:   (row.errorList as ErrorEntry[]) ?? [],
+    foundNames:  row.foundNames ?? [],
+  };
 }
 
 export const ScrapeHistory = {
-  // Save a completed session
-  save(state: ScraperState): ScrapeHistoryEntry {
-    const entry: ScrapeHistoryEntry = {
-      id: uuidv4(),
-      zipcode: state.zipcode!,
-      category: state.category!,
-      startedAt: state.startedAt!,
-      finishedAt: state.finishedAt!,
-      found: state.found,
-      saved: state.saved,
-      skipped: state.skipped,
-      errors: state.errors,
-      tokensUsed: state.tokensUsed,
-      savedList: state.savedList,
+  async save(state: ScraperState): Promise<void> {
+    const id = uuidv4();
+    await getDb().insert(scrapeSessions).values({
+      id,
+      zipcode:     state.zipcode ?? '',
+      category:    state.category ?? '',
+      startedAt:   new Date(state.startedAt ?? Date.now()),
+      finishedAt:  new Date(state.finishedAt ?? Date.now()),
+      found:       state.found,
+      saved:       state.saved,
+      skipped:     state.skipped,
+      errors:      state.errors,
+      tokensUsed:  state.tokensUsed,
+      savedList:   state.savedList,
       skippedList: state.skippedList,
-      errorList: state.errorList,
-      foundNames: state.foundNames,
-    };
-    const all = readAll();
-    all.unshift(entry); // newest first
-    writeAll(all);
-    logger.debug('Scrape session saved to history', { id: entry.id, zipcode: entry.zipcode });
-    return entry;
+      errorList:   state.errorList,
+      foundNames:  state.foundNames,
+    });
+    logger.debug('Scrape session saved', { id, zipcode: state.zipcode });
   },
 
-  // Get all sessions (newest first)
-  getAll(): ScrapeHistoryEntry[] {
-    return readAll();
+  /** Newest first; counts only. Use getById for the per-business lists. */
+  async getAll(): Promise<ScrapeSessionSummary[]> {
+    const rows = await getDb()
+      .select(SUMMARY_COLUMNS)
+      .from(scrapeSessions)
+      .orderBy(desc(scrapeSessions.startedAt));
+    return rows.map(rowToSummary);
   },
 
-  // Get a specific session by id
-  getById(id: string): ScrapeHistoryEntry | null {
-    return readAll().find(e => e.id === id) ?? null;
-  },
-
-  // Summary of all zipcodes scraped (for the "parent database" view)
-  getZipcodes(): { zipcode: string; sessions: number; totalSaved: number; lastScrapedAt: string }[] {
-    const all = readAll();
-    const map = new Map<string, { sessions: number; totalSaved: number; lastScrapedAt: string }>();
-    for (const entry of all) {
-      const existing = map.get(entry.zipcode);
-      if (!existing) {
-        map.set(entry.zipcode, {
-          sessions: 1,
-          totalSaved: entry.saved,
-          lastScrapedAt: entry.finishedAt,
-        });
-      } else {
-        existing.sessions++;
-        existing.totalSaved += entry.saved;
-        // keep the most recent
-        if (entry.finishedAt > existing.lastScrapedAt) {
-          existing.lastScrapedAt = entry.finishedAt;
-        }
-      }
-    }
-    return Array.from(map.entries())
-      .map(([zipcode, data]) => ({ zipcode, ...data }))
-      .sort((a, b) => b.lastScrapedAt.localeCompare(a.lastScrapedAt));
+  async getById(id: string): Promise<ScrapeHistoryEntry | null> {
+    const rows = await getDb().select().from(scrapeSessions).where(eq(scrapeSessions.id, id));
+    return rows.length ? rowToEntry(rows[0]) : null;
   },
 };

@@ -1,68 +1,53 @@
-import { Business, RawBusiness } from '../types/business.types';
-import { IBusinessRepository } from '../data/repository.interface';
+import { RawBusiness } from '../types/business.types';
+import { DedupKey, IBusinessRepository } from '../data/repository.interface';
 import { logger } from './logger';
 
 // ---------------------------------------------------------------------------
 // Deduplicator
 //
-// Prevents duplicate business records from being saved.
-// Maintains two in-memory indexes built from existing records:
+// Prevents duplicate business records from being saved during a scrape.
+// Two in-memory indexes are built once per session from the repository:
 //   1. nameAddress  → normalized "name::address" → business id
-//   2. phone        → phone string → business id
+//   2. phone        → digits-only phone → business id
 //
-// Why in-memory indexes instead of querying the repo each time?
-// - A scraping session processes 50-100 businesses sequentially.
-// - Querying CSV on every business = O(n) file read per business = slow.
-// - Loading once into memory = O(1) lookups for the entire session.
+// A session processes 50-100 listings sequentially; one query up front and
+// O(1) lookups after that is far cheaper than a DB round-trip per listing.
 //
 // Usage:
 //   const dedup = new Deduplicator();
-//   await dedup.load(repo);           // call once before scraping starts
-//   const isDup = dedup.isDuplicate(rawBusiness);
-//   if (!isDup) {
-//     const saved = await repo.create(business);
-//     dedup.register(saved);          // keep index in sync
-//   }
+//   await dedup.load(repo);            // once, before scraping starts
+//   const dupId = dedup.isDuplicate(rawBusiness);
+//   if (!dupId) { await repo.create(business); dedup.register(business); }
 // ---------------------------------------------------------------------------
 
 export class Deduplicator {
   private nameAddressIndex = new Map<string, string>(); // key → id
   private phoneIndex = new Map<string, string>();        // phone → id
 
-  // Load all existing businesses from the repository into memory.
-  // Call once at the start of a scraping session.
   async load(repo: IBusinessRepository): Promise<void> {
-    const { items } = await repo.findAll({ pageSize: 10_000 });
+    const keys = await repo.findDedupKeys();
     this.nameAddressIndex.clear();
     this.phoneIndex.clear();
-
-    for (const b of items) {
-      this.indexBusiness(b);
-    }
+    for (const k of keys) this.index(k);
 
     logger.debug('Deduplicator loaded', {
-      businesses: items.length,
+      businesses: keys.length,
       nameAddressKeys: this.nameAddressIndex.size,
       phoneKeys: this.phoneIndex.size,
     });
   }
 
-  // Check if a raw scraped business already exists in storage.
-  // Returns the duplicate's id if found, null if it's new.
+  /** Returns the existing record's id if this business is already stored. */
   isDuplicate(raw: Pick<RawBusiness, 'name' | 'address' | 'phone'>): string | null {
-    // Phone check first — faster and more reliable identifier
     if (raw.phone) {
-      const normalizedPhone = this.normalizePhone(raw.phone);
-      const id = this.phoneIndex.get(normalizedPhone);
+      const id = this.phoneIndex.get(this.normalizePhone(raw.phone));
       if (id) {
         logger.debug('Duplicate detected by phone', { phone: raw.phone, id });
         return id;
       }
     }
 
-    // Name + address check
-    const key = this.makeNameAddressKey(raw.name, raw.address);
-    const id = this.nameAddressIndex.get(key);
+    const id = this.nameAddressIndex.get(this.makeNameAddressKey(raw.name, raw.address));
     if (id) {
       logger.debug('Duplicate detected by name+address', { name: raw.name, id });
       return id;
@@ -71,38 +56,29 @@ export class Deduplicator {
     return null;
   }
 
-  // Check if a normalized phone number exists in the index (for skip reason detection).
+  /** Whether a digits-only phone is indexed (used to report the skip reason). */
   hasPhone(normalizedPhone: string): boolean {
     return this.phoneIndex.has(normalizedPhone);
   }
 
-  // Register a newly saved business into the in-memory index.
-  // Call immediately after repo.create() to keep the index current.
-  register(business: Pick<Business, 'id' | 'name' | 'address' | 'phone'>): void {
-    this.indexBusiness(business as Business);
+  /** Register a newly saved business so later listings in the session see it. */
+  register(business: DedupKey): void {
+    this.index(business);
   }
 
   // ---- Private helpers ----------------------------------------------------
 
-  private indexBusiness(b: Pick<Business, 'id' | 'name' | 'address' | 'phone'>): void {
-    const key = this.makeNameAddressKey(b.name, b.address);
-    this.nameAddressIndex.set(key, b.id);
-
-    if (b.phone) {
-      this.phoneIndex.set(this.normalizePhone(b.phone), b.id);
-    }
+  private index(b: DedupKey): void {
+    this.nameAddressIndex.set(this.makeNameAddressKey(b.name, b.address), b.id);
+    if (b.phone) this.phoneIndex.set(this.normalizePhone(b.phone), b.id);
   }
 
   private makeNameAddressKey(name: string, address: string): string {
-    return (
-      name.toLowerCase().trim().replace(/\s+/g, ' ') +
-      '::' +
-      address.toLowerCase().trim().replace(/\s+/g, ' ')
-    );
+    const norm = (s: string) => s.toLowerCase().trim().replace(/\s+/g, ' ');
+    return `${norm(name)}::${norm(address)}`;
   }
 
   private normalizePhone(phone: string): string {
-    // Strip everything except digits for reliable matching
     // "(212) 380-8585" and "2123808585" both normalize to "2123808585"
     return phone.replace(/\D/g, '');
   }

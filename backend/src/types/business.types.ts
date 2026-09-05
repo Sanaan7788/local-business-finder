@@ -76,17 +76,6 @@ export const OutreachSchema = z.object({
       body: z.string(),
     })
     .nullable(),
-  callScript: z
-    .object({
-      opener: z.string(),
-      valueProposition: z.string(),
-      objectionHandlers: z.object({
-        notInterested: z.string(),
-        haveOne: z.string(),
-      }),
-      close: z.string(),
-    })
-    .nullable(),
 });
 
 // ---------------------------------------------------------------------------
@@ -148,10 +137,6 @@ export const BusinessSchema = z.object({
   websiteAnalysis: WebsiteAnalysisSchema.nullable(),
   outreach: OutreachSchema.nullable(),
 
-  // Deployment — populated by GitHub/Vercel services
-  githubUrl: z.string().url().nullable(),
-  deployedUrl: z.string().url().nullable(),
-
   // Token tracking
   tokensUsed: z.number().int().min(0),
 
@@ -183,13 +168,6 @@ export const RawBusinessSchema = z.object({
   googleMapsUrl: z.string().url().nullable(),
 });
 
-// Fields a user can update via the API (CRM fields only)
-export const UpdateBusinessSchema = z.object({
-  leadStatus: LeadStatusSchema.optional(),
-  notes: z.string().nullable().optional(),
-  lastContactedAt: z.string().datetime().nullable().optional(),
-});
-
 // ---------------------------------------------------------------------------
 // TypeScript types inferred from schemas
 // Never manually define these — always infer from Zod to stay in sync.
@@ -199,7 +177,6 @@ export type Business = z.infer<typeof BusinessSchema>;
 export type MenuItem = z.infer<typeof MenuItemSchema>;
 export type MenuSection = z.infer<typeof MenuSectionSchema>;
 export type RawBusiness = z.infer<typeof RawBusinessSchema>;
-export type UpdateBusiness = z.infer<typeof UpdateBusinessSchema>;
 export type LeadStatus = z.infer<typeof LeadStatusSchema>;
 export type Priority = z.infer<typeof PrioritySchema>;
 export type Insights = z.infer<typeof InsightsSchema>;
@@ -208,3 +185,20 @@ export type ContentBrief = z.infer<typeof ContentBriefSchema>;
 export type Keywords = z.infer<typeof KeywordsSchema>;
 export type WebsiteAnalysis = z.infer<typeof WebsiteAnalysisSchema>;
 export type CrawledPage = z.infer<typeof CrawledPageSchema>;
+
+// ---------------------------------------------------------------------------
+// Derived types
+// ---------------------------------------------------------------------------
+
+/** Columns the list views need — no text/JSON blobs. */
+export const BUSINESS_LIST_FIELDS = [
+  'id', 'createdAt', 'updatedAt', 'name', 'phone', 'address', 'zipcode', 'category',
+  'website', 'websiteUrl', 'rating', 'reviewCount', 'leadStatus', 'priority',
+  'priorityScore', 'notes', 'lastContactedAt', 'tokensUsed',
+] as const;
+
+export type BusinessListField = (typeof BUSINESS_LIST_FIELDS)[number];
+export type BusinessListItem = Pick<Business, BusinessListField>;
+
+/** What callers may pass to repository.update(). updatedAt is set by the repository. */
+export type BusinessUpdate = Partial<Omit<Business, 'id' | 'createdAt' | 'updatedAt'>>;

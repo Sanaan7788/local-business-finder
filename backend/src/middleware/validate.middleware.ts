@@ -1,17 +1,14 @@
 import { Request, Response, NextFunction } from 'express';
 import { ZodSchema } from 'zod';
+import { ValidationError } from '../utils/errors';
 
-// Validates req.body against a Zod schema.
-// Returns 400 with field-level errors if validation fails.
+// Validates req.body against a Zod schema; replaces the body with the parsed
+// (defaulted, coerced) value on success.
 export function validateBody(schema: ZodSchema) {
-  return (req: Request, res: Response, next: NextFunction): void => {
+  return (req: Request, _res: Response, next: NextFunction): void => {
     const result = schema.safeParse(req.body);
     if (!result.success) {
-      res.status(400).json({
-        success: false,
-        error: 'Validation failed',
-        fields: result.error.flatten().fieldErrors,
-      });
+      next(new ValidationError('Validation failed', result.error.flatten().fieldErrors));
       return;
     }
     req.body = result.data;

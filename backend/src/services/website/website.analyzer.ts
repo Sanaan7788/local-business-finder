@@ -2,16 +2,19 @@ import { LLMService } from '../llm/llm.service';
 import { WebsiteCrawlerService } from './website.crawler';
 import { getRepository } from '../../data/repository.factory';
 import { CrawledPage, WebsiteAnalysis } from '../../types/business.types';
+import { NotFoundError, UnprocessableError, UpstreamError } from '../../utils/errors';
 import { logger } from '../../utils/logger';
 import { buildWebsiteStructurePrompt, parseWebsiteStructure } from '../ai/prompts/website-structure.prompt';
+import { parseLlmJson } from '../ai/prompts/llm-json';
 
 // ---------------------------------------------------------------------------
 // WebsiteAnalyzerService
 //
 // 1. Crawls the business website (multi-page)
-// 2. Step A — structure prompt: extracts site structure & content
-// 3. Step B — analysis prompt: scores the site and lists improvements
-// 4. Persists combined result to DB as websiteAnalysis JSON field
+// 2. Runs two independent LLM prompts concurrently:
+//    - structure: what the site contains and how it is organised
+//    - analysis:  a 1–10 score and a list of improvements
+// 3. Persists the combined result (plus any emails found) on the business
 // ---------------------------------------------------------------------------
 
 function buildAnalysisPrompt(
@@ -57,11 +60,10 @@ function buildAnalysisPrompt(
 }
 
 function parseAnalysis(raw: string): { score: number; scoreReason: string; improvements: string[] } {
-  const text = raw.trim().replace(/^```json\s*/i, '').replace(/```\s*$/, '').trim();
-  const parsed = JSON.parse(text);
-  if (typeof parsed.score !== 'number') throw new Error('score field missing');
-  if (typeof parsed.scoreReason !== 'string') throw new Error('scoreReason field missing');
-  if (!Array.isArray(parsed.improvements)) throw new Error('improvements field missing');
+  const parsed = parseLlmJson(raw);
+  if (typeof parsed.score !== 'number') throw new UpstreamError('score field missing');
+  if (typeof parsed.scoreReason !== 'string') throw new UpstreamError('scoreReason field missing');
+  if (!Array.isArray(parsed.improvements)) throw new UpstreamError('improvements field missing');
   return {
     score: Math.min(10, Math.max(0, Math.round(parsed.score))),
     scoreReason: parsed.scoreReason.trim(),
@@ -74,42 +76,36 @@ export const WebsiteAnalyzerService = {
   async analyze(businessId: string): Promise<WebsiteAnalysis> {
     const repo = getRepository();
     const business = await repo.findById(businessId);
-    if (!business) throw new Error(`Business not found: ${businessId}`);
-    if (!business.websiteUrl) throw new Error(`Business has no website URL: ${businessId}`);
+    if (!business) throw new NotFoundError('Business', businessId);
+    if (!business.websiteUrl) throw new UnprocessableError('This business has no website URL to analyse.');
 
     logger.info('WebsiteAnalyzer: starting analysis', { id: businessId, url: business.websiteUrl });
 
-    // Step 1: Crawl
     const pages = await WebsiteCrawlerService.crawl(business.websiteUrl);
-
     if (pages.length === 0) {
-      throw new Error(`Could not crawl website — no pages accessible at ${business.websiteUrl}`);
+      throw new UnprocessableError(
+        `Could not crawl ${business.websiteUrl} — no pages were reachable. The URL may be wrong or the site may be down.`,
+      );
     }
 
-    // Step 2a: Structure prompt — extract site content & structure
-    logger.debug('WebsiteAnalyzer: running structure prompt', { pages: pages.length });
-    const structurePrompt = buildWebsiteStructurePrompt(business.name, business.websiteUrl, pages);
-    const structureResponse = await LLMService.complete('websiteStructure', {
-      ...structurePrompt,
-      temperature: 0.3,
-      maxTokens: 2048,
-    });
+    const [structureResponse, analysisResponse] = await Promise.all([
+      LLMService.complete('websiteStructure', {
+        ...buildWebsiteStructurePrompt(business.name, business.websiteUrl, pages),
+        temperature: 0.3,
+        maxTokens: 2048,
+      }),
+      LLMService.complete('websiteAnalysis', {
+        ...buildAnalysisPrompt(business.name, business.websiteUrl, pages),
+        temperature: 0.4,
+        maxTokens: 2048,
+      }),
+    ]);
+
     const structured = parseWebsiteStructure(structureResponse.content);
-
-    // Step 2b: Analysis prompt — score + improvements
-    logger.debug('WebsiteAnalyzer: running analysis prompt', { pages: pages.length });
-    const analysisPrompt = buildAnalysisPrompt(business.name, business.websiteUrl, pages);
-    const analysisResponse = await LLMService.complete('websiteAnalysis', {
-      ...analysisPrompt,
-      temperature: 0.4,
-      maxTokens: 2048,
-    });
     const { score, scoreReason, improvements } = parseAnalysis(analysisResponse.content);
+    const scrapedEmails = Array.from(new Set(pages.flatMap((p) => p.emails ?? [])));
+    const tokensUsed = (structureResponse.tokensUsed ?? 0) + (analysisResponse.tokensUsed ?? 0);
 
-    // Step 3: Collect all unique emails found across crawled pages
-    const allEmails = Array.from(new Set(pages.flatMap(p => p.emails ?? [])));
-
-    // Step 4: Persist
     const analysis: WebsiteAnalysis = {
       crawledAt: new Date().toISOString(),
       pagesVisited: pages.length,
@@ -122,26 +118,25 @@ export const WebsiteAnalyzerService = {
 
     await repo.update(businessId, {
       websiteAnalysis: analysis,
-      scrapedEmails: allEmails,
-      updatedAt: new Date().toISOString(),
+      scrapedEmails,
+      tokensUsed: business.tokensUsed + tokensUsed,
     });
 
-    logger.info('WebsiteAnalyzer: analysis complete', { id: businessId, score, pages: pages.length });
+    logger.info('WebsiteAnalyzer: analysis complete', { id: businessId, score, pages: pages.length, emails: scrapedEmails.length });
     return analysis;
   },
 
-  async updateAnalysis(businessId: string, patch: Partial<Pick<WebsiteAnalysis, 'structured' | 'improvements'>>): Promise<WebsiteAnalysis> {
+  async updateAnalysis(
+    businessId: string,
+    patch: Partial<Pick<WebsiteAnalysis, 'structured' | 'improvements'>>,
+  ): Promise<WebsiteAnalysis> {
     const repo = getRepository();
     const business = await repo.findById(businessId);
-    if (!business) throw new Error(`Business not found: ${businessId}`);
-    if (!business.websiteAnalysis) throw new Error(`No website analysis to update for: ${businessId}`);
+    if (!business) throw new NotFoundError('Business', businessId);
+    if (!business.websiteAnalysis) throw new UnprocessableError('No website analysis to update — run the analysis first.');
 
-    const updated: WebsiteAnalysis = {
-      ...business.websiteAnalysis,
-      ...patch,
-    };
-
-    await repo.update(businessId, { websiteAnalysis: updated, updatedAt: new Date().toISOString() });
+    const updated: WebsiteAnalysis = { ...business.websiteAnalysis, ...patch };
+    await repo.update(businessId, { websiteAnalysis: updated });
     return updated;
   },
 };

@@ -29,6 +29,13 @@
       "when": 1776052423529,
       "tag": "0003_slippery_magma",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1788576261015,
+      "tag": "0004_scraped_emails_and_indexes",
+      "breakpoints": true
     }
   ]
 }

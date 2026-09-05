@@ -1,4 +1,6 @@
 import { Business } from '../../../types/business.types';
+import { parseLlmJson } from './llm-json';
+import { UpstreamError } from '../../../utils/errors';
 
 // ---------------------------------------------------------------------------
 // Outreach Email Prompt
@@ -50,10 +52,9 @@ export function buildOutreachEmailPrompt(business: Business): { systemPrompt: st
 }
 
 export function parseOutreachEmail(raw: string): { subject: string; body: string } {
-  const text = raw.trim().replace(/^```json\s*/i, '').replace(/```\s*$/, '').trim();
-  const parsed = JSON.parse(text);
-  if (typeof parsed.subject !== 'string') throw new Error('subject field missing');
-  if (typeof parsed.body !== 'string') throw new Error('body field missing');
+  const parsed = parseLlmJson(raw);
+  if (typeof parsed.subject !== 'string') throw new UpstreamError('subject field missing');
+  if (typeof parsed.body !== 'string') throw new UpstreamError('body field missing');
   return {
     subject: parsed.subject.trim(),
     body: parsed.body.trim(),

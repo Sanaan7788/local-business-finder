@@ -1,20 +1,18 @@
-import { chromium, Browser, BrowserContext } from 'playwright';
+import { chromium, Browser, BrowserContext, Page } from 'playwright';
+import { config } from '../../config';
 import { logger } from '../../utils/logger';
 
 // ---------------------------------------------------------------------------
-// Scraper config
-// Conservative pacing to avoid IP blocks and CAPTCHAs.
-// All values are intentionally slow — this is personal use, not bulk ops.
+// Scraper config — conservative pacing to avoid IP blocks and CAPTCHAs.
 // ---------------------------------------------------------------------------
 
 export const SCRAPER_CONFIG = {
-  // Set SCRAPER_DEBUG=true in .env to watch the browser while debugging
-  headless: process.env.SCRAPER_DEBUG !== 'true',
-  minDelayMs: 2000,             // Min pause between page actions
-  maxDelayMs: 5000,             // Max pause (randomized within range)
-  navigationTimeoutMs: 30_000,  // Max time to wait for page load
-  maxRetries: 3,                // Retry attempts on transient failure
-  backoffBaseMs: 2000,          // Base delay for exponential backoff
+  headless: !config.scraper.debug,  // SCRAPER_DEBUG=true opens a visible window
+  minDelayMs: 2000,                 // Min pause between page actions
+  maxDelayMs: 5000,                 // Max pause (randomized within range)
+  navigationTimeoutMs: 30_000,      // Max time to wait for page load
+  maxRetries: 3,                    // Retry attempts on transient failure
+  backoffBaseMs: 2000,              // Base delay for exponential backoff
   viewport: { width: 1280, height: 800 },
   // Realistic user agent — avoids basic bot detection
   userAgent:
@@ -23,18 +21,31 @@ export const SCRAPER_CONFIG = {
     'Chrome/121.0.0.0 Safari/537.36',
 };
 
+export const CHROMIUM_LAUNCH_ARGS = [
+  '--no-sandbox',
+  '--disable-setuid-sandbox',
+  '--disable-blink-features=AutomationControlled', // reduce bot signal
+  '--disable-infobars',
+];
+
+// Heavy assets that never affect text extraction. Stylesheets stay — Google
+// Maps needs CSS to render the search box and results.
+export const BLOCKED_RESOURCE_TYPES = new Set(['image', 'media', 'font']);
+
+const noop = () => undefined;
+
 // ---------------------------------------------------------------------------
 // BrowserManager
 //
-// Maintains a single Browser + BrowserContext across scraping sessions.
-// One context = one isolated "user session" (cookies, storage, etc.)
+// One Browser + one BrowserContext, shared by every scraper flow. The instance
+// itself lives for the process; launch() and close() only manage the browser,
+// so callers holding a reference across a stop() see the same object.
 //
-// Usage:
 //   const bm = BrowserManager.getInstance();
-//   const page = await bm.newPage();
-//   // ... use page ...
+//   const page = await bm.newPage();   // launches on demand
+//   ...
 //   await page.close();
-//   await bm.close(); // call when scraping session is fully done
+//   await bm.close();                  // when the scraping flow is done
 // ---------------------------------------------------------------------------
 
 export class BrowserManager {
@@ -42,84 +53,68 @@ export class BrowserManager {
 
   private browser: Browser | null = null;
   private context: BrowserContext | null = null;
+  private launching: Promise<void> | null = null;
 
   private constructor() {}
 
   static getInstance(): BrowserManager {
-    if (!BrowserManager._instance) {
-      BrowserManager._instance = new BrowserManager();
-    }
-    return BrowserManager._instance;
+    return (BrowserManager._instance ??= new BrowserManager());
   }
 
+  /** Idempotent; concurrent callers share one launch. */
   async launch(): Promise<void> {
-    if (this.browser) {
-      logger.debug('BrowserManager: browser already running');
-      return;
-    }
+    if (this.browser) return;
+    this.launching ??= this.doLaunch().finally(() => { this.launching = null; });
+    return this.launching;
+  }
 
+  private async doLaunch(): Promise<void> {
     logger.info('BrowserManager: launching Chromium');
 
-    this.browser = await chromium.launch({
+    const browser = await chromium.launch({
       headless: SCRAPER_CONFIG.headless,
-      args: [
-        '--no-sandbox',
-        '--disable-setuid-sandbox',
-        '--disable-blink-features=AutomationControlled', // reduce bot signal
-        '--disable-infobars',
-      ],
+      args: CHROMIUM_LAUNCH_ARGS,
     });
 
-    this.context = await this.browser.newContext({
+    const context = await browser.newContext({
       viewport: SCRAPER_CONFIG.viewport,
       userAgent: SCRAPER_CONFIG.userAgent,
-      // Disable location prompts
-      geolocation: undefined,
       permissions: [],
-      // Emulate a real locale
       locale: 'en-US',
       timezoneId: 'America/New_York',
+      ignoreHTTPSErrors: true,
     });
 
-    // Block heavy assets that don't affect text data extraction.
-    // Keep stylesheet — Google Maps needs CSS to render the search box and results.
-    await this.context.route('**/*', (route) => {
-      const type = route.request().resourceType();
-      if (['image', 'media', 'font'].includes(type)) {
-        route.abort();
-      } else {
-        route.continue();
-      }
+    await context.route('**/*', (route) => {
+      if (BLOCKED_RESOURCE_TYPES.has(route.request().resourceType())) route.abort();
+      else route.continue();
     });
 
+    this.browser = browser;
+    this.context = context;
     logger.info('BrowserManager: browser ready');
   }
 
-  async newPage() {
-    if (!this.context) {
-      await this.launch();
-    }
+  async newPage(): Promise<Page> {
+    if (!this.context) await this.launch();
     const page = await this.context!.newPage();
     page.setDefaultTimeout(SCRAPER_CONFIG.navigationTimeoutMs);
     page.setDefaultNavigationTimeout(SCRAPER_CONFIG.navigationTimeoutMs);
     return page;
   }
 
+  /** Idempotent and safe to call from stop() while a session is mid-flight. */
   async close(): Promise<void> {
-    if (this.context) {
-      await this.context.close();
-      this.context = null;
-    }
-    if (this.browser) {
-      await this.browser.close();
-      this.browser = null;
+    const context = this.context;
+    const browser = this.browser;
+    this.context = null;
+    this.browser = null;
+
+    if (context) await context.close().catch(noop);
+    if (browser) {
+      await browser.close().catch(noop);
       logger.info('BrowserManager: browser closed');
     }
-    BrowserManager._instance = null;
-  }
-
-  isRunning(): boolean {
-    return this.browser !== null;
   }
 }
 
@@ -136,7 +131,7 @@ export function randomDelay(
 }
 
 // ---------------------------------------------------------------------------
-// Utility: exponential backoff retry
+// Utility: exponential backoff retry (2 s, 4 s, 8 s)
 // ---------------------------------------------------------------------------
 
 export async function withRetry<T>(

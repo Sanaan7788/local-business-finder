@@ -1,261 +1,90 @@
-import { Router, Request, Response, NextFunction } from 'express';
+import { Router } from 'express';
 import { z } from 'zod';
 import { ScraperService } from '../services/scraper/scraper.service';
 import { ScrapeHistory } from '../services/scraper/scrape.history';
-import { ScrapeHistoryPostgres } from '../services/scraper/scrape.history.postgres';
 import { validateBody } from '../middleware/validate.middleware';
-
+import { asyncHandler } from '../middleware/async.handler';
+import { NotFoundError, UnprocessableError } from '../utils/errors';
 import { logger } from '../utils/logger';
 
-function getHistory() {
-  return process.env.STORAGE_BACKEND === 'postgres' ? ScrapeHistoryPostgres : ScrapeHistory;
-}
+// ---------------------------------------------------------------------------
+// Scraper Routes — /api/scraper
+//
+// POST /import-url       — create a business from its own website URL (sync)
+// POST /lookup-maps-url  — create a business from a Google Maps URL (sync)
+// POST /start            — queue one background scrape session (202)
+// POST /batch            — queue N category sessions for one location (202)
+// POST /stop             — stop the running session and clear the queue
+// GET  /status           — session state + batch progress (polled)
+// GET  /history          — past sessions (summaries), newest first
+// GET  /history/:id      — one session with its saved/skipped/error lists
+// ---------------------------------------------------------------------------
 
 const router = Router();
+const scraper = () => ScraperService.getInstance();
 
-// ---------------------------------------------------------------------------
-// Request schemas
-// ---------------------------------------------------------------------------
+const LocationSchema = z.string().min(2, 'Location must be at least 2 characters').max(50, 'Location too long');
+const MaxResultsSchema = z.number().int().min(1).max(200);
 
 const StartScraperSchema = z.object({
-  zipcode: z
-    .string()
-    .min(2, 'Location must be at least 2 characters')
-    .max(50, 'Location too long'),
+  zipcode: LocationSchema,
   category: z.string().min(1).max(100).default('businesses'),
-  maxResults: z.number().int().min(1).max(200).default(50),
-});
-
-const LookupSchema = z.object({
-  businessName: z.string().min(1).max(200),
-  location: z.string().min(1).max(200),
-});
-
-const LookupMapsUrlSchema = z.object({
-  mapsUrl: z.string().url('Must be a valid URL'),
-});
-
-const ImportUrlSchema = z.object({
-  websiteUrl: z.string().url('Must be a valid URL'),
+  maxResults: MaxResultsSchema.default(50),
 });
 
 const StartBatchSchema = z.object({
-  zipcode: z
-    .string()
-    .min(2)
-    .max(50),
+  zipcode: LocationSchema,
   categories: z.array(z.string().min(1).max(100)).min(1).max(50),
-  maxResults: z.number().int().min(1).max(200).default(20),
+  maxResults: MaxResultsSchema.default(20),
 });
 
-// ---------------------------------------------------------------------------
-// POST /api/scraper/import-url
-// Import a business from its existing website URL.
-// Fetches the page, extracts business info, creates a profile, runs AI analysis.
-// ---------------------------------------------------------------------------
+const LookupMapsUrlSchema = z.object({ mapsUrl: z.string().url('Must be a valid URL') });
+const ImportUrlSchema = z.object({ websiteUrl: z.string().url('Must be a valid URL') });
 
-router.post(
-  '/import-url',
-  validateBody(ImportUrlSchema),
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { websiteUrl } = req.body as z.infer<typeof ImportUrlSchema>;
-      const scraper = ScraperService.getInstance();
+router.post('/import-url', validateBody(ImportUrlSchema), asyncHandler(async (req, res) => {
+  const { websiteUrl } = req.body as z.infer<typeof ImportUrlSchema>;
+  logger.info('Import from URL requested', { websiteUrl });
+  res.json({ success: true, data: await scraper().importFromUrl(websiteUrl) });
+}));
 
-      logger.info('Import from URL requested', { websiteUrl });
-      const result = await scraper.importFromUrl(websiteUrl);
+router.post('/lookup-maps-url', validateBody(LookupMapsUrlSchema), asyncHandler(async (req, res) => {
+  const { mapsUrl } = req.body as z.infer<typeof LookupMapsUrlSchema>;
+  logger.info('Maps URL lookup requested', { mapsUrl });
+  res.json({ success: true, data: await scraper().lookupByMapsUrl(mapsUrl) });
+}));
 
-      res.json({ success: true, data: result });
-    } catch (err) {
-      next(err);
-    }
-  },
-);
+router.post('/start', validateBody(StartScraperSchema), asyncHandler(async (req, res) => {
+  const { zipcode, category, maxResults } = req.body as z.infer<typeof StartScraperSchema>;
+  scraper().start(zipcode, category, maxResults); // throws ConflictError when busy
+  res.status(202).json({ success: true, data: { message: 'Scraping started', zipcode, category, maxResults } });
+}));
 
-// ---------------------------------------------------------------------------
-// POST /api/scraper/lookup
-// Look up a single specific business by name + location.
-// Synchronous — waits for the scrape and returns the result directly.
-// ---------------------------------------------------------------------------
+router.post('/batch', validateBody(StartBatchSchema), asyncHandler(async (req, res) => {
+  const { zipcode, categories, maxResults } = req.body as z.infer<typeof StartBatchSchema>;
+  scraper().startBatch(zipcode, categories, maxResults);
+  res.status(202).json({ success: true, data: { message: 'Batch started', zipcode, jobs: categories.length, maxResults } });
+}));
 
-router.post(
-  '/lookup',
-  validateBody(LookupSchema),
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { businessName, location } = req.body as z.infer<typeof LookupSchema>;
-      const scraper = ScraperService.getInstance();
-
-      logger.info('Single business lookup requested', { businessName, location });
-      const result = await scraper.lookup(businessName, location);
-
-      res.json({ success: true, data: result });
-    } catch (err) {
-      next(err);
-    }
-  },
-);
-
-// ---------------------------------------------------------------------------
-// POST /api/scraper/lookup-maps-url
-// Look up a specific business by its Google Maps URL — no search, direct navigation.
-// ---------------------------------------------------------------------------
-
-router.post(
-  '/lookup-maps-url',
-  validateBody(LookupMapsUrlSchema),
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { mapsUrl } = req.body as z.infer<typeof LookupMapsUrlSchema>;
-      const scraper = ScraperService.getInstance();
-      logger.info('Maps URL lookup requested', { mapsUrl });
-      const result = await scraper.lookupByMapsUrl(mapsUrl);
-      res.json({ success: true, data: result });
-    } catch (err) {
-      next(err);
-    }
-  },
-);
-
-// ---------------------------------------------------------------------------
-// POST /api/scraper/start
-// Starts a scraping session in the background.
-// Returns immediately — poll /status for progress.
-// ---------------------------------------------------------------------------
-
-router.post(
-  '/start',
-  validateBody(StartScraperSchema),
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { zipcode, category, maxResults } = req.body as z.infer<typeof StartScraperSchema>;
-      const scraper = ScraperService.getInstance();
-
-      await scraper.start(zipcode, category, maxResults);
-
-      logger.info('Scraper start requested via API', { zipcode, category, maxResults });
-
-      res.status(202).json({
-        success: true,
-        data: {
-          message: 'Scraping started',
-          zipcode,
-          category,
-          maxResults,
-        },
-      });
-    } catch (err) {
-      next(err);
-    }
-  },
-);
-
-// ---------------------------------------------------------------------------
-// POST /api/scraper/batch
-// Queue multiple categories for the same zipcode.
-// ---------------------------------------------------------------------------
-
-router.post(
-  '/batch',
-  validateBody(StartBatchSchema),
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { zipcode, categories, maxResults } = req.body as z.infer<typeof StartBatchSchema>;
-      const scraper = ScraperService.getInstance();
-
-      await scraper.startBatch(zipcode, categories, maxResults);
-
-      logger.info('Batch scraper started via API', { zipcode, jobs: categories.length, maxResults });
-
-      res.status(202).json({
-        success: true,
-        data: { message: 'Batch started', zipcode, jobs: categories.length, maxResults },
-      });
-    } catch (err) {
-      next(err);
-    }
-  },
-);
-
-// ---------------------------------------------------------------------------
-// GET /api/scraper/batch-progress
-// Returns batch queue state (how many jobs done / pending).
-// ---------------------------------------------------------------------------
-
-router.get('/batch-progress', (req: Request, res: Response) => {
-  const scraper = ScraperService.getInstance();
-  res.json({ success: true, data: scraper.getBatchProgress() });
-});
-
-// ---------------------------------------------------------------------------
-// POST /api/scraper/stop
-// Signals the running session to stop after the current listing.
-// ---------------------------------------------------------------------------
-
-router.post('/stop', (req: Request, res: Response) => {
-  const scraper = ScraperService.getInstance();
-  const state = scraper.getState();
-
-  if (!state.running) {
-    res.status(400).json({ success: false, error: 'No scraping session is running' });
-    return;
-  }
-
-  scraper.stop();
+router.post('/stop', asyncHandler(async (_req, res) => {
+  const s = scraper();
+  if (!s.getState().running) throw new UnprocessableError('No scraping session is running');
+  s.stop();
   res.json({ success: true, data: { message: 'Stop signal sent' } });
+}));
+
+router.get('/status', (_req, res) => {
+  const s = scraper();
+  res.json({ success: true, data: { ...s.getState(), batch: s.getBatchProgress() } });
 });
 
-// ---------------------------------------------------------------------------
-// GET /api/scraper/status
-// Returns the current session state — safe to poll every few seconds.
-// ---------------------------------------------------------------------------
+router.get('/history', asyncHandler(async (_req, res) => {
+  res.json({ success: true, data: await ScrapeHistory.getAll() });
+}));
 
-router.get('/status', (req: Request, res: Response) => {
-  const scraper = ScraperService.getInstance();
-  res.json({
-    success: true,
-    data: {
-      ...scraper.getState(),
-      batch: scraper.getBatchProgress(),
-    },
-  });
-});
-
-// ---------------------------------------------------------------------------
-// GET /api/scraper/history
-// All past scraping sessions, newest first.
-// ---------------------------------------------------------------------------
-router.get('/history', async (_req: Request, res: Response, next: NextFunction) => {
-  try {
-    const data = await getHistory().getAll();
-    res.json({ success: true, data });
-  } catch (err) { next(err); }
-});
-
-// ---------------------------------------------------------------------------
-// GET /api/scraper/history/:id
-// Full detail of one past session including savedList, skippedList, errorList.
-// ---------------------------------------------------------------------------
-router.get('/history/:id', async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const entry = await getHistory().getById(req.params.id);
-    if (!entry) {
-      res.status(404).json({ success: false, error: 'Session not found' });
-      return;
-    }
-    res.json({ success: true, data: entry });
-  } catch (err) { next(err); }
-});
-
-// ---------------------------------------------------------------------------
-// GET /api/scraper/zipcodes
-// Summary of all zipcodes scraped — the "parent database" view.
-// ---------------------------------------------------------------------------
-router.get('/zipcodes', async (_req: Request, res: Response, next: NextFunction) => {
-  try {
-    const data = await getHistory().getZipcodes();
-    res.json({ success: true, data });
-  } catch (err) { next(err); }
-});
+router.get('/history/:id', asyncHandler(async (req, res) => {
+  const entry = await ScrapeHistory.getById(req.params.id);
+  if (!entry) throw new NotFoundError('Scrape session', req.params.id);
+  res.json({ success: true, data: entry });
+}));
 
 export default router;
