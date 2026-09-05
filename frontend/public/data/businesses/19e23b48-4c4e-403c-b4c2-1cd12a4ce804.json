@@ -1,0 +1,132 @@
+{
+  "id": "19e23b48-4c4e-403c-b4c2-1cd12a4ce804",
+  "createdAt": "2026-06-01T02:14:01.095Z",
+  "updatedAt": "2026-06-01T02:14:49.431Z",
+  "name": "Houston Health Insurance Experts",
+  "phone": "(281) 206-2619",
+  "address": "11104 W Airport Blvd R D O, Stafford, TX 77477",
+  "zipcode": "77477",
+  "category": "Health insurance agency",
+  "description": "5.0(20)",
+  "website": true,
+  "websiteUrl": "https://houstonhealthinsuranceagentagency.com/",
+  "rating": 5,
+  "reviewCount": 102,
+  "googleMapsUrl": "https://www.google.com/maps/place/Houston+Health+Insurance+Experts/data=!4m7!3m6!1s0x8640e7ac342d32f5:0x479824c276b1b685!8m2!3d29.6417829!4d-95.5688757!16s%2Fg%2F11qn1fpb9w!19sChIJ9TItNKznQIYRhbaxdsIkmEc?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "I can’t believe it they took my car on the first ring. I was super impressed by Miguel’s explanation of benefits and he did a split screen comparing all my options. Thanks Houston health insurance experts.",
+    "Thank you for your wonderful five-star review. It was a pleasure to work with you. We truly value your feedback and appreciate you sharing your positive Health Insurance experience with others in the Houston Area. We look forward to … More",
+    "This past year I was able to speak to Miguel on my health insurance. It wasn’t that long of a call maybe around 20 minutes, but he was very helpful and explained my coverages.",
+    "Thank you for taking the time to leave a five-star review. Your positive feedback is greatly valued here at Houston Health Insurance Experts. … More",
+    "Real Good Work Here en Houston Texas on our companies health insurance options. Thank you Mike for assisting me if you’re looking for health insurance in the Houston area. Call Mike today.!"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Open 24 hours",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Open 24 hours",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Open 24 hours",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Open 24 hours",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Open 24 hours",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Open 24 hours",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Open 24 hours",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "health insurance",
+    "company health insurance options",
+    "coverage explanation",
+    "benefits comparison",
+    "health insurance options",
+    "Houston health insurance",
+    "Stafford health insurance",
+    "77477 health insurance",
+    "Houston Area health insurance",
+    "Texas health insurance",
+    "first ring response",
+    "helpful explanation",
+    "clear coverage explanation",
+    "split screen comparison",
+    "quick 20 minute call",
+    "health insurance Houston",
+    "health insurance near me Houston",
+    "health insurance agency Stafford",
+    "health insurance options Houston",
+    "health insurance explanation of benefits"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "health insurance",
+      "company health insurance options",
+      "coverage explanation",
+      "benefits comparison",
+      "health insurance options"
+    ],
+    "locationKeywords": [
+      "Houston health insurance",
+      "Stafford health insurance",
+      "77477 health insurance",
+      "Houston Area health insurance",
+      "Texas health insurance"
+    ],
+    "reputationKeywords": [
+      "first ring response",
+      "helpful explanation",
+      "clear coverage explanation",
+      "split screen comparison",
+      "quick 20 minute call"
+    ],
+    "searchPhrases": [
+      "health insurance Houston",
+      "health insurance near me Houston",
+      "health insurance agency Stafford",
+      "health insurance options Houston",
+      "health insurance explanation of benefits"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 642,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

@@ -48,7 +48,7 @@ function rowToSummary(row: SummaryRow): ScrapeSessionSummary {
   };
 }
 
-function rowToEntry(row: typeof scrapeSessions.$inferSelect): ScrapeHistoryEntry {
+export function rowToEntry(row: typeof scrapeSessions.$inferSelect): ScrapeHistoryEntry {
   return {
     ...rowToSummary(row),
     savedList:   (row.savedList as SavedEntry[]) ?? [],

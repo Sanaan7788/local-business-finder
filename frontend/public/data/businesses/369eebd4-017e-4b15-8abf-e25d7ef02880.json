@@ -1,0 +1,144 @@
+{
+  "id": "369eebd4-017e-4b15-8abf-e25d7ef02880",
+  "createdAt": "2026-06-07T09:09:45.834Z",
+  "updatedAt": "2026-06-07T09:15:38.135Z",
+  "name": "H-Town Star Family Dentistry",
+  "phone": "(713) 734-7827",
+  "address": "4001 S Sam Houston Pkwy E Suite 120, Houston, TX 77047",
+  "zipcode": "77047",
+  "category": "Dentist",
+  "description": null,
+  "website": true,
+  "websiteUrl": "http://www.htownstarfamilydentistry.com/",
+  "rating": 4.9,
+  "reviewCount": 365,
+  "googleMapsUrl": "https://www.google.com/maps/place/H-Town+Star+Family+Dentistry/data=!4m7!3m6!1s0x8640948619d3e325:0x83de0cebe5962eae!8m2!3d29.5993554!4d-95.3561946!16s%2Fg%2F11b7q7v5mh!19sChIJJePTGYaUQIYRri6W5esM3oM?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "I had a great experience at this dental office. The dentist was very thorough, attentive, and took the time to explain everything clearly. I came in with central incisor pain and concerns about pressure under the tooth, and they carefully …",
+    "Yuritza, Thank you for your thoughtful review! We’re so glad to hear that you had a great … More",
+    "Mishelle took great care of both my husband and me! The appointment was originally scheduled only for my husband, but since I was experiencing a toothache, they were kind enough to see me as well. The staff at H-Town Star Family Dentistry …",
+    "Dawneshia, Thank you so much for your thoughtful review! We’re happy we could accommodate … More",
+    "First & foremost it takes a lot to WOW me in a dental practice! I am a previous dental professional (25 yrs) and I must say I’ve found my new dentist! Dr G and his team were awesome, professional and very attentive to my concerns. I would …"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–2 PM",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "dentist",
+    "toothache treatment",
+    "central incisor pain",
+    "dental exam",
+    "dental cleaning",
+    "family dentistry",
+    "emergency dental appointment",
+    "dentist Houston",
+    "dentist 77047",
+    "dentist South Sam Houston Pkwy",
+    "dentist Alief",
+    "dentist near 77047",
+    "dentist Southeast Houston",
+    "thorough dentist",
+    "attentive staff",
+    "explains everything clearly",
+    "accommodating to walk-in",
+    "highly rated dentist",
+    "WOW dental experience",
+    "experienced team",
+    "best dentist near me",
+    "dentist for toothache Houston",
+    "family dentist 77047",
+    "emergency dentist Houston",
+    "dentist that takes walk ins",
+    "highly recommended dentist Houston"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "dentist",
+      "toothache treatment",
+      "central incisor pain",
+      "dental exam",
+      "dental cleaning",
+      "family dentistry",
+      "emergency dental appointment"
+    ],
+    "locationKeywords": [
+      "dentist Houston",
+      "dentist 77047",
+      "dentist South Sam Houston Pkwy",
+      "dentist Alief",
+      "dentist near 77047",
+      "dentist Southeast Houston"
+    ],
+    "reputationKeywords": [
+      "thorough dentist",
+      "attentive staff",
+      "explains everything clearly",
+      "accommodating to walk-in",
+      "highly rated dentist",
+      "WOW dental experience",
+      "experienced team"
+    ],
+    "searchPhrases": [
+      "best dentist near me",
+      "dentist for toothache Houston",
+      "family dentist 77047",
+      "emergency dentist Houston",
+      "dentist that takes walk ins",
+      "highly recommended dentist Houston"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 699,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

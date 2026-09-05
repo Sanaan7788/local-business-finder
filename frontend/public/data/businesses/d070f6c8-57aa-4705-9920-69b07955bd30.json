@@ -1,0 +1,136 @@
+{
+  "id": "d070f6c8-57aa-4705-9920-69b07955bd30",
+  "createdAt": "2026-06-01T01:55:16.027Z",
+  "updatedAt": "2026-06-01T01:57:04.156Z",
+  "name": "Bloom Dentistry",
+  "phone": "(832) 400-4257",
+  "address": "4625 Austin Pkwy, Sugar Land, TX 77479",
+  "zipcode": "77477",
+  "category": "Dentist",
+  "description": "5.0(40)",
+  "website": true,
+  "websiteUrl": "http://www.bloomdentistryhtx.com/",
+  "rating": 5,
+  "reviewCount": null,
+  "googleMapsUrl": "https://www.google.com/maps/place/Bloom+Dentistry/data=!4m7!3m6!1s0x8640e5c32f210447:0xc0e7f88aee59d4aa!8m2!3d29.578832!4d-95.58477!16s%2Fg%2F11zh_yy75b!19sChIJRwQhL8PlQIYRqtRZ7or458A?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "Great office, excellent experience! Easy in and out, with care managed by a thoroughly professional dentist and the team. I even signed up for their in-house insurance plan!",
+    "Thank you for taking the leave to leave this thoughtful review, Manish! This made our day!! 🪷 …",
+    "I’m so excited to finally have Dr Asthana closer to us! Jazmin at the front office is so welcoming and Joanna explains each step as she completed her dental hygiene process. Dr Asthana with her gentle hands, nice bedside manner in this awesome clean and friendly setting…I can’t recommend her enough!!",
+    "Today was my first patient visit with Dr. Sasha Asthana at Bloom Dentistry. It seems like an oxymoron to say I enjoyed a visit to the dentist, but all day I have reflected on the amazing impression made by the attention given to patient …",
+    "Thank you so much, Sherry! We're thrilled you had such a wonderful first visit. Our team truly loves what we do, and it means the world to hear that you felt cared for. 💙 …"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "10 AM–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "dentist",
+    "dental hygiene",
+    "in-house insurance plan",
+    "gentle dentist",
+    "dental cleaning",
+    "dentist Sugar Land",
+    "dentist 77477",
+    "dentist 77479",
+    "dentist Austin Pkwy",
+    "dentist Fort Bend County",
+    "gentle hands",
+    "caring team",
+    "friendly staff",
+    "clean office",
+    "welcoming front office",
+    "thoroughly professional",
+    "dentist near me Sugar Land",
+    "gentle dentist Sugar Land",
+    "dentist with in-house insurance",
+    "best dentist 77477",
+    "new patient dentist Sugar Land",
+    "dental cleaning Sugar Land"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "dentist",
+      "dental hygiene",
+      "in-house insurance plan",
+      "gentle dentist",
+      "dental cleaning"
+    ],
+    "locationKeywords": [
+      "dentist Sugar Land",
+      "dentist 77477",
+      "dentist 77479",
+      "dentist Austin Pkwy",
+      "dentist Fort Bend County"
+    ],
+    "reputationKeywords": [
+      "gentle hands",
+      "caring team",
+      "friendly staff",
+      "clean office",
+      "welcoming front office",
+      "thoroughly professional"
+    ],
+    "searchPhrases": [
+      "dentist near me Sugar Land",
+      "gentle dentist Sugar Land",
+      "dentist with in-house insurance",
+      "best dentist 77477",
+      "new patient dentist Sugar Land",
+      "dental cleaning Sugar Land"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 679,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 20,
+  "notes": null,
+  "lastContactedAt": null
+}

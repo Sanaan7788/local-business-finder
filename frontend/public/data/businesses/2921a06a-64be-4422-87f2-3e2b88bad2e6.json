@@ -1,0 +1,165 @@
+{
+  "id": "2921a06a-64be-4422-87f2-3e2b88bad2e6",
+  "createdAt": "2026-05-31T19:01:28.618Z",
+  "updatedAt": "2026-05-31T19:01:40.730Z",
+  "name": "Dental Domain",
+  "phone": "(832) 930-7847",
+  "address": "3607 S Main St Ste 107, Stafford, TX 77477",
+  "zipcode": "77477",
+  "category": "Dentist",
+  "description": null,
+  "website": true,
+  "websiteUrl": "https://thedentaldomain.com/?utm_source=organic&utm_medium=gbp&utm_id=local",
+  "rating": 5,
+  "reviewCount": 365,
+  "googleMapsUrl": "https://www.google.com/maps/place/Dental+Domain/data=!4m7!3m6!1s0x8640e772cec74e8d:0x4b5e922cadd87822!8m2!3d29.6198917!4d-95.5680347!16s%2Fg%2F11h8bx5q05!19sChIJjU7HznLnQIYRInjYrSySXks?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "Dr. White is amazing. She has always been kind, considerate of my well-being, and knowledgable of dental things. Since I've been taking her advice, I have had less issues with my teeth. I can tell that her goal is to help me do better with …",
+    "Ahh - this is such a sweet review Trell! Thank you so much for your feedback and your trust in us 💕 …",
+    "I had to find a new dentist because of my insurance. I was truly blest that Dental Domain was on my list. Dr. White and her staff make me feel comfortable and valued as a patient. They are very prompt with appointments and do really good …",
+    "And we are likewise blessed to be able to work with someone as sweet and kind as you! Can't wait to see you next time! 🥰 …",
+    "I had a great experience! I booked an appointment through their website, and everything went smoothly. As a new patient, I was nervous, but Dr. White made me feel comfortable and explained procedures clearly. I loved the latest technology she uses. I highly recommend this place; her staff and overall experience are great."
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–12 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "1–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "10 AM–1 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "2–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–12 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "1–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–12 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "1–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–12 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "1–4 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "dentist",
+    "general dentistry",
+    "new patient exam",
+    "dental cleaning",
+    "latest dental technology",
+    "dental checkup",
+    "dentist Stafford TX",
+    "dentist 77477",
+    "Stafford TX dentist",
+    "dentist near 77477",
+    "South Main Street dentist",
+    "Stafford dental clinic",
+    "kind dentist",
+    "comfortable dental experience",
+    "knowledgeable dentist",
+    "prompt appointments",
+    "caring dental staff",
+    "trusted dentist",
+    "dentist that makes you feel comfortable",
+    "new patient dentist Stafford TX",
+    "dentist with latest technology",
+    "best rated dentist near me",
+    "dentist that explains procedures clearly",
+    "affordable dentist Stafford TX"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "dentist",
+      "general dentistry",
+      "new patient exam",
+      "dental cleaning",
+      "latest dental technology",
+      "dental checkup"
+    ],
+    "locationKeywords": [
+      "dentist Stafford TX",
+      "dentist 77477",
+      "Stafford TX dentist",
+      "dentist near 77477",
+      "South Main Street dentist",
+      "Stafford dental clinic"
+    ],
+    "reputationKeywords": [
+      "kind dentist",
+      "comfortable dental experience",
+      "knowledgeable dentist",
+      "prompt appointments",
+      "caring dental staff",
+      "trusted dentist"
+    ],
+    "searchPhrases": [
+      "dentist that makes you feel comfortable",
+      "new patient dentist Stafford TX",
+      "dentist with latest technology",
+      "best rated dentist near me",
+      "dentist that explains procedures clearly",
+      "affordable dentist Stafford TX"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 701,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

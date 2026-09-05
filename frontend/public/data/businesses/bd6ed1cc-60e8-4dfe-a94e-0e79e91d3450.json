@@ -1,0 +1,144 @@
+{
+  "id": "bd6ed1cc-60e8-4dfe-a94e-0e79e91d3450",
+  "createdAt": "2026-05-31T19:20:02.988Z",
+  "updatedAt": "2026-05-31T19:20:15.332Z",
+  "name": "Nolan Smiles Orthodontics",
+  "phone": "(281) 208-7101",
+  "address": "203 Dulles Ave Ste 300, Stafford, TX 77477",
+  "zipcode": "77477",
+  "category": "Orthodontist",
+  "description": null,
+  "website": true,
+  "websiteUrl": "http://www.nolansmilesortho.com/",
+  "rating": 4.9,
+  "reviewCount": 47,
+  "googleMapsUrl": "https://www.google.com/maps/place/Nolan+Smiles+Orthodontics/data=!4m7!3m6!1s0x8640e7caacf83943:0x71577978fc83767!8m2!3d29.6255615!4d-95.5822!16s%2Fg%2F1ptw7sycb!19sChIJQzn4rMrnQIYRZzfIj5d3FQc?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "Nolan Smiles Orthodontics is the best and most superb orthodontic establishment ever!! I just got my braces off today and I am very satisfied with my results, Dr Ngyuen is such an amazing orthodontist and he gets things done quick but also …",
+    "10/10 Recommend! Mrs.Samantha & Dr. Son Nguyen has cared for my smile since 2022 and I am overly satisfied with my ending results. They are very accommodating and very lenient with appointments!",
+    "I love this dentist. Very accommodating and takes close attention to detail. Dr.Nguyen does amazing with making sure his clients are happy with their results. Definitely recommend 10/10"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–1 PM",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "braces",
+    "Invisalign",
+    "orthodontic treatment",
+    "braces removal",
+    "smile makeover",
+    "teeth straightening",
+    "retainers",
+    "orthodontist Stafford TX",
+    "orthodontist 77477",
+    "Stafford orthodontist",
+    "Dulles Ave orthodontist",
+    "orthodontist near me Stafford",
+    "orthodontist Fort Bend County",
+    "accommodating appointments",
+    "lenient scheduling",
+    "attention to detail",
+    "amazing results",
+    "highly recommended",
+    "satisfied with results",
+    "caring staff",
+    "best orthodontist in Stafford TX",
+    "braces near me Stafford",
+    "Invisalign Stafford TX",
+    "orthodontist with great reviews",
+    "affordable braces Stafford",
+    "orthodontist that accommodates appointments",
+    "Dr. Nguyen orthodontist Stafford"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "braces",
+      "Invisalign",
+      "orthodontic treatment",
+      "braces removal",
+      "smile makeover",
+      "teeth straightening",
+      "retainers"
+    ],
+    "locationKeywords": [
+      "orthodontist Stafford TX",
+      "orthodontist 77477",
+      "Stafford orthodontist",
+      "Dulles Ave orthodontist",
+      "orthodontist near me Stafford",
+      "orthodontist Fort Bend County"
+    ],
+    "reputationKeywords": [
+      "accommodating appointments",
+      "lenient scheduling",
+      "attention to detail",
+      "amazing results",
+      "highly recommended",
+      "satisfied with results",
+      "caring staff"
+    ],
+    "searchPhrases": [
+      "best orthodontist in Stafford TX",
+      "braces near me Stafford",
+      "Invisalign Stafford TX",
+      "orthodontist with great reviews",
+      "affordable braces Stafford",
+      "orthodontist that accommodates appointments",
+      "Dr. Nguyen orthodontist Stafford"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 633,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 10,
+  "notes": null,
+  "lastContactedAt": null
+}

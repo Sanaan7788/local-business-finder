@@ -1,0 +1,80 @@
+{
+  "id": "54dd84d8-6c75-4c0c-bb02-88476194ee94",
+  "createdAt": "2026-06-07T05:26:12.207Z",
+  "updatedAt": "2026-06-07T05:26:12.207Z",
+  "name": "MOBILE TEKY TELEVISION, COMPUTER, PHONE, AND ELECTRONIC REPAIR",
+  "phone": "(281) 409-0814",
+  "address": "3708 McHard Rd suite f, Missouri City, TX 77489",
+  "zipcode": "77054",
+  "category": "Computer repair service",
+  "description": "4.6(80)",
+  "website": true,
+  "websiteUrl": "http://mobileteky.com/",
+  "rating": 4.6,
+  "reviewCount": 2186,
+  "googleMapsUrl": "https://www.google.com/maps/place/MOBILE+TEKY+TELEVISION,+COMPUTER,+PHONE,+AND+ELECTRONIC+REPAIR/data=!4m7!3m6!1s0x8640ee741ec2fdcd:0x7307fd7de20d282f!8m2!3d29.5794663!4d-95.5179349!16s%2Fg%2F11c48nzcm_!19sChIJzf3CHnTuQIYRLygN4n39B3M?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "My TV was beyond repair, but still wanted to leave the review for Mr Doug, as he was extremely professional and took the time to explain why the repair was not possible. Will definitely come back when I have TV issues.",
+    "Mr Doug is very thorough and Great at what he does! I’ve brought him multiple items and he had them back working in no time!",
+    "This place is awesome!! I had some old electronic equipment I used back in the 70’s. He was able to get everything working like new. I highly recommend this place for any electronics repairs."
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–4 PM",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [],
+  "keywordCategories": null,
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 0,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

@@ -1,0 +1,144 @@
+{
+  "id": "84e7e30b-e3a3-420e-88ad-582337764974",
+  "createdAt": "2026-05-31T19:18:50.697Z",
+  "updatedAt": "2026-05-31T19:19:25.208Z",
+  "name": "Sugar Land Dental: Dr. Laura S. LaCroix, DDS",
+  "phone": "(281) 980-5100",
+  "address": "101 Southwestern Blvd, Sugar Land, TX 77478",
+  "zipcode": "77477",
+  "category": "Dentist",
+  "description": null,
+  "website": true,
+  "websiteUrl": "http://www.sugarlanddental.com/",
+  "rating": 4.9,
+  "reviewCount": 389,
+  "googleMapsUrl": "https://www.google.com/maps/place/Sugar+Land+Dental:+Dr.+Laura+S.+LaCroix,+DDS/data=!4m7!3m6!1s0x8640e65312261017:0xea24f0c31fa3aa3d!8m2!3d29.6227304!4d-95.5969328!16s%2Fg%2F11bcdhsk6d!19sChIJFxAmElPmQIYRPaqjH8PwJOo?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "WOW!! This was the absolute best dental experience I have ever had in my life! The entire staff is so friendly and welcoming! The office is clean and comfortable and Dr.LaCroix is so sweet and you can tell how passionate she is about …",
+    "Dr. LaCroix is very thorough and truly understanding of one’s well-being. I’ve had fillings and cleaning with her and not a single incident. It’s always a pleasure to visit her and the team, nothing but blessings!",
+    "Located in the lovely Atrium Bldg, my child and I experienced wonderful & personalized care. I appreciate the double Squad: Sharon and Sha who welcomed us, took the time to explain treatment plans, truth, options, and flexibility. Dr. …"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "7 AM–3 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "general dentistry",
+    "fillings",
+    "teeth cleaning",
+    "dental checkup",
+    "pediatric dentistry",
+    "dental treatment plans",
+    "personalized dental care",
+    "dentist Sugar Land",
+    "dentist 77478",
+    "dentist 77477",
+    "dentist Atrium Building Sugar Land",
+    "dentist Southwestern Blvd Sugar Land",
+    "Sugar Land dental clinic",
+    "thorough dentist",
+    "understanding dentist",
+    "friendly dental staff",
+    "clean dental office",
+    "passionate dentist",
+    "comfortable dental experience",
+    "blessings dental team",
+    "best dental experience near me",
+    "dentist who understands my well-being",
+    "friendly dentist Sugar Land",
+    "thorough dentist Sugar Land",
+    "great pediatric dentist Sugar Land",
+    "comfortable dental cleaning near me",
+    "highly rated dentist 77478"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "general dentistry",
+      "fillings",
+      "teeth cleaning",
+      "dental checkup",
+      "pediatric dentistry",
+      "dental treatment plans",
+      "personalized dental care"
+    ],
+    "locationKeywords": [
+      "dentist Sugar Land",
+      "dentist 77478",
+      "dentist 77477",
+      "dentist Atrium Building Sugar Land",
+      "dentist Southwestern Blvd Sugar Land",
+      "Sugar Land dental clinic"
+    ],
+    "reputationKeywords": [
+      "thorough dentist",
+      "understanding dentist",
+      "friendly dental staff",
+      "clean dental office",
+      "passionate dentist",
+      "comfortable dental experience",
+      "blessings dental team"
+    ],
+    "searchPhrases": [
+      "best dental experience near me",
+      "dentist who understands my well-being",
+      "friendly dentist Sugar Land",
+      "thorough dentist Sugar Land",
+      "great pediatric dentist Sugar Land",
+      "comfortable dental cleaning near me",
+      "highly rated dentist 77478"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 654,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

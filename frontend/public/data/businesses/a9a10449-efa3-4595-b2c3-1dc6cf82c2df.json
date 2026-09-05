@@ -1,0 +1,140 @@
+{
+  "id": "a9a10449-efa3-4595-b2c3-1dc6cf82c2df",
+  "createdAt": "2026-06-07T08:05:00.731Z",
+  "updatedAt": "2026-06-07T08:05:20.425Z",
+  "name": "Hermann Park Smiles (Family & Cosmetic Dentistry)",
+  "phone": "(832) 536-7208",
+  "address": "5927 Almeda Rd Suite J, Houston, TX 77004",
+  "zipcode": "77054",
+  "category": "Dentist",
+  "description": null,
+  "website": true,
+  "websiteUrl": "https://www.hermannparksmiles.com/?utm_source=GMB&utm_medium=organic&utm_campaign=DevOptimization&utm_content=Website",
+  "rating": 4.3,
+  "reviewCount": 89,
+  "googleMapsUrl": "https://www.google.com/maps/place/Hermann+Park+Smiles+%28Family+%26+Cosmetic+Dentistry%29/data=!4m7!3m6!1s0x8640bf9a7dfcc8a7:0x56542229620fd1a6!8m2!3d29.7145666!4d-95.3813625!16s%2Fg%2F11cp75tv5s!19sChIJp8j8fZq_QIYRptEPYikiVFY?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "Very nice office. Very clean and smells good. The staff is kind and very courteous! Dr.Sly did a very thorough examination. I wasn’t thrilled that I had a copay from my insurance not covering all of my xrays but once my exam was done I was …",
+    "Thank you, Kissy! We’re thrilled you loved the exam, technology, and cleaning. We value your copay feedback and are committed to improving billing transparency and your experience at Hermann Park Smiles.",
+    "Dr. Sly is the best dentist ive seen. Shes attentive, she cares, and gives fair pricing. Very beautiful woman, who actually CARES about her patients! I will be returning.",
+    "Thank you for the wonderful 5-star review; we’re pleased Dr. Sly’s attentiveness, compassion, and fair pricing made your visit outstanding. We look forward to your return and remain committed to exceptional patient care—please contact us anytime with questions or to schedule.",
+    "While I can’t say that I love going to the dentist, I can say that Dr. Sly and her team were amazing. Dr.Sly was thorough in explaining things to me where I was able to see things on the tv screen where she showed me my X-rays and also on …"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Open 24 hours",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Open 24 hours",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Open 24 hours",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Open 24 hours",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Open 24 hours",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Open 24 hours",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Open 24 hours",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "family dentistry",
+    "cosmetic dentistry",
+    "dental exam",
+    "dental cleaning",
+    "x-rays",
+    "dental technology",
+    "dentist Houston",
+    "dentist 77054",
+    "Almeda Rd dentist",
+    "Hermann Park dentist",
+    "dentist near Hermann Park",
+    "Houston family dentist",
+    "thorough exam",
+    "caring dentist",
+    "fair pricing",
+    "attentive staff",
+    "clean office",
+    "explains everything",
+    "family dentist near me",
+    "cosmetic dentist Houston",
+    "dentist with fair pricing",
+    "dentist that cares about patients",
+    "thorough dental exam Houston",
+    "dentist near Hermann Park Houston"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "family dentistry",
+      "cosmetic dentistry",
+      "dental exam",
+      "dental cleaning",
+      "x-rays",
+      "dental technology"
+    ],
+    "locationKeywords": [
+      "dentist Houston",
+      "dentist 77054",
+      "Almeda Rd dentist",
+      "Hermann Park dentist",
+      "dentist near Hermann Park",
+      "Houston family dentist"
+    ],
+    "reputationKeywords": [
+      "thorough exam",
+      "caring dentist",
+      "fair pricing",
+      "attentive staff",
+      "clean office",
+      "explains everything"
+    ],
+    "searchPhrases": [
+      "family dentist near me",
+      "cosmetic dentist Houston",
+      "dentist with fair pricing",
+      "dentist that cares about patients",
+      "thorough dental exam Houston",
+      "dentist near Hermann Park Houston"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 729,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 10,
+  "notes": null,
+  "lastContactedAt": null
+}

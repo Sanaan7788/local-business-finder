@@ -1,0 +1,140 @@
+{
+  "id": "038b19f7-e7a7-4653-a140-84b131c4b425",
+  "createdAt": "2026-06-01T00:39:01.164Z",
+  "updatedAt": "2026-06-01T00:40:18.310Z",
+  "name": "Nada B. Farah, DDS",
+  "phone": "(281) 494-3144",
+  "address": "Bluebonnet PROFESSIONAL BUILDING, 4434 Bluebonnet Dr, Stafford, TX 77477",
+  "zipcode": "77477",
+  "category": "Dentist",
+  "description": "4.9(14)",
+  "website": false,
+  "websiteUrl": null,
+  "rating": 4.9,
+  "reviewCount": 1,
+  "googleMapsUrl": "https://www.google.com/maps/place/Nada+B.+Farah,+DDS/data=!4m7!3m6!1s0x8640e7c889046941:0xcd59376a4af31079!8m2!3d29.6362784!4d-95.5799236!16s%2Fg%2F1v76_13t!19sChIJQWkEicjnQIYReRDzSmo3Wc0?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "Been coming to Dr Farah for the last 15 years. Best and honest dentist ever! Highly recommend her. She has extensive experience and whenever she does work on your teeth, she is gentle and it really shows how experienced she is.",
+    "Very professional very gentle and honest with her diagnosis. Dr. Nada makes me feel very comfortable and confident with her work. Highly recommend 👌 …",
+    "Clean office , Dentist has a lot of experience , business environment meaning straight to the point , no small chit chat. Dentist and Assistants get the right job done. I recommend it."
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–2 PM",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "dentist",
+    "general dentistry",
+    "gentle dental care",
+    "dental diagnosis",
+    "dental work",
+    "experienced dentist",
+    "dentist Stafford TX",
+    "dentist 77477",
+    "Bluebonnet Dr dentist",
+    "Stafford dental clinic",
+    "Houston area dentist",
+    "Fort Bend County dentist",
+    "honest dentist",
+    "gentle dentist",
+    "experienced dentist",
+    "comfortable dental visits",
+    "clean dental office",
+    "highly recommended dentist",
+    "straight to the point dentist",
+    "best dentist in Stafford TX",
+    "honest dentist near me",
+    "gentle dentist Stafford",
+    "experienced dentist 77477",
+    "dentist with 15 years experience",
+    "comfortable dental clinic Stafford"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "dentist",
+      "general dentistry",
+      "gentle dental care",
+      "dental diagnosis",
+      "dental work",
+      "experienced dentist"
+    ],
+    "locationKeywords": [
+      "dentist Stafford TX",
+      "dentist 77477",
+      "Bluebonnet Dr dentist",
+      "Stafford dental clinic",
+      "Houston area dentist",
+      "Fort Bend County dentist"
+    ],
+    "reputationKeywords": [
+      "honest dentist",
+      "gentle dentist",
+      "experienced dentist",
+      "comfortable dental visits",
+      "clean dental office",
+      "highly recommended dentist",
+      "straight to the point dentist"
+    ],
+    "searchPhrases": [
+      "best dentist in Stafford TX",
+      "honest dentist near me",
+      "gentle dentist Stafford",
+      "experienced dentist 77477",
+      "dentist with 15 years experience",
+      "comfortable dental clinic Stafford"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 606,
+  "leadStatus": "new",
+  "priority": "medium",
+  "priorityScore": 50,
+  "notes": null,
+  "lastContactedAt": null
+}

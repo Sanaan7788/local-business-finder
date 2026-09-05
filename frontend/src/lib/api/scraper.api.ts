@@ -13,3 +13,5 @@ export const scraperApi = {
   history: () => api.get<ScrapeSessionSummary[]>('/scraper/history'),
   historyById: (id: string) => api.get<ScrapeHistoryEntry>(`/scraper/history/${id}`),
 }
+
+export type ScraperApi = typeof scraperApi

@@ -117,10 +117,14 @@ export interface Business {
   lastContactedAt: string | null
 }
 
+/** Columns the list views need — no text/JSON blobs. Mirrors backend BUSINESS_LIST_FIELDS and is the sort whitelist. */
+export const BUSINESS_LIST_FIELDS = [
+  'id', 'createdAt', 'updatedAt', 'name', 'phone', 'address', 'zipcode', 'category',
+  'website', 'websiteUrl', 'rating', 'reviewCount', 'leadStatus', 'priority',
+  'priorityScore', 'notes', 'lastContactedAt', 'tokensUsed',
+] as const
+
+export type BusinessListField = (typeof BUSINESS_LIST_FIELDS)[number]
+
 /** The light projection returned by GET /businesses. */
-export type BusinessListItem = Pick<
-  Business,
-  | 'id' | 'createdAt' | 'updatedAt' | 'name' | 'phone' | 'address' | 'zipcode' | 'category'
-  | 'website' | 'websiteUrl' | 'rating' | 'reviewCount' | 'leadStatus' | 'priority'
-  | 'priorityScore' | 'notes' | 'lastContactedAt' | 'tokensUsed'
->
+export type BusinessListItem = Pick<Business, BusinessListField>

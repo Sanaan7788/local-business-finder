@@ -1,0 +1,148 @@
+{
+  "id": "fceb918d-4d35-4afe-9d69-9ce047e05235",
+  "createdAt": "2026-06-01T00:31:55.795Z",
+  "updatedAt": "2026-06-01T00:34:05.095Z",
+  "name": "Fort Bend Dental Sugar Land",
+  "phone": "(281) 205-8691",
+  "address": "15921 City Walk, Sugar Land, TX 77479",
+  "zipcode": "77477",
+  "category": "Dentist",
+  "description": "4.9(168)",
+  "website": true,
+  "websiteUrl": "https://www.ftbenddental.com/",
+  "rating": 4.9,
+  "reviewCount": 538,
+  "googleMapsUrl": "https://www.google.com/maps/place/Fort+Bend+Dental+Sugar+Land/data=!4m7!3m6!1s0x8640e72977c89959:0xcc364bd924306349!8m2!3d29.5970485!4d-95.620584!16s%2Fg%2F11wmpftv10!19sChIJWZnIdynnQIYRSWMwJNlLNsw?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "Dr.Beshay and Connie were amazing! I had a great experience. 150% recommended. Best Service in town. Dr. Beshay and staff are patient and gentle. Very Understanding and make you feel at home.",
+    "Providing compassionate, gentle care in a comfortable and welcoming environment is very important to our entire team. Thank you for your wonderful review and recommendation! We are so happy to hear that your experience was such a positive … More",
+    "Dr. Beshay is amazing, she is so sweet and very knowledgeable. She makes sure all her patients are well taken care of. Her hygienist was also extremely kind, efficient, and knowledgeable. She provided me with lots of great tips! Would recommend their services to anyone.",
+    "We are delighted to hear that you felt so well cared for and supported throughout your visit. Our team is committed to providing compassionate, knowledgeable care and making sure every patient feels comfortable and informed. It is wonderful … More",
+    "Dr. Beshay and her team are friendly and respectful. My visits have been great! Dr. Beshay is nice, attendative, and caring! Always laughter when I come in!! Thank you! ☺️"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–2 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "dentist",
+    "general dentistry",
+    "dental cleaning",
+    "hygienist",
+    "dental care",
+    "preventive dentistry",
+    "dental checkup",
+    "Sugar Land dentist",
+    "dentist 77479",
+    "Fort Bend dental",
+    "City Walk dentist",
+    "dentist near 77477",
+    "Sugar Land TX dental",
+    "Fort Bend County dentist",
+    "gentle dentist",
+    "compassionate care",
+    "knowledgeable dentist",
+    "friendly staff",
+    "comfortable environment",
+    "patient and gentle",
+    "caring dentist",
+    "best dentist in Sugar Land",
+    "gentle dentist near me",
+    "dentist with great reviews Sugar Land",
+    "compassionate dental care Sugar Land",
+    "top rated dentist 77479",
+    "dentist that makes you feel at home",
+    "knowledgeable dentist Sugar Land"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "dentist",
+      "general dentistry",
+      "dental cleaning",
+      "hygienist",
+      "dental care",
+      "preventive dentistry",
+      "dental checkup"
+    ],
+    "locationKeywords": [
+      "Sugar Land dentist",
+      "dentist 77479",
+      "Fort Bend dental",
+      "City Walk dentist",
+      "dentist near 77477",
+      "Sugar Land TX dental",
+      "Fort Bend County dentist"
+    ],
+    "reputationKeywords": [
+      "gentle dentist",
+      "compassionate care",
+      "knowledgeable dentist",
+      "friendly staff",
+      "comfortable environment",
+      "patient and gentle",
+      "caring dentist"
+    ],
+    "searchPhrases": [
+      "best dentist in Sugar Land",
+      "gentle dentist near me",
+      "dentist with great reviews Sugar Land",
+      "compassionate dental care Sugar Land",
+      "top rated dentist 77479",
+      "dentist that makes you feel at home",
+      "knowledgeable dentist Sugar Land"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 737,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

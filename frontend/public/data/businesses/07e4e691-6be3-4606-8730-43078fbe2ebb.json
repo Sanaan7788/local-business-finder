@@ -1,0 +1,146 @@
+{
+  "id": "07e4e691-6be3-4606-8730-43078fbe2ebb",
+  "createdAt": "2026-05-31T19:16:34.402Z",
+  "updatedAt": "2026-05-31T19:17:12.543Z",
+  "name": "Rodeo Dental & Orthodontics of Stafford",
+  "phone": "(346) 767-0300",
+  "address": "11753 W Bellfort Ave #114, Stafford, TX 77477",
+  "zipcode": "77477",
+  "category": "Pediatric dentist",
+  "description": null,
+  "website": true,
+  "websiteUrl": "https://www.rodeodental.com/locations/stafford-tx?utm_source=gmb&utm_medium=organic&utm_campaign=stafford-tx",
+  "rating": 4.5,
+  "reviewCount": 526,
+  "googleMapsUrl": "https://www.google.com/maps/place/Rodeo+Dental+%26+Orthodontics+of+Stafford/data=!4m7!3m6!1s0x8640e7e224e18727:0x19a5f6443f6a72b0!8m2!3d29.6564375!4d-95.5859811!16s%2Fg%2F11q3p_rdrr!19sChIJJ4fhJOLnQIYRsHJqP0T2pRk?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "The staff is genuinely friendly and honest. Dr. T. is engaging and pays excellent attention to details in conversation and care of teeth. I appreciate a dental care team that wants you to receive treatment without lying to you or draining …",
+    "Dear William, Thank you so much for taking the time to share your wonderful experience with us … More",
+    "I had such a wonderful experience with Dr. Mahmood and her amazing dental assistant Faryal. Dr. Mahmood was incredibly sweet, gentle, and very knowledgeable when working on my fillings. She explained everything clearly and made sure I felt …",
+    "Hello Almas Aart, Thank you so much for taking the time to share your wonderful experience with … More",
+    "Rodeo Dental is top tier awesome. Every visit the staff is friendly and has great bedside manners. They make sure my kids are comfortable and when they are frightened they try their best to make their experience cool and fun by cracking …"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "10 AM–7 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "10 AM–7 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "10 AM–7 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "10 AM–7 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "10 AM–7 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–3 PM",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "pediatric dentist",
+    "children's dentistry",
+    "dental fillings for kids",
+    "gentle dentist for children",
+    "kid-friendly dental care",
+    "dental checkup for kids",
+    "pediatric dental exams",
+    "dentist in Stafford TX",
+    "pediatric dentist 77477",
+    "children's dentist Stafford",
+    "Rodeo Dental Stafford",
+    "pediatric dentist near me Stafford",
+    "kids dentist Fort Bend County",
+    "friendly staff",
+    "honest dentist",
+    "gentle with kids",
+    "engaging doctor",
+    "explains everything clearly",
+    "great bedside manner",
+    "makes kids comfortable",
+    "fun experience for children",
+    "best pediatric dentist in Stafford TX",
+    "kids dentist that is gentle and honest",
+    "pediatric dentist near me for fillings",
+    "dentist for scared children Stafford",
+    "Rodeo Dental Stafford reviews",
+    "children's dental office with fun atmosphere"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "pediatric dentist",
+      "children's dentistry",
+      "dental fillings for kids",
+      "gentle dentist for children",
+      "kid-friendly dental care",
+      "dental checkup for kids",
+      "pediatric dental exams"
+    ],
+    "locationKeywords": [
+      "dentist in Stafford TX",
+      "pediatric dentist 77477",
+      "children's dentist Stafford",
+      "Rodeo Dental Stafford",
+      "pediatric dentist near me Stafford",
+      "kids dentist Fort Bend County"
+    ],
+    "reputationKeywords": [
+      "friendly staff",
+      "honest dentist",
+      "gentle with kids",
+      "engaging doctor",
+      "explains everything clearly",
+      "great bedside manner",
+      "makes kids comfortable",
+      "fun experience for children"
+    ],
+    "searchPhrases": [
+      "best pediatric dentist in Stafford TX",
+      "kids dentist that is gentle and honest",
+      "pediatric dentist near me for fillings",
+      "dentist for scared children Stafford",
+      "Rodeo Dental Stafford reviews",
+      "children's dental office with fun atmosphere"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 703,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

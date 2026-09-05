@@ -1,0 +1,80 @@
+{
+  "id": "9d71e1ca-c9fd-4af1-9fd5-497ab2c1cf39",
+  "createdAt": "2026-06-07T07:53:42.084Z",
+  "updatedAt": "2026-06-07T07:53:42.084Z",
+  "name": "Urgent Dental Care of Houston",
+  "phone": "(346) 551-4600",
+  "address": "3264 S Loop W, Houston, TX 77025",
+  "zipcode": "77054",
+  "category": "Dentist",
+  "description": null,
+  "website": true,
+  "websiteUrl": "https://urgentdentalhub.com/",
+  "rating": 4.9,
+  "reviewCount": 781,
+  "googleMapsUrl": "https://www.google.com/maps/place/Urgent+Dental+Care+of+Houston/data=!4m7!3m6!1s0x8640c1e5d9d971c7:0x2e4d97532850125b!8m2!3d29.6787201!4d-95.4279174!16s%2Fg%2F11y31z_x1g!19sChIJx3HZ2eXBQIYRWxJQKFOXTS4?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "Sanarya and Dr Mai performed an excellent service in re cement of my crown and Cleaning of my teeth! And I may add that I drove from Spring Texas a little over an hour just to come …",
+    "Sanarya / Dr. Mai Casey This is the best dentist out in Houston. My daughter‘s Space retainer fell out …",
+    "Mirna, Sanarya and Dr Truong made me feel totally comfortable with moving forward with suggested treatment. I really appreciated the complete explanations and details. Mirna was absolutely wonderful with her attention and care. She kept me …"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "8 AM–8 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–8 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–8 PM",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [],
+  "keywordCategories": null,
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 0,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

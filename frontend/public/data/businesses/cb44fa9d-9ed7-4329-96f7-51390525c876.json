@@ -1,0 +1,146 @@
+{
+  "id": "cb44fa9d-9ed7-4329-96f7-51390525c876",
+  "createdAt": "2026-06-01T03:37:32.087Z",
+  "updatedAt": "2026-06-01T03:49:47.584Z",
+  "name": "Katy ClearChoice Orthodontics - Orthodontist in Katy, TX",
+  "phone": "(281) 392-0888",
+  "address": "1260 Pin Oak Rd #208, Katy, TX 77494",
+  "zipcode": "77477",
+  "category": "Orthodontist",
+  "description": "4.9(183)",
+  "website": true,
+  "websiteUrl": "http://www.kccortho.com/",
+  "rating": 4.9,
+  "reviewCount": 51,
+  "googleMapsUrl": "https://www.google.com/maps/place/Katy+ClearChoice+Orthodontics+-+Orthodontist+in+Katy,+TX/data=!4m7!3m6!1s0x8641241ea419cfcd:0xd89b7d13d86b6350!8m2!3d29.771562!4d-95.818556!16s%2Fg%2F1wh4g7b2!19sChIJzc8ZpB4kQYYRUGNr2BN9m9g?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "I had my first visit today, and the team was amazing! They were so helpful, friendly, and fun to be around. They made me feel completely comfortable, and I really appreciated how welcoming they were. the plactis amazing and the clinic so …",
+    "An amazing office, with very friendly, professional and knowledgeable staff. Everyone there makes you feel welcome and takes great care in making you feel …",
+    "Wow, thank you for taking the time to write such a generous and detailed review! We truly appreciate you recognizing the dedication of our entire staff. It means the world to us that you feel welcome, comfortable, and that our team takes … More",
+    "We absolutely love Dr. G and the entire team at ClearChoice Orthodontics! They are so easy to work with, always on schedule, and make every visit smooth and stress-free. They’ve taken such great care of us and always take the time to …",
+    "Dear Cassie, Thank you so much for your kind words! We're thrilled to hear that you love Dr. … More"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–2 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "braces",
+    "Invisalign",
+    "clear aligners",
+    "orthodontic treatment",
+    "teeth straightening",
+    "retainers",
+    "early orthodontic evaluation",
+    "orthodontist Katy TX",
+    "Katy orthodontist 77494",
+    "Pin Oak Rd orthodontist",
+    "Katy TX braces",
+    "orthodontist near 77477",
+    "Katy area orthodontist",
+    "friendly staff",
+    "comfortable visits",
+    "on schedule",
+    "stress-free experience",
+    "welcoming office",
+    "knowledgeable team",
+    "smooth appointments",
+    "best orthodontist in Katy TX",
+    "Invisalign Katy TX reviews",
+    "braces near me Katy",
+    "orthodontist that takes insurance Katy",
+    "gentle orthodontist Katy",
+    "family orthodontist Katy TX",
+    "clear aligners Katy TX"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "braces",
+      "Invisalign",
+      "clear aligners",
+      "orthodontic treatment",
+      "teeth straightening",
+      "retainers",
+      "early orthodontic evaluation"
+    ],
+    "locationKeywords": [
+      "orthodontist Katy TX",
+      "Katy orthodontist 77494",
+      "Pin Oak Rd orthodontist",
+      "Katy TX braces",
+      "orthodontist near 77477",
+      "Katy area orthodontist"
+    ],
+    "reputationKeywords": [
+      "friendly staff",
+      "comfortable visits",
+      "on schedule",
+      "stress-free experience",
+      "welcoming office",
+      "knowledgeable team",
+      "smooth appointments"
+    ],
+    "searchPhrases": [
+      "best orthodontist in Katy TX",
+      "Invisalign Katy TX reviews",
+      "braces near me Katy",
+      "orthodontist that takes insurance Katy",
+      "gentle orthodontist Katy",
+      "family orthodontist Katy TX",
+      "clear aligners Katy TX"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 741,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

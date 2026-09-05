@@ -1,0 +1,154 @@
+{
+  "id": "398991b5-127a-4808-beed-8649b22fcd28",
+  "createdAt": "2026-06-01T00:18:32.862Z",
+  "updatedAt": "2026-06-01T00:19:41.126Z",
+  "name": "Texas Veterinary Dental Center",
+  "phone": "(281) 325-0074",
+  "address": "12810 Fountain Lake Cir, Stafford, TX 77477",
+  "zipcode": "77477",
+  "category": "Veterinarian",
+  "description": "4.7(80)",
+  "website": true,
+  "websiteUrl": "http://www.veterinarydentalservices.com/",
+  "rating": 4.7,
+  "reviewCount": 37,
+  "googleMapsUrl": "https://www.google.com/maps/place/Texas+Veterinary+Dental+Center/data=!4m7!3m6!1s0x8640e7b715e76135:0xbd42ab255957eb89!8m2!3d29.6346349!4d-95.588505!16s%2Fg%2F1tcvc8f_!19sChIJNWHnFbfnQIYRietXWSWrQr0?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "Dr. McCoy saved my cat's life. He is great at explaining your animal's condition, the concrete steps that will be taken to rectify it, and manages your expectations in a realistic way. …",
+    "The concern and care this place had for my dog was incredible. I took my pug in for a check up on a growth on her gums and they were able to get her in for surgery the same day. This ended up being more serious than expected and they were …",
+    "Absolutely the best! Dr Green is amazing and I will always recommend her. My 16 year old dachshund has gone here twice for dental surgery and both were the first times in his life we didn’t spend the next day at the emergency vet after he had dental work done."
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "veterinary dental surgery",
+    "cat dental cleaning",
+    "dog oral surgery",
+    "canine gum growth removal",
+    "feline dental extraction",
+    "pet dental checkup",
+    "animal dental care",
+    "veterinary dentistry",
+    "veterinarian Stafford TX",
+    "pet dentist 77477",
+    "animal dental clinic Sugar Land",
+    "veterinary dental center Houston",
+    "dog dentist Fort Bend County",
+    "cat dental care Missouri City",
+    "pet oral surgery Richmond TX",
+    "veterinary dental specialist southwest Houston",
+    "life-saving care",
+    "clear explanation of condition",
+    "same-day surgery",
+    "caring staff",
+    "no post-surgery emergencies",
+    "highly recommended",
+    "amazing vet",
+    "trustworthy dental vet",
+    "vet that does dental surgery near me",
+    "dog dental cleaning Stafford TX",
+    "cat tooth extraction Houston",
+    "pet dentist that explains everything",
+    "veterinary dental center 77477",
+    "best vet for dog dental surgery",
+    "affordable pet dental care Sugar Land",
+    "vet that saved my cat's life"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "veterinary dental surgery",
+      "cat dental cleaning",
+      "dog oral surgery",
+      "canine gum growth removal",
+      "feline dental extraction",
+      "pet dental checkup",
+      "animal dental care",
+      "veterinary dentistry"
+    ],
+    "locationKeywords": [
+      "veterinarian Stafford TX",
+      "pet dentist 77477",
+      "animal dental clinic Sugar Land",
+      "veterinary dental center Houston",
+      "dog dentist Fort Bend County",
+      "cat dental care Missouri City",
+      "pet oral surgery Richmond TX",
+      "veterinary dental specialist southwest Houston"
+    ],
+    "reputationKeywords": [
+      "life-saving care",
+      "clear explanation of condition",
+      "same-day surgery",
+      "caring staff",
+      "no post-surgery emergencies",
+      "highly recommended",
+      "amazing vet",
+      "trustworthy dental vet"
+    ],
+    "searchPhrases": [
+      "vet that does dental surgery near me",
+      "dog dental cleaning Stafford TX",
+      "cat tooth extraction Houston",
+      "pet dentist that explains everything",
+      "veterinary dental center 77477",
+      "best vet for dog dental surgery",
+      "affordable pet dental care Sugar Land",
+      "vet that saved my cat's life"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 697,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

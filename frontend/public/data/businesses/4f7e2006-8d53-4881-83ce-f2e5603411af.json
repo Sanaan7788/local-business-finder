@@ -1,0 +1,121 @@
+{
+  "id": "4f7e2006-8d53-4881-83ce-f2e5603411af",
+  "createdAt": "2026-05-31T02:13:38.040Z",
+  "updatedAt": "2026-05-31T02:15:18.031Z",
+  "name": "Fashio Nail Spa",
+  "phone": "(832) 835-6433",
+  "address": "12810 W Broadway St Suite 150, Pearland, TX 77584",
+  "zipcode": "77047",
+  "category": "Nail salon",
+  "description": null,
+  "website": true,
+  "websiteUrl": "https://fashionailsspapearland.com/",
+  "rating": 4.6,
+  "reviewCount": 961,
+  "googleMapsUrl": "https://www.google.com/maps/place/Fashio+Nail+Spa/data=!4m7!3m6!1s0x8640ece92239f4e1:0x7c8636382d361621!8m2!3d29.5546335!4d-95.4190703!16s%2Fg%2F11c33hs70m!19sChIJ4fQ5IunsQIYRIRY2LTg2hnw?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "This is my second visit to this salon. I’m a very simple nail design type of person but big on shape and nail health. This is by far the best pedicure I’ve ever had both times. The service was impeccable. I had the Korean coffee and it was …",
+    "I appreciate your time leaving a very kind feedback for our store. We are happy to make our customers happy. See you soon.",
+    "I had an amazing experience at FASHIO Nail Spa in Pearland! Hands down the best nail salon in the area. The salon is incredibly clean, modern, and relaxing. I came in for a dip powder manicure and a spa pedicure, and both were perfect. The …",
+    "Love to see you like our services. We have plenty more for you to try. We are looking forward to serving you again.",
+    "Today I had the most amazing pedicure tech!! BIN is amazing he is very professional and gives the most amazing massages! This is my first time here and I can’t wait to return!! …"
+  ],
+  "menu": [
+    {
+      "section": "Popular times",
+      "items": [
+        {
+          "name": "Saturdays",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Based on visits to this place.",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "dip powder manicure",
+    "spa pedicure",
+    "Korean coffee pedicure",
+    "gel nails",
+    "nail design",
+    "nail health",
+    "massage",
+    "nail salon Pearland",
+    "nail salon 77047",
+    "nail salon Broadway St",
+    "Pearland nail spa",
+    "nail salon near 77584",
+    "Pearland TX nail salon",
+    "best pedicure",
+    "clean and modern salon",
+    "relaxing atmosphere",
+    "amazing massage",
+    "impeccable service",
+    "amazing pedicure tech",
+    "best nail salon in the area",
+    "best nail salon Pearland",
+    "spa pedicure Pearland",
+    "dip powder manicure near me",
+    "Korean coffee pedicure Pearland",
+    "clean nail salon Pearland",
+    "amazing pedicure tech Pearland",
+    "nail salon with massage Pearland"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "dip powder manicure",
+      "spa pedicure",
+      "Korean coffee pedicure",
+      "gel nails",
+      "nail design",
+      "nail health",
+      "massage"
+    ],
+    "locationKeywords": [
+      "nail salon Pearland",
+      "nail salon 77047",
+      "nail salon Broadway St",
+      "Pearland nail spa",
+      "nail salon near 77584",
+      "Pearland TX nail salon"
+    ],
+    "reputationKeywords": [
+      "best pedicure",
+      "clean and modern salon",
+      "relaxing atmosphere",
+      "amazing massage",
+      "impeccable service",
+      "amazing pedicure tech",
+      "best nail salon in the area"
+    ],
+    "searchPhrases": [
+      "best nail salon Pearland",
+      "spa pedicure Pearland",
+      "dip powder manicure near me",
+      "Korean coffee pedicure Pearland",
+      "clean nail salon Pearland",
+      "amazing pedicure tech Pearland",
+      "nail salon with massage Pearland"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 727,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

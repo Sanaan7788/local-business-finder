@@ -1,0 +1,144 @@
+{
+  "id": "6fa1950a-7124-4123-863b-bb2b49fe8233",
+  "createdAt": "2026-05-31T19:15:02.077Z",
+  "updatedAt": "2026-05-31T19:15:10.474Z",
+  "name": "Dentist at lexington",
+  "phone": "(281) 403-3595",
+  "address": "4727 Lexington Blvd, Missouri City, TX 77459",
+  "zipcode": "77477",
+  "category": "Dentist",
+  "description": null,
+  "website": true,
+  "websiteUrl": "http://www.dentistatlexington.com/",
+  "rating": 5,
+  "reviewCount": 24,
+  "googleMapsUrl": "https://www.google.com/maps/place/Dentist+at+lexington/data=!4m7!3m6!1s0x8640e615a28cffc9:0xcef558335abb18f7!8m2!3d29.6003433!4d-95.5801666!16s%2Fg%2F1tql54wq!19sChIJyf-MohXmQIYR9xi7WjNY9c4?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "Update: it’s almost the end of 2025 and I am still seeing Dr Wong and Julia is still the hygienist. It’s always a great experience here and it feels like my teeth get spa treatment every 6 months. …",
+    "I have been a happy patient here for several years. I love the service and attention I receive there on each visit. Dr. Wongchukit is one of the friendliest people you’ll meet, but more importantly, she is very professional and cares about …",
+    "Dr. Wong & team are great! Highly recommend to anyone looking for a friendly and easy dental experience!"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "dentist",
+    "teeth cleaning",
+    "hygienist",
+    "dental checkup",
+    "spa dental treatment",
+    "friendly dentist",
+    "dental care",
+    "dentist Missouri City",
+    "dentist 77477",
+    "dentist Lexington Blvd",
+    "dentist 77459",
+    "dentist near Missouri City TX",
+    "dentist in 77477",
+    "great experience",
+    "friendly dentist",
+    "caring dentist",
+    "spa treatment for teeth",
+    "happy patient for years",
+    "highly recommend",
+    "easy dental experience",
+    "best dentist in Missouri City",
+    "dentist near me 77477",
+    "teeth cleaning Missouri City",
+    "friendly dentist Missouri City",
+    "dental spa Missouri City",
+    "dentist with great reviews",
+    "affordable dentist Missouri City"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "dentist",
+      "teeth cleaning",
+      "hygienist",
+      "dental checkup",
+      "spa dental treatment",
+      "friendly dentist",
+      "dental care"
+    ],
+    "locationKeywords": [
+      "dentist Missouri City",
+      "dentist 77477",
+      "dentist Lexington Blvd",
+      "dentist 77459",
+      "dentist near Missouri City TX",
+      "dentist in 77477"
+    ],
+    "reputationKeywords": [
+      "great experience",
+      "friendly dentist",
+      "caring dentist",
+      "spa treatment for teeth",
+      "happy patient for years",
+      "highly recommend",
+      "easy dental experience"
+    ],
+    "searchPhrases": [
+      "best dentist in Missouri City",
+      "dentist near me 77477",
+      "teeth cleaning Missouri City",
+      "friendly dentist Missouri City",
+      "dental spa Missouri City",
+      "dentist with great reviews",
+      "affordable dentist Missouri City"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 607,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 10,
+  "notes": null,
+  "lastContactedAt": null
+}

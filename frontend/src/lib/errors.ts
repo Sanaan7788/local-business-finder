@@ -1,4 +1,4 @@
-import { ApiError } from './api/client'
+import { ApiError } from './api/api-error'
 
 /** Human-readable message for anything thrown by the API layer. */
 export function getApiErrorMessage(err: unknown, fallback = 'Something went wrong'): string {

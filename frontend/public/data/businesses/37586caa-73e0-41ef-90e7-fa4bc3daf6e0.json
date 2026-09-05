@@ -1,0 +1,166 @@
+{
+  "id": "37586caa-73e0-41ef-90e7-fa4bc3daf6e0",
+  "createdAt": "2026-06-01T09:23:01.124Z",
+  "updatedAt": "2026-06-01T09:36:18.854Z",
+  "name": "The Joint Chiropractic",
+  "phone": "(281) 336-8416",
+  "address": "15870 Southwest Fwy Suite 100, Sugar Land, TX 77478",
+  "zipcode": "77477",
+  "category": "Chiropractor",
+  "description": null,
+  "website": true,
+  "websiteUrl": "https://www.thejoint.com/texas/sugar-land/sugar-land-28035",
+  "rating": 4.8,
+  "reviewCount": 112,
+  "googleMapsUrl": "https://www.google.com/maps/place/The+Joint+Chiropractic/data=!4m7!3m6!1s0x8640e694c5ef2757:0xdc217a5a11d4089e!8m2!3d29.6008106!4d-95.6224004!16s%2Fg%2F125_zj5ps!19sChIJVyfvxZTmQIYRngjUEVp6Idw?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "Weird service at this location specifically.. I’ve been a paying customer at an another location for over a year and half. I heard about a new chiropractor that was amazing and a must try, so I decided to travel to try it out for myself. I …",
+    "Thank you for your perspective. Our care model is built on a few simple standards that should be felt in every visit: respectful service, clear expectations, transparent processes, and professional clinical care guided by what is … More",
+    "Dr. Russel is SO amazing! She’s so attentive and a FANTASTIC chiropractor! She also sees my grandma now and has helped her so much with her pain. My grandma was so nervous but Dr. Russel made her feel so comfortable and safe. Everytime in visit the area I make sure to see her. I feel soooo much better after I do!",
+    "Absolutely the Best Chiropractor Experience Ever! Dr. Trong is incredible! I’ve been to many chiropractors over the years, but no one has ever been as thorough, attentive, and effective as he is. From the …"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "10 AM–2 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "2:45–7 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "10 AM–2 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "2:45–7 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "10 AM–2 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "2:45–7 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "10 AM–2 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "2:45–7 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "10 AM–2 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "2:45–7 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "10 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "10 AM–5 PM",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "chiropractor",
+    "spinal adjustment",
+    "pain relief",
+    "back pain treatment",
+    "neck pain adjustment",
+    "family chiropractic care",
+    "gentle chiropractic",
+    "Sugar Land chiropractor",
+    "77478 chiropractor",
+    "77477 chiropractic",
+    "Southwest Fwy chiropractor",
+    "Sugar Land back pain relief",
+    "Houston chiropractor",
+    "attentive chiropractor",
+    "thorough adjustment",
+    "comfortable and safe",
+    "effective pain relief",
+    "amazing chiropractor",
+    "helpful for seniors",
+    "best chiropractor in Sugar Land",
+    "chiropractor near me 77478",
+    "back pain relief Sugar Land",
+    "gentle chiropractor Sugar Land",
+    "chiropractor for seniors near me",
+    "family chiropractor Sugar Land"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "chiropractor",
+      "spinal adjustment",
+      "pain relief",
+      "back pain treatment",
+      "neck pain adjustment",
+      "family chiropractic care",
+      "gentle chiropractic"
+    ],
+    "locationKeywords": [
+      "Sugar Land chiropractor",
+      "77478 chiropractor",
+      "77477 chiropractic",
+      "Southwest Fwy chiropractor",
+      "Sugar Land back pain relief",
+      "Houston chiropractor"
+    ],
+    "reputationKeywords": [
+      "attentive chiropractor",
+      "thorough adjustment",
+      "comfortable and safe",
+      "effective pain relief",
+      "amazing chiropractor",
+      "helpful for seniors"
+    ],
+    "searchPhrases": [
+      "best chiropractor in Sugar Land",
+      "chiropractor near me 77478",
+      "back pain relief Sugar Land",
+      "gentle chiropractor Sugar Land",
+      "chiropractor for seniors near me",
+      "family chiropractor Sugar Land"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 722,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

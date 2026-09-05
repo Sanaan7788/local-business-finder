@@ -1,0 +1,146 @@
+{
+  "id": "8e17a90a-1285-4fe6-9d25-437ff1b6952b",
+  "createdAt": "2026-06-01T04:10:16.500Z",
+  "updatedAt": "2026-06-01T04:11:27.259Z",
+  "name": "Five Star Dentists Houston/Stafford",
+  "phone": "(281) 564-0117",
+  "address": "11615 Southwest Fwy, Houston, TX 77031",
+  "zipcode": "77477",
+  "category": "Dentist",
+  "description": "4.2(101)",
+  "website": true,
+  "websiteUrl": "http://5stardentists.com/",
+  "rating": 4.2,
+  "reviewCount": 55,
+  "googleMapsUrl": "https://www.google.com/maps/place/Five+Star+Dentists+Houston%2FStafford/data=!4m7!3m6!1s0x8640e792e77c035b:0x41c0ac5a814fe221!8m2!3d29.6518422!4d-95.5667735!16s%2Fg%2F1tdrxpy9!19sChIJWwN855LnQIYRIeJPgVqswEE?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "The Best Dental Office in the City of Houston! I've been with this dentistry for nearly 20 years under Dr. Nguyen care. I've had orthodontist services done for myself and my child, dental surgery, and routine care for years. She services …",
+    "What a great experience at Five Star Dentists. Dr. E. Watkins and his staff was a breathe of fresh air. Mama and I arrived at 6:45am this morning, the staff was friendly and professional. The place is filled with a sense of home with their …",
+    "Thank you so much, Ms. Franklin, for taking the time to share such a beautiful and detailed review. We are truly honored by your kind words. It was a pleasure taking care of your mother, and we're grateful you both felt welcomed and at home … More",
+    "We had a very bad experience on March 8,2025 with this facility. The appointment for our daughter wisdom teeth's procedure was at 10 am but they started it 3 hours later while we were already in the room without any explanation. Our …",
+    "Thank you, Amalia, for sharing your experience. We sincerely apologize for the frustration and discomfort your family experienced on March 8. We understand how stressful extended wait times can be, especially when a patient is fasting and … More"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–1 PM",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "orthodontist",
+    "dental surgery",
+    "wisdom teeth removal",
+    "routine dental care",
+    "dental implants",
+    "teeth cleaning",
+    "pediatric dentistry",
+    "dentist Houston",
+    "dentist Stafford",
+    "dentist 77031",
+    "dentist 77477",
+    "dentist Southwest Fwy",
+    "dentist near me Houston",
+    "dentist in southwest Houston",
+    "friendly staff",
+    "feels like home",
+    "caring team",
+    "experienced dentist",
+    "long-term patient trust",
+    "welcoming atmosphere",
+    "best dentist in Houston",
+    "affordable dentist near me",
+    "dentist for wisdom teeth removal",
+    "family dentist Houston",
+    "dentist open early morning",
+    "orthodontist for children Houston",
+    "dental surgery Houston"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "orthodontist",
+      "dental surgery",
+      "wisdom teeth removal",
+      "routine dental care",
+      "dental implants",
+      "teeth cleaning",
+      "pediatric dentistry"
+    ],
+    "locationKeywords": [
+      "dentist Houston",
+      "dentist Stafford",
+      "dentist 77031",
+      "dentist 77477",
+      "dentist Southwest Fwy",
+      "dentist near me Houston",
+      "dentist in southwest Houston"
+    ],
+    "reputationKeywords": [
+      "friendly staff",
+      "feels like home",
+      "caring team",
+      "experienced dentist",
+      "long-term patient trust",
+      "welcoming atmosphere"
+    ],
+    "searchPhrases": [
+      "best dentist in Houston",
+      "affordable dentist near me",
+      "dentist for wisdom teeth removal",
+      "family dentist Houston",
+      "dentist open early morning",
+      "orthodontist for children Houston",
+      "dental surgery Houston"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 760,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

@@ -1,0 +1,82 @@
+{
+  "id": "6f1bb281-95b7-4a4b-b698-acfba8822bd6",
+  "createdAt": "2026-06-07T08:21:43.053Z",
+  "updatedAt": "2026-06-07T08:21:43.053Z",
+  "name": "Texan Dental, P.A.",
+  "phone": "(713) 218-0500",
+  "address": "2493 S Braeswood Blvd Suite C, Houston, TX 77030",
+  "zipcode": "77054",
+  "category": "Dentist",
+  "description": null,
+  "website": true,
+  "websiteUrl": "https://www.texandental.com/?utm_source=GMB&utm_medium=organic&utm_campaign=DevOptimization&utm_content=Website",
+  "rating": 4.8,
+  "reviewCount": 54,
+  "googleMapsUrl": "https://www.google.com/maps/place/Texan+Dental,+P.A./data=!4m7!3m6!1s0x8640c03e8af87e1b:0x4c8cab4e98e18428!8m2!3d29.6968734!4d-95.4170787!16s%2Fg%2F11h0_k8b2!19sChIJG374ij7AQIYRKIThmE6rjEw?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "I had a great experience at Texan Dental, PA and really want to recognize the staff who made my visit such a positive one. …",
+    "We're thrilled to hear about your positive experience at Texan Dental, PA! Our team, from front desk to the doctors, strives to provide the best care. Thank you for your recommendation!",
+    "Hi - I visited Texan Dental today , 11/7/25 I had a very pleasant experience. …",
+    "We appreciate your kind words, Mary. Ensuring comfort and professionalism is a top priority at our clinic. We look forward to serving you again.",
+    "I love Texan Dental. I will be a patient in whatever oral health issues I may have. Their doctors and staff are professional and truly care. They explain what needs to be done and are very reassuring of the process. I'm a totally satisfied patient. I feel their work is outstanding! Thank you. So happy I was recommended to TD.💯👍🏾 …"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–2 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [],
+  "keywordCategories": null,
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 0,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 10,
+  "notes": null,
+  "lastContactedAt": null
+}

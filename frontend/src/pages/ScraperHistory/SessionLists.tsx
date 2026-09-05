@@ -9,6 +9,8 @@ import { CopyButton } from '../../components/ui/CopyButton'
 import { EmptyState } from '../../components/ui/EmptyState'
 import type { Priority } from '../../types/business'
 import type { ErrorEntry, SavedEntry, SkippedEntry } from '../../types/scraper'
+import { IS_STATIC } from '../../lib/env'
+import { ServerOnly } from '../../components/ServerOnly'
 import { CreateProfileButton } from './CreateProfileButton'
 
 const Hint = ({ children }: { children: string }) => <p className="mb-3 text-xs text-fg-subtle">{children}</p>
@@ -81,7 +83,7 @@ export function ErrorList({ entries, zipcode, category }: { entries: ErrorEntry[
   if (entries.length === 0) return <EmptyState size="sm" title="No errors" />
   return (
     <div className="space-y-2">
-      <Hint>Found on Maps but could not be scraped. Create a stub profile to track manually, or search Maps to fill in the details.</Hint>
+      <Hint>{IS_STATIC ? 'Found on Maps but could not be scraped.' : 'Found on Maps but could not be scraped. Create a stub profile to track manually, or search Maps to fill in the details.'}</Hint>
       {entries.map((e, i) => (
         <div key={i} className={cn('rounded-lg border p-3', TONE.danger.panel)}>
           <div className="flex items-start justify-between gap-3">
@@ -91,7 +93,9 @@ export function ErrorList({ entries, zipcode, category }: { entries: ErrorEntry[
             </div>
             <div className="flex shrink-0 flex-col items-end gap-1.5">
               <MapsLink name={e.name} />
-              <CreateProfileButton name={e.name} zipcode={zipcode} category={category} onCreated={id => navigate(`/businesses/${id}`)} />
+              <ServerOnly>
+                <CreateProfileButton name={e.name} zipcode={zipcode} category={category} onCreated={id => navigate(`/businesses/${id}`)} />
+              </ServerOnly>
             </div>
           </div>
         </div>
@@ -118,7 +122,7 @@ export function FoundNamesList({
 
   return (
     <div>
-      <Hint>{`All ${names.length} businesses found on Maps. Green = saved to the database; the rest can be created as stub profiles.`}</Hint>
+      <Hint>{`All ${names.length} businesses found on Maps. Green = saved to the database${IS_STATIC ? '' : '; the rest can be created as stub profiles'}.`}</Hint>
       <div className="space-y-1.5">
         {names.map((name, i) => {
           const saved = savedByName.get(name.toLowerCase())
@@ -140,7 +144,9 @@ export function FoundNamesList({
                 ) : (
                   <>
                     <MapsLink name={name} />
-                    <CreateProfileButton name={name} zipcode={zipcode} category={category} onCreated={id => setCreatedIds(prev => ({ ...prev, [name]: id }))} />
+                    <ServerOnly>
+                      <CreateProfileButton name={name} zipcode={zipcode} category={category} onCreated={id => setCreatedIds(prev => ({ ...prev, [name]: id }))} />
+                    </ServerOnly>
                   </>
                 )}
               </div>

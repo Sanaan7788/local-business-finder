@@ -1,0 +1,134 @@
+{
+  "id": "2cb2547c-92c8-4db1-b757-722d91af87a6",
+  "createdAt": "2026-06-01T00:47:15.212Z",
+  "updatedAt": "2026-06-01T00:52:39.738Z",
+  "name": "Sunrise Dentistry",
+  "phone": "(281) 941-6403",
+  "address": "3425 Hwy 6 #106, Sugar Land, TX 77478",
+  "zipcode": "77477",
+  "category": "Dentist",
+  "description": "4.9(377)",
+  "website": true,
+  "websiteUrl": "https://sunrisedentistrytx.com/",
+  "rating": 4.9,
+  "reviewCount": 33,
+  "googleMapsUrl": "https://www.google.com/maps/place/Sunrise+Dentistry/data=!4m7!3m6!1s0x8640e662e457e50f:0x3cbdaa68f0446235!8m2!3d29.592016!4d-95.6015384!16s%2Fg%2F1tc_rdhs!19sChIJD-VX5GLmQIYRNWJE8GiqvTw?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "My hygienist is so friendly and thorough with her cleaning. Always keeping me aware of issues with my teeth. I also enjoy having Dr. Jankowsky as my dentist. On my recent visit he helped me with questions that I had regarding my oral hygiene.",
+    "My experience with Sunrise Dentistry and Dr. Jankowski has been (and continues to be) quite positive! Appointment scheduling is straightforward with plenty of reminders. Dr. Jankowski does a thorough evaluation at every bi-annual cleaning; …",
+    "We really appreciate your kind words! Have a Merry Christmas!",
+    "I love the team at Sunrise Dentistry. Beth and Janet, who have cleaned my teeth, are excellent at cleaning my teeth and making them sparkle. Molly is just about the friendliest/most knowledgeable person I’ve ever encountered in a dental …",
+    "Thank you for your kind review! Beth, Janet, and Molly and the rest of our team love hearing that all they give makes such a difference. We're glad the drive feels worth it, and we'll make sure it always is. Have an amazing day! Thanks … More"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "dental cleaning",
+    "bi-annual cleaning",
+    "oral hygiene evaluation",
+    "friendly hygienist",
+    "thorough cleaning",
+    "dentist Sugar Land",
+    "dentist 77477",
+    "dentist 77478",
+    "dentist Hwy 6 Sugar Land",
+    "Sugar Land dental clinic",
+    "friendly hygienist",
+    "thorough evaluation",
+    "straightforward scheduling",
+    "plenty of reminders",
+    "knowledgeable team",
+    "excellent cleaning",
+    "dentist with friendly hygienist Sugar Land",
+    "thorough dental cleaning Sugar Land",
+    "dentist with good reminders near me",
+    "bi-annual cleaning Sugar Land",
+    "highly rated dentist 77477"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "dental cleaning",
+      "bi-annual cleaning",
+      "oral hygiene evaluation",
+      "friendly hygienist",
+      "thorough cleaning"
+    ],
+    "locationKeywords": [
+      "dentist Sugar Land",
+      "dentist 77477",
+      "dentist 77478",
+      "dentist Hwy 6 Sugar Land",
+      "Sugar Land dental clinic"
+    ],
+    "reputationKeywords": [
+      "friendly hygienist",
+      "thorough evaluation",
+      "straightforward scheduling",
+      "plenty of reminders",
+      "knowledgeable team",
+      "excellent cleaning"
+    ],
+    "searchPhrases": [
+      "dentist with friendly hygienist Sugar Land",
+      "thorough dental cleaning Sugar Land",
+      "dentist with good reminders near me",
+      "bi-annual cleaning Sugar Land",
+      "highly rated dentist 77477"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 694,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

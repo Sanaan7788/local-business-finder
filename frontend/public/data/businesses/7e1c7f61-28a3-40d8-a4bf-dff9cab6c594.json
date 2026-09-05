@@ -1,0 +1,123 @@
+{
+  "id": "7e1c7f61-28a3-40d8-a4bf-dff9cab6c594",
+  "createdAt": "2026-06-07T05:19:21.929Z",
+  "updatedAt": "2026-06-07T05:22:50.162Z",
+  "name": "Cell Tienda - Phone, Computer & Gaming Console Repair / Reparación de Celulares, Computadoras y Consolas de Videojuegos",
+  "phone": "(346) 393-0000",
+  "address": "9617 S Gessner Rd, Houston, TX 77071",
+  "zipcode": "77054",
+  "category": "Phone repair service",
+  "description": "4.9(243)",
+  "website": false,
+  "websiteUrl": null,
+  "rating": 4.9,
+  "reviewCount": 43,
+  "googleMapsUrl": "https://www.google.com/maps/place/Cell+Tienda+-+Phone,+Computer+%26+Gaming+Console+Repair+%2F+Reparaci%C3%B3n+de+Celulares,+Computadoras+y+Consolas+de+Videojuegos/data=!4m7!3m6!1s0x8640c34796232d49:0xdd1619417537cf61!8m2!3d29.6758978!4d-95.5277159!16s%2Fg%2F11ltp4h129!19sChIJSS0jlkfDQIYRYc83dUEZFt0?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "Very Honest and Reliable Service – Highly Recommended! I’ve had a great experience with this shop. The service is truly honest and reliable, which is hard to come by these days. They’re straightforward, …",
+    "Thanks, Irfan! We really appreciate you recognizing our honest, reliable approach and the straightforward, professional service we try to provide every day. Glad we could make sure everything was done right, and thank you for the recommendation.",
+    "I love Rahim. Highly recommend it. Fee reasonable. He saved me alot of money. Under promises, overdelivered. Quick turnaround time.!",
+    "Thank you I do always on spot repair",
+    "I like the good ,fast service and reliable also honest guy highly recommended thank you…"
+  ],
+  "menu": [
+    {
+      "section": "Popular times",
+      "items": [
+        {
+          "name": "Sundays",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Based on visits to this place.",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "phone repair",
+    "computer repair",
+    "gaming console repair",
+    "celular repair",
+    "laptop repair",
+    "iPhone repair",
+    "screen replacement",
+    "battery replacement",
+    "phone repair Houston",
+    "cell phone repair 77071",
+    "Gessner Rd phone repair",
+    "Southwest Houston phone repair",
+    "repair shop near 77054",
+    "cell repair in Houston TX",
+    "honest repair service",
+    "reliable phone repair",
+    "fast turnaround",
+    "reasonable prices",
+    "on spot repair",
+    "under promises overdelivers",
+    "recommended by customers",
+    "phone repair near me",
+    "computer repair Houston TX",
+    "gaming console repair shop",
+    "honest cell phone repair Houston",
+    "affordable phone repair 77071",
+    "reliable laptop repair near me",
+    "best phone repair in Houston"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "phone repair",
+      "computer repair",
+      "gaming console repair",
+      "celular repair",
+      "laptop repair",
+      "iPhone repair",
+      "screen replacement",
+      "battery replacement"
+    ],
+    "locationKeywords": [
+      "phone repair Houston",
+      "cell phone repair 77071",
+      "Gessner Rd phone repair",
+      "Southwest Houston phone repair",
+      "repair shop near 77054",
+      "cell repair in Houston TX"
+    ],
+    "reputationKeywords": [
+      "honest repair service",
+      "reliable phone repair",
+      "fast turnaround",
+      "reasonable prices",
+      "on spot repair",
+      "under promises overdelivers",
+      "recommended by customers"
+    ],
+    "searchPhrases": [
+      "phone repair near me",
+      "computer repair Houston TX",
+      "gaming console repair shop",
+      "honest cell phone repair Houston",
+      "affordable phone repair 77071",
+      "reliable laptop repair near me",
+      "best phone repair in Houston"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 678,
+  "leadStatus": "new",
+  "priority": "medium",
+  "priorityScore": 40,
+  "notes": null,
+  "lastContactedAt": null
+}

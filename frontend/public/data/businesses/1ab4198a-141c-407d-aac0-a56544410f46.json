@@ -1,0 +1,136 @@
+{
+  "id": "1ab4198a-141c-407d-aac0-a56544410f46",
+  "createdAt": "2026-05-31T01:56:44.348Z",
+  "updatedAt": "2026-05-31T01:57:38.633Z",
+  "name": "Elegant Nail By Annie",
+  "phone": "(713) 734-5149",
+  "address": "11111 Cullen Blvd suite c, Houston, TX 77047",
+  "zipcode": "77047",
+  "category": "Nail salon",
+  "description": null,
+  "website": false,
+  "websiteUrl": null,
+  "rating": 4.5,
+  "reviewCount": 229,
+  "googleMapsUrl": "https://www.google.com/maps/place/Elegant+Nail+By+Annie/data=!4m7!3m6!1s0x86409501124d80db:0x57793e4c1a5f7fcc!8m2!3d29.6386262!4d-95.3555496!16s%2Fg%2F1tk_k2k8!19sChIJ24BNEgGVQIYRzH9fGkw-eVc?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "Nice environment very charming lady her work is definitely 100% she five it her all come happy leave happy and fabulous you will be The end",
+    "Annie is so wonderful and nice. I love my nails!! I will be back",
+    "Annie is the best, she always does a great job. My grandmother been coming to Ann for years, she referred me and everyone in the neighborhood for her great service."
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "12–5:30 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "12–4 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "10:30 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "10:30 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "10:30 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "10:30 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "10 AM–5 PM",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "gel nails",
+    "acrylic nails",
+    "nail art",
+    "manicure",
+    "pedicure",
+    "nail extensions",
+    "dip powder nails",
+    "nail salon 77047",
+    "nail salon Houston",
+    "Cullen Blvd nail salon",
+    "Houston TX nail salon",
+    "South Houston nail salon",
+    "friendly nail salon",
+    "charming atmosphere",
+    "great service",
+    "customer favorite",
+    "neighborhood referral",
+    "nail salon near 77047",
+    "best nail salon in Houston",
+    "Annie nail salon Houston",
+    "gel nails Houston TX",
+    "affordable nail salon Houston",
+    "nail salon with friendly service"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "gel nails",
+      "acrylic nails",
+      "nail art",
+      "manicure",
+      "pedicure",
+      "nail extensions",
+      "dip powder nails"
+    ],
+    "locationKeywords": [
+      "nail salon 77047",
+      "nail salon Houston",
+      "Cullen Blvd nail salon",
+      "Houston TX nail salon",
+      "South Houston nail salon"
+    ],
+    "reputationKeywords": [
+      "friendly nail salon",
+      "charming atmosphere",
+      "great service",
+      "customer favorite",
+      "neighborhood referral"
+    ],
+    "searchPhrases": [
+      "nail salon near 77047",
+      "best nail salon in Houston",
+      "Annie nail salon Houston",
+      "gel nails Houston TX",
+      "affordable nail salon Houston",
+      "nail salon with friendly service"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 532,
+  "leadStatus": "new",
+  "priority": "medium",
+  "priorityScore": 50,
+  "notes": null,
+  "lastContactedAt": null
+}

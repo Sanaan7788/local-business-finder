@@ -1,0 +1,82 @@
+{
+  "id": "914e4558-5e73-462d-b8eb-8bd32a20d6f9",
+  "createdAt": "2026-06-07T10:16:23.716Z",
+  "updatedAt": "2026-06-07T10:16:23.716Z",
+  "name": "Brident Dental & Orthodontics",
+  "phone": "(713) 457-3441",
+  "address": "12805 Cullen Blvd, Houston, TX 77047",
+  "zipcode": "77047",
+  "category": "Dentist",
+  "description": null,
+  "website": true,
+  "websiteUrl": "https://www.brident.com/en-us/find-a-location/texas/houston/12805-cullen-blvd/?utm_source=GMB&utm_medium=organic",
+  "rating": 4.1,
+  "reviewCount": 1,
+  "googleMapsUrl": "https://www.google.com/maps/place/Brident+Dental+%26+Orthodontics/data=!4m7!3m6!1s0x864094f9d0290367:0x8e8da02eae158dc1!8m2!3d29.6242688!4d-95.3546626!16s%2Fg%2F1th6f6r1!19sChIJZwMp0PmUQIYRwY0Vri6gjY4?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "Kesha is great she’s the receptionist and handle all clerical work but Gabby i suggest you find a different job your rude lack basic knowledge and skills and you walked up smacking gum while assisting and when i asked you very simple basic …",
+    "Hello, due to the sensitivity of this matter, we currently cannot provide a public response. Our team is looking into the situation and once we’re finished reviewing, we will address any questions and concerns. Thank you for your patience and understanding as we work to resolve the situation.",
+    "I had the most horrific Endodontist appointment for a root canal that I have ever had. A 2 hour procedure took 5 hours. She hit me in the head with the xray machine, would work at 100mph grinding, poking , you could feel all the pain. Then …",
+    "Hello, due to the sensitivity of this matter, we currently cannot provide a public response. Our team is looking into the situation and once we’re finished reviewing, we will address any questions and concerns. Thank you for your patience and understanding as we work to resolve the situation.",
+    "I came in for feel-ins service was amazing, Dental Assistants Kayla & Stephanie were quick but super detailed. Manager, Kisha was very helpful with descriptions of what my next steps were there were no rush, she took her time. And Dr. Jasek …"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [],
+  "keywordCategories": null,
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 0,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 20,
+  "notes": null,
+  "lastContactedAt": null
+}

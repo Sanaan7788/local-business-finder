@@ -1,0 +1,146 @@
+{
+  "id": "3e271055-d271-4f77-8a71-9d412878b060",
+  "createdAt": "2026-06-07T06:23:50.599Z",
+  "updatedAt": "2026-06-07T06:34:28.160Z",
+  "name": "Houston Phone Doctors (We Come To Your Convenient location)",
+  "phone": "(832) 382-9902",
+  "address": "(832) 382-9902",
+  "zipcode": "77054",
+  "category": "Phone repair service",
+  "description": "4.9(70)",
+  "website": false,
+  "websiteUrl": null,
+  "rating": 4.9,
+  "reviewCount": null,
+  "googleMapsUrl": "https://www.google.com/maps/place/Houston+Phone+Doctors+%28We+Come+To+Your+Convenient+location%29/data=!4m7!3m6!1s0x8640c1e09df9aad9:0x57b647b6345b337d!8m2!3d29.8266774!4d-95.465351!16s%2Fg%2F11rtyrt74l!19sChIJ2ar5neDBQIYRfTNbNLZHtlc?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "He fixed my iPhone 12 Pro Max. I was not even sure that anyone can fix this phone because he got completely smashed, but he fixed it right away. I was really happy and satisfied she’s really affordable and quick.",
+    "Fast and great experience they fix your phone right away with the affordable pricing got my iPhone 15 Pro Max fixed today. I was really happy.",
+    "Absolutely amazing service handled fast and with care even offer warranty. Fantastic work and would recommend to anyone needing phone repair work."
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Open 24 hours",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Open 24 hours",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Open 24 hours",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Open 24 hours",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Open 24 hours",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Open 24 hours",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Open 24 hours",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "iPhone repair",
+    "iPhone 12 Pro Max repair",
+    "iPhone 15 Pro Max repair",
+    "smashed phone repair",
+    "phone screen repair",
+    "mobile phone repair",
+    "affordable phone repair",
+    "fast phone repair",
+    "phone repair Houston",
+    "phone repair 77054",
+    "Houston mobile repair",
+    "Houston phone repair service",
+    "Houston iPhone repair",
+    "Houston on-site phone repair",
+    "affordable pricing",
+    "fast service",
+    "great experience",
+    "warranty offered",
+    "handled with care",
+    "recommended by customers",
+    "satisfied customers",
+    "iPhone repair near me",
+    "affordable phone repair Houston",
+    "fast phone repair Houston",
+    "iPhone 15 Pro Max repair near me",
+    "smashed phone repair Houston",
+    "phone repair with warranty Houston",
+    "mobile phone repair Houston"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "iPhone repair",
+      "iPhone 12 Pro Max repair",
+      "iPhone 15 Pro Max repair",
+      "smashed phone repair",
+      "phone screen repair",
+      "mobile phone repair",
+      "affordable phone repair",
+      "fast phone repair"
+    ],
+    "locationKeywords": [
+      "phone repair Houston",
+      "phone repair 77054",
+      "Houston mobile repair",
+      "Houston phone repair service",
+      "Houston iPhone repair",
+      "Houston on-site phone repair"
+    ],
+    "reputationKeywords": [
+      "affordable pricing",
+      "fast service",
+      "great experience",
+      "warranty offered",
+      "handled with care",
+      "recommended by customers",
+      "satisfied customers"
+    ],
+    "searchPhrases": [
+      "iPhone repair near me",
+      "affordable phone repair Houston",
+      "fast phone repair Houston",
+      "iPhone 15 Pro Max repair near me",
+      "smashed phone repair Houston",
+      "phone repair with warranty Houston",
+      "mobile phone repair Houston"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 595,
+  "leadStatus": "new",
+  "priority": "high",
+  "priorityScore": 60,
+  "notes": null,
+  "lastContactedAt": null
+}

@@ -1,0 +1,178 @@
+{
+  "id": "b5a3993e-ead2-447f-8db3-438690121c19",
+  "createdAt": "2026-04-21T07:43:49.566Z",
+  "updatedAt": "2026-04-23T02:32:14.952Z",
+  "name": "Mood Coffee",
+  "phone": "(832) 999-4273",
+  "address": "14019 Southwest Fwy #405, Sugar Land, TX 77478",
+  "zipcode": "",
+  "category": "Coffee shop",
+  "description": null,
+  "website": true,
+  "websiteUrl": "http://moodcoffee.us/",
+  "rating": 4.8,
+  "reviewCount": null,
+  "googleMapsUrl": "https://www.google.com/maps/place/mood+coffee+sugar+land/data=!4m2!3m1!1s0x8640e71bd7f03ecb:0x3024b23b80d540fa?sa=X&ved=1t:242&ictx=111",
+  "reviewSnippets": [],
+  "menu": [],
+  "scrapedEmails": [],
+  "keywords": [
+    "specialty coffee",
+    "espresso drinks",
+    "pour-over coffee",
+    "pastries",
+    "breakfast tacos",
+    "coffee beans",
+    "cold brew",
+    "iced lattes",
+    "coffee shop Sugar Land",
+    "Sugar Land coffee",
+    "Southwest Freeway coffee",
+    "Fort Bend County coffee",
+    "Sugar Land Town Square area",
+    "friendly baristas",
+    "cozy atmosphere",
+    "great study spot",
+    "excellent espresso",
+    "popular local spot",
+    "coffee shop near me",
+    "best espresso Sugar Land",
+    "place to study with coffee",
+    "breakfast tacos and coffee",
+    "local coffee roaster Sugar Land"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "specialty coffee",
+      "espresso drinks",
+      "pour-over coffee",
+      "pastries",
+      "breakfast tacos",
+      "coffee beans",
+      "cold brew",
+      "iced lattes"
+    ],
+    "locationKeywords": [
+      "coffee shop Sugar Land",
+      "Sugar Land coffee",
+      "Southwest Freeway coffee",
+      "Fort Bend County coffee",
+      "Sugar Land Town Square area"
+    ],
+    "reputationKeywords": [
+      "friendly baristas",
+      "cozy atmosphere",
+      "great study spot",
+      "excellent espresso",
+      "popular local spot"
+    ],
+    "searchPhrases": [
+      "coffee shop near me",
+      "best espresso Sugar Land",
+      "place to study with coffee",
+      "breakfast tacos and coffee",
+      "local coffee roaster Sugar Land"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": {
+    "confirmedFacts": "Services: Mood Coffee offers specialty coffee, espresso drinks, pour-over coffee, pastries, breakfast tacos, coffee beans, cold brew, and iced lattes. Contact: The business is located at 14019 Southwest Fwy #405, Sugar Land, TX 77478, with a phone number of (832) 999-4273. Its location is described as in the Sugar Land Town Square area, near Southwest Freeway in Fort Bend County. Reputation: Mood Coffee has a Google rating of 4.8 stars and is described as a popular local spot. What Customers Say: Keywords indicate customers associate Mood Coffee with friendly baristas, a cozy atmosphere, being a great study spot, and excellent espresso. Menu Highlights: The business specifically mentions breakfast tacos and coffee as offerings.",
+    "assumptions": "Likely Services: As a coffee shop, Mood Coffee likely provides free Wi-Fi for customers, offers non-dairy milk alternatives (like oat, almond, or soy milk), sells branded merchandise (such as mugs or tote bags), and may host small events like open mic nights or local art displays. Estimated Price Range: Given its specialty coffee focus and location, prices are likely moderate, with espresso-based drinks typically ranging from $4 to $6 and food items like pastries or breakfast tacos priced between $3 and $8. Target Customers: The business likely targets local residents, professionals seeking a work or study spot, students from nearby schools or universities, and coffee enthusiasts interested in high-quality, locally roasted beans. Probable Hours: As a coffee shop in a suburban area like Sugar Land, it likely operates from early morning (around 6 or 7 AM) to early evening (around 6 or 7 PM), possibly with extended hours on weekends.",
+    "generatedAt": "2026-04-21T07:46:19.376Z"
+  },
+  "generatedWebsiteCode": null,
+  "websitePrompt": "You are a professional web developer. Build a complete, modern, single-page website for the following local business.\nReturn only the complete HTML file — no explanation, no markdown, no code fences. The file must be self-contained (inline CSS and JS, no external dependencies).\n\n== BUSINESS INFORMATION ==\nName: Mood Coffee\nCategory: Coffee shop\nAddress: 14019 Southwest Fwy #405, Sugar Land, TX 77478\nPhone: (832) 999-4273\nCurrent Website: http://moodcoffee.us/\nGoogle Rating: 4.8★ (0 reviews)\nGoogle Maps: https://www.google.com/maps/place/mood+coffee+sugar+land/data=!4m2!3m1!1s0x8640e71bd7f03ecb:0x3024b23b80d540fa?sa=X&ved=1t:242&ictx=111\n\n== CONFIRMED FACTS (use these as real content) ==\nServices: Mood Coffee offers specialty coffee, espresso drinks, pour-over coffee, pastries, breakfast tacos, coffee beans, cold brew, and iced lattes. Contact: The business is located at 14019 Southwest Fwy #405, Sugar Land, TX 77478, with a phone number of (832) 999-4273. Its location is described as in the Sugar Land Town Square area, near Southwest Freeway in Fort Bend County. Reputation: Mood Coffee has a Google rating of 4.8 stars and is described as a popular local spot. What Customers Say: Keywords indicate customers associate Mood Coffee with friendly baristas, a cozy atmosphere, being a great study spot, and excellent espresso. Menu Highlights: The business specifically mentions breakfast tacos and coffee as offerings.\n\n== INTELLIGENT ASSUMPTIONS (fill gaps with these) ==\nLikely Services: As a coffee shop, Mood Coffee likely provides free Wi-Fi for customers, offers non-dairy milk alternatives (like oat, almond, or soy milk), sells branded merchandise (such as mugs or tote bags), and may host small events like open mic nights or local art displays. Estimated Price Range: Given its specialty coffee focus and location, prices are likely moderate, with espresso-based drinks typically ranging from $4 to $6 and food items like pastries or breakfast tacos priced between $3 and $8. Target Customers: The business likely targets local residents, professionals seeking a work or study spot, students from nearby schools or universities, and coffee enthusiasts interested in high-quality, locally roasted beans. Probable Hours: As a coffee shop in a suburban area like Sugar Land, it likely operates from early morning (around 6 or 7 AM) to early evening (around 6 or 7 PM), possibly with extended hours on weekends.\n\n== KEYWORDS TO USE IN COPY ==\nServices: specialty coffee, espresso drinks, pour-over coffee, pastries, breakfast tacos, coffee beans, cold brew, iced lattes\nLocation: coffee shop Sugar Land, Sugar Land coffee, Southwest Freeway coffee, Fort Bend County coffee, Sugar Land Town Square area\nTrust signals: friendly baristas, cozy atmosphere, great study spot, excellent espresso, popular local spot\nSearch phrases: coffee shop near me, best espresso Sugar Land, place to study with coffee, breakfast tacos and coffee, local coffee roaster Sugar Land\n\n== DESIGN REQUIREMENTS ==\n- Mobile-first, fully responsive design\n- Modern, professional look appropriate for the business category\n- Sections: Hero, About, Services, Testimonials (if reviews available), Contact\n- Include the business phone number and address prominently\n- Add a clear call-to-action (e.g. \"Call Now\", \"Book Appointment\", \"Get a Quote\")\n- Use a colour palette that fits the business type\n- Smooth scroll navigation\n\nBuild the complete HTML file now.",
+  "websiteAnalysis": {
+    "crawledAt": "2026-04-21T07:56:25.968Z",
+    "pagesVisited": 2,
+    "rawPages": [
+      {
+        "url": "http://moodcoffee.us/",
+        "title": "Mood Coffee",
+        "headings": [
+          "Mood Coffee",
+          "MOOD COFFEE",
+          "Brewed for Every Mood",
+          "Brewed for Every Mood",
+          "Contact Us"
+        ],
+        "paragraphs": [
+          "Sign up for our email list for updates, promotions, and more.",
+          "This site is protected by reCAPTCHA and the Google Privacy Policy and Terms of Service apply.",
+          "Copyright © 2025 Mood Coffee - All Rights Reserved.",
+          "Powered by",
+          "We use cookies to analyze website traffic and optimize your website experience. By accepting our use of cookies, your data will be aggregated with all other user data."
+        ],
+        "navLinks": [
+          "Mood CoffeeMood CoffeeMood CoffeeMood Coffee",
+          "MOOD COFFEE",
+          "More"
+        ],
+        "images": 1,
+        "hasContactForm": true,
+        "hasPhone": false,
+        "hasEmail": false,
+        "emails": []
+      },
+      {
+        "url": "https://moodcoffee.us/",
+        "title": "Mood Coffee",
+        "headings": [
+          "Mood Coffee",
+          "MOOD COFFEE",
+          "Brewed for Every Mood",
+          "Brewed for Every Mood",
+          "Contact Us"
+        ],
+        "paragraphs": [
+          "Sign up for our email list for updates, promotions, and more.",
+          "This site is protected by reCAPTCHA and the Google Privacy Policy and Terms of Service apply.",
+          "Copyright © 2025 Mood Coffee - All Rights Reserved.",
+          "Powered by",
+          "We use cookies to analyze website traffic and optimize your website experience. By accepting our use of cookies, your data will be aggregated with all other user data."
+        ],
+        "navLinks": [
+          "Mood CoffeeMood CoffeeMood CoffeeMood Coffee",
+          "MOOD COFFEE",
+          "More"
+        ],
+        "images": 1,
+        "hasContactForm": true,
+        "hasPhone": false,
+        "hasEmail": false,
+        "emails": []
+      }
+    ],
+    "structured": "## Site-Wide Structure\n**Website Name:** Mood Coffee\n**Domain:** http://moodcoffee.us/\n**Pages Crawled:** 2 (both appear to be the homepage; the second crawl is the same URL with 'https' protocol).\n\n**Navigation Bar (Header):** The navbar is minimal and repetitive. It contains multiple instances of the text 'Mood Coffee' and a single link labeled 'More'. The 'More' link is the only distinct navigational element, but its destination is unclear from the crawled data. There is no clear menu structure for pages like 'About', 'Products', or 'Services'.\n\n**Footer:** The footer contains standard legal and informational text: a copyright notice ('Copyright © 2025 Mood Coffee - All Rights Reserved.'), a statement about being powered by an unspecified platform, a cookie consent notice, and a reCAPTCHA disclaimer linked to Google's Privacy Policy and Terms of Service.\n\n**Pages Found:** Based on the crawl, only one distinct page was identified: the homepage (http://moodcoffee.us/). The 'More' link in the nav may lead to another page, but it was not crawled.\n\n## Homepage\n**Title:** Mood Coffee\n**Headings:** The page uses several headings, but they are repetitive and lack clear hierarchical structure: 'Mood Coffee', 'MOOD COFFEE', 'Brewed for Every Mood' (appears twice), and 'Contact Us'.\n\n**Sections & Content:**\n1.  **Hero/Brand Message:** The tagline 'Brewed for Every Mood' is prominently displayed, suggesting the business's core concept.\n2.  **Email Sign-Up:** The primary content block is a call-to-action for visitors to 'Sign up for our email list for updates, promotions, and more.' This is the main interactive element on the page.\n3.  **Contact Section:** A 'Contact Us' heading is present, but no direct contact details (phone, email, address) are visible. Instead, it contains a contact form (confirmed present in crawl data).\n\n**Services/Products Listed:** None. The website does not list any specific coffee products, blends, subscription plans, or services for sale.\n\n**Contact Details:** No direct contact details are visible on the page (phone and email are noted as 'false' in the crawl). Communication is funneled solely through the embedded contact form.\n\n**Testimonials:** None present.\n\n**Calls-to-Action (CTAs):** The primary CTA is to sign up for the email list. A secondary, implied CTA is to use the contact form to get in touch.\n\n**Media:** The crawl indicates one image is present, but its subject is not described. No videos were noted.\n\n## Overall Organisation\n**Assessment:** The website is extremely basic and appears to be in a very early or placeholder stage. It functions more as a single landing page than a full business website.\n\n**Strengths:**\n*   Has a clear, memorable brand name and tagline ('Brewed for Every Mood').\n*   Includes essential legal components (copyright, cookie notice).\n*   Provides a method for lead capture (email sign-up) and contact (form).\n\n**Missing Elements & Structural Issues:**\n*   **Lack of Content:** There is no information about the company, its story, its products, or its values.\n*   **Poor Navigation:** The navbar is non-functional and confusing, with duplicate links and only one vague 'More' option.\n*   **No Product/Service Information:** Crucial for an e-commerce or retail business. Visitors cannot see what is being sold.\n*   **Missing Contact Transparency:** No physical address, phone number, or email address is provided, which can reduce trust.\n*   **No Supporting Pages:** Standard pages like 'About Us', 'Our Coffee', 'Shop', 'Blog', or 'FAQ' are absent.\n*   **Unclear Purpose:** It is not evident if the site is for a physical cafe, an online retailer, a subscription service, or a wholesaler.\n\n**Conclusion:** The current website structure is minimal and incomplete. It serves as a basic holding page with lead capture but fails to communicate the business's offerings or provide a functional user experience for customers seeking to learn about or purchase coffee.",
+    "improvements": [
+      "Add detailed product/service pages describing the coffee offerings.",
+      "Create an 'About Us' page explaining the business story and mission.",
+      "Make contact information (phone, email, address) clearly visible.",
+      "Add an online store or clear call-to-action to purchase coffee.",
+      "Expand the navigation menu to include logical sections like Shop, About, Contact.",
+      "Replace placeholder/repeated navigation links with proper, distinct labels.",
+      "Add high-quality, relevant images showcasing products, the process, or a cafe.",
+      "Include social media links and integration.",
+      "Add customer testimonials or reviews.",
+      "Create a dedicated FAQ page.",
+      "Implement a clear privacy policy and terms of service page.",
+      "Optimize page titles and meta descriptions for search engines."
+    ],
+    "score": 2,
+    "scoreReason": "The website is extremely basic and incomplete, lacking essential business information and functionality, though it has a clean visual foundation and a contact form."
+  },
+  "outreach": {
+    "email": {
+      "subject": "Your Mood Coffee website & a quick idea",
+      "body": "Hi there — I was looking at the Mood Coffee site and noticed it's a bit sparse right now.\n\nSpecifically, there's no info about your coffee blends or an 'About Us' page to tell your story. This matters because customers online want to know what makes your shop special and what they can order.\n\nI help local businesses with simple, effective websites. Would you be open to a quick 10-minute chat next week to discuss some easy improvements?\n\nBest,\nAlex"
+    }
+  },
+  "tokensUsed": 1828,
+  "leadStatus": "new",
+  "priority": "medium",
+  "priorityScore": 30,
+  "notes": null,
+  "lastContactedAt": null
+}

@@ -1,0 +1,140 @@
+{
+  "id": "2ee55f0f-1fa7-437b-9fa3-a878bd7ba600",
+  "createdAt": "2026-06-01T00:45:59.292Z",
+  "updatedAt": "2026-06-01T00:46:35.196Z",
+  "name": "PS Dental",
+  "phone": "(281) 261-7721",
+  "address": "1211 Lake Pointe Pkwy #100, Sugar Land, TX 77478",
+  "zipcode": "77477",
+  "category": "Dentist",
+  "description": "5.0(678)",
+  "website": true,
+  "websiteUrl": "http://psdentalcorp.com/",
+  "rating": 5,
+  "reviewCount": 160,
+  "googleMapsUrl": "https://www.google.com/maps/place/PS+Dental/data=!4m7!3m6!1s0x8640e6e960ecbc21:0x5dd33ef8b30d7378!8m2!3d29.6066983!4d-95.6209247!16s%2Fg%2F11b866364k!19sChIJIbzsYOnmQIYReHMNs_g-010?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "Had a great experience at PS Dental! Both Dr. Purvi Patel and Dr. Anjali Patel were very caring and helpful. Their genuine care and attention to detail is unmatched. Thankful nd grateful for my care and experience there!",
+    "Thank You!!",
+    "Anjali is amazing! So glad to have her taking care of my teeth. Her expertise and thoughtfulness are immediately evident from the moment I walk in. I really appreciate the thorough, reliable service I can count on.",
+    "Thank You!!",
+    "I have been with Dr Patel for over 25 years. I have recommended her to multiple people and they all love her and her staff as much as my family does. Dr. Patel will go out of her way to help you on what you need for your teeth. She doesn't push you into anything if you are not ready or need at that moment. Totally recommended her."
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–12 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "dentist",
+    "teeth cleaning",
+    "dental checkup",
+    "dental care",
+    "tooth care",
+    "dentist Sugar Land",
+    "dentist 77477",
+    "dentist 77478",
+    "dentist Lake Pointe Pkwy",
+    "dentist Fort Bend County",
+    "caring dentist",
+    "attention to detail",
+    "thorough service",
+    "reliable dentist",
+    "experienced dentist",
+    "recommended dentist",
+    "trusted dentist",
+    "dentist near me",
+    "best dentist in Sugar Land",
+    "dentist with 5 star reviews",
+    "caring dentist Sugar Land",
+    "dentist recommended by family",
+    "dentist with 25 years experience",
+    "gentle dentist Sugar Land"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "dentist",
+      "teeth cleaning",
+      "dental checkup",
+      "dental care",
+      "tooth care"
+    ],
+    "locationKeywords": [
+      "dentist Sugar Land",
+      "dentist 77477",
+      "dentist 77478",
+      "dentist Lake Pointe Pkwy",
+      "dentist Fort Bend County"
+    ],
+    "reputationKeywords": [
+      "caring dentist",
+      "attention to detail",
+      "thorough service",
+      "reliable dentist",
+      "experienced dentist",
+      "recommended dentist",
+      "trusted dentist"
+    ],
+    "searchPhrases": [
+      "dentist near me",
+      "best dentist in Sugar Land",
+      "dentist with 5 star reviews",
+      "caring dentist Sugar Land",
+      "dentist recommended by family",
+      "dentist with 25 years experience",
+      "gentle dentist Sugar Land"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 658,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

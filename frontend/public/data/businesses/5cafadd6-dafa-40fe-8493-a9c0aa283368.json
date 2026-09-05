@@ -1,0 +1,55 @@
+{
+  "id": "5cafadd6-dafa-40fe-8493-a9c0aa283368",
+  "createdAt": "2026-06-07T08:05:59.370Z",
+  "updatedAt": "2026-06-07T08:05:59.370Z",
+  "name": "houston medical center dental",
+  "phone": "(713) 795-0608",
+  "address": "6400 Fannin St #2040, Houston, TX 77030",
+  "zipcode": "77054",
+  "category": "Dentist",
+  "description": null,
+  "website": true,
+  "websiteUrl": "http://www.houstonmedicalcenterdental.com/",
+  "rating": 4.8,
+  "reviewCount": 47,
+  "googleMapsUrl": "https://www.google.com/maps/place/houston+medical+center+dental/data=!4m7!3m6!1s0x8640c079c5db78b5:0x8e1ba7ca9b95437b!8m2!3d29.7149801!4d-95.397395!16s%2Fg%2F11bxc6jgw_!19sChIJtXjbxXnAQIYRe0OVm8qnG44?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "This is Dr. Thomas Swonke's clinic in the medical center. He's by far the best dentist I've ever been too! His staff is great too!",
+    "Dr. Swonke's hands-down the best dentist I've ever had. Just as important, as a patient, the staff here is top-notch. From reception, to the hygenists, and subs - the place just oozes competency. …",
+    "Dr. Swonke was recommended to me by 3 of my neighbors. He has been truly what they said he would be- I have every confidence in him. I’ve had some bad experiences in the past with dentists and I’m always stressed about going. Dr. Swonke …"
+  ],
+  "menu": [
+    {
+      "section": "Popular times",
+      "items": [
+        {
+          "name": "Sundays",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Based on visits to this place.",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [],
+  "keywordCategories": null,
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 0,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 10,
+  "notes": null,
+  "lastContactedAt": null
+}

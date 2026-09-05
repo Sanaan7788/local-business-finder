@@ -1,0 +1,155 @@
+{
+  "id": "bb8751eb-4ec6-4b6d-8bca-d84be6961776",
+  "createdAt": "2026-06-01T00:44:48.950Z",
+  "updatedAt": "2026-06-01T00:45:18.918Z",
+  "name": "AccessHealth Stafford Clinic",
+  "phone": "(281) 342-4530",
+  "address": "10435 Greenbough Dr # 300, Stafford, TX 77477",
+  "zipcode": "77477",
+  "category": "Medical clinic",
+  "description": "4.2(64)",
+  "website": true,
+  "websiteUrl": "http://www.myaccesshealth.org/",
+  "rating": 4.2,
+  "reviewCount": 4,
+  "googleMapsUrl": "https://www.google.com/maps/place/AccessHealth+Stafford+Clinic/data=!4m7!3m6!1s0x8640e62a1e55c92b:0xaffc49351a84756c!8m2!3d29.6205723!4d-95.5625492!16s%2Fg%2F11hd9qz3ct!19sChIJK8lVHirmQIYRbHWEGjVJ_K8?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "Janelle is extremely polite pleasant and helpful friendly and professional. she makes me so comfortable I will all come back to this office because of her kindness.",
+    "I am very happy and satisfied with the dental from access health. I've gotten my cleaning and my fillings done here. They've always been fast, nice and good with their work. They've given me the tooth colored fillings here and I am so …",
+    "Elizabeth is always so pleasant! Great customer service and very knowledgeable about services. She is a great addition to the team.",
+    "We sincerely appreciate your wonderful feedback on AccessHealth! Your positive review brightened our day. Our dedicated team is committed to delivering exceptional care, and we're delighted that you had a great experience. Looking forward to continually surpassing your expectations in the future!"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "7 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "7 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "7 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "7 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "7 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "medical clinic",
+    "dental cleaning",
+    "tooth colored fillings",
+    "dental fillings",
+    "primary care",
+    "family medicine",
+    "preventive care",
+    "urgent care",
+    "Stafford medical clinic",
+    "clinic 77477",
+    "Greenbough Dr clinic",
+    "Stafford TX healthcare",
+    "medical clinic near Stafford",
+    "Houston area clinic",
+    "Stafford family clinic",
+    "clinic in 77477",
+    "friendly staff",
+    "polite and pleasant",
+    "comfortable experience",
+    "fast service",
+    "knowledgeable team",
+    "great customer service",
+    "kindness",
+    "exceptional care",
+    "medical clinic Stafford TX",
+    "dental cleaning near me",
+    "family doctor Stafford",
+    "tooth colored fillings Stafford",
+    "urgent care Stafford",
+    "primary care clinic 77477",
+    "best medical clinic in Stafford",
+    "affordable dental fillings near me"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "medical clinic",
+      "dental cleaning",
+      "tooth colored fillings",
+      "dental fillings",
+      "primary care",
+      "family medicine",
+      "preventive care",
+      "urgent care"
+    ],
+    "locationKeywords": [
+      "Stafford medical clinic",
+      "clinic 77477",
+      "Greenbough Dr clinic",
+      "Stafford TX healthcare",
+      "medical clinic near Stafford",
+      "Houston area clinic",
+      "Stafford family clinic",
+      "clinic in 77477"
+    ],
+    "reputationKeywords": [
+      "friendly staff",
+      "polite and pleasant",
+      "comfortable experience",
+      "fast service",
+      "knowledgeable team",
+      "great customer service",
+      "kindness",
+      "exceptional care"
+    ],
+    "searchPhrases": [
+      "medical clinic Stafford TX",
+      "dental cleaning near me",
+      "family doctor Stafford",
+      "tooth colored fillings Stafford",
+      "urgent care Stafford",
+      "primary care clinic 77477",
+      "best medical clinic in Stafford",
+      "affordable dental fillings near me"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 677,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 10,
+  "notes": null,
+  "lastContactedAt": null
+}

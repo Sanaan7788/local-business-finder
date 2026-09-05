@@ -1,0 +1,91 @@
+{
+  "id": "b3bff251-24fb-4da1-9967-f86a675a423d",
+  "createdAt": "2026-04-06T15:56:15.299Z",
+  "updatedAt": "2026-04-06T15:59:00.228Z",
+  "name": "Tactical Marketing Pro",
+  "phone": "(713) 519-5919",
+  "address": "1000 Main St Suite 2300, Houston, TX 77002",
+  "zipcode": "77002",
+  "category": "Business management consultant",
+  "description": "5.0(3)",
+  "website": true,
+  "websiteUrl": "http://tacticalmarketingpro.com/",
+  "rating": 5,
+  "reviewCount": 1,
+  "googleMapsUrl": "https://www.google.com/maps/place/Tactical+Marketing+Pro/data=!4m7!3m6!1s0x8640bfac104ef231:0xc336781af54ff302!8m2!3d29.7567954!4d-95.3659038!16s%2Fg%2F11vym26qh6!19sChIJMfJOEKy_QIYRAvNP9Rp4NsM?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "Tactical Marketing Pro built a system specifically designed for my business and it has completely taken off. They rebuilt my website into a professional, conversion ready platform and created marketing strategies that brought in real …"
+  ],
+  "menu": [],
+  "scrapedEmails": [],
+  "keywords": [
+    "business management consulting",
+    "marketing strategy development",
+    "website redesign",
+    "conversion optimization",
+    "lead generation systems",
+    "digital marketing consulting",
+    "business growth consulting",
+    "Houston business consultant",
+    "downtown Houston consulting",
+    "77002 business consultant",
+    "Main Street Houston consultant",
+    "Houston TX management consultant",
+    "custom business systems",
+    "conversion ready websites",
+    "strategies that bring real results",
+    "business growth expert",
+    "5-star rated consultant",
+    "business management consultant Houston",
+    "Houston marketing strategy consultant",
+    "website redesign for business growth",
+    "lead generation consultant Houston",
+    "downtown Houston business consultant"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "business management consulting",
+      "marketing strategy development",
+      "website redesign",
+      "conversion optimization",
+      "lead generation systems",
+      "digital marketing consulting",
+      "business growth consulting"
+    ],
+    "locationKeywords": [
+      "Houston business consultant",
+      "downtown Houston consulting",
+      "77002 business consultant",
+      "Main Street Houston consultant",
+      "Houston TX management consultant"
+    ],
+    "reputationKeywords": [
+      "custom business systems",
+      "conversion ready websites",
+      "strategies that bring real results",
+      "business growth expert",
+      "5-star rated consultant"
+    ],
+    "searchPhrases": [
+      "business management consultant Houston",
+      "Houston marketing strategy consultant",
+      "website redesign for business growth",
+      "lead generation consultant Houston",
+      "downtown Houston business consultant"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 492,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 10,
+  "notes": null,
+  "lastContactedAt": null
+}

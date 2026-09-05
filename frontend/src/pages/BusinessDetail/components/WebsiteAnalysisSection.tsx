@@ -1,5 +1,6 @@
 import { useAnalyzeWebsite, useUpdateWebsiteAnalysis } from '../../../hooks/useBusinesses'
 import { cn } from '../../../lib/cn'
+import { IS_STATIC, serverOnly } from '../../../lib/env'
 import { getApiErrorMessage } from '../../../lib/errors'
 import { formatDate } from '../../../lib/format'
 import { TONE, type Tone } from '../../../lib/tones'
@@ -22,7 +23,13 @@ export function WebsiteAnalysisSection({ business }: { business: Business }) {
   const analysis = business.websiteAnalysis
 
   if (!business.websiteUrl) {
-    return <EmptyState size="sm" title="No website URL" description="Add a website URL in the Overview tab first." />
+    return (
+      <EmptyState
+        size="sm"
+        title="No website URL"
+        description={IS_STATIC ? 'This business has no website on record.' : 'Add a website URL in the Overview tab first.'}
+      />
+    )
   }
 
   const analyzeButton = (label: string, pendingLabel: string) => (
@@ -33,11 +40,20 @@ export function WebsiteAnalysisSection({ business }: { business: Business }) {
 
   if (!analysis) {
     return (
-      <Panel tone="neutral" title="Current Website Structure" description="No analysis yet — crawl and analyse the existing website" action={analyzeButton('Analyze Website', 'Crawling… (may take 60s)')}>
+      <Panel
+        tone="neutral"
+        title="Current Website Structure"
+        description={IS_STATIC ? 'Not analysed yet' : 'No analysis yet — crawl and analyse the existing website'}
+        action={serverOnly(analyzeButton('Analyze Website', 'Crawling… (may take 60s)'))}
+      >
         {analyze.isError ? (
           <Alert tone="danger">{getApiErrorMessage(analyze.error, 'Analysis failed')}</Alert>
         ) : (
-          <p className="text-xs text-fg-subtle">Crawls up to 10 pages of {business.websiteUrl}, then scores the site and lists improvements.</p>
+          <p className="text-xs text-fg-subtle">
+            {IS_STATIC
+              ? 'The website was not analysed before this snapshot was exported. Run the analysis in the local app.'
+              : `Crawls up to 10 pages of ${business.websiteUrl}, then scores the site and lists improvements.`}
+          </p>
         )}
       </Panel>
     )
@@ -50,7 +66,7 @@ export function WebsiteAnalysisSection({ business }: { business: Business }) {
       <SectionHeading
         title="Current Website Structure"
         description={`${analysis.pagesVisited} page${analysis.pagesVisited !== 1 ? 's' : ''} crawled · ${formatDate(analysis.crawledAt)}`}
-        action={analyzeButton('Re-analyze', 'Re-crawling…')}
+        action={serverOnly(analyzeButton('Re-analyze', 'Re-crawling…'))}
       />
       {analyze.isError && <Alert tone="danger">{getApiErrorMessage(analyze.error, 'Analysis failed')}</Alert>}
 
@@ -73,6 +89,7 @@ export function WebsiteAnalysisSection({ business }: { business: Business }) {
         error={update.error}
         rows={16}
         mono
+        readOnly={IS_STATIC}
       >
         <pre className="whitespace-pre-wrap font-sans text-sm leading-relaxed text-fg">{analysis.structured ?? '—'}</pre>
       </EditablePanel>
@@ -91,6 +108,7 @@ export function WebsiteAnalysisSection({ business }: { business: Business }) {
         saving={update.isPending}
         error={update.error}
         hint="One improvement per line"
+        readOnly={IS_STATIC}
       >
         <ul className="space-y-2">
           {analysis.improvements.map((item, i) => (

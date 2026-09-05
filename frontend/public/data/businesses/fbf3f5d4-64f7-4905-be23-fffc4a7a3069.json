@@ -1,0 +1,89 @@
+{
+  "id": "fbf3f5d4-64f7-4905-be23-fffc4a7a3069",
+  "createdAt": "2026-04-06T10:44:12.287Z",
+  "updatedAt": "2026-04-06T10:44:45.329Z",
+  "name": "Business Services Today LLC",
+  "phone": "(281) 739-2448",
+  "address": "9900 Westpark Dr #315, Houston, TX 77063",
+  "zipcode": "77074",
+  "category": "Business development service",
+  "description": "1.0(1)",
+  "website": true,
+  "websiteUrl": "https://www.businessservicestoday.com/",
+  "rating": 1,
+  "reviewCount": 23,
+  "googleMapsUrl": "https://www.google.com/maps/place/Business+Services+Today+LLC/data=!4m7!3m6!1s0x8640c37c4780932b:0x300105af9ebfdabd!8m2!3d29.7211202!4d-95.5358725!16s%2Fg%2F11j3r1g3rb!19sChIJK5OAR3zDQIYRvdq_nq8FATA?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "Do not trust this company, they completely screwed up my business filings and made me lose millions of dollars due to their incompetency."
+  ],
+  "menu": [],
+  "scrapedEmails": [],
+  "keywords": [
+    "business filings",
+    "business registration",
+    "LLC formation",
+    "corporate compliance",
+    "business licensing",
+    "tax ID application",
+    "registered agent service",
+    "Houston business services",
+    "Westpark Dr business consultant",
+    "77063 business filings",
+    "Houston TX business development",
+    "77074 business services",
+    "business filing errors",
+    "incompetent business filings",
+    "lost money due to filings",
+    "do not trust business filings",
+    "business filing service Houston",
+    "LLC formation Houston TX",
+    "business registration service 77063",
+    "Houston business development consultant",
+    "corporate compliance services Houston"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "business filings",
+      "business registration",
+      "LLC formation",
+      "corporate compliance",
+      "business licensing",
+      "tax ID application",
+      "registered agent service"
+    ],
+    "locationKeywords": [
+      "Houston business services",
+      "Westpark Dr business consultant",
+      "77063 business filings",
+      "Houston TX business development",
+      "77074 business services"
+    ],
+    "reputationKeywords": [
+      "business filing errors",
+      "incompetent business filings",
+      "lost money due to filings",
+      "do not trust business filings"
+    ],
+    "searchPhrases": [
+      "business filing service Houston",
+      "LLC formation Houston TX",
+      "business registration service 77063",
+      "Houston business development consultant",
+      "corporate compliance services Houston"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 470,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 15,
+  "notes": null,
+  "lastContactedAt": null
+}

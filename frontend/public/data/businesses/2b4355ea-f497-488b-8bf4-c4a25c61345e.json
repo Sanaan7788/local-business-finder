@@ -1,0 +1,82 @@
+{
+  "id": "2b4355ea-f497-488b-8bf4-c4a25c61345e",
+  "createdAt": "2026-06-07T09:36:00.586Z",
+  "updatedAt": "2026-06-07T09:36:00.586Z",
+  "name": "Centra Dental Houston - Family Dentist",
+  "phone": "(713) 352-0750",
+  "address": "4318 W Fuqua St, Houston, TX 77045",
+  "zipcode": "77047",
+  "category": "Dentist",
+  "description": null,
+  "website": true,
+  "websiteUrl": "https://www.centradental.com/?utm_campaign=gmb",
+  "rating": 4.9,
+  "reviewCount": 79,
+  "googleMapsUrl": "https://www.google.com/maps/place/Centra+Dental+Houston+-+Family+Dentist/data=!4m7!3m6!1s0x8640eba3f712c6af:0x1656be24a58823e0!8m2!3d29.6137362!4d-95.441838!16s%2Fg%2F1tdz0bnb!19sChIJr8YS96PrQIYR4COIpSS-VhY?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "NOTE: MY EXPERIENCE IS WITH THE NIGHTLASE PROCEDURE FOR SNORING/SLEEP APNEA Dr. Nguyen and her staff have genuinely been life changing in giving me relief …",
+    "Hi, Zachofragnarok. We appreciate the kind words and are glad we could provide you with a positive experience!",
+    "I have had so many bad experiences with dentists which caused me to neglect regular dental check ups. I NEED dental work done & came to Centra Dental. Everyone was so nice & respectful. I truly respect how gentle the dental hygienist & dentists was. They truly care & listen to the patient. I felt so comfortable with them.",
+    "Hi, Kellie. Your feedback is highly appreciated. Thank you for the review!",
+    "My favorite dentist! Great experience having a general check-up and having my teeth cleaned here. Dr Nguyen and team have soft hands and make the procedure painless."
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–12 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–12 PM",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [],
+  "keywordCategories": null,
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 0,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 10,
+  "notes": null,
+  "lastContactedAt": null
+}

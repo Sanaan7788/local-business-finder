@@ -1,0 +1,146 @@
+{
+  "id": "a25a1c42-e939-4bd0-8b6d-3ceb1719704f",
+  "createdAt": "2026-06-01T09:57:24.995Z",
+  "updatedAt": "2026-06-01T10:06:12.759Z",
+  "name": "Healthy Life Chiropractic & Acupuncture Clinic",
+  "phone": "(281) 302-6902",
+  "address": "4899 Hwy 6 Suite 201C, Missouri City, TX 77459",
+  "zipcode": "77477",
+  "category": "Chiropractor",
+  "description": "4.7(42)",
+  "website": true,
+  "websiteUrl": "http://www.sugarlanddc.com/",
+  "rating": 4.7,
+  "reviewCount": 319,
+  "googleMapsUrl": "https://www.google.com/maps/place/Healthy+Life+Chiropractic+%26+Acupuncture+Clinic/data=!4m7!3m6!1s0x8640e6bfe8a3c1b7:0x17e4f833c9a76933!8m2!3d29.5797055!4d-95.5789296!16s%2Fg%2F113f3cl8j!19sChIJt8Gj6L_mQIYRM2mnyTP45Bc?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "After 15 years of desk work, I was struggling with significant frozen shoulder pain. I’ve seen a dramatic improvement in both my right and left hands after 10 massage treatments here! It has been the easiest and most effective way to …",
+    "I would highly recommend asking for Helen for your massage. Her work ethics and making you truly feel good is so good I promise. She was able to point out every part of where I have a knot without even telling her. The level pressure I want was also on point. Every minute spent with her was no waste.",
+    "The doctor in picture literally told me now that They don’t need NEW PATIENTS. THEY ARE FULL OF CAPACITY. PLEASE GO SOMEWHERE ELSE. He said “We are not licensed doctors to treat people with any types of pain. If you have pain, you should go to physical therapist.” 不要来，不要来，不要上当。"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "chiropractor",
+    "acupuncture",
+    "massage therapy",
+    "frozen shoulder treatment",
+    "pain management",
+    "desk work injury relief",
+    "muscle knot treatment",
+    "Missouri City chiropractor",
+    "chiropractor 77477",
+    "chiropractor Hwy 6",
+    "acupuncture Missouri City",
+    "massage therapy Missouri City",
+    "chiropractor near 77459",
+    "Sienna Plantation chiropractor",
+    "effective massage treatments",
+    "Helen massage therapist",
+    "good work ethics",
+    "accurate knot detection",
+    "custom pressure massage",
+    "dramatic improvement",
+    "highly recommended massage",
+    "chiropractor for frozen shoulder near me",
+    "massage for desk workers Missouri City",
+    "acupuncture clinic Missouri City",
+    "best massage therapist Missouri City",
+    "chiropractor that accepts new patients 77477",
+    "pain relief massage Missouri City",
+    "Helen massage therapist Missouri City"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "chiropractor",
+      "acupuncture",
+      "massage therapy",
+      "frozen shoulder treatment",
+      "pain management",
+      "desk work injury relief",
+      "muscle knot treatment"
+    ],
+    "locationKeywords": [
+      "Missouri City chiropractor",
+      "chiropractor 77477",
+      "chiropractor Hwy 6",
+      "acupuncture Missouri City",
+      "massage therapy Missouri City",
+      "chiropractor near 77459",
+      "Sienna Plantation chiropractor"
+    ],
+    "reputationKeywords": [
+      "effective massage treatments",
+      "Helen massage therapist",
+      "good work ethics",
+      "accurate knot detection",
+      "custom pressure massage",
+      "dramatic improvement",
+      "highly recommended massage"
+    ],
+    "searchPhrases": [
+      "chiropractor for frozen shoulder near me",
+      "massage for desk workers Missouri City",
+      "acupuncture clinic Missouri City",
+      "best massage therapist Missouri City",
+      "chiropractor that accepts new patients 77477",
+      "pain relief massage Missouri City",
+      "Helen massage therapist Missouri City"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 712,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

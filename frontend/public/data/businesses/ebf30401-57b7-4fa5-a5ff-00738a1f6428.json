@@ -1,0 +1,80 @@
+{
+  "id": "ebf30401-57b7-4fa5-a5ff-00738a1f6428",
+  "createdAt": "2026-06-01T00:58:02.240Z",
+  "updatedAt": "2026-06-01T00:58:02.240Z",
+  "name": "Westwood Dental",
+  "phone": "(281) 265-2222",
+  "address": "2310 Settlers Way Blvd, Sugar Land, TX 77478",
+  "zipcode": "77477",
+  "category": "Dentist",
+  "description": "4.5(124)",
+  "website": false,
+  "websiteUrl": null,
+  "rating": 4.5,
+  "reviewCount": 464,
+  "googleMapsUrl": "https://www.google.com/maps/place/Westwood+Dental/data=!4m7!3m6!1s0x8640e664ce34c5ab:0xfe3fa234ebb7b495!8m2!3d29.590763!4d-95.596625!16s%2Fg%2F1tnss9h2!19sChIJq8U0zmTmQIYRlbS36zSiP_4?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "The team was really nice and i loved the way experience. They were very informative and considerate Dr Shah, Shahad, Edwin, Freddy and Tania they all took good care of my kids and took their time to provide them with all the dental services needed. It was an amazing experience honestly.",
+    "Our first time at Westwood and the experience was great. Both the doctors and staff were super nice and accommodating. Freddy was very helpful in getting us the best prices since our insurance is limited. This is our new permanent dentist for sure!",
+    "They are always amazing. Extremely patient, gentle, and professional. Always. My family including myself go to Westwood. The latest experience was getting sealant on my son’s adult teeth to prevent cavities. They’ve done many other services. They’re great."
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–1 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [],
+  "keywordCategories": null,
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 0,
+  "leadStatus": "new",
+  "priority": "medium",
+  "priorityScore": 40,
+  "notes": null,
+  "lastContactedAt": null
+}

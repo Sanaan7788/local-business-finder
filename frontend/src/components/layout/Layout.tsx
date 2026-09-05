@@ -1,10 +1,13 @@
 import type { ReactNode } from 'react'
 import { NavLink } from 'react-router-dom'
 import { cn } from '../../lib/cn'
+import { IS_STATIC } from '../../lib/env'
 import { LLMSelector } from './LLMSelector'
-import { TotalTokensCounter } from './TotalTokensCounter'
+import { LocalChangesWidget } from './LocalChangesWidget'
 import { ScraperStatusPill } from './ScraperStatusPill'
+import { SnapshotBadge } from './SnapshotBadge'
 import { ThemeToggle } from './ThemeToggle'
+import { TotalTokensCounter } from './TotalTokensCounter'
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>
   cn(
@@ -31,9 +34,10 @@ export function Layout({ children }: { children: ReactNode }) {
 
             <span aria-hidden className="mx-1 h-5 w-px bg-line" />
 
-            <ScraperStatusPill />
+            {/* The static build has no scraper or LLM to talk to; it shows the snapshot date and local edits instead. */}
+            {IS_STATIC ? <SnapshotBadge /> : <ScraperStatusPill />}
             <TotalTokensCounter />
-            <LLMSelector />
+            {IS_STATIC ? <LocalChangesWidget /> : <LLMSelector />}
             <ThemeToggle />
           </div>
         </div>

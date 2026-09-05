@@ -10,7 +10,9 @@
     "type-check": "tsc --noEmit",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx src/data/migrate.ts",
-    "db:push": "drizzle-kit push"
+    "db:push": "drizzle-kit push",
+    "export:static": "tsx src/scripts/export-static.ts",
+    "import:changes": "tsx src/scripts/import-changes.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.80.0",

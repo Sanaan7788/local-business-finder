@@ -1,0 +1,82 @@
+{
+  "id": "883b3ba2-43cb-48a8-949c-e2c1c88d2670",
+  "createdAt": "2026-06-01T08:02:31.612Z",
+  "updatedAt": "2026-06-01T08:02:31.612Z",
+  "name": "A1 Chiropractic and Family Wellness",
+  "phone": "(346) 299-5524",
+  "address": "4501 Cartwright Rd STE 104, Missouri City, TX 77459",
+  "zipcode": "77477",
+  "category": "Chiropractor",
+  "description": null,
+  "website": true,
+  "websiteUrl": "http://www.a1chirofw.com/?utm_source=google&utm_medium=wix_google_business_profile&utm_campaign=13049394219519376604",
+  "rating": 5,
+  "reviewCount": null,
+  "googleMapsUrl": "https://www.google.com/maps/place/A1+Chiropractic+and+Family+Wellness/data=!4m7!3m6!1s0x8640e7891f4a25b5:0xe224537adeb7abbc!8m2!3d29.5822677!4d-95.5774934!16s%2Fg%2F11n3wx9z_q!19sChIJtSVKH4nnQIYRvKu33npTJOI?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "You should definitely come check this out. I had such a blast. I feel very renewed and stretched and just feeling all around, infused with good energy, good vibes and almost a new body.",
+    "Hi Brianna! 😊 We’re so happy you chose us for your care—welcome to the A1 family! 💙 … More",
+    "Fantastic service. I walked in with serious lower back pain and after one session felt clear improvement. Professional and effective I highly recommend Dr. Williams.",
+    "Hi Virgilio! 😊 We’re so happy you chose us for your care—welcome to the A1 family! 💙 … More",
+    "Never knew how important an adjustment was, until I met Dr. Williams. She has a wealth of knowledge. I booked an appointment and it was the best experience ever. Very friendly, professional, and knowledgeable."
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–1 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [],
+  "keywordCategories": null,
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 0,
+  "leadStatus": "new",
+  "priority": "medium",
+  "priorityScore": 30,
+  "notes": null,
+  "lastContactedAt": null
+}

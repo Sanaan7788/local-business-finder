@@ -1,0 +1,144 @@
+{
+  "id": "ca5458bb-f5b4-4aea-9d5c-a65990fba750",
+  "createdAt": "2026-06-01T01:20:06.426Z",
+  "updatedAt": "2026-06-01T01:26:50.182Z",
+  "name": "Thomas Lomonte DDS",
+  "phone": "(281) 530-1440",
+  "address": "12122 Murphy Rd a, Stafford, TX 77477",
+  "zipcode": "77477",
+  "category": "Dentist",
+  "description": "4.9(38)",
+  "website": true,
+  "websiteUrl": "http://www.thomaslomontedds.com/",
+  "rating": 4.9,
+  "reviewCount": 119,
+  "googleMapsUrl": "https://www.google.com/maps/place/Thomas+Lomonte+DDS/data=!4m7!3m6!1s0x8640e7de890f4483:0x83fe6ae68aecded7!8m2!3d29.6460737!4d-95.5659653!16s%2Fg%2F1wf38_hy!19sChIJg0QPid7nQIYR197siuZq_oM?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "Some years ago my front tooth became loose and I needed a bone implant and I also had a tooth implant. I only felt pain on that day and the next day I was fine. In this year 2022 I am getting another implant, I only had a little discomfort …",
+    "Very friendly staff, Dr is an excellent dentist. Nice atmosphere.",
+    "For years I dealt with broken, chipped teeth. I have a new smile and I love it! Dr.Lomonte is who you want! Incredible work!"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–3 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–4 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–4 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–4 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–2 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "dental implants",
+    "bone implant",
+    "tooth implant",
+    "cosmetic dentistry",
+    "smile makeover",
+    "broken teeth repair",
+    "chipped teeth restoration",
+    "dentist Stafford TX",
+    "dentist 77477",
+    "Stafford dental clinic",
+    "Murphy Rd dentist",
+    "Stafford TX dental implants",
+    "dentist near Murphy Rd Stafford",
+    "4.9 star dentist",
+    "highly rated dentist",
+    "friendly staff",
+    "excellent dentist",
+    "incredible dental work",
+    "pain-free implant experience",
+    "new smile transformation",
+    "best dentist in Stafford TX",
+    "dental implants near me",
+    "tooth implant Stafford TX",
+    "dentist for broken teeth",
+    "smile makeover dentist",
+    "painless dental implant",
+    "top rated dentist 77477"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "dental implants",
+      "bone implant",
+      "tooth implant",
+      "cosmetic dentistry",
+      "smile makeover",
+      "broken teeth repair",
+      "chipped teeth restoration"
+    ],
+    "locationKeywords": [
+      "dentist Stafford TX",
+      "dentist 77477",
+      "Stafford dental clinic",
+      "Murphy Rd dentist",
+      "Stafford TX dental implants",
+      "dentist near Murphy Rd Stafford"
+    ],
+    "reputationKeywords": [
+      "4.9 star dentist",
+      "highly rated dentist",
+      "friendly staff",
+      "excellent dentist",
+      "incredible dental work",
+      "pain-free implant experience",
+      "new smile transformation"
+    ],
+    "searchPhrases": [
+      "best dentist in Stafford TX",
+      "dental implants near me",
+      "tooth implant Stafford TX",
+      "dentist for broken teeth",
+      "smile makeover dentist",
+      "painless dental implant",
+      "top rated dentist 77477"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 597,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

@@ -1,0 +1,142 @@
+{
+  "id": "50473c86-db91-40b2-b8e3-13d8f736a6a2",
+  "createdAt": "2026-06-01T00:28:27.163Z",
+  "updatedAt": "2026-06-01T00:29:22.415Z",
+  "name": "First Dental - Alan Imrek DDS PA",
+  "phone": "(281) 494-3368",
+  "address": "1730 Williams Trace Blvd suite e, Sugar Land, TX 77478",
+  "zipcode": "77477",
+  "category": "Dentist",
+  "description": "4.9(160)",
+  "website": true,
+  "websiteUrl": "https://www.dentistsugarland.com/?utm_source=google&utm_medium=google_business_profile&utm_campaign=website_click",
+  "rating": 4.9,
+  "reviewCount": 43,
+  "googleMapsUrl": "https://www.google.com/maps/place/First+Dental+-+Alan+Imrek+DDS+PA/data=!4m7!3m6!1s0x8640e6f4b2ee7a17:0x3faab5963e9638fd!8m2!3d29.6012602!4d-95.6083329!16s%2Fg%2F1tgln8qr!19sChIJF3rusvTmQIYR_TiWPpa1qj8?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "Dr. Imrek has been the dentist for my family for 20 years now and still is. He has continued to take care of our dental care needs without fail. He makes me feel at ease during procedures. His staff are very professional and friendly. Kudos also to the hygienist in that clinic, also top notch.",
+    "My first visit to First Dental was fantastic. How many people can say that a visit to the dentist was fantastic Doctor Imrek Explained everything Regarding the condition of my mouth and explained every step of the process he was taking …",
+    "Dr. IMREK always gives us the best advice to help my two kids’ teeth with good condition. He is definitely very knowledgeable and professional as a dentist. All of the assistants are well-trained and knowledgeable as well. All of the staffs …"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–1 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–3 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–1 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–3 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–1 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "family dentist",
+    "pediatric dental care",
+    "dental checkup",
+    "teeth cleaning",
+    "dental exam",
+    "dental hygiene",
+    "preventive dentistry",
+    "dentist Sugar Land",
+    "dentist 77477",
+    "dentist 77478",
+    "Williams Trace Blvd dentist",
+    "Sugar Land family dentist",
+    "Sugar Land pediatric dentist",
+    "family dentist for 20 years",
+    "puts patients at ease",
+    "explains everything",
+    "great with kids",
+    "knowledgeable staff",
+    "well-trained assistants",
+    "top notch hygienist",
+    "family dentist near me Sugar Land",
+    "best dentist for kids Sugar Land",
+    "dentist that explains everything",
+    "gentle dentist Sugar Land",
+    "top rated dentist 77477",
+    "dental checkup Sugar Land"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "family dentist",
+      "pediatric dental care",
+      "dental checkup",
+      "teeth cleaning",
+      "dental exam",
+      "dental hygiene",
+      "preventive dentistry"
+    ],
+    "locationKeywords": [
+      "dentist Sugar Land",
+      "dentist 77477",
+      "dentist 77478",
+      "Williams Trace Blvd dentist",
+      "Sugar Land family dentist",
+      "Sugar Land pediatric dentist"
+    ],
+    "reputationKeywords": [
+      "family dentist for 20 years",
+      "puts patients at ease",
+      "explains everything",
+      "great with kids",
+      "knowledgeable staff",
+      "well-trained assistants",
+      "top notch hygienist"
+    ],
+    "searchPhrases": [
+      "family dentist near me Sugar Land",
+      "best dentist for kids Sugar Land",
+      "dentist that explains everything",
+      "gentle dentist Sugar Land",
+      "top rated dentist 77477",
+      "dental checkup Sugar Land"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 655,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

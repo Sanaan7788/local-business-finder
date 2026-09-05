@@ -1,11 +1,14 @@
-import { useBusinessList, useDeleteBusiness } from '../../hooks/useBusinesses'
+import { useBusinessList, useDeleteBusiness, useUpdateStatus } from '../../hooks/useBusinesses'
+import { IS_STATIC } from '../../lib/env'
+import { getApiErrorMessage } from '../../lib/errors'
 import { formatNumber } from '../../lib/format'
+import { Alert } from '../../components/ui/Alert'
 import { Card } from '../../components/ui/Card'
 import { PageHeader } from '../../components/ui/Heading'
 import { EmptyState } from '../../components/ui/EmptyState'
 import { ErrorState } from '../../components/ui/ErrorState'
 import { LoadingBlock } from '../../components/ui/Spinner'
-import type { BusinessListItem } from '../../types/business'
+import type { BusinessListItem, LeadStatus } from '../../types/business'
 import { useBusinessFilters } from './useBusinessFilters'
 import { BusinessFilters } from './BusinessFilters'
 import { BusinessTable } from './BusinessTable'
@@ -14,8 +17,9 @@ import { Pagination } from './Pagination'
 
 export default function Businesses() {
   const filterState = useBusinessFilters()
-  const { filters, set, hasActiveFilters, listParams } = filterState
+  const { filters, set, setMany, hasActiveFilters, listParams } = filterState
   const { data, isPending, isError, error, refetch } = useBusinessList(listParams)
+  const updateStatus = useUpdateStatus()
   const deleteBusiness = useDeleteBusiness()
 
   const businesses = data?.items ?? []
@@ -23,8 +27,10 @@ export default function Businesses() {
 
   const onSort = (field: string) => {
     if (field === filters.sort) set('dir', filters.dir === 'asc' ? 'desc' : 'asc')
-    else { set('sort', field); set('dir', 'desc') }
+    else setMany({ sort: field, dir: 'desc' })
   }
+
+  const onStatus = (b: BusinessListItem, status: LeadStatus) => updateStatus.mutate({ id: b.id, status })
 
   const onDelete = (b: BusinessListItem) => {
     if (window.confirm(`Delete ${b.name}?`)) deleteBusiness.mutate(b.id)
@@ -35,7 +41,10 @@ export default function Businesses() {
   ) : isError ? (
     <ErrorState error={error} onRetry={() => void refetch()} />
   ) : businesses.length === 0 ? (
-    <EmptyState title="No businesses found" description={hasActiveFilters ? 'Try adjusting your filters' : 'Run the scraper to get started'} />
+    <EmptyState
+      title="No businesses found"
+      description={hasActiveFilters ? 'Try adjusting your filters' : IS_STATIC ? 'The published snapshot is empty' : 'Run the scraper to get started'}
+    />
   ) : null
 
   return (
@@ -44,15 +53,24 @@ export default function Businesses() {
 
       <BusinessFilters {...filterState} />
 
+      {updateStatus.isError && <Alert tone="danger">{getApiErrorMessage(updateStatus.error)}</Alert>}
+
       {state ? (
         <Card padding="none">{state}</Card>
       ) : (
         <>
           <Card padding="none" className="hidden overflow-hidden sm:block">
-            <BusinessTable businesses={businesses} sort={filters.sort} dir={filters.dir} onSort={onSort} onDelete={onDelete} />
+            <BusinessTable
+              businesses={businesses}
+              sort={filters.sort}
+              dir={filters.dir}
+              onSort={onSort}
+              onStatus={onStatus}
+              onDelete={IS_STATIC ? undefined : onDelete}
+            />
           </Card>
           <div className="sm:hidden">
-            <BusinessCardList businesses={businesses} onDelete={onDelete} />
+            <BusinessCardList businesses={businesses} onStatus={onStatus} onDelete={IS_STATIC ? undefined : onDelete} />
           </div>
         </>
       )}

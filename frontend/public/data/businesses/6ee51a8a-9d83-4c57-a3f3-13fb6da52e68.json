@@ -1,0 +1,146 @@
+{
+  "id": "6ee51a8a-9d83-4c57-a3f3-13fb6da52e68",
+  "createdAt": "2026-06-07T06:15:40.379Z",
+  "updatedAt": "2026-06-07T06:20:01.410Z",
+  "name": "uBreakiFix - Phone and Computer Repair",
+  "phone": "(713) 808-9974",
+  "address": "8350 Westheimer Rd Suite C2, Houston, TX 77063",
+  "zipcode": "77054",
+  "category": "Mobile phone repair shop",
+  "description": "4.7(509)",
+  "website": true,
+  "websiteUrl": "https://www.ubreakifix.com/locations/midwesthouston?utm_source=google&utm_medium=gmb&utm_campaign=midwesthouston",
+  "rating": 4.7,
+  "reviewCount": 582,
+  "googleMapsUrl": "https://www.google.com/maps/place/uBreakiFix+-+Phone+and+Computer+Repair/data=!4m7!3m6!1s0x8640c3a407083d81:0xe178829aeec5b40d!8m2!3d29.7381023!4d-95.5126487!16s%2Fg%2F11j5h4gg83!19sChIJgT0IB6TDQIYRDbTF7pqCeOE?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "John was on time and efficient! Very friendly and did a really amazing job fixing my screen! It looks like I just bought the phone! Thank you 💜! …",
+    "Thank you, Ladie Purple! We're thrilled to hear that John provided you with efficient and friendly service. It's great to know your screen looks like new! We appreciate your kind words and look forward to helping you again in the future! 💜 …",
+    "Brian Flores came out to my work location to fix my cracked screen on my Galaxy smartphone. He was very communicative and gave me updates about his arrival time. He was able to fix my phone quickly. Stellar and prompt service. Thank you!!",
+    "Thank you so much for your 5 star rating! We're glad that you trusted uBreakiFix by Asurion with your tech needs. Thank you for the kind words. We strive to provide the best service and quality in town. Please come back anytime!",
+    "I am very impressed by the level of professionalism Gio showed when he came to repair my phone. He conveniently met me at my jobsite, quickly completed the repair, (it wasnt even 30 mins) and even addressed mistakes the previous, …"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "10 AM–7 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "10 AM–7 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "10 AM–7 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "10 AM–7 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "10 AM–7 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "10 AM–7 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "10 AM–7 PM",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "phone screen repair",
+    "cracked screen fix",
+    "Galaxy smartphone repair",
+    "mobile phone repair",
+    "computer repair",
+    "on-site phone repair",
+    "phone battery replacement",
+    "phone repair Houston",
+    "Westheimer Rd phone repair",
+    "77063 phone repair",
+    "Houston mobile repair",
+    "phone repair near me Houston",
+    "uBreakiFix Houston",
+    "on-time service",
+    "efficient repair",
+    "friendly technician",
+    "communicative service",
+    "quick repair",
+    "professional technician",
+    "stellar service",
+    "phone screen repair near me",
+    "cracked screen fix Houston",
+    "Galaxy screen repair Houston",
+    "mobile repair on site",
+    "phone repair Westheimer",
+    "uBreakiFix Houston reviews",
+    "best phone repair Houston"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "phone screen repair",
+      "cracked screen fix",
+      "Galaxy smartphone repair",
+      "mobile phone repair",
+      "computer repair",
+      "on-site phone repair",
+      "phone battery replacement"
+    ],
+    "locationKeywords": [
+      "phone repair Houston",
+      "Westheimer Rd phone repair",
+      "77063 phone repair",
+      "Houston mobile repair",
+      "phone repair near me Houston",
+      "uBreakiFix Houston"
+    ],
+    "reputationKeywords": [
+      "on-time service",
+      "efficient repair",
+      "friendly technician",
+      "communicative service",
+      "quick repair",
+      "professional technician",
+      "stellar service"
+    ],
+    "searchPhrases": [
+      "phone screen repair near me",
+      "cracked screen fix Houston",
+      "Galaxy screen repair Houston",
+      "mobile repair on site",
+      "phone repair Westheimer",
+      "uBreakiFix Houston reviews",
+      "best phone repair Houston"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 740,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

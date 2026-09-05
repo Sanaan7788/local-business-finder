@@ -1,0 +1,82 @@
+{
+  "id": "5c553f6e-e835-4367-aa30-39c70596e347",
+  "createdAt": "2026-06-07T06:37:50.115Z",
+  "updatedAt": "2026-06-07T06:37:50.115Z",
+  "name": "uBreakiFix - Phone and Computer Repair",
+  "phone": "(832) 538-1360",
+  "address": "446 W 19th St, Houston, TX 77008",
+  "zipcode": "77054",
+  "category": "Mobile phone repair shop",
+  "description": "4.6(914)",
+  "website": true,
+  "websiteUrl": "https://www.ubreakifix.com/locations/theheights?utm_source=google&utm_medium=gmb&utm_campaign=theheights",
+  "rating": 4.6,
+  "reviewCount": 1189,
+  "googleMapsUrl": "https://www.google.com/maps/place/uBreakiFix+-+Phone+and+Computer+Repair/data=!4m7!3m6!1s0x8640c76f742756b3:0x7dd560c1220ec40e!8m2!3d29.802474!4d-95.405329!16s%2Fg%2F11ckr76tb5!19sChIJs1YndG_HQIYRDsQOIsFg1X0?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "Julio was very helpful and fixed my phone asap. I was very stressed because my business is on my phone, he quickly found solutions to get me back up and going within 2hrs, and for the most cost effective price. Highly competent. Absolutely recommend",
+    "Thank you for your wonderful feedback, Neet! We're thrilled to hear that Julio was able to assist you promptly and effectively at uBreakiFix. It’s our priority to provide quick and cost-effective solutions for our customers, especially when … More",
+    "The whole staff was very helpful, friendly , informative , and quick. The tech who greets you at the door made my process very easy. We almost had a hiccup but he walked us through it step by step. Sarah was able to fix my phone 2 days …",
+    "Thanks for the ⭐⭐⭐⭐⭐, leaah! Thanks for trusting us with your tech needs. We’re always here to help!",
+    "Sarah made today’s “electronics repair day” so much easier! She was incredibly pleasant, helpful, and knowledgeable, taking the time to answer all my questions and keeping me updated on each device’s status throughout the process. I …"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "12–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "10 AM–7 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "10 AM–7 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "10 AM–7 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "10 AM–7 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "10 AM–7 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "10 AM–7 PM",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [],
+  "keywordCategories": null,
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 0,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

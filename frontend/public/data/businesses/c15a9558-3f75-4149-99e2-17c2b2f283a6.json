@@ -1,0 +1,152 @@
+{
+  "id": "c15a9558-3f75-4149-99e2-17c2b2f283a6",
+  "createdAt": "2026-06-07T08:30:01.911Z",
+  "updatedAt": "2026-06-07T08:39:38.969Z",
+  "name": "Gloss Dental - City Park",
+  "phone": "(713) 565-4450",
+  "address": "1416 W Orem Dr Suite B, Houston, TX 77047",
+  "zipcode": "77047",
+  "category": "Dental clinic",
+  "description": null,
+  "website": true,
+  "websiteUrl": "https://glossdentalcitypark.com/",
+  "rating": 4.8,
+  "reviewCount": 144,
+  "googleMapsUrl": "https://www.google.com/maps/place/Gloss+Dental+-+City+Park/data=!4m7!3m6!1s0x8640953f824f16e5:0x62f8710963f91016!8m2!3d29.6282891!4d-95.3914602!16s%2Fg%2F11pzygvhkp!19sChIJ5RZPgj-VQIYRFhD5Ywlx-GI?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "I had an amazing experience at Gloss Dental! From the moment I walked in, the staff was welcoming, professional, and made me feel completely comfortable. The office is clean, modern, and very organized. The dentist took the time to explain …",
+    "I want to start by thanking the wonderful team for being so patient with my kiddos. This is the first time I haven’t had to be in the room with my son for a procedure. I really appreciate the patience with explaining our benefits and working with use to maximize them. Thank you Gloss Dental.",
+    "All staff and dentist were respectful and courteous. Visit went very well everyone was pleasant and full of energy and quick. I highly recommend and will be back ."
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–4 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "dental clinic",
+    "family dentistry",
+    "pediatric dentistry",
+    "dental cleanings",
+    "dental exams",
+    "dental procedures",
+    "benefits maximization",
+    "dental treatments",
+    "dental clinic Houston",
+    "dentist 77047",
+    "City Park dentist",
+    "Orem Dr dentist",
+    "dental clinic near 77047",
+    "dentist in City Park Houston",
+    "Houston dental clinic",
+    "welcoming staff",
+    "clean modern office",
+    "patient with kids",
+    "explains benefits",
+    "respectful courteous team",
+    "pleasant energetic staff",
+    "highly recommend",
+    "comfortable experience",
+    "dentist that explains benefits",
+    "family dentist near me",
+    "pediatric dentist Houston",
+    "dental clinic City Park Houston",
+    "dentist for kids Houston",
+    "gentle dentist near 77047",
+    "best rated dentist Houston",
+    "dental office with clean modern facility"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "dental clinic",
+      "family dentistry",
+      "pediatric dentistry",
+      "dental cleanings",
+      "dental exams",
+      "dental procedures",
+      "benefits maximization",
+      "dental treatments"
+    ],
+    "locationKeywords": [
+      "dental clinic Houston",
+      "dentist 77047",
+      "City Park dentist",
+      "Orem Dr dentist",
+      "dental clinic near 77047",
+      "dentist in City Park Houston",
+      "Houston dental clinic"
+    ],
+    "reputationKeywords": [
+      "welcoming staff",
+      "clean modern office",
+      "patient with kids",
+      "explains benefits",
+      "respectful courteous team",
+      "pleasant energetic staff",
+      "highly recommend",
+      "comfortable experience"
+    ],
+    "searchPhrases": [
+      "dentist that explains benefits",
+      "family dentist near me",
+      "pediatric dentist Houston",
+      "dental clinic City Park Houston",
+      "dentist for kids Houston",
+      "gentle dentist near 77047",
+      "best rated dentist Houston",
+      "dental office with clean modern facility"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 655,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

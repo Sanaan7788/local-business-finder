@@ -1,5 +1,7 @@
 import { useAnalyze } from '../../../hooks/useBusinesses'
+import { IS_STATIC, serverOnly } from '../../../lib/env'
 import { getApiErrorMessage } from '../../../lib/errors'
+import { ServerOnly } from '../../../components/ServerOnly'
 import { Alert } from '../../../components/ui/Alert'
 import { Button } from '../../../components/ui/Button'
 import { EmptyState } from '../../../components/ui/EmptyState'
@@ -17,12 +19,16 @@ export function AIAnalysisTab({ business }: { business: Business }) {
       <>
         <EmptyState
           title="No AI analysis yet."
-          description="Generates keywords, summary, business context and insights in one go."
-          action={
+          description={
+            IS_STATIC
+              ? 'No AI analysis was generated before this snapshot was exported. Run it in the local app.'
+              : 'Generates keywords, summary, business context and insights in one go.'
+          }
+          action={serverOnly(
             <Button variant="primary" size="md" loading={analyze.isPending} onClick={() => analyze.mutate(business.id)}>
               {analyze.isPending ? 'Analyzing… (may take 2–3 min)' : 'Generate AI Analysis'}
-            </Button>
-          }
+            </Button>,
+          )}
         />
         {analyze.isError && <Alert tone="danger">{getApiErrorMessage(analyze.error)}</Alert>}
       </>
@@ -31,12 +37,14 @@ export function AIAnalysisTab({ business }: { business: Business }) {
 
   return (
     <div className="space-y-8">
-      <div className="flex items-center justify-end gap-3">
-        {analyze.isError && <span className="text-xs text-fg-subtle">{getApiErrorMessage(analyze.error)}</span>}
-        <Button variant="link" loading={analyze.isPending} onClick={() => analyze.mutate(business.id)}>
-          {analyze.isPending ? 'Re-analyzing…' : 'Re-analyze'}
-        </Button>
-      </div>
+      <ServerOnly>
+        <div className="flex items-center justify-end gap-3">
+          {analyze.isError && <span className="text-xs text-fg-subtle">{getApiErrorMessage(analyze.error)}</span>}
+          <Button variant="link" loading={analyze.isPending} onClick={() => analyze.mutate(business.id)}>
+            {analyze.isPending ? 'Re-analyzing…' : 'Re-analyze'}
+          </Button>
+        </div>
+      </ServerOnly>
 
       {(business.summary || business.businessContext) && (
         <div className="space-y-4">

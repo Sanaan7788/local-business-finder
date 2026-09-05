@@ -1,0 +1,131 @@
+{
+  "id": "17a868af-623c-4d97-9022-30f5ddcf5211",
+  "createdAt": "2026-05-31T01:54:28.341Z",
+  "updatedAt": "2026-05-31T01:55:33.901Z",
+  "name": "Justin Nails & Spa",
+  "phone": "(281) 501-3087",
+  "address": "3503 S Sam Houston Pkwy E Suite 200, Houston, TX 77047",
+  "zipcode": "77047",
+  "category": "Nail salon",
+  "description": null,
+  "website": false,
+  "websiteUrl": null,
+  "rating": 4.5,
+  "reviewCount": 258,
+  "googleMapsUrl": "https://www.google.com/maps/place/Justin+Nails+%26+Spa/data=!4m7!3m6!1s0x86409547ff76baed:0xdc0c42f5f63dc754!8m2!3d29.5989957!4d-95.3665566!16s%2Fg%2F11t3b31g13!19sChIJ7bp2_0eVQIYRVMc99vVCDNw?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "Literally the best nail salon in Houston! I recommend David for any nail service. He’s my go too and for my long nail girlies, he will get you just right! Also, Van will have your feet feeling like you are walking on clouds!",
+    "Thanks so much sweetie",
+    "My husband and I first visited this salon around January 9th for pedicures. Tom did mine, and although he doesn’t speak much English, he gave me one of the best pedicures I’ve ever had. I’m very particular about polish being painted fully …",
+    "Thank you for letting us know next time I will correct them, but first I really apologize about their service . I will have a talk with them. let us take care of you next time my name, Justin and thank you very much ma’am.",
+    "I really enjoyed the calming music and friendly nail artists, they’re also very gentle and quick with their work. I would absolutely recommend this to others."
+  ],
+  "menu": [
+    {
+      "section": "Popular times",
+      "items": [
+        {
+          "name": "Saturdays",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Based on visits to this place.",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "gel nails",
+    "acrylic extensions",
+    "pedicures",
+    "nail art",
+    "dip powder",
+    "manicure",
+    "nail repair",
+    "spa pedicure",
+    "nail salon Houston",
+    "nail salon 77047",
+    "nail salon Sam Houston Pkwy",
+    "nail salon Southeast Houston",
+    "nail salon near me Houston",
+    "nail salon in 77047",
+    "Houston nail spa",
+    "nail salon Almeda",
+    "best pedicure ever",
+    "gentle nail artists",
+    "quick service",
+    "calming atmosphere",
+    "friendly staff",
+    "long nail specialist",
+    "recommended nail salon",
+    "walk-ins welcome",
+    "best nail salon in Houston",
+    "best pedicure in Houston",
+    "long nail salon Houston",
+    "gentle nail artist Houston",
+    "calming nail salon Houston",
+    "affordable gel nails Houston",
+    "nail salon near 77047",
+    "Houston nail spa with friendly staff"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "gel nails",
+      "acrylic extensions",
+      "pedicures",
+      "nail art",
+      "dip powder",
+      "manicure",
+      "nail repair",
+      "spa pedicure"
+    ],
+    "locationKeywords": [
+      "nail salon Houston",
+      "nail salon 77047",
+      "nail salon Sam Houston Pkwy",
+      "nail salon Southeast Houston",
+      "nail salon near me Houston",
+      "nail salon in 77047",
+      "Houston nail spa",
+      "nail salon Almeda"
+    ],
+    "reputationKeywords": [
+      "best pedicure ever",
+      "gentle nail artists",
+      "quick service",
+      "calming atmosphere",
+      "friendly staff",
+      "long nail specialist",
+      "recommended nail salon",
+      "walk-ins welcome"
+    ],
+    "searchPhrases": [
+      "best nail salon in Houston",
+      "best pedicure in Houston",
+      "long nail salon Houston",
+      "gentle nail artist Houston",
+      "calming nail salon Houston",
+      "affordable gel nails Houston",
+      "nail salon near 77047",
+      "Houston nail spa with friendly staff"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 727,
+  "leadStatus": "new",
+  "priority": "medium",
+  "priorityScore": 50,
+  "notes": null,
+  "lastContactedAt": null
+}

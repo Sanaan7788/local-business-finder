@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useUpdateNotes, useUpdateStatus } from '../../../hooks/useBusinesses'
 import { useTransientFlag } from '../../../hooks/useTransientFlag'
 import { cn } from '../../../lib/cn'
+import { IS_STATIC } from '../../../lib/env'
 import { getApiErrorMessage } from '../../../lib/errors'
 import { formatDate, formatNumber } from '../../../lib/format'
 import { LEAD_STATUS_LABELS, LEAD_STATUS_TRANSITIONS } from '../../../lib/leads'
@@ -36,6 +37,13 @@ export function CRMTab({ business }: { business: Business }) {
 
   return (
     <div className="space-y-6">
+      {IS_STATIC && (
+        <Alert tone="info">
+          Status and notes changes are saved in this browser only. Use <strong>Local changes</strong> in the header to export them and apply
+          them to the database with <code>npm run import:changes</code>.
+        </Alert>
+      )}
+
       <Meta label="Current Status"><LeadStatusBadge status={business.leadStatus} /></Meta>
 
       {allowed.length > 0 && (

@@ -1,0 +1,80 @@
+{
+  "id": "9f3616a9-9b8d-4246-af95-74688abaa82f",
+  "createdAt": "2026-06-01T01:27:29.343Z",
+  "updatedAt": "2026-06-01T01:27:29.343Z",
+  "name": "Family Dentistry",
+  "phone": "(281) 498-0288",
+  "address": "10806 W Bellfort Ave, Houston, TX 77099",
+  "zipcode": "77477",
+  "category": "Dentist",
+  "description": "5.0(19)",
+  "website": true,
+  "websiteUrl": "http://kimhodds.com/",
+  "rating": 5,
+  "reviewCount": 301,
+  "googleMapsUrl": "https://www.google.com/maps/place/Family+Dentistry/data=!4m7!3m6!1s0x8640e7e5c2c65dad:0x236e035072ae0b56!8m2!3d29.655367!4d-95.569144!16s%2Fg%2F1tftllsg!19sChIJrV3GwuXnQIYRVguuclADbiM?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "I had such a great experience! Both the dentist and staff were so kind and understanding. I was nervous since I hadn’t kept up with my teeth for a while, but instead of judging me (which this happened with the last dr I went to and I never went back) but they reassured me and made me feel safe. I left feeling hopeful and cared for.",
+    "Dr. Jennifer Blanton and her dental assistant always make my visit comfortable and accommodate all my needs. My jaw gets tired having it open too long and they always give me breaks to prevent that. They also check on me frequently and you …",
+    "Dr. Ho and her assistant did a great job through my multiple visits. They were always pleasant and a joy to be around. All my appointments were on time and I never had to wait. I 100% recommend them."
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [],
+  "keywordCategories": null,
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 0,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

@@ -1,4 +1,7 @@
 import axios, { type AxiosRequestConfig } from 'axios'
+import { ApiError } from './api-error'
+
+export { ApiError }
 
 // ---------------------------------------------------------------------------
 // HTTP client. Every backend response is wrapped in { success, data } or
@@ -6,40 +9,35 @@ import axios, { type AxiosRequestConfig } from 'axios'
 // every failure — HTTP error, network error, timeout — into an ApiError.
 // ---------------------------------------------------------------------------
 
-export class ApiError extends Error {
-  readonly status?: number
-  readonly fields?: Record<string, string[] | undefined>
-
-  constructor(message: string, status?: number, fields?: Record<string, string[] | undefined>) {
-    super(message)
-    this.name = 'ApiError'
-    this.status = status
-    this.fields = fields
-  }
-}
-
 type Envelope<T> =
   | { success: true; data: T }
   | { success: false; error: string; fields?: Record<string, string[] | undefined> }
 
-// AI operations (analysis, website generation, crawling) can take a few minutes
-const http = axios.create({ baseURL: '/api', timeout: 300_000 })
+function createHttp() {
+  // AI operations (analysis, website generation, crawling) can take a few minutes
+  const http = axios.create({ baseURL: '/api', timeout: 300_000 })
 
-http.interceptors.response.use(
-  res => res,
-  (err: unknown) => {
-    if (axios.isAxiosError(err)) {
-      const body = err.response?.data as Partial<Extract<Envelope<unknown>, { success: false }>> | undefined
-      const message =
-        body && typeof body.error === 'string' ? body.error
-        : err.code === 'ECONNABORTED' ? 'Request timed out'
-        : err.response ? `Request failed (${err.response.status})`
-        : 'Cannot reach the backend'
-      return Promise.reject(new ApiError(message, err.response?.status, body?.fields))
-    }
-    return Promise.reject(err)
-  },
-)
+  http.interceptors.response.use(
+    res => res,
+    (err: unknown) => {
+      if (axios.isAxiosError(err)) {
+        const body = err.response?.data as Partial<Extract<Envelope<unknown>, { success: false }>> | undefined
+        const message =
+          body && typeof body.error === 'string' ? body.error
+          : err.code === 'ECONNABORTED' ? 'Request timed out'
+          : err.response ? `Request failed (${err.response.status})`
+          : 'Cannot reach the backend'
+        return Promise.reject(new ApiError(message, err.response?.status, body?.fields))
+      }
+      return Promise.reject(err)
+    },
+  )
+
+  return http
+}
+
+// Marked pure so the static build, which never calls `api`, tree-shakes axios away.
+const http = /*#__PURE__*/ createHttp()
 
 async function request<T>(cfg: AxiosRequestConfig): Promise<T> {
   const res = await http.request<Envelope<T>>(cfg)

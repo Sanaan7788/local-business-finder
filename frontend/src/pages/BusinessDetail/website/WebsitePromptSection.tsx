@@ -2,8 +2,10 @@ import { useState } from 'react'
 import { useGenerateWebsitePrompt, useUpdateWebsitePrompt } from '../../../hooks/useBusinesses'
 import { useTransientFlag } from '../../../hooks/useTransientFlag'
 import { cn } from '../../../lib/cn'
+import { IS_STATIC, serverOnly } from '../../../lib/env'
 import { getApiErrorMessage } from '../../../lib/errors'
 import { TONE } from '../../../lib/tones'
+import { ServerOnly } from '../../../components/ServerOnly'
 import { Alert } from '../../../components/ui/Alert'
 import { Button } from '../../../components/ui/Button'
 import { CopyButton } from '../../../components/ui/CopyButton'
@@ -42,30 +44,34 @@ export function WebsitePromptSection({ business }: { business: Business }) {
     <div className="space-y-3">
       <SectionHeading
         title="Website Prompt"
-        description={prompt ? 'Generate Website uses this saved prompt. Edit it to steer the result.' : 'The brief sent to the AI when generating the website.'}
+        description={prompt ? (IS_STATIC ? 'The saved brief used when generating the website.' : 'Generate Website uses this saved prompt. Edit it to steer the result.') : 'The brief sent to the AI when generating the website.'}
         action={
           !prompt ? (
-            <Button variant="primary" size="xs" loading={generatePrompt.isPending} onClick={() => generatePrompt.mutate(business.id)}>
-              {generatePrompt.isPending ? 'Generating…' : 'Generate Prompt'}
-            </Button>
+            serverOnly(
+              <Button variant="primary" size="xs" loading={generatePrompt.isPending} onClick={() => generatePrompt.mutate(business.id)}>
+                {generatePrompt.isPending ? 'Generating…' : 'Generate Prompt'}
+              </Button>,
+            )
           ) : (
             <div className="flex flex-wrap items-center gap-2">
               {saved && <span className={cn('text-xs', TONE.success.text)}>✓ Saved</span>}
               <CopyButton text={prompt} variant="secondary" size="xs" />
               <Button size="xs" onClick={() => setShow(s => !s)}>{show ? 'Hide' : 'Show'}</Button>
-              {editing ? (
-                <>
-                  <Button size="xs" onClick={() => setEditing(false)}>Cancel</Button>
-                  <Button size="xs" variant="primary" loading={updatePrompt.isPending} onClick={() => void save()}>
-                    {updatePrompt.isPending ? 'Saving…' : 'Save'}
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Button size="xs" variant="primary" onClick={startEdit}>Edit</Button>
-                  <Button size="xs" variant="danger" disabled={busy} onClick={() => void remove()}>Delete</Button>
-                </>
-              )}
+              <ServerOnly>
+                {editing ? (
+                  <>
+                    <Button size="xs" onClick={() => setEditing(false)}>Cancel</Button>
+                    <Button size="xs" variant="primary" loading={updatePrompt.isPending} onClick={() => void save()}>
+                      {updatePrompt.isPending ? 'Saving…' : 'Save'}
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button size="xs" variant="primary" onClick={startEdit}>Edit</Button>
+                    <Button size="xs" variant="danger" disabled={busy} onClick={() => void remove()}>Delete</Button>
+                  </>
+                )}
+              </ServerOnly>
             </div>
           )
         }
@@ -73,8 +79,9 @@ export function WebsitePromptSection({ business }: { business: Business }) {
 
       {!prompt && (
         <p className="text-xs text-fg-subtle">
-          No saved prompt. Generate Website builds the default brief from this profile; generate it here first if you want to review or customise it.
-          The prompt is self-contained, so you can also paste it into any other AI tool.
+          {IS_STATIC
+            ? 'No website prompt was saved before this snapshot was exported.'
+            : 'No saved prompt. Generate Website builds the default brief from this profile; generate it here first if you want to review or customise it. The prompt is self-contained, so you can also paste it into any other AI tool.'}
         </p>
       )}
 

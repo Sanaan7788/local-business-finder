@@ -1,0 +1,145 @@
+{
+  "id": "de74db71-fbb4-48db-9104-33bb1d97b52d",
+  "createdAt": "2026-06-01T10:57:00.381Z",
+  "updatedAt": "2026-06-01T11:00:03.313Z",
+  "name": "Total Health & Rehab Family Chiropractic",
+  "phone": "(832) 315-9721",
+  "address": "4502 Riverstone Blvd #101, Missouri City, TX 77459",
+  "zipcode": "77477",
+  "category": "Chiropractor",
+  "description": "5.0(28)",
+  "website": true,
+  "websiteUrl": "http://www.totalhealthrehabtx.com/",
+  "rating": 5,
+  "reviewCount": 9,
+  "googleMapsUrl": "https://www.google.com/maps/place/Total+Health+%26+Rehab+Family+Chiropractic/data=!4m7!3m6!1s0x8640e5eff990928b:0xce6581823965eabf!8m2!3d29.5678171!4d-95.5725664!16s%2Fg%2F11bw1_hn9x!19sChIJi5KQ-e_lQIYRv-plOYKBZc4?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "Dr.Cohen is a wonderful chiropractor! You should visit her! She is calm, efficient and effective, and she's so wonderful with my kids!",
+    "Thank you so much for the kind words. ❤️",
+    "I highly recommend Dr. Cohen. She has a very sweet personality and cares about her patients. Dr. Cohen is very gentle and makes sure that she treats all of your problem areas. She will listen to you and answer any questions you may have. …",
+    "I was a little nervous about visiting a chiropractor while pregnant, but my midwife recommended it and a friend pointed me to Dr. Cohen. I’m so glad I went! Dr. Cohen’s approach is gentle and very effective, even in the last few months of …"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "9:30 AM–2 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–3 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "chiropractor",
+    "prenatal chiropractic",
+    "pediatric chiropractic",
+    "gentle chiropractic care",
+    "family chiropractic",
+    "pregnancy back pain relief",
+    "chiropractic for kids",
+    "chiropractor Missouri City",
+    "chiropractor 77477",
+    "chiropractor Riverstone",
+    "chiropractor 77459",
+    "chiropractor Fort Bend County",
+    "chiropractor near Sienna Plantation",
+    "gentle chiropractor",
+    "calm and effective",
+    "wonderful with kids",
+    "sweet personality",
+    "cares about patients",
+    "listens to patients",
+    "highly recommended",
+    "gentle chiropractor near me",
+    "prenatal chiropractor Missouri City",
+    "pediatric chiropractor 77477",
+    "chiropractor for pregnancy back pain",
+    "family chiropractor Riverstone",
+    "best chiropractor Missouri City",
+    "chiropractor recommended by midwife"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "chiropractor",
+      "prenatal chiropractic",
+      "pediatric chiropractic",
+      "gentle chiropractic care",
+      "family chiropractic",
+      "pregnancy back pain relief",
+      "chiropractic for kids"
+    ],
+    "locationKeywords": [
+      "chiropractor Missouri City",
+      "chiropractor 77477",
+      "chiropractor Riverstone",
+      "chiropractor 77459",
+      "chiropractor Fort Bend County",
+      "chiropractor near Sienna Plantation"
+    ],
+    "reputationKeywords": [
+      "gentle chiropractor",
+      "calm and effective",
+      "wonderful with kids",
+      "sweet personality",
+      "cares about patients",
+      "listens to patients",
+      "highly recommended"
+    ],
+    "searchPhrases": [
+      "gentle chiropractor near me",
+      "prenatal chiropractor Missouri City",
+      "pediatric chiropractor 77477",
+      "chiropractor for pregnancy back pain",
+      "family chiropractor Riverstone",
+      "best chiropractor Missouri City",
+      "chiropractor recommended by midwife"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 686,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 10,
+  "notes": null,
+  "lastContactedAt": null
+}

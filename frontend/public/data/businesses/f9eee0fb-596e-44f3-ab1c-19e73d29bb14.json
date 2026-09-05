@@ -1,0 +1,155 @@
+{
+  "id": "f9eee0fb-596e-44f3-ab1c-19e73d29bb14",
+  "createdAt": "2026-06-07T07:23:14.086Z",
+  "updatedAt": "2026-06-07T07:25:15.157Z",
+  "name": "CELLPHONIA Unlocking Geeks & WeFiX inside HEB",
+  "phone": "(713) 732-4625",
+  "address": "10251 Kempwood Dr, Houston, TX 77043",
+  "zipcode": "77054",
+  "category": "Cell phone store",
+  "description": "4.8(497)",
+  "website": true,
+  "websiteUrl": "https://m.facebook.com/cellphoniatx/",
+  "rating": 4.8,
+  "reviewCount": 77,
+  "googleMapsUrl": "https://www.google.com/maps/place/CELLPHONIA+Unlocking+Geeks+%26+WeFiX+inside+HEB/data=!4m7!3m6!1s0x8640c5236373e8d7:0xc96c994fc754c68a!8m2!3d29.8215497!4d-95.5473146!16s%2Fg%2F1yg93cgc1!19sChIJ1-hzYyPFQIYRisZUx0-ZbMk?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "CELLPHONIA is hands-down the best cellphone repair shop I’ve ever been to. From the moment I walked in, the staff was friendly, professional, and clearly knew what they were doing. They explained everything in plain English, gave me an …",
+    "Thanks for giving us opportunity to take care of your devices",
+    "when I tell you they save my life and came in clutch with the great deals and prices. They even cut me a deal on a brand new case when I didn’t have enough. Very friendly and professional. I recommend anybody needing their phone fix to check this place out first! Great business and customer service…",
+    "Great customer service! I had just purchased a new phone and needed a screen protector. I forgot that this place was inside H-E-B on Gessner and Kempwood. Even though is was 8:30 and they were technically closed, they still helped me. You have a repeat customer."
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "11 AM–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "11 AM–8 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "11 AM–8 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "11 AM–8 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "11 AM–8 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "11 AM–8 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "11 AM–8 PM",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "cell phone repair",
+    "screen protector installation",
+    "phone unlocking",
+    "phone cases",
+    "device repair",
+    "phone screen replacement",
+    "phone accessories",
+    "new phone deals",
+    "cell phone store Houston",
+    "phone repair 77054",
+    "Kempwood Dr cell phone repair",
+    "Gessner and Kempwood phone store",
+    "HEB cell phone repair Houston",
+    "cell phone repair near 77043",
+    "Houston phone repair shop",
+    "Spring Branch phone repair",
+    "friendly staff",
+    "great customer service",
+    "explained in plain English",
+    "came in clutch",
+    "great deals and prices",
+    "repeat customers",
+    "helped after hours",
+    "highly recommended",
+    "best cell phone repair shop near me",
+    "phone screen protector installation Houston",
+    "cell phone repair inside HEB",
+    "affordable phone repair Houston",
+    "phone unlocking service near me",
+    "cell phone store with great customer service",
+    "phone repair open late Houston",
+    "trusted phone repair shop Houston"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "cell phone repair",
+      "screen protector installation",
+      "phone unlocking",
+      "phone cases",
+      "device repair",
+      "phone screen replacement",
+      "phone accessories",
+      "new phone deals"
+    ],
+    "locationKeywords": [
+      "cell phone store Houston",
+      "phone repair 77054",
+      "Kempwood Dr cell phone repair",
+      "Gessner and Kempwood phone store",
+      "HEB cell phone repair Houston",
+      "cell phone repair near 77043",
+      "Houston phone repair shop",
+      "Spring Branch phone repair"
+    ],
+    "reputationKeywords": [
+      "friendly staff",
+      "great customer service",
+      "explained in plain English",
+      "came in clutch",
+      "great deals and prices",
+      "repeat customers",
+      "helped after hours",
+      "highly recommended"
+    ],
+    "searchPhrases": [
+      "best cell phone repair shop near me",
+      "phone screen protector installation Houston",
+      "cell phone repair inside HEB",
+      "affordable phone repair Houston",
+      "phone unlocking service near me",
+      "cell phone store with great customer service",
+      "phone repair open late Houston",
+      "trusted phone repair shop Houston"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 733,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

@@ -2,10 +2,12 @@ import { useState } from 'react'
 import { useRescrape, useUpdateProfile, useUpdateStatus } from '../../../hooks/useBusinesses'
 import { useTransientFlag } from '../../../hooks/useTransientFlag'
 import { cn } from '../../../lib/cn'
+import { IS_STATIC } from '../../../lib/env'
 import { getApiErrorMessage } from '../../../lib/errors'
 import { formatNumber } from '../../../lib/format'
 import { TONE } from '../../../lib/tones'
 import { mapsSearchUrl } from '../../../lib/urls'
+import { ServerOnly } from '../../../components/ServerOnly'
 import { Alert } from '../../../components/ui/Alert'
 import { Button } from '../../../components/ui/Button'
 import { CopyButton } from '../../../components/ui/CopyButton'
@@ -44,26 +46,29 @@ export function OverviewTab({ business }: { business: Business }) {
           {shortlisted ? '★ Shortlisted — click to remove' : '☆ Add to Shortlist'}
         </Button>
 
-        <div className="flex flex-wrap items-center gap-2">
-          {saved && <span className={cn('text-xs', TONE.success.text)}>Saved ✓</span>}
-          {rescrape.isError && <span className={cn('text-xs', TONE.danger.text)}>{getApiErrorMessage(rescrape.error, 'Re-scrape failed')}</span>}
-          {rescrape.isSuccess && <span className={cn('text-xs', TONE.success.text)}>Re-scraped ✓</span>}
-          {!editing && business.googleMapsUrl && (
-            <Button size="xs" loading={rescrape.isPending} onClick={() => rescrape.mutate(business.id)}>
-              {rescrape.isPending ? 'Scraping…' : 'Re-scrape'}
-            </Button>
-          )}
-          {editing ? (
-            <>
-              <Button size="xs" onClick={() => setEditing(false)}>Cancel</Button>
-              <Button size="xs" variant="primary" loading={updateProfile.isPending} onClick={() => void save()}>
-                {updateProfile.isPending ? 'Saving…' : 'Save Changes'}
+        {/* Re-scraping and profile edits write to the database, so they only exist in the live app */}
+        <ServerOnly>
+          <div className="flex flex-wrap items-center gap-2">
+            {saved && <span className={cn('text-xs', TONE.success.text)}>Saved ✓</span>}
+            {rescrape.isError && <span className={cn('text-xs', TONE.danger.text)}>{getApiErrorMessage(rescrape.error, 'Re-scrape failed')}</span>}
+            {rescrape.isSuccess && <span className={cn('text-xs', TONE.success.text)}>Re-scraped ✓</span>}
+            {!editing && business.googleMapsUrl && (
+              <Button size="xs" loading={rescrape.isPending} onClick={() => rescrape.mutate(business.id)}>
+                {rescrape.isPending ? 'Scraping…' : 'Re-scrape'}
               </Button>
-            </>
-          ) : (
-            <Button size="xs" onClick={() => { startEdit(); setEditing(true) }}>Edit</Button>
-          )}
-        </div>
+            )}
+            {editing ? (
+              <>
+                <Button size="xs" onClick={() => setEditing(false)}>Cancel</Button>
+                <Button size="xs" variant="primary" loading={updateProfile.isPending} onClick={() => void save()}>
+                  {updateProfile.isPending ? 'Saving…' : 'Save Changes'}
+                </Button>
+              </>
+            ) : (
+              <Button size="xs" onClick={() => { startEdit(); setEditing(true) }}>Edit</Button>
+            )}
+          </div>
+        </ServerOnly>
       </div>
 
       <ProfileFields business={business} draft={draft} editing={editing} setField={setField} />
@@ -103,7 +108,8 @@ export function OverviewTab({ business }: { business: Business }) {
 
       {isStub && (
         <Alert tone="warning">
-          This is a stub profile created from a found name. Click <strong>Edit</strong> to fill in the phone, address and other details, or{' '}
+          This is a stub profile created from a found name.{' '}
+          {IS_STATIC ? 'Fill in the phone, address and other details in the local app, or' : <>Click <strong>Edit</strong> to fill in the phone, address and other details, or</>}{' '}
           <a href={mapsSearchUrl(business.name)} target="_blank" rel="noopener noreferrer" className="underline">search Maps →</a>
         </Alert>
       )}

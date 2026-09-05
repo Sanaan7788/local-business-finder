@@ -1,0 +1,103 @@
+{
+  "id": "2312d9fc-4aac-4175-916b-db3a77e564f3",
+  "createdAt": "2026-06-07T08:29:07.777Z",
+  "updatedAt": "2026-06-28T21:22:12.849Z",
+  "name": "Denta Care | Best Dental Office in Pearland",
+  "phone": "(832) 810-8485",
+  "address": "15818 South Fwy Ste 140, Pearland, TX 77584",
+  "zipcode": "77047",
+  "category": "Dentist",
+  "description": null,
+  "website": true,
+  "websiteUrl": "https://dentacare.care/",
+  "rating": 5,
+  "reviewCount": 425,
+  "googleMapsUrl": "https://www.google.com/maps/place/Denta+Care+%7C+Best+Dental+Office+in+Pearland/data=!4m7!3m6!1s0x8640933f07ee35db:0xe8bab6bb64f3a613!8m2!3d29.56739!4d-95.387865!16s%2Fg%2F11td03crwd!19sChIJ2zXuBz-TQIYRE6bzZLu2uug?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "Always a very friendly experience from the moment I booked the appointment up until we’re done with every dental appointment we had with them. Everyone in the clinic was just fantastic, as always! The entire team is so warm, compassionate, …",
+    "What is this? A nice, sterile atmosphere. Kindly customer care. Hypnotically Latino. A seamless application of anesthesia, and soon the cavity was no longer a part of this world. I sat up that chair, seeking to resume my old life, and in …",
+    "I had a great experience at Denta Care in Pearland. The staff was very attentive and professional, and the office was extremely clean and well organized. …"
+  ],
+  "menu": [],
+  "scrapedEmails": [],
+  "keywords": [
+    "dentist",
+    "dental office",
+    "cavity filling",
+    "anesthesia",
+    "dental appointment",
+    "sterile atmosphere",
+    "dental care",
+    "dentist Pearland",
+    "Pearland TX dentist",
+    "dentist 77047",
+    "South Fwy dentist",
+    "Pearland dental office",
+    "friendly experience",
+    "warm compassionate team",
+    "sterile atmosphere",
+    "kindly customer care",
+    "seamless anesthesia",
+    "attentive staff",
+    "clean well organized office",
+    "best dentist in Pearland",
+    "dentist near me Pearland",
+    "friendly dentist Pearland TX",
+    "clean dental office Pearland",
+    "cavity filling Pearland",
+    "dentist with great reviews Pearland"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "dentist",
+      "dental office",
+      "cavity filling",
+      "anesthesia",
+      "dental appointment",
+      "sterile atmosphere",
+      "dental care"
+    ],
+    "locationKeywords": [
+      "dentist Pearland",
+      "Pearland TX dentist",
+      "dentist 77047",
+      "South Fwy dentist",
+      "Pearland dental office"
+    ],
+    "reputationKeywords": [
+      "friendly experience",
+      "warm compassionate team",
+      "sterile atmosphere",
+      "kindly customer care",
+      "seamless anesthesia",
+      "attentive staff",
+      "clean well organized office"
+    ],
+    "searchPhrases": [
+      "best dentist in Pearland",
+      "dentist near me Pearland",
+      "friendly dentist Pearland TX",
+      "clean dental office Pearland",
+      "cavity filling Pearland",
+      "dentist with great reviews Pearland"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": {
+    "confirmedFacts": "Services: The business is a dental office that offers cavity filling and anesthesia. Contact: The business is located at 15818 South Fwy Ste 140, Pearland, TX 77584, in the 77047 zip code. The phone number is (832) 810-8485. Reputation: The business has a 5-star Google rating based on 425 reviews. What Customers Say: Customers describe the experience as friendly from booking through the appointment. The team is described as warm, compassionate, and fantastic. The atmosphere is noted as sterile and nice. Customer care is described as kindly. Anesthesia is described as seamless. The office is described as extremely clean and well organized. The staff is described as attentive and professional. One review mentions a Latino influence in the experience.",
+    "assumptions": "Likely Services: As a general dentist, the business likely offers routine cleanings, exams, X-rays, fillings, crowns, bridges, root canals, extractions, and possibly cosmetic services such as teeth whitening or veneers. They may also offer preventive care like sealants and fluoride treatments. Estimated Price Range: Based on the location in Pearland, TX, and the high rating, prices are likely competitive with other local dental offices. A routine cleaning and exam might range from $100 to $200 without insurance. Cavity fillings could range from $150 to $400 per tooth depending on material. Anesthesia is typically included in procedure costs. Target Customers: The business likely targets residents of Pearland and the surrounding 77047 area, including families, adults, and possibly children. The friendly and compassionate tone suggests a focus on anxious patients or those seeking a comfortable experience. Probable Hours: Typical dental office hours are Monday through Friday, 8:00 AM to 5:00 PM, with some offices open on Saturdays for limited hours. Evening appointments may be available by request.",
+    "generatedAt": "2026-06-28T21:22:12.849Z"
+  },
+  "generatedWebsiteCode": null,
+  "websitePrompt": "You are a professional web developer. Build a complete, modern, single-page website for the following local business.\nReturn only the complete HTML file — no explanation, no markdown, no code fences. The file must be self-contained (inline CSS and JS, no external dependencies).\n\n== BUSINESS INFORMATION ==\nName: Denta Care | Best Dental Office in Pearland\nCategory: Dentist\nAddress: 15818 South Fwy Ste 140, Pearland, TX 77584\nPhone: (832) 810-8485\nCurrent Website: https://dentacare.care/\nGoogle Rating: 5★ (425 reviews)\nGoogle Maps: https://www.google.com/maps/place/Denta+Care+%7C+Best+Dental+Office+in+Pearland/data=!4m7!3m6!1s0x8640933f07ee35db:0xe8bab6bb64f3a613!8m2!3d29.56739!4d-95.387865!16s%2Fg%2F11td03crwd!19sChIJ2zXuBz-TQIYRE6bzZLu2uug?authuser=0&hl=en&rclk=1\n\n== KEYWORDS TO USE IN COPY ==\nServices: dentist, dental office, cavity filling, anesthesia, dental appointment, sterile atmosphere, dental care\nLocation: dentist Pearland, Pearland TX dentist, dentist 77047, South Fwy dentist, Pearland dental office\nTrust signals: friendly experience, warm compassionate team, sterile atmosphere, kindly customer care, seamless anesthesia, attentive staff, clean well organized office\nSearch phrases: best dentist in Pearland, dentist near me Pearland, friendly dentist Pearland TX, clean dental office Pearland, cavity filling Pearland, dentist with great reviews Pearland\n\n== REAL CUSTOMER REVIEWS (use quotes in testimonial section) ==\n  \"Always a very friendly experience from the moment I booked the appointment up until we’re done with every dental appointment we had with them. Everyone in the clinic was just fantastic, as always! The entire team is so warm, compassionate, …\"\n  \"What is this? A nice, sterile atmosphere. Kindly customer care. Hypnotically Latino. A seamless application of anesthesia, and soon the cavity was no longer a part of this world. I sat up that chair, seeking to resume my old life, and in …\"\n  \"I had a great experience at Denta Care in Pearland. The staff was very attentive and professional, and the office was extremely clean and well organized. …\"\n\n== DESIGN REQUIREMENTS ==\n- Mobile-first, fully responsive design\n- Modern, professional look appropriate for the business category\n- Sections: Hero, About, Services, Testimonials (if reviews available), Contact\n- Include the business phone number and address prominently\n- Add a clear call-to-action (e.g. \"Call Now\", \"Book Appointment\", \"Get a Quote\")\n- Use a colour palette that fits the business type\n- Smooth scroll navigation\n\nBuild the complete HTML file now.",
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 1669,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

@@ -4,10 +4,18 @@ import { Card } from '../../components/ui/Card'
 import { Badge } from '../../components/ui/Badge'
 import { LeadStatusBadge, PriorityBadge } from '../../components/business/LeadBadges'
 import { TONE } from '../../lib/tones'
-import type { BusinessListItem } from '../../types/business'
+import type { BusinessListItem, LeadStatus } from '../../types/business'
 import { RowMenu } from './RowMenu'
 
-export function BusinessCardList({ businesses, onDelete }: { businesses: BusinessListItem[]; onDelete: (b: BusinessListItem) => void }) {
+export function BusinessCardList({
+  businesses,
+  onStatus,
+  onDelete,
+}: {
+  businesses: BusinessListItem[]
+  onStatus: (b: BusinessListItem, status: LeadStatus) => void
+  onDelete?: (b: BusinessListItem) => void
+}) {
   return (
     <div className="space-y-3">
       {businesses.map(b => (
@@ -24,7 +32,7 @@ export function BusinessCardList({ businesses, onDelete }: { businesses: Busines
                 <p className="mt-0.5 truncate text-xs text-fg-subtle">{b.address}</p>
               )}
             </div>
-            <div className="relative z-10 shrink-0"><RowMenu name={b.name} onDelete={() => onDelete(b)} /></div>
+            <div className="relative z-10 shrink-0"><RowMenu name={b.name} status={b.leadStatus} onStatus={s => onStatus(b, s)} onDelete={onDelete ? () => onDelete(b) : undefined} /></div>
           </div>
 
           <div className="mt-2.5 flex items-center gap-3">

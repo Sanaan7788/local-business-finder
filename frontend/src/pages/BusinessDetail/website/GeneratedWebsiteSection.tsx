@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { useGenerateWebsite } from '../../../hooks/useBusinesses'
+import { IS_STATIC, serverOnly } from '../../../lib/env'
 import { getApiErrorMessage } from '../../../lib/errors'
 import { formatKB } from '../../../lib/format'
+import { ServerOnly } from '../../../components/ServerOnly'
 import { Alert } from '../../../components/ui/Alert'
 import { Button } from '../../../components/ui/Button'
 import { CopyButton } from '../../../components/ui/CopyButton'
@@ -29,15 +31,19 @@ export function GeneratedWebsiteSection({ business }: { business: Business }) {
       {!html ? (
         <EmptyState
           title="No website generated yet."
-          description="The AI writes a complete, self-contained HTML website from the saved prompt (or the default brief)."
-          action={generateButton('Generate Website', 'md')}
+          description={
+            IS_STATIC
+              ? 'No website was generated before this snapshot was exported. Generate it in the local app.'
+              : 'The AI writes a complete, self-contained HTML website from the saved prompt (or the default brief).'
+          }
+          action={serverOnly(generateButton('Generate Website', 'md'))}
         />
       ) : (
         <>
           <div className="flex flex-wrap items-center gap-3">
             <Button variant="link" onClick={() => setShowCode(s => !s)}>{showCode ? 'Hide Code' : 'Show Code'}</Button>
             <CopyButton text={html} />
-            {generateButton('Regenerate')}
+            <ServerOnly>{generateButton('Regenerate')}</ServerOnly>
             <span className="ml-auto text-xs text-fg-subtle">{formatKB(html.length)}</span>
           </div>
           <div className="overflow-hidden rounded-lg border">

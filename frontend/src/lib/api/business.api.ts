@@ -41,3 +41,6 @@ export const businessApi = {
     return api.post<MenuExtractResult>(`/businesses/${id}/menu-from-images`, form)
   },
 }
+
+/** Shape every data source must implement (see lib/api/static/). */
+export type BusinessApi = typeof businessApi

@@ -1,0 +1,152 @@
+{
+  "id": "19e2395f-db4e-44cd-8365-f80f36771ba8",
+  "createdAt": "2026-05-31T19:15:50.476Z",
+  "updatedAt": "2026-05-31T19:15:55.327Z",
+  "name": "MINT dentistry | Sugar Land",
+  "phone": "(281) 607-0955",
+  "address": "13134 Dairy Ashford Rd Suite 200, Sugar Land, TX 77478",
+  "zipcode": "77477",
+  "category": "Doctor",
+  "description": null,
+  "website": true,
+  "websiteUrl": "https://mintdentistry.com/dentist/houston/sugar-land",
+  "rating": 4.7,
+  "reviewCount": 1888,
+  "googleMapsUrl": "https://www.google.com/maps/place/MINT+dentistry+%7C+Sugar+Land/data=!4m7!3m6!1s0x8640e65557a3c921:0x7da1695bea68e155!8m2!3d29.6237256!4d-95.6035995!16s%2Fg%2F11csrqtqcv!19sChIJIcmjV1XmQIYRVeFo6ltpoX0?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "I returned to the Sugarland location for a post-op visit. I was nervous simply because of my fear of dentists. I was checked in and called to the back almost simultaneously. Dr. Abu Ghosh has such a calming voice. She asked how I was doing …",
+    "I had a great experience at Mint Dentistry. Dr. Z and her assistant Jamal were caring, professional, and worked wonderfully as a team. I was fitted for a crown, and the entire staff from the front desk to the chair was patient and amazing. Highly recommend!",
+    "Dr. Abu Gosh did an amazing job walking me through the entire process of getting my temporary crowns. The procedure was fast and she made me feel comfortable. She’s a true perfectionist and genuinely cares about her patients. I’m so excited for my new smile, highly recommend her! 😊 …"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–5:30 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–5:30 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–5:30 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–5:30 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–5:30 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "dentist",
+    "crowns",
+    "temporary crowns",
+    "post-op visit",
+    "dental checkup",
+    "dental cleaning",
+    "dental implants",
+    "cosmetic dentistry",
+    "Sugar Land dentist",
+    "dentist 77477",
+    "Dairy Ashford Rd dentist",
+    "Sugar Land TX dentist",
+    "Houston dentist",
+    "Fort Bend County dentist",
+    "Sugar Land dental clinic",
+    "calming dentist",
+    "caring staff",
+    "gentle dentist",
+    "patient dentist",
+    "perfectionist dentist",
+    "comfortable experience",
+    "highly recommended dentist",
+    "great team",
+    "best dentist in Sugar Land",
+    "dentist near me Sugar Land",
+    "gentle dentist Sugar Land",
+    "crown dentist Sugar Land",
+    "dentist for nervous patients",
+    "affordable dentist Sugar Land",
+    "top rated dentist Sugar Land",
+    "dentist with great reviews"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "dentist",
+      "crowns",
+      "temporary crowns",
+      "post-op visit",
+      "dental checkup",
+      "dental cleaning",
+      "dental implants",
+      "cosmetic dentistry"
+    ],
+    "locationKeywords": [
+      "Sugar Land dentist",
+      "dentist 77477",
+      "Dairy Ashford Rd dentist",
+      "Sugar Land TX dentist",
+      "Houston dentist",
+      "Fort Bend County dentist",
+      "Sugar Land dental clinic"
+    ],
+    "reputationKeywords": [
+      "calming dentist",
+      "caring staff",
+      "gentle dentist",
+      "patient dentist",
+      "perfectionist dentist",
+      "comfortable experience",
+      "highly recommended dentist",
+      "great team"
+    ],
+    "searchPhrases": [
+      "best dentist in Sugar Land",
+      "dentist near me Sugar Land",
+      "gentle dentist Sugar Land",
+      "crown dentist Sugar Land",
+      "dentist for nervous patients",
+      "affordable dentist Sugar Land",
+      "top rated dentist Sugar Land",
+      "dentist with great reviews"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 677,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

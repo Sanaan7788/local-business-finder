@@ -1,0 +1,151 @@
+{
+  "id": "024f6c64-5531-42ed-9bef-1c8042dc00c4",
+  "createdAt": "2026-05-31T19:07:08.865Z",
+  "updatedAt": "2026-05-31T19:07:25.000Z",
+  "name": "1 stop dentistry",
+  "phone": "(832) 674-0005",
+  "address": "11707 W Airport Blvd Suite 102, Meadows Place, TX 77477",
+  "zipcode": "77477",
+  "category": "Dentist",
+  "description": null,
+  "website": true,
+  "websiteUrl": "https://www.1stopdentistry.us/",
+  "rating": 5,
+  "reviewCount": 922,
+  "googleMapsUrl": "https://www.google.com/maps/place/1+stop+dentistry/data=!4m7!3m6!1s0x8640e7f18b01b6a3:0x7391456fbd043a50!8m2!3d29.64721!4d-95.5825283!16s%2Fg%2F11t6yqskhk!19sChIJo7YBi_HnQIYRUDoEvW9FkXM?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "Brenda greeted me with a smile while multi-tasking at the front desk and assisting patients in the back. I found Dr. Shah to be kind, amazing, and she explained everything to me in great detail. I will return for additional dental …",
+    "Dear Veronica, Thank you so much for your wonderful review! We are thrilled to hear about your … More",
+    "Dr. Hoang is so nice and an excellent dentist. Same goes with all the staff at this clinic. She really takes the time to communicate with me and make my treatment as painless as possible. I would absolutely recommend her to my friends and family.",
+    "Great dental office! Attention to detail, patient oriented, friendly, and experienced. Dr. Shah explained everything really well and answered all my questions. 10/10 recommend!"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–4 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–4 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "dentist",
+    "dental office",
+    "general dentistry",
+    "dental treatment",
+    "painless dentistry",
+    "dental care",
+    "teeth cleaning",
+    "dental exam",
+    "Meadows Place dentist",
+    "dentist 77477",
+    "dentist Houston",
+    "dentist Southwest Houston",
+    "dentist near Sugar Land",
+    "dentist in Meadows Place TX",
+    "5 star dentist",
+    "highly rated dentist",
+    "friendly staff",
+    "explains everything",
+    "painless treatment",
+    "patient oriented",
+    "attention to detail",
+    "recommended by patients",
+    "best dentist in Meadows Place",
+    "dentist near me 77477",
+    "painless dentist Houston",
+    "friendly dentist Meadows Place",
+    "dentist that explains everything",
+    "top rated dentist Southwest Houston",
+    "dentist for anxious patients",
+    "affordable dentist 77477"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "dentist",
+      "dental office",
+      "general dentistry",
+      "dental treatment",
+      "painless dentistry",
+      "dental care",
+      "teeth cleaning",
+      "dental exam"
+    ],
+    "locationKeywords": [
+      "Meadows Place dentist",
+      "dentist 77477",
+      "dentist Houston",
+      "dentist Southwest Houston",
+      "dentist near Sugar Land",
+      "dentist in Meadows Place TX"
+    ],
+    "reputationKeywords": [
+      "5 star dentist",
+      "highly rated dentist",
+      "friendly staff",
+      "explains everything",
+      "painless treatment",
+      "patient oriented",
+      "attention to detail",
+      "recommended by patients"
+    ],
+    "searchPhrases": [
+      "best dentist in Meadows Place",
+      "dentist near me 77477",
+      "painless dentist Houston",
+      "friendly dentist Meadows Place",
+      "dentist that explains everything",
+      "top rated dentist Southwest Houston",
+      "dentist for anxious patients",
+      "affordable dentist 77477"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 658,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

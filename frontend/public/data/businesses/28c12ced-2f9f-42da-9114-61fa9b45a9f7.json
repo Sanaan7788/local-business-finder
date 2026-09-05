@@ -1,0 +1,148 @@
+{
+  "id": "28c12ced-2f9f-42da-9114-61fa9b45a9f7",
+  "createdAt": "2026-06-01T08:18:18.011Z",
+  "updatedAt": "2026-06-01T08:25:56.323Z",
+  "name": "Full Circle Chiropractic and Wellness Center",
+  "phone": "(832) 987-1715",
+  "address": "2825 Dulles Ave, Missouri City, TX 77459",
+  "zipcode": "77477",
+  "category": "Chiropractor",
+  "description": null,
+  "website": true,
+  "websiteUrl": "http://www.fullcirclechirowell.com/",
+  "rating": 4.8,
+  "reviewCount": 535,
+  "googleMapsUrl": "https://www.google.com/maps/place/Full+Circle+Chiropractic+and+Wellness+Center/data=!4m7!3m6!1s0x8640e60b1122c645:0x3049fcbf34c2fb8!8m2!3d29.5827079!4d-95.5801214!16s%2Fg%2F11c1w0fxh4!19sChIJRcYiEQvmQIYRuC9M88ufBAM?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "A little nervous going in to see a Chiropractor for the very first time ever. However the experience was absolutely life changing here. Dr. Te’Lila and team are absolutely phenomenal. …",
+    "Great experience! They very friendly from the beginning and personable. Such as one of my therapists Althea, who gave great advice and extra steps I can take to help progress my recovery. And they’re always very flexible with appointment times.",
+    "Every one on the staff is amazing!! Front the front desk making it extremely easy to schedule, to Althea assisting with rehabilitation to the clinic helping with the rest of the chiropractic treatments. Dr. Robinson truly listens to your …"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "9 AM–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–12 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–12 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "chiropractic adjustment",
+    "rehabilitation therapy",
+    "chiropractic treatments",
+    "spinal adjustment",
+    "recovery exercises",
+    "pain relief chiropractor",
+    "therapeutic exercises",
+    "chiropractor Missouri City",
+    "chiropractor 77477",
+    "chiropractor 77459",
+    "chiropractor Dulles Ave",
+    "chiropractor Fort Bend County",
+    "chiropractor near Missouri City",
+    "chiropractor Sienna Plantation",
+    "life changing chiropractic",
+    "friendly chiropractor staff",
+    "flexible appointment scheduling",
+    "personable chiropractic care",
+    "phenomenal chiropractor team",
+    "great recovery advice",
+    "listening chiropractor",
+    "chiropractor for first time",
+    "best chiropractor Missouri City",
+    "chiropractor near me 77477",
+    "chiropractor that listens to you",
+    "flexible appointment chiropractor",
+    "rehabilitation chiropractor near me",
+    "chiropractor for back pain relief",
+    "life changing chiropractic care"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "chiropractic adjustment",
+      "rehabilitation therapy",
+      "chiropractic treatments",
+      "spinal adjustment",
+      "recovery exercises",
+      "pain relief chiropractor",
+      "therapeutic exercises"
+    ],
+    "locationKeywords": [
+      "chiropractor Missouri City",
+      "chiropractor 77477",
+      "chiropractor 77459",
+      "chiropractor Dulles Ave",
+      "chiropractor Fort Bend County",
+      "chiropractor near Missouri City",
+      "chiropractor Sienna Plantation"
+    ],
+    "reputationKeywords": [
+      "life changing chiropractic",
+      "friendly chiropractor staff",
+      "flexible appointment scheduling",
+      "personable chiropractic care",
+      "phenomenal chiropractor team",
+      "great recovery advice",
+      "listening chiropractor"
+    ],
+    "searchPhrases": [
+      "chiropractor for first time",
+      "best chiropractor Missouri City",
+      "chiropractor near me 77477",
+      "chiropractor that listens to you",
+      "flexible appointment chiropractor",
+      "rehabilitation chiropractor near me",
+      "chiropractor for back pain relief",
+      "life changing chiropractic care"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 667,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

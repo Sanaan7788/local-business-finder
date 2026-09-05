@@ -1,0 +1,132 @@
+{
+  "id": "d3080898-5451-4e3c-a0f5-a8dc69aa0651",
+  "createdAt": "2026-05-31T19:09:18.435Z",
+  "updatedAt": "2026-05-31T19:09:29.897Z",
+  "name": "Advanced Dentistry of Sugar Land",
+  "phone": "(281) 801-9705",
+  "address": "9920 Hwy 90 Alt Suite C-100, Sugar Land, TX 77478",
+  "zipcode": "77477",
+  "category": "Dentist",
+  "description": null,
+  "website": true,
+  "websiteUrl": "https://www.sugarlandcosmeticdentist.com/?utm_campaign=gmb",
+  "rating": 4.8,
+  "reviewCount": 349,
+  "googleMapsUrl": "https://www.google.com/maps/place/Advanced+Dentistry+of+Sugar+Land/data=!4m7!3m6!1s0x8640e70037059b11:0x1fca01e8b129c2e9!8m2!3d29.6250712!4d-95.6044815!16s%2Fg%2F1tfcz5yv!19sChIJEZsFNwDnQIYR6cIpsegByh8?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "⭐⭐⭐⭐⭐ Excellent cleaning and exam! I have been a patient for almost 20 years and have recommended all of my family, friends, and coworkers to Dr. John. Yvette was …",
+    "Thank you for your loyalty and for recommending us to your loved ones! We’re so glad you had a smooth, comfortable visit and feel well cared for by our team. We truly grateful and appreciate your kind words!",
+    "Dr. John has been by dentist for over 20 years and he has helped me to manage my dental health in the best way possible. The office staff are always courteous and professional. My hygienist Gina is very knowledgeable and detailed in her cleaning.",
+    "Thank you for being a longtime part of our dental family! We’re grateful for your trust in Dr. John and Gala and appreciate you sharing your experience.",
+    "Excellent dental experience! I had been with the same dental practice for many years so I hesitated to switch. The team at Advanced Dentistry of Sugarland is amazing! From the moment I walked in to the time I left, I felt appreciated and I …"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–4 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "dental cleaning",
+    "dental exam",
+    "hygienist",
+    "dental health management",
+    "dentist Sugar Land",
+    "Sugar Land dentist",
+    "dentist 77477",
+    "dentist 77478",
+    "dentist near Hwy 90 Alt",
+    "dentist in Sugar Land TX",
+    "longtime patient trust",
+    "recommended by family and friends",
+    "courteous and professional staff",
+    "knowledgeable hygienist",
+    "comfortable visit",
+    "dentist for over 20 years Sugar Land",
+    "best dentist in Sugar Land TX",
+    "dental cleaning and exam Sugar Land",
+    "dentist recommended by friends Sugar Land",
+    "experienced dentist near 77477"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "dental cleaning",
+      "dental exam",
+      "hygienist",
+      "dental health management",
+      "dentist Sugar Land"
+    ],
+    "locationKeywords": [
+      "Sugar Land dentist",
+      "dentist 77477",
+      "dentist 77478",
+      "dentist near Hwy 90 Alt",
+      "dentist in Sugar Land TX"
+    ],
+    "reputationKeywords": [
+      "longtime patient trust",
+      "recommended by family and friends",
+      "courteous and professional staff",
+      "knowledgeable hygienist",
+      "comfortable visit"
+    ],
+    "searchPhrases": [
+      "dentist for over 20 years Sugar Land",
+      "best dentist in Sugar Land TX",
+      "dental cleaning and exam Sugar Land",
+      "dentist recommended by friends Sugar Land",
+      "experienced dentist near 77477"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 692,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

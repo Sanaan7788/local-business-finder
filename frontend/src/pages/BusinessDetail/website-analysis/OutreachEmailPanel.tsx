@@ -1,4 +1,5 @@
 import { useGenerateOutreachEmail } from '../../../hooks/useBusinesses'
+import { IS_STATIC, serverOnly } from '../../../lib/env'
 import { getApiErrorMessage } from '../../../lib/errors'
 import { Alert } from '../../../components/ui/Alert'
 import { Badge } from '../../../components/ui/Badge'
@@ -18,11 +19,11 @@ export function OutreachEmailPanel({ business }: { business: Business }) {
       tone="info"
       title="Outreach Email"
       description="Personalised cold email based on the improvement opportunities above"
-      action={
+      action={serverOnly(
         <Button variant="primary" size="xs" loading={generate.isPending} onClick={() => generate.mutate(business.id)}>
           {generate.isPending ? 'Generating…' : email ? 'Regenerate' : 'Generate Email'}
-        </Button>
-      }
+        </Button>,
+      )}
       bodyClassName="space-y-4 p-4"
     >
       {emails.length > 0 ? (
@@ -44,6 +45,10 @@ export function OutreachEmailPanel({ business }: { business: Business }) {
       )}
 
       {generate.isError && <Alert tone="danger">{getApiErrorMessage(generate.error, 'Generation failed')}</Alert>}
+
+      {IS_STATIC && !email && (
+        <p className="text-xs text-fg-subtle">No outreach email was generated before this snapshot was exported. Generate it in the local app.</p>
+      )}
 
       {email && (
         <div className="space-y-3">

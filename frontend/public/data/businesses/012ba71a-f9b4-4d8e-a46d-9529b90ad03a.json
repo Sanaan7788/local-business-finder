@@ -1,0 +1,144 @@
+{
+  "id": "012ba71a-f9b4-4d8e-a46d-9529b90ad03a",
+  "createdAt": "2026-06-07T07:27:23.708Z",
+  "updatedAt": "2026-06-07T07:29:34.713Z",
+  "name": "ACent Techs Houston",
+  "phone": "(346) 388-0909",
+  "address": "(346) 388-0909",
+  "zipcode": "77054",
+  "category": "Telephone company",
+  "description": "5.0(3)",
+  "website": true,
+  "websiteUrl": "http://acenttechs.com/",
+  "rating": 5,
+  "reviewCount": null,
+  "googleMapsUrl": "https://www.google.com/maps/place/ACent+Techs+Houston/data=!4m7!3m6!1s0x8640eb9019341a51:0xbfd5b5c45784d5ac!8m2!3d31.1689103!4d-100.0768425!16s%2Fg%2F11fpsnyvcc!19sChIJURo0GZDrQIYRrNWEV8S11b8?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "ACent support was great. As a field technician there's nothing worse than waiting too long for grump support NOCs. ACent support is quick, knowledgeable, and answer right away. Five stars.",
+    "Rich is such a dependable guy. He came through and was able to address my phone issues with the most expertise and professionalism I've ever experienced. Tech guys he sent out to us was very mannerable and patient . He retained a customer for life.",
+    "It was awesome working with the Accent team"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "12–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Open 24 hours",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Open 24 hours",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Open 24 hours",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Open 24 hours",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Open 24 hours",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Open 24 hours",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "phone system installation",
+    "phone system repair",
+    "field technician support",
+    "NOC support",
+    "phone issues troubleshooting",
+    "telephone company services",
+    "business phone systems",
+    "Houston telephone company",
+    "77054 phone repair",
+    "Houston phone system support",
+    "telephone service Houston",
+    "phone technician Houston",
+    "Houston NOC support",
+    "quick support",
+    "knowledgeable technicians",
+    "dependable service",
+    "expert phone repair",
+    "patient technicians",
+    "mannerable staff",
+    "customer for life",
+    "phone system repair near me",
+    "field technician support Houston",
+    "business phone system installation Houston",
+    "phone issues help Houston",
+    "reliable phone company Houston",
+    "NOC support Houston",
+    "phone technician 77054"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "phone system installation",
+      "phone system repair",
+      "field technician support",
+      "NOC support",
+      "phone issues troubleshooting",
+      "telephone company services",
+      "business phone systems"
+    ],
+    "locationKeywords": [
+      "Houston telephone company",
+      "77054 phone repair",
+      "Houston phone system support",
+      "telephone service Houston",
+      "phone technician Houston",
+      "Houston NOC support"
+    ],
+    "reputationKeywords": [
+      "quick support",
+      "knowledgeable technicians",
+      "dependable service",
+      "expert phone repair",
+      "patient technicians",
+      "mannerable staff",
+      "customer for life"
+    ],
+    "searchPhrases": [
+      "phone system repair near me",
+      "field technician support Houston",
+      "business phone system installation Houston",
+      "phone issues help Houston",
+      "reliable phone company Houston",
+      "NOC support Houston",
+      "phone technician 77054"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 568,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 20,
+  "notes": null,
+  "lastContactedAt": null
+}

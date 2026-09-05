@@ -1,3 +1,4 @@
+import { ServerOnly } from '../../../components/ServerOnly'
 import { SectionHeading } from '../../../components/ui/Heading'
 import type { Business } from '../../../types/business'
 import { MenuUpload } from './MenuUpload'
@@ -19,7 +20,9 @@ export function ScrapedDataSection({ business }: { business: Business }) {
         </div>
       )}
 
-      <MenuUpload businessId={business.id} />
+      <ServerOnly>
+        <MenuUpload businessId={business.id} />
+      </ServerOnly>
 
       {business.menu.length > 0 && <MenuList menu={business.menu} />}
     </div>

@@ -1,0 +1,130 @@
+{
+  "id": "8df2f706-29e8-4a12-9cf1-319905694d30",
+  "createdAt": "2026-06-07T08:58:47.149Z",
+  "updatedAt": "2026-06-07T09:09:05.425Z",
+  "name": "X DENTAL-Pearland",
+  "phone": "(281) 835-4849",
+  "address": "2975 Kingsley Dr Ste 127, Pearland, TX 77584",
+  "zipcode": "77047",
+  "category": "Dental clinic",
+  "description": null,
+  "website": true,
+  "websiteUrl": "https://www.xdentalpearland.com/",
+  "rating": 4.7,
+  "reviewCount": 162,
+  "googleMapsUrl": "https://www.google.com/maps/place/X+DENTAL-Pearland/data=!4m7!3m6!1s0x8640ece98fd3bb35:0x88f2106b4bd52a2a!8m2!3d29.5564482!4d-95.4167134!16s%2Fg%2F11crzg1m_5!19sChIJNbvTj-nsQIYRKirVS2sQ8og?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "Dr. Dian is a terrific breath of fresh air from previous dentists I've been to. I had to get a root canal done, and I've had many before, but he was very accommodating and informative. He's a no BS type of professional and shares the …",
+    "I'm so grateful to have found Dr. Dian. He truly cares about his patients! My experience with wisdom teeth extractions was quick, smooth, and painless. Thanks to his exceptional skill and compassion. What impressed me most is his …",
+    "Dentist was great! He was prompt and professional! So glad my mom recommended me to this dentist!"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "10 AM–2 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "10 AM–2 PM",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "root canal",
+    "wisdom teeth extractions",
+    "dental clinic",
+    "dentist",
+    "dental care",
+    "dentist Pearland",
+    "dentist 77047",
+    "Pearland dental clinic",
+    "Kingsley Dr dentist",
+    "Pearland TX dentist",
+    "caring dentist",
+    "painless extractions",
+    "accommodating dentist",
+    "informative dentist",
+    "prompt service",
+    "dentist near me Pearland",
+    "root canal Pearland",
+    "wisdom teeth removal Pearland",
+    "dentist that cares Pearland",
+    "painless dentist Pearland"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "root canal",
+      "wisdom teeth extractions",
+      "dental clinic",
+      "dentist",
+      "dental care"
+    ],
+    "locationKeywords": [
+      "dentist Pearland",
+      "dentist 77047",
+      "Pearland dental clinic",
+      "Kingsley Dr dentist",
+      "Pearland TX dentist"
+    ],
+    "reputationKeywords": [
+      "caring dentist",
+      "painless extractions",
+      "accommodating dentist",
+      "informative dentist",
+      "prompt service"
+    ],
+    "searchPhrases": [
+      "dentist near me Pearland",
+      "root canal Pearland",
+      "wisdom teeth removal Pearland",
+      "dentist that cares Pearland",
+      "painless dentist Pearland"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 570,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

@@ -50,6 +50,27 @@ npm run dev        # backend on PORT (default 3001), frontend on 5173
 
 The Vite dev proxy in `frontend/vite.config.ts` forwards `/api` to the backend port; keep it in sync with `PORT` in `backend/.env`.
 
+### Static snapshot on GitHub Pages
+
+The frontend has a second build target that runs without the backend: `vite build --mode static` reads a JSON snapshot from `frontend/public/data` instead of `/api`, and `.github/workflows/deploy-pages.yml` publishes it to `https://sanaan7788.github.io/local-business-finder/` on every push to `main` that touches `frontend/`. The repo is public, so everything in the snapshot is public.
+
+```bash
+npm run export:static     # Neon → frontend/public/data (index.json, businesses/<id>.json, sessions.json); add -- --no-notes to leave CRM notes out
+npm run build:static      # type-check + vite build --mode static + 404.html SPA fallback → frontend/dist
+npm run preview:static    # serve the static build locally at /local-business-finder/
+# commit frontend/public/data and push main → Actions deploys in a minute or two
+```
+
+What the static site can do: browse, search, filter and sort businesses; open every profile tab; move leads between statuses (shortlist / reject / contacted / …) and write notes. Those edits live in that browser's localStorage (`lbf:changes`), merged over the snapshot on read. **Local changes** in the header exports them as a JSON file; apply it to the database with:
+
+```bash
+npm run import:changes -- ~/Downloads/lbf-changes-2026-09-05.json --dry-run   # preview
+npm run import:changes -- ~/Downloads/lbf-changes-2026-09-05.json             # apply; --force overrides conflicts
+npm run export:static && git add frontend/public/data && git commit -m "Refresh snapshot" && git push
+```
+
+What it cannot do (no server): scraping, re-scrape, URL imports, every AI call (analysis, brief, website prompt/site, crawl, outreach, menu photos), profile edits, deletes, LLM switching. Those controls are hidden in the static build (`IS_STATIC` in `frontend/src/lib/env.ts`, `<ServerOnly>`); the data layer swap lives in `frontend/src/lib/api/index.ts` and `frontend/src/lib/api/static/`.
+
 ### Environment variables (`backend/.env`)
 
 | Variable | Required | Notes |
@@ -186,6 +207,7 @@ backend/
     middleware/             async.handler, validate, logger, error
     routes/                 health, scraper, businesses, analysis, website, settings
     services/               scraper/, llm/, ai/, lead/, website/
+    scripts/                export-static.ts (snapshot for GitHub Pages), import-changes.ts (apply exported local edits)
     types/                  business.types.ts (Zod schemas + inferred types)
     utils/                  errors.ts, logger.ts, deduplicator.ts
 frontend/
@@ -193,7 +215,8 @@ frontend/
     components/ui/          design-system primitives
     components/layout/      header, theme toggle, LLM selector, token counter, scrape pill
     hooks/                  query keys, queries/mutations, small UI hooks
-    lib/                    api client, formatting, tones, leads, urls
+    lib/                    api client (+ api/static/: snapshot + localStorage overlay for the Pages build), env, formatting, tones, leads, urls
+    ../public/data/         exported snapshot served by the static build (committed)
     pages/                  one directory per page
     types/                  business.ts, scraper.ts, api.ts
 ```

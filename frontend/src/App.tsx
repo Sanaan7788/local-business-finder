@@ -42,7 +42,7 @@ export default function App() {
   return (
     <DarkModeProvider>
       <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
+        <BrowserRouter basename={import.meta.env.BASE_URL}>
           <Layout>
             <ErrorBoundary>
               <Suspense fallback={<LoadingBlock />}>

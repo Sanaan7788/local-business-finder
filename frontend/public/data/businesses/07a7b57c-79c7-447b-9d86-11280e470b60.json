@@ -1,0 +1,144 @@
+{
+  "id": "07a7b57c-79c7-447b-9d86-11280e470b60",
+  "createdAt": "2026-05-31T19:17:50.429Z",
+  "updatedAt": "2026-05-31T19:18:10.977Z",
+  "name": "FabSmiles Pediatric Dentistry",
+  "phone": "(832) 899-4442",
+  "address": "11707 W Airport Blvd Suite 103, Meadows Place, TX 77477",
+  "zipcode": "77477",
+  "category": "Pediatric dentist",
+  "description": null,
+  "website": true,
+  "websiteUrl": "https://www.myfabsmiles.com/",
+  "rating": 5,
+  "reviewCount": 632,
+  "googleMapsUrl": "https://www.google.com/maps/place/FabSmiles+Pediatric+Dentistry/data=!4m7!3m6!1s0x8640e75d36452333:0x672c5b138b705e84!8m2!3d29.64721!4d-95.5825283!16s%2Fg%2F11qg5hq_dk!19sChIJMyNFNl3nQIYRhF5wixNbLGc?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "it’s my baby’s first ever dentist visit n the visit went great. staffs were friendly n helpfully and i like that they keep track of the patients record. The place is clean n i can let my baby play without worrying, this will be my baby’s only dentist place.",
+    "I have been going to this doctor for the past two years, and I am very satisfied with the care my kid receive. She is extremely kind, professional, and always treats her patients with respect and patience. The clinic is always very clean …",
+    "We’ve been coming to FabSmiles Pediatric Dentistry since my daughter was just one year old, and she is now four—we wouldn’t go anywhere else. From the receptionist to the dental assistants to the doctor, everyone has always treated my …"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5:30 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5:30 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5:30 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5:30 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–3 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "pediatric dentist",
+    "children's dentist",
+    "baby's first dentist visit",
+    "kid's dental care",
+    "pediatric dental clinic",
+    "child dentist",
+    "dental care for kids",
+    "Meadows Place pediatric dentist",
+    "77477 dentist for kids",
+    "pediatric dentist Sugar Land",
+    "children's dentist Houston",
+    "pediatric dentist Fort Bend County",
+    "pediatric dentist near 77477",
+    "friendly staff",
+    "clean clinic",
+    "patient and kind doctor",
+    "great with babies",
+    "trusted by parents for years",
+    "caring dental team",
+    "recommended by parents",
+    "best pediatric dentist near me",
+    "baby's first dentist visit Meadows Place",
+    "kid friendly dentist 77477",
+    "children's dentist Sugar Land TX",
+    "pediatric dentist with clean office",
+    "affordable pediatric dentist Houston",
+    "top rated pediatric dentist for toddlers"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "pediatric dentist",
+      "children's dentist",
+      "baby's first dentist visit",
+      "kid's dental care",
+      "pediatric dental clinic",
+      "child dentist",
+      "dental care for kids"
+    ],
+    "locationKeywords": [
+      "Meadows Place pediatric dentist",
+      "77477 dentist for kids",
+      "pediatric dentist Sugar Land",
+      "children's dentist Houston",
+      "pediatric dentist Fort Bend County",
+      "pediatric dentist near 77477"
+    ],
+    "reputationKeywords": [
+      "friendly staff",
+      "clean clinic",
+      "patient and kind doctor",
+      "great with babies",
+      "trusted by parents for years",
+      "caring dental team",
+      "recommended by parents"
+    ],
+    "searchPhrases": [
+      "best pediatric dentist near me",
+      "baby's first dentist visit Meadows Place",
+      "kid friendly dentist 77477",
+      "children's dentist Sugar Land TX",
+      "pediatric dentist with clean office",
+      "affordable pediatric dentist Houston",
+      "top rated pediatric dentist for toddlers"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 662,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

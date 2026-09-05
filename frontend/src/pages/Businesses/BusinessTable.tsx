@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { cn } from '../../lib/cn'
 import { LeadStatusBadge, PriorityBadge } from '../../components/business/LeadBadges'
 import { TONE } from '../../lib/tones'
-import type { BusinessListItem } from '../../types/business'
+import type { BusinessListItem, LeadStatus } from '../../types/business'
 import { RowMenu } from './RowMenu'
 
 function SortableTh({
@@ -42,13 +42,15 @@ export function BusinessTable({
   sort,
   dir,
   onSort,
+  onStatus,
   onDelete,
 }: {
   businesses: BusinessListItem[]
   sort: string
   dir: 'asc' | 'desc'
   onSort: (field: string) => void
-  onDelete: (b: BusinessListItem) => void
+  onStatus: (b: BusinessListItem, status: LeadStatus) => void
+  onDelete?: (b: BusinessListItem) => void
 }) {
   const navigate = useNavigate()
   const th = { sort, dir, onSort }
@@ -90,7 +92,7 @@ export function BusinessTable({
             </td>
             <td className="px-4 py-3"><PriorityBadge priority={b.priority} score={b.priorityScore} /></td>
             <td className="px-4 py-3"><LeadStatusBadge status={b.leadStatus} /></td>
-            <td className="px-4 py-3"><RowMenu name={b.name} onDelete={() => onDelete(b)} /></td>
+            <td className="px-4 py-3"><RowMenu name={b.name} status={b.leadStatus} onStatus={s => onStatus(b, s)} onDelete={onDelete ? () => onDelete(b) : undefined} /></td>
           </tr>
         ))}
       </tbody>

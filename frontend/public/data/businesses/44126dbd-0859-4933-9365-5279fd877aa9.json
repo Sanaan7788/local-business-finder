@@ -1,0 +1,136 @@
+{
+  "id": "44126dbd-0859-4933-9365-5279fd877aa9",
+  "createdAt": "2026-06-01T07:34:08.906Z",
+  "updatedAt": "2026-06-01T07:35:19.116Z",
+  "name": "Sugar Mill Chiropractic",
+  "phone": "(281) 494-1690",
+  "address": "54 Sugar Creek Center Blvd STE 100, Sugar Land, TX 77478",
+  "zipcode": "77477",
+  "category": "Chiropractor",
+  "description": null,
+  "website": true,
+  "websiteUrl": "http://www.sugarmillchiro.com/",
+  "rating": 4.8,
+  "reviewCount": 305,
+  "googleMapsUrl": "https://www.google.com/maps/place/Sugar+Mill+Chiropractic/data=!4m7!3m6!1s0x8640e6ffa46d5a73:0x72c90db7ace43dbf!8m2!3d29.6210992!4d-95.605525!16s%2Fg%2F1tfzs9c2!19sChIJc1ptpP_mQIYRvz3krLcNyXI?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "Dr Linda and all of her staff are the absolute best. Five years ago they helped me when I couldn't walk from my couch to my bedroom… They were able to help me get out of pain & back to life …",
+    "I went for my backpain & Dr Tara Parker did an amazing job. Staff is very sweet & helpful. Miss Pam is so sweet at the reception. Recommended 👍 …",
+    "Outstanding Chiropractor!! I have been a patient of Dr Linda for over 10 years. She has helped me maintain pain free back issues. She is wonderful and very professional. She is also great …"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "8:30 AM–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8:30 AM–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8:30 AM–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8:30 AM–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8:30 AM–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8:30–11 AM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "chiropractor",
+    "back pain relief",
+    "pain management",
+    "spinal adjustment",
+    "chiropractic care",
+    "back issues treatment",
+    "Sugar Land chiropractor",
+    "Sugar Land 77478 chiropractor",
+    "Sugar Creek Center chiropractor",
+    "77477 chiropractor",
+    "Sugar Land back pain clinic",
+    "helped when I couldn't walk",
+    "pain free back issues",
+    "amazing job",
+    "staff is sweet and helpful",
+    "outstanding chiropractor",
+    "10 year patient",
+    "chiropractor near me Sugar Land",
+    "back pain chiropractor Sugar Land",
+    "best chiropractor in Sugar Land",
+    "chiropractor for back pain 77478",
+    "Sugar Land chiropractor reviews",
+    "Dr Linda chiropractor Sugar Land"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "chiropractor",
+      "back pain relief",
+      "pain management",
+      "spinal adjustment",
+      "chiropractic care",
+      "back issues treatment"
+    ],
+    "locationKeywords": [
+      "Sugar Land chiropractor",
+      "Sugar Land 77478 chiropractor",
+      "Sugar Creek Center chiropractor",
+      "77477 chiropractor",
+      "Sugar Land back pain clinic"
+    ],
+    "reputationKeywords": [
+      "helped when I couldn't walk",
+      "pain free back issues",
+      "amazing job",
+      "staff is sweet and helpful",
+      "outstanding chiropractor",
+      "10 year patient"
+    ],
+    "searchPhrases": [
+      "chiropractor near me Sugar Land",
+      "back pain chiropractor Sugar Land",
+      "best chiropractor in Sugar Land",
+      "chiropractor for back pain 77478",
+      "Sugar Land chiropractor reviews",
+      "Dr Linda chiropractor Sugar Land"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 605,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

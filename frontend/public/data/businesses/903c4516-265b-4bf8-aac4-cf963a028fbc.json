@@ -1,0 +1,165 @@
+{
+  "id": "903c4516-265b-4bf8-aac4-cf963a028fbc",
+  "createdAt": "2026-06-01T01:44:28.441Z",
+  "updatedAt": "2026-06-01T01:46:12.253Z",
+  "name": "Fort Bend Dental Missouri City",
+  "phone": "(281) 336-9899",
+  "address": "3717 Township Ln, Missouri City, TX 77459",
+  "zipcode": "77477",
+  "category": "Dentist",
+  "description": "4.8(2,119)",
+  "website": true,
+  "websiteUrl": "https://www.ftbenddental.com/",
+  "rating": 4.8,
+  "reviewCount": 141,
+  "googleMapsUrl": "https://www.google.com/maps/place/Fort+Bend+Dental+Missouri+City/data=!4m7!3m6!1s0x8640e5f9fac0cd59:0x6e0334abce0ffd86!8m2!3d29.5693696!4d-95.5644592!16s%2Fg%2F1tjs59_k!19sChIJWc3A-vnlQIYRhv0Pzqs0A24?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "I took my child to Fort Bend Dental, and it was such a great experience! The staff were warm and welcoming from the moment we walked in, and they made my little one feel completely comfortable. The office itself is spotless, bright, and …",
+    "Thank you so much for taking the time to share such a thoughtful review! Creating a warm, welcoming, and calming environment, especially for our little ones, is very important to us, and it means so much to know you felt comfortable and … More",
+    "Very disappointed. Got to the dentist office at 2:30, a half hour early for my 3 o'clock appointment. Now mind you, I haven't been to a dentist since I moved to Houston in 2021, so I knew I was long over due. When I originally made my …",
+    "Thank you for taking the time to provide feedback on your experience. We sincerely regret any frustration you experienced, particularly regarding the duration of your visit and the nature of the discussions. We recognize the value of your … More",
+    "⭐⭐⭐⭐⭐ Amazing experience at Fort Bend Dental! I went in for an emergency appointment and they were able to see me the same day and got me taken care of quickly. Dr. …"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–1 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "2–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–1 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "2–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–1 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "2–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–1 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "2–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–12 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "1–4 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "emergency dentist",
+    "pediatric dentistry",
+    "same day appointment",
+    "dental cleaning",
+    "family dentistry",
+    "general dentistry",
+    "dentist Missouri City TX",
+    "dentist 77459",
+    "dentist 77477",
+    "dentist Fort Bend County",
+    "dentist near Sienna Plantation",
+    "dentist in Missouri City",
+    "warm and welcoming staff",
+    "great with kids",
+    "spotless office",
+    "calming environment",
+    "same day emergency care",
+    "highly rated 4.8 stars",
+    "emergency dentist near me Missouri City",
+    "pediatric dentist Missouri City TX",
+    "same day dentist appointment Missouri City",
+    "best dentist in Missouri City TX",
+    "family dentist Fort Bend County",
+    "dentist that takes walk ins Missouri City"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "emergency dentist",
+      "pediatric dentistry",
+      "same day appointment",
+      "dental cleaning",
+      "family dentistry",
+      "general dentistry"
+    ],
+    "locationKeywords": [
+      "dentist Missouri City TX",
+      "dentist 77459",
+      "dentist 77477",
+      "dentist Fort Bend County",
+      "dentist near Sienna Plantation",
+      "dentist in Missouri City"
+    ],
+    "reputationKeywords": [
+      "warm and welcoming staff",
+      "great with kids",
+      "spotless office",
+      "calming environment",
+      "same day emergency care",
+      "highly rated 4.8 stars"
+    ],
+    "searchPhrases": [
+      "emergency dentist near me Missouri City",
+      "pediatric dentist Missouri City TX",
+      "same day dentist appointment Missouri City",
+      "best dentist in Missouri City TX",
+      "family dentist Fort Bend County",
+      "dentist that takes walk ins Missouri City"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 743,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

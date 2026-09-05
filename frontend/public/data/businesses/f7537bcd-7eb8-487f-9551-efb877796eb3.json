@@ -1,0 +1,156 @@
+{
+  "id": "f7537bcd-7eb8-487f-9551-efb877796eb3",
+  "createdAt": "2026-06-07T08:41:21.712Z",
+  "updatedAt": "2026-06-07T08:41:55.550Z",
+  "name": "The Smile Center at Pearland",
+  "phone": "(832) 410-1639",
+  "address": "1799 Kirby Dr Suite 170, Pearland, TX 77584",
+  "zipcode": "77047",
+  "category": "Cosmetic dentist",
+  "description": null,
+  "website": true,
+  "websiteUrl": "http://smilecenterpearland.com/",
+  "rating": 5,
+  "reviewCount": 231,
+  "googleMapsUrl": "https://www.google.com/maps/place/The+Smile+Center+at+Pearland/data=!4m7!3m6!1s0x8640edbcf21da6ef:0x294b762258c65974!8m2!3d29.5806392!4d-95.3995531!16s%2Fg%2F11tsnmwr_k!19sChIJ76Yd8rztQIYRdFnGWCJ2Syk?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "Best experience I’ve had at a dentist office, my entire life, literally from the front desk all the way back to seeing the dentist. The customer service was exceptional, and it was obvious that they have experience and I’m a true believer that experience matters and highly recommend this dentist.",
+    "Thanks so much for your kind review! We’ll share your kind words with Dr. Dugarte and our team. We appreciate you!!!",
+    "Beautiful & well kept office along with a gorgeous and knowledgeable doctor! Very careful with my sensitive teeth and super informative. Staff was very nice and accommodating. Glad I found a new dental home❤️",
+    "We truly appreciate your 5-star review! It’s our mission to provide excellent dental care in a welcoming environment. Thank you for being a valued patient at Dr. Dugarte’s office!.",
+    "Dr. Dugarte and her team are amazing! The office is clean, welcoming and modern. Dr. D is very gentle, caring, professional, warm and always takes the time to explain everything clearly making sure I understand what's happening and feel …"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "cosmetic dentist",
+    "teeth whitening",
+    "veneers",
+    "dental implants",
+    "Invisalign",
+    "porcelain crowns",
+    "bonding",
+    "smile makeover",
+    "cosmetic dentist Pearland",
+    "dentist 77047",
+    "dentist Kirby Dr",
+    "cosmetic dentist Houston",
+    "dentist Pearland TX",
+    "dentist near Pearland",
+    "cosmetic dentist 77047",
+    "dentist in Pearland",
+    "gentle dentist",
+    "caring dentist",
+    "welcoming office",
+    "clean office",
+    "knowledgeable doctor",
+    "patient education",
+    "sensitive teeth care",
+    "5-star dentist",
+    "best cosmetic dentist in Pearland",
+    "gentle dentist for sensitive teeth",
+    "cosmetic dentist near me",
+    "dentist with great customer service",
+    "modern dental office Pearland",
+    "top rated dentist Pearland",
+    "dentist who explains everything",
+    "smile makeover Pearland"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "cosmetic dentist",
+      "teeth whitening",
+      "veneers",
+      "dental implants",
+      "Invisalign",
+      "porcelain crowns",
+      "bonding",
+      "smile makeover"
+    ],
+    "locationKeywords": [
+      "cosmetic dentist Pearland",
+      "dentist 77047",
+      "dentist Kirby Dr",
+      "cosmetic dentist Houston",
+      "dentist Pearland TX",
+      "dentist near Pearland",
+      "cosmetic dentist 77047",
+      "dentist in Pearland"
+    ],
+    "reputationKeywords": [
+      "gentle dentist",
+      "caring dentist",
+      "welcoming office",
+      "clean office",
+      "knowledgeable doctor",
+      "patient education",
+      "sensitive teeth care",
+      "5-star dentist"
+    ],
+    "searchPhrases": [
+      "best cosmetic dentist in Pearland",
+      "gentle dentist for sensitive teeth",
+      "cosmetic dentist near me",
+      "dentist with great customer service",
+      "modern dental office Pearland",
+      "top rated dentist Pearland",
+      "dentist who explains everything",
+      "smile makeover Pearland"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 745,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

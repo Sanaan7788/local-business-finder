@@ -1,0 +1,117 @@
+{
+  "id": "b998382d-9bbc-4c89-804c-710f525d7bd8",
+  "createdAt": "2026-06-01T08:26:37.178Z",
+  "updatedAt": "2026-06-01T08:39:17.087Z",
+  "name": "Missouri City Chiropractic & Wellness Clinic",
+  "phone": "(832) 440-7690",
+  "address": "2755 Texas Pkwy #102, Missouri City, TX 77489",
+  "zipcode": "77477",
+  "category": "Chiropractor",
+  "description": null,
+  "website": true,
+  "websiteUrl": "https://mocitychiro.com/",
+  "rating": 5,
+  "reviewCount": 3,
+  "googleMapsUrl": "https://www.google.com/maps/place/Missouri+City+Chiropractic+%26+Wellness+Clinic/data=!4m7!3m6!1s0x8640e9c266694cf7:0x23cc2071e76bb770!8m2!3d29.5864963!4d-95.5258246!16s%2Fg%2F11mc3r7n1v!19sChIJ90xpZsLpQIYRcLdr53EgzCM?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "I have had a great experience at this facility. The staff is very knowledgeable and professional. You are always welcome with a pleasant greeting. I would highly recommend to anyone seeking physical therapy.",
+    "the best staff ever. everyone is super nice and supportive. They never rush or push me to do something that hurt or is u comfortable. the drs i had were also really good. i was kinda scared of adjustments at first and dr.davis walked me through it no rush and helped alott. 10/10",
+    "I had the best experience at Mo City Chiropractor & Rehab Clinic. From the moment I walked in, the staff was welcoming, professional, and genuinely cared about my well-being. The treatment was thorough and effective, and I noticed real …"
+  ],
+  "menu": [
+    {
+      "section": "Popular times",
+      "items": [
+        {
+          "name": "Mondays",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Based on visits to this place.",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "chiropractic adjustment",
+    "physical therapy",
+    "rehabilitation",
+    "spinal adjustment",
+    "pain management",
+    "walk-through adjustment",
+    "supportive care",
+    "chiropractor Missouri City",
+    "chiropractor 77477",
+    "Texas Parkway chiropractor",
+    "Missouri City TX chiropractor",
+    "Sienna Plantation chiropractor",
+    "Stafford chiropractor",
+    "knowledgeable staff",
+    "welcoming atmosphere",
+    "patient and supportive",
+    "no rush",
+    "gentle adjustments",
+    "highly recommended",
+    "effective treatment",
+    "best chiropractor in Missouri City",
+    "chiropractor near me 77477",
+    "physical therapy Missouri City",
+    "gentle chiropractic adjustment Missouri City",
+    "chiropractor that takes time with patients",
+    "rehab clinic Missouri City TX"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "chiropractic adjustment",
+      "physical therapy",
+      "rehabilitation",
+      "spinal adjustment",
+      "pain management",
+      "walk-through adjustment",
+      "supportive care"
+    ],
+    "locationKeywords": [
+      "chiropractor Missouri City",
+      "chiropractor 77477",
+      "Texas Parkway chiropractor",
+      "Missouri City TX chiropractor",
+      "Sienna Plantation chiropractor",
+      "Stafford chiropractor"
+    ],
+    "reputationKeywords": [
+      "knowledgeable staff",
+      "welcoming atmosphere",
+      "patient and supportive",
+      "no rush",
+      "gentle adjustments",
+      "highly recommended",
+      "effective treatment"
+    ],
+    "searchPhrases": [
+      "best chiropractor in Missouri City",
+      "chiropractor near me 77477",
+      "physical therapy Missouri City",
+      "gentle chiropractic adjustment Missouri City",
+      "chiropractor that takes time with patients",
+      "rehab clinic Missouri City TX"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 638,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 20,
+  "notes": null,
+  "lastContactedAt": null
+}

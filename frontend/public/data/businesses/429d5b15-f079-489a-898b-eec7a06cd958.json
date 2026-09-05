@@ -1,0 +1,55 @@
+{
+  "id": "429d5b15-f079-489a-898b-eec7a06cd958",
+  "createdAt": "2026-06-01T10:32:53.202Z",
+  "updatedAt": "2026-06-01T10:32:53.202Z",
+  "name": "The Aligned Clinic, Dr. Alex Tubio",
+  "phone": "(832) 589-5007",
+  "address": "210 Century Square Blvd Ste 200, Sugar Land, TX 77478",
+  "zipcode": "77477",
+  "category": "Chiropractor",
+  "description": "4.8(269)",
+  "website": true,
+  "websiteUrl": "https://square.site/book/X9Z0AMSYY8W8E/the-aligned-clinic-sugar-land-tx",
+  "rating": 4.8,
+  "reviewCount": 16,
+  "googleMapsUrl": "https://www.google.com/maps/place/The+Aligned+Clinic,+Dr.+Alex+Tubio/data=!4m7!3m6!1s0x8640e72c9ec0453d:0xe0de2119021b2b1c!8m2!3d29.624458!4d-95.6064385!16s%2Fg%2F11swzz5_fh!19sChIJPUXAniznQIYRHCsbAhkh3uA?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "I had a great experience with Dr. Liu and The Aligned Clinic. From the moment I walked in, the staff was welcoming and professional. Dr. Liu was extremely knowledgeable, attentive, and took the time to truly listen to my concerns. I never …",
+    "I had such a positive experience at The Aligned Clinic! From the moment I arrived, the clinic felt welcoming and professional. The staff were friendly and attentive, creating a calm and supportive atmosphere from check-in to check-out. …",
+    "One of the best dr visits I’ve had. Dr Liu took the time to actually listen to my concerns and answer my questions. He clearly explained what he saw wrong and how to start correcting. The adjustment itself was amazing. Alleviated several …"
+  ],
+  "menu": [
+    {
+      "section": "Popular times",
+      "items": [
+        {
+          "name": "Mondays",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Based on visits to this place.",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [],
+  "keywordCategories": null,
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 0,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

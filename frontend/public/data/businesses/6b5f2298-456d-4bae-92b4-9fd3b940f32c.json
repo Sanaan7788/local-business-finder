@@ -1,0 +1,80 @@
+{
+  "id": "6b5f2298-456d-4bae-92b4-9fd3b940f32c",
+  "createdAt": "2026-06-01T07:46:18.823Z",
+  "updatedAt": "2026-06-01T07:46:18.823Z",
+  "name": "Spine Specialist Decompression Center",
+  "phone": "(281) 277-0602",
+  "address": "12440 Emily Ct suite#702, Sugar Land, TX 77478",
+  "zipcode": "77477",
+  "category": "Chiropractor",
+  "description": null,
+  "website": true,
+  "websiteUrl": "http://spinespecialistcenter.com/",
+  "rating": 4.8,
+  "reviewCount": 437,
+  "googleMapsUrl": "https://www.google.com/maps/place/Spine+Specialist+Decompression+Center/data=!4m7!3m6!1s0x8640e6a49f557379:0xc372c1d4088c8bd4!8m2!3d29.6303775!4d-95.5994811!16s%2Fg%2F1tk_k2t9!19sChIJeXNVn6TmQIYR1IuMCNTBcsM?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "I was doing therapy at Spine Specialist for my car accident a little while ago . Nancy was usually the one who would tend to me. She was very attentive and informing. I would highly recommend Spine Specialist and Dr. Khan's services.\"",
+    "My attorney referred me to a chiropractor in my area, but my neck pain never really improved.... that was until a friend of mine recommended I visit Dr. Khan’s office. After starting decompression and laser therapy with Dr. Khan and Luis, I …",
+    "Nancy was my therapist when I went into my appointment. She was very nice but very unprofessional with her colleague that works front desk. I overheard them talking about Dr.Khan in a terrible way. Dr. khan has always been the best but her …"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "8 AM–7 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–7 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–7 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–7 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "1–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [],
+  "keywordCategories": null,
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 0,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

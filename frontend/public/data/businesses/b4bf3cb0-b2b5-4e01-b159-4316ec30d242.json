@@ -1,0 +1,147 @@
+{
+  "id": "b4bf3cb0-b2b5-4e01-b159-4316ec30d242",
+  "createdAt": "2026-06-01T06:55:40.388Z",
+  "updatedAt": "2026-06-01T07:06:42.261Z",
+  "name": "Peak Wellness",
+  "phone": "(281) 201-7093",
+  "address": "711 Avenue E, Stafford, TX 77477",
+  "zipcode": "77477",
+  "category": "Chiropractor",
+  "description": null,
+  "website": true,
+  "websiteUrl": "https://peakwellnesshtx.com/",
+  "rating": 5,
+  "reviewCount": 15,
+  "googleMapsUrl": "https://www.google.com/maps/place/Peak+Wellness/data=!4m7!3m6!1s0x6926916656f3f869:0xdcb26e08c680d9c5!8m2!3d29.6096005!4d-95.5700003!16s%2Fg%2F11svzrf4lp!19sChIJafjzVmaRJmkRxdmAxghustw?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "Dr. Glenn, was very professional, informative, and passionate about his work. He took the time to thoroughly explain everything and made sure I understood each step of the process. You can tell he’s truly dedicated to his craft and cares …",
+    "Mr. Breed, thank you so much for sharing your experience. We are so glad you felt well-informed during your visit with us. We take pride in making sure every one of our patients understands their care and feels confident through the process. We are truly grateful for your trust and recommendation.",
+    "We had an outstanding experience with Dr Glenn, who done physical therapy to support my son’s recovery and safely return him to competitive sports. From the very beginning, the approach was thorough, professional, and clearly focused on …",
+    "Mr. Reza, thank you so much for taking the time to share this! It was a pleasure working with your son and be a part of his recovery. Getting young athletes back to competing safely is exactly what we're here for, and it means a lot to hear that the process felt clear and thorough from your end.",
+    "Dr. Caleb has become an essential part of my family’s wellness journey. As a former collegiate athlete, he brings a unique perspective to his practice — one that blends expert-level knowledge of the body with a deep understanding of …"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "12–7 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "12–7 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "1:30–7:30 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "12–7 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "12–7 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "10:30 AM–12 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "2:30–4 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "chiropractor",
+    "physical therapy",
+    "sports recovery",
+    "athlete rehabilitation",
+    "family wellness",
+    "spinal adjustment",
+    "injury recovery",
+    "chiropractor Stafford TX",
+    "chiropractor 77477",
+    "chiropractor Houston",
+    "chiropractor Sugar Land",
+    "chiropractor Missouri City",
+    "chiropractor Fort Bend County",
+    "thorough explanation",
+    "well-informed care",
+    "passionate chiropractor",
+    "trusted by athletes",
+    "family wellness journey",
+    "clear process",
+    "chiropractor near me Stafford TX",
+    "sports recovery chiropractor Houston",
+    "physical therapy for athletes Stafford",
+    "best chiropractor in 77477",
+    "family chiropractor Sugar Land",
+    "chiropractor for sports injury recovery"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "chiropractor",
+      "physical therapy",
+      "sports recovery",
+      "athlete rehabilitation",
+      "family wellness",
+      "spinal adjustment",
+      "injury recovery"
+    ],
+    "locationKeywords": [
+      "chiropractor Stafford TX",
+      "chiropractor 77477",
+      "chiropractor Houston",
+      "chiropractor Sugar Land",
+      "chiropractor Missouri City",
+      "chiropractor Fort Bend County"
+    ],
+    "reputationKeywords": [
+      "thorough explanation",
+      "well-informed care",
+      "passionate chiropractor",
+      "trusted by athletes",
+      "family wellness journey",
+      "clear process"
+    ],
+    "searchPhrases": [
+      "chiropractor near me Stafford TX",
+      "sports recovery chiropractor Houston",
+      "physical therapy for athletes Stafford",
+      "best chiropractor in 77477",
+      "family chiropractor Sugar Land",
+      "chiropractor for sports injury recovery"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 742,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 10,
+  "notes": null,
+  "lastContactedAt": null
+}

@@ -1,0 +1,82 @@
+{
+  "id": "909d60e9-3d30-4c35-998f-01a02f30b6fb",
+  "createdAt": "2026-06-01T01:57:43.014Z",
+  "updatedAt": "2026-06-01T01:57:43.014Z",
+  "name": "Elara Orthodontics - Richmond",
+  "phone": "(713) 999-1099",
+  "address": "16733 W Airport Blvd Suite 270, Richmond, TX 77407",
+  "zipcode": "77477",
+  "category": "Orthodontist",
+  "description": "5.0(926)",
+  "website": true,
+  "websiteUrl": "https://elaraorthodontics.com/orthodontist-richmond-tx/",
+  "rating": 5,
+  "reviewCount": 164,
+  "googleMapsUrl": "https://www.google.com/maps/place/Elara+Orthodontics+-+Richmond/data=!4m7!3m6!1s0x8640c1ca55615a09:0xffe57f537131446f!8m2!3d29.648453!4d-95.681122!16s%2Fg%2F11ghfr2kr7!19sChIJCVphVcrBQIYRb0QxcVN_5f8?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "We had our child’s first orthodontic consultation with Dr. Sara, and it was an absolutely wonderful experience. From the moment we walked in, we felt welcomed and comfortable. …",
+    "Thank you so much for your wonderful review! We’re thrilled that your child’s first consultation with Dr. Sara and Nicole was such a positive experience. It means a lot to us that you felt welcomed, informed, and at ease. We truly appreciate your recommendation and look forward to supporting your child’s smile journey!",
+    "I definitely appreciate this place a lot for it being my first time coming here everyone was so welcoming from the start! The process was very easy especially when it came to the consultation part! they are fast at getting the work done I …",
+    "Thank you for sharing your experience! We’re so glad you felt welcomed and that your visit was quick and easy. We’re thrilled we could take care of everything in one day and appreciate you trusting us with your care!",
+    "We had a wonderful experience at Elara dental office. The staff was extremely kind, patient, and professional while treating both of my kids. They took the time to explain everything clearly and made my children feel comfortable and relaxed …"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "10 AM–7 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "10 AM–7 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–3 PM",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [],
+  "keywordCategories": null,
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 0,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

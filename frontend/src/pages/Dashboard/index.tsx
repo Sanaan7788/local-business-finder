@@ -1,7 +1,9 @@
 import { PageHeader } from '../../components/ui/Heading'
+import { IS_STATIC } from '../../lib/env'
 import { StatsGrid } from './StatsGrid'
 import { PipelineStatus } from './PipelineStatus'
 import { ScraperCard } from './ScraperCard'
+import { SnapshotCard } from './SnapshotCard'
 
 export default function Dashboard() {
   return (
@@ -9,7 +11,7 @@ export default function Dashboard() {
       <PageHeader title="Dashboard" description="Overview of your lead pipeline" />
       <StatsGrid />
       <PipelineStatus />
-      <ScraperCard />
+      {IS_STATIC ? <SnapshotCard /> : <ScraperCard />}
     </div>
   )
 }

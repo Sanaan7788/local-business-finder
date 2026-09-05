@@ -1,0 +1,130 @@
+{
+  "id": "f164067c-ec12-4c93-b99d-7ed19c0a528e",
+  "createdAt": "2026-06-01T00:23:40.609Z",
+  "updatedAt": "2026-06-01T00:23:49.234Z",
+  "name": "Amazing Smiles",
+  "phone": "(281) 240-8080",
+  "address": "14090 Southwest Fwy #402, Sugar Land, TX 77478",
+  "zipcode": "77477",
+  "category": "Dentist",
+  "description": "4.6(175)",
+  "website": true,
+  "websiteUrl": "https://www.amazingsmiles-tx.com/",
+  "rating": 4.6,
+  "reviewCount": 295,
+  "googleMapsUrl": "https://www.google.com/maps/place/Amazing+Smiles/data=!4m7!3m6!1s0x8640e6f8cf0d977f:0x30bc5f930f34ddd3!8m2!3d29.6182433!4d-95.6055397!16s%2Fg%2F1tdrxpy6!19sChIJf5cNz_jmQIYR0900D5NfvDA?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "Ok I first went there for a root canal because they were on my insurance. I explained to the doctor I also was interested in getting my upper teeth repaired. Was told I could get implanted on the one s that had a bottom tooth it could …",
+    "Amazing Smiles is simply AMAZING. The office is welcoming with its warm decor, and the staff is professional, friendly and accommodating. Dr. Allen is the best, forthcoming with your treatment plan and such a pleasant …",
+    "I had an absolutely amazing experience at Amazing Smiles Dentist! From the moment I walked in, the staff was warm, welcoming, and incredibly professional. The office was spotless, modern, and had a calming atmosphere that immediately put me …"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "root canal",
+    "dental implants",
+    "upper teeth repair",
+    "treatment plan",
+    "general dentistry",
+    "dentist Sugar Land",
+    "dentist 77478",
+    "dentist 77477",
+    "dentist Southwest Fwy",
+    "dentist Fort Bend County",
+    "warm welcoming office",
+    "friendly accommodating staff",
+    "spotless modern office",
+    "calming atmosphere",
+    "forthcoming treatment plan",
+    "dentist near me Sugar Land",
+    "root canal dentist Sugar Land",
+    "dental implants Sugar Land",
+    "top rated dentist 77478",
+    "family dentist Southwest Fwy"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "root canal",
+      "dental implants",
+      "upper teeth repair",
+      "treatment plan",
+      "general dentistry"
+    ],
+    "locationKeywords": [
+      "dentist Sugar Land",
+      "dentist 77478",
+      "dentist 77477",
+      "dentist Southwest Fwy",
+      "dentist Fort Bend County"
+    ],
+    "reputationKeywords": [
+      "warm welcoming office",
+      "friendly accommodating staff",
+      "spotless modern office",
+      "calming atmosphere",
+      "forthcoming treatment plan"
+    ],
+    "searchPhrases": [
+      "dentist near me Sugar Land",
+      "root canal dentist Sugar Land",
+      "dental implants Sugar Land",
+      "top rated dentist 77478",
+      "family dentist Southwest Fwy"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 596,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

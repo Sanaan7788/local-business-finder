@@ -6,3 +6,5 @@ export const settingsApi = {
   setLlm: (provider: string) => api.post<{ active: string }>('/settings/llm', { provider }),
   getStats: () => api.get<TokenStats>('/settings/stats'),
 }
+
+export type SettingsApi = typeof settingsApi

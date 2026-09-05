@@ -7,7 +7,7 @@ import { Button } from '../../../components/ui/Button'
 import { Textarea } from '../../../components/ui/Field'
 import { Panel } from '../../../components/ui/Panel'
 
-/** A Panel whose body can be swapped for a textarea and saved. */
+/** A Panel whose body can be swapped for a textarea and saved. `readOnly` hides the edit affordance. */
 export function EditablePanel({
   tone,
   title,
@@ -19,6 +19,7 @@ export function EditablePanel({
   rows = 12,
   mono = false,
   hint,
+  readOnly = false,
   children,
 }: {
   tone: Tone
@@ -31,6 +32,7 @@ export function EditablePanel({
   rows?: number
   mono?: boolean
   hint?: string
+  readOnly?: boolean
   children: ReactNode
 }) {
   const [editing, setEditing] = useState(false)
@@ -45,12 +47,14 @@ export function EditablePanel({
       title={title}
       description={description}
       action={
-        <Button variant="link" onClick={() => (editing ? setEditing(false) : startEdit())}>
-          {editing ? 'Cancel' : 'Edit'}
-        </Button>
+        readOnly ? undefined : (
+          <Button variant="link" onClick={() => (editing ? setEditing(false) : startEdit())}>
+            {editing ? 'Cancel' : 'Edit'}
+          </Button>
+        )
       }
     >
-      {editing ? (
+      {editing && !readOnly ? (
         <div className="space-y-2">
           {hint && <p className="text-xs text-fg-subtle">{hint}</p>}
           <Textarea

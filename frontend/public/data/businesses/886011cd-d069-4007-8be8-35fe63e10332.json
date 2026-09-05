@@ -1,0 +1,143 @@
+{
+  "id": "886011cd-d069-4007-8be8-35fe63e10332",
+  "createdAt": "2026-06-07T05:27:56.705Z",
+  "updatedAt": "2026-06-07T05:34:00.667Z",
+  "name": "UltraPage",
+  "phone": "(281) 438-6000",
+  "address": "15930 S Post Oak Rd B, Houston, TX 77053",
+  "zipcode": "77054",
+  "category": "Mobile phone repair shop",
+  "description": "4.5(76)",
+  "website": true,
+  "websiteUrl": "https://www.ultrapagehouston.com/",
+  "rating": 4.5,
+  "reviewCount": 149,
+  "googleMapsUrl": "https://www.google.com/maps/place/UltraPage/data=!4m7!3m6!1s0x8640ebfab196801b:0x78803f799c69c151!8m2!3d29.5948097!4d-95.4679247!16s%2Fg%2F1tj3lgkw!19sChIJG4CWsfrrQIYRUcFpnHk_gHg?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "The shop offers decent prices for phone repairs considering their price point. However, if your phone is outdated, it might make more sense to invest in a new device and take advantage of port-out deals, which can often include free phones …",
+    "Great customer service and incredibly accommodating to your needs. John is awesome!! …",
+    "I went there a few weeks back to get a screen replacement. Service was great and price was fair but the issue I am having is the replacement screen has a issue where it shows a gray bar running from the top to bottom (front camera to …",
+    "Steve, Thank you for sharing your honest feedback about your recent experience with us … More"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–7:30 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–7:30 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–7:30 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–7:30 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–7:30 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–6:30 PM",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "phone screen replacement",
+    "battery replacement",
+    "phone repair",
+    "screen repair",
+    "phone diagnostics",
+    "port-out deals",
+    "phone repair shop",
+    "Houston phone repair",
+    "77053 phone repair",
+    "South Post Oak Rd phone repair",
+    "Houston TX phone repair",
+    "77054 phone repair",
+    "Alief phone repair",
+    "decent prices",
+    "great customer service",
+    "accommodating",
+    "John is awesome",
+    "fair price",
+    "honest feedback",
+    "phone screen replacement Houston",
+    "affordable phone repair Houston",
+    "phone repair near 77053",
+    "cell phone repair South Post Oak",
+    "phone repair shop Houston TX",
+    "best phone repair Houston",
+    "phone battery replacement Houston"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "phone screen replacement",
+      "battery replacement",
+      "phone repair",
+      "screen repair",
+      "phone diagnostics",
+      "port-out deals",
+      "phone repair shop"
+    ],
+    "locationKeywords": [
+      "Houston phone repair",
+      "77053 phone repair",
+      "South Post Oak Rd phone repair",
+      "Houston TX phone repair",
+      "77054 phone repair",
+      "Alief phone repair"
+    ],
+    "reputationKeywords": [
+      "decent prices",
+      "great customer service",
+      "accommodating",
+      "John is awesome",
+      "fair price",
+      "honest feedback"
+    ],
+    "searchPhrases": [
+      "phone screen replacement Houston",
+      "affordable phone repair Houston",
+      "phone repair near 77053",
+      "cell phone repair South Post Oak",
+      "phone repair shop Houston TX",
+      "best phone repair Houston",
+      "phone battery replacement Houston"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 610,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

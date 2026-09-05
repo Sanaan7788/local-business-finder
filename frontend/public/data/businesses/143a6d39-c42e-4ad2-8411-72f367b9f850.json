@@ -1,0 +1,156 @@
+{
+  "id": "143a6d39-c42e-4ad2-8411-72f367b9f850",
+  "createdAt": "2026-06-01T00:30:00.614Z",
+  "updatedAt": "2026-06-01T00:31:18.115Z",
+  "name": "Pratiksha Amin DMD, MPH",
+  "phone": "(281) 495-9300",
+  "address": "12110 Murphy Rd Suite A, Stafford, TX 77477",
+  "zipcode": "77477",
+  "category": "Dentist",
+  "description": "5.0(46)",
+  "website": true,
+  "websiteUrl": "https://www.pratikshaamindmd.com/",
+  "rating": 5,
+  "reviewCount": 1,
+  "googleMapsUrl": "https://www.google.com/maps/place/Pratiksha+Amin+DMD,+MPH/data=!4m7!3m6!1s0x8640e7b40aedc7ab:0x2c1f54649478302a!8m2!3d29.646346!4d-95.5660146!16s%2Fg%2F11s2q7zr49!19sChIJq8ftCrTnQIYRKjB4lGRUHyw?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "Dr. Amin is the most incredible dentist. Take it from an old Grandfather, she is this rare exception a Periodontist that concentrates on keeping her patients' teeth and doing her best to let you keep your teeth as long as possible. She …",
+    "Thank you so much for this sweet and thoughtful review! Helping patients keep their teeth healthy and save them whenever possible is truly the heart of how I practice. It’s incredibly meaningful to be part of your journey back to healthier … More",
+    "I just had my teeth cleaned at Dr Amin's office and Brenda, the hygienist, is fabulous. Dr Amin has the latest in hygiene equipment and Brenda is very adept at cleaning my teeth without any pain. She is also very pleasant. …",
+    "Thank you! We’re lucky to have such an amazing team, and even luckier to have great patients like you!",
+    "Our experience with Dr Amin and her office has been flawless. She was recommended by our general dentist to address crossbite in both of my young children (3 and 7 y/o) with Sato orthodontic methods, which are less invasive and more …"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8:30 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8:30 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8:30 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "periodontist",
+    "teeth cleaning",
+    "hygiene equipment",
+    "Sato orthodontic methods",
+    "crossbite treatment",
+    "painless cleaning",
+    "pediatric orthodontics",
+    "periodontal care",
+    "dentist Stafford TX",
+    "periodontist 77477",
+    "Murphy Rd dentist",
+    "Stafford dental office",
+    "Houston periodontist",
+    "Fort Bend County dentist",
+    "Sugar Land dentist",
+    "Missouri City dentist",
+    "keeps patients' teeth",
+    "saves teeth",
+    "latest hygiene equipment",
+    "painless cleaning",
+    "fabulous hygienist",
+    "flawless experience",
+    "recommended by general dentist",
+    "less invasive methods",
+    "periodontist near me",
+    "dentist that saves teeth",
+    "painless teeth cleaning Stafford",
+    "Sato orthodontic treatment for kids",
+    "crossbite correction for children",
+    "best periodontist in Stafford TX",
+    "gentle teeth cleaning Houston",
+    "family dentist 77477"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "periodontist",
+      "teeth cleaning",
+      "hygiene equipment",
+      "Sato orthodontic methods",
+      "crossbite treatment",
+      "painless cleaning",
+      "pediatric orthodontics",
+      "periodontal care"
+    ],
+    "locationKeywords": [
+      "dentist Stafford TX",
+      "periodontist 77477",
+      "Murphy Rd dentist",
+      "Stafford dental office",
+      "Houston periodontist",
+      "Fort Bend County dentist",
+      "Sugar Land dentist",
+      "Missouri City dentist"
+    ],
+    "reputationKeywords": [
+      "keeps patients' teeth",
+      "saves teeth",
+      "latest hygiene equipment",
+      "painless cleaning",
+      "fabulous hygienist",
+      "flawless experience",
+      "recommended by general dentist",
+      "less invasive methods"
+    ],
+    "searchPhrases": [
+      "periodontist near me",
+      "dentist that saves teeth",
+      "painless teeth cleaning Stafford",
+      "Sato orthodontic treatment for kids",
+      "crossbite correction for children",
+      "best periodontist in Stafford TX",
+      "gentle teeth cleaning Houston",
+      "family dentist 77477"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 761,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 10,
+  "notes": null,
+  "lastContactedAt": null
+}

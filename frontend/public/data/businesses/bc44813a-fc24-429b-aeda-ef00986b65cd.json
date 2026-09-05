@@ -1,0 +1,82 @@
+{
+  "id": "bc44813a-fc24-429b-aeda-ef00986b65cd",
+  "createdAt": "2026-06-07T09:53:32.577Z",
+  "updatedAt": "2026-06-07T09:53:32.577Z",
+  "name": "Smile Village Dental Care",
+  "phone": "(832) 346-6272",
+  "address": "12810 W Broadway St 110 Suite 110, Pearland, TX 77584",
+  "zipcode": "77047",
+  "category": "Dentist",
+  "description": null,
+  "website": true,
+  "websiteUrl": "http://www.smilevillagedentalcare.com/?utm_campaign=gmb",
+  "rating": 4.9,
+  "reviewCount": 345,
+  "googleMapsUrl": "https://www.google.com/maps/place/Smile+Village+Dental+Care/data=!4m7!3m6!1s0x8640ece9223b7c19:0x5f345b352a78a83e!8m2!3d29.5546671!4d-95.4188082!16s%2Fg%2F1tfzbkn1!19sChIJGXw7IunsQIYRPqh4KjVbNF8?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "My experience at Smile Village was awesome! The clinic is very warm and welcoming, along with the staff. Everyone I encountered made me feel very comfortable, and they did not mind explaining the process. I highly recommend Smile Village Dental Care.",
+    "Hi, Ursula. We are thrilled to learn that you had a positive experience with us! Thank you for coming in. We are so happy to take care of you.",
+    "Dr.Davis and her entire staff could not be more professional and personable. I am so happy with my Invisalign and routine cleanings. You will not find a friendlier office. If you are looking for a wonderful dental experience you will be at the right place. -Tanya Hardin",
+    "Hi, Tanya. Thank you so much for leaving us a stellar review!",
+    "This was my first visit to Smile Village Dental Care, and it was a great experience from start to finish! The office is very clean, elegant, and welcoming and informative. Everyone was friendly and professional, making me feel comfortable …"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–5 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–3 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "8 AM–12 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [],
+  "keywordCategories": null,
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 0,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}

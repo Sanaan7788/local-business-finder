@@ -22,4 +22,7 @@ export const qk = {
     llm: () => ['settings', 'llm'] as const,
     tokens: () => ['settings', 'tokens'] as const,
   },
+  snapshot: {
+    meta: () => ['snapshot', 'meta'] as const,
+  },
 }

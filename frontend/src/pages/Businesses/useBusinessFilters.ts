@@ -7,6 +7,8 @@ export const PAGE_SIZE = 25
 
 export type FilterKey = 'search' | 'leadStatus' | 'priority' | 'website' | 'category' | 'page' | 'sort' | 'dir'
 
+type FilterUpdates = Partial<Record<FilterKey, string | number>>
+
 // The URL is the single source of truth for the list state, so filters survive
 // reloads and the back button, and Dashboard links (?leadStatus=…) just work.
 export function useBusinessFilters() {
@@ -26,17 +28,27 @@ export function useBusinessFilters() {
     }
   }, [params])
 
-  const set = useCallback(
-    (key: FilterKey, value: string | number, opts?: { replace?: boolean }) => {
+  // Keys that change together (sort + dir) must be written in one navigation:
+  // react-router resolves the functional updater against the params of the
+  // current render, so two consecutive updates would overwrite each other.
+  const setMany = useCallback(
+    (updates: FilterUpdates, opts?: { replace?: boolean }) => {
       setParams(prev => {
         const next = new URLSearchParams(prev)
-        if (value === '' || (key === 'page' && value === 1)) next.delete(key)
-        else next.set(key, String(value))
-        if (key !== 'page') next.delete('page') // any filter/sort change goes back to page 1
+        for (const [key, value] of Object.entries(updates) as [FilterKey, string | number][]) {
+          if (value === '' || (key === 'page' && value === 1)) next.delete(key)
+          else next.set(key, String(value))
+          if (key !== 'page') next.delete('page') // any filter/sort change goes back to page 1
+        }
         return next
       }, opts)
     },
     [setParams],
+  )
+
+  const set = useCallback(
+    (key: FilterKey, value: string | number, opts?: { replace?: boolean }) => setMany({ [key]: value }, opts),
+    [setMany],
   )
 
   const clear = useCallback(() => setParams({}), [setParams])
@@ -55,5 +67,5 @@ export function useBusinessFilters() {
     sortOrder: filters.dir,
   }
 
-  return { filters, set, clear, hasActiveFilters, listParams }
+  return { filters, set, setMany, clear, hasActiveFilters, listParams }
 }

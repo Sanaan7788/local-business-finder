@@ -1,0 +1,174 @@
+{
+  "id": "6c023d41-000a-4f56-9a17-8f570335b1c6",
+  "createdAt": "2026-06-01T10:06:51.847Z",
+  "updatedAt": "2026-06-01T10:12:35.613Z",
+  "name": "Chiropractic Made Simple",
+  "phone": "(202) 771-0968",
+  "address": "3634 Glenn Lakes Ln Suite 271, Missouri City, TX 77459",
+  "zipcode": "77477",
+  "category": "Chiropractor",
+  "description": "5.0(37)",
+  "website": true,
+  "websiteUrl": "https://cmschiro.com/",
+  "rating": 5,
+  "reviewCount": 197,
+  "googleMapsUrl": "https://www.google.com/maps/place/Chiropractic+Made+Simple/data=!4m7!3m6!1s0x8640ef4cd97cb14d:0xc370d20582ff0856!8m2!3d29.5646471!4d-95.5611674!16s%2Fg%2F11l2fq0x5d!19sChIJTbF82UzvQIYRVgj_ggXScMM?authuser=0&hl=en&rclk=1",
+  "reviewSnippets": [
+    "Dr Chrissa is excellent (and passionate) about what she does. Her expert care (dry needling, cupping, adjustments) has greatly improved the nagging issues with my neck and back in less than 3 visits. Great bedside manner with outstanding one-on-one personal care. This is the place to go for your chiropractic care. Highly recommend.",
+    "Dr. Salcido is fabulous. She knows how to make you feel better whether it's bone, muscle, or cartilage issues. I always leave feeling so much better and knowing she really cares about you having a good experience and about your well-being. …",
+    "She is Absolutely amazing! I couldn't walk, seat or moving on my bed without a sharp pain in my lower back ( level 7 pain).I started looking for a Chiropractor Friday evening. I booked …"
+  ],
+  "menu": [
+    {
+      "section": "Menu",
+      "items": [
+        {
+          "name": "9 AM–12 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "1–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–12 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "1–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–12 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "1–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–12 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "1–6 PM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "9 AM–3 AM",
+          "price": null,
+          "description": null
+        },
+        {
+          "name": "Closed",
+          "price": null,
+          "description": null
+        }
+      ]
+    }
+  ],
+  "scrapedEmails": [],
+  "keywords": [
+    "chiropractor",
+    "dry needling",
+    "cupping therapy",
+    "spinal adjustments",
+    "neck pain relief",
+    "back pain treatment",
+    "muscle pain relief",
+    "joint adjustments",
+    "chiropractor Missouri City",
+    "chiropractor 77459",
+    "chiropractor 77477",
+    "chiropractor near Sienna Plantation",
+    "chiropractor Fort Bend County",
+    "chiropractor Glenn Lakes Ln",
+    "chiropractor Texas 77459",
+    "chiropractor Houston area",
+    "expert care",
+    "passionate chiropractor",
+    "one-on-one personal care",
+    "great bedside manner",
+    "caring chiropractor",
+    "highly recommend",
+    "amazing results",
+    "pain relief in few visits",
+    "best chiropractor near me",
+    "chiropractor for neck and back pain",
+    "dry needling near me",
+    "cupping therapy near me",
+    "chiropractor that accepts insurance",
+    "chiropractor for lower back pain",
+    "affordable chiropractor Missouri City",
+    "chiropractor who cares about well-being"
+  ],
+  "keywordCategories": {
+    "serviceKeywords": [
+      "chiropractor",
+      "dry needling",
+      "cupping therapy",
+      "spinal adjustments",
+      "neck pain relief",
+      "back pain treatment",
+      "muscle pain relief",
+      "joint adjustments"
+    ],
+    "locationKeywords": [
+      "chiropractor Missouri City",
+      "chiropractor 77459",
+      "chiropractor 77477",
+      "chiropractor near Sienna Plantation",
+      "chiropractor Fort Bend County",
+      "chiropractor Glenn Lakes Ln",
+      "chiropractor Texas 77459",
+      "chiropractor Houston area"
+    ],
+    "reputationKeywords": [
+      "expert care",
+      "passionate chiropractor",
+      "one-on-one personal care",
+      "great bedside manner",
+      "caring chiropractor",
+      "highly recommend",
+      "amazing results",
+      "pain relief in few visits"
+    ],
+    "searchPhrases": [
+      "best chiropractor near me",
+      "chiropractor for neck and back pain",
+      "dry needling near me",
+      "cupping therapy near me",
+      "chiropractor that accepts insurance",
+      "chiropractor for lower back pain",
+      "affordable chiropractor Missouri City",
+      "chiropractor who cares about well-being"
+    ]
+  },
+  "summary": null,
+  "businessContext": null,
+  "insights": null,
+  "contentBrief": null,
+  "generatedWebsiteCode": null,
+  "websitePrompt": null,
+  "websiteAnalysis": null,
+  "outreach": null,
+  "tokensUsed": 718,
+  "leadStatus": "new",
+  "priority": "low",
+  "priorityScore": 0,
+  "notes": null,
+  "lastContactedAt": null
+}
