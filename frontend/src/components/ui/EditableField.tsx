@@ -1,12 +1,4 @@
-export interface EditableFieldProps {
-  label: string
-  value: string | number | null | undefined
-  editing: boolean
-  onChange: (v: string) => void
-  type?: 'text' | 'number' | 'url' | 'tel'
-  placeholder?: string
-  href?: string
-}
+import { FormField, Input } from './Field'
 
 export function EditableField({
   label,
@@ -16,28 +8,38 @@ export function EditableField({
   type = 'text',
   placeholder,
   href,
-}: EditableFieldProps) {
+}: {
+  label: string
+  value: string | number | null | undefined
+  editing: boolean
+  onChange: (v: string) => void
+  type?: 'text' | 'number' | 'url' | 'tel'
+  placeholder?: string
+  href?: string
+}) {
   const display = value !== null && value !== undefined && value !== '' ? String(value) : null
+
+  if (editing) {
+    return (
+      <FormField label={label}>
+        {id => (
+          <Input id={id} type={type} value={value ?? ''} onChange={e => onChange(e.target.value)} placeholder={placeholder ?? label} />
+        )}
+      </FormField>
+    )
+  }
 
   return (
     <div>
-      <p className="text-xs text-gray-500 mb-1">{label}</p>
-      {editing ? (
-        <input
-          type={type}
-          value={value ?? ''}
-          onChange={e => onChange(e.target.value)}
-          placeholder={placeholder ?? label}
-          className="w-full border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-      ) : display ? (
+      <p className="mb-1 text-xs text-fg-muted">{label}</p>
+      {display ? (
         href ? (
-          <a href={href} target="_blank" rel="noreferrer" className="text-sm text-blue-600 hover:underline break-all">{display}</a>
+          <a href={href} target="_blank" rel="noreferrer" className="break-all text-sm text-primary hover:underline">{display}</a>
         ) : (
-          <p className="text-sm font-medium text-gray-900">{display}</p>
+          <p className="text-sm font-medium text-fg">{display}</p>
         )
       ) : (
-        <p className="text-sm text-gray-400">—</p>
+        <p className="text-sm text-fg-subtle">—</p>
       )}
     </div>
   )

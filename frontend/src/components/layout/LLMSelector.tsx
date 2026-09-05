@@ -1,91 +1,80 @@
-import { useState, useEffect, useRef } from 'react'
-import { settingsApi, type ProviderInfo } from '../../lib/api'
-
-const LS_KEY = 'llm_provider'
+import { useEffect, useRef, useState } from 'react'
+import { LLM_PROVIDER_STORAGE_KEY, useLlmSettings, useSetLlmProvider } from '../../hooks/useSettings'
+import { getApiErrorMessage } from '../../lib/errors'
+import { cn } from '../../lib/cn'
+import { TONE } from '../../lib/tones'
+import { Alert } from '../ui/Alert'
+import { Button } from '../ui/Button'
+import { MenuItem, Popover } from '../ui/Popover'
 
 export function LLMSelector() {
-  const [providers, setProviders] = useState<ProviderInfo[]>([])
-  const [active, setActive] = useState<string>('')
+  const { data } = useLlmSettings()
+  const setProvider = useSetLlmProvider()
   const [open, setOpen] = useState(false)
-  const [saving, setSaving] = useState(false)
-  const ref = useRef<HTMLDivElement>(null)
+  const reconciled = useRef(false)
 
+  // The backend keeps the active provider in memory only, so after a restart it
+  // falls back to LLM_PROVIDER. Re-apply the last choice once, if it is usable.
   useEffect(() => {
-    settingsApi.getLlm().then(data => {
-      setProviders(data.providers)
-      const saved = localStorage.getItem(LS_KEY)
-      const initial = saved ?? data.active
-      setActive(initial)
-      // Sync backend if localStorage had a different value
-      if (saved && saved !== data.active) {
-        settingsApi.setLlm(saved).catch(() => {
-          // If saved provider isn't configured, fall back to backend default
-          setActive(data.active)
-          localStorage.removeItem(LS_KEY)
-        })
-      }
-    }).catch(() => {})
-  }, [])
+    if (!data || reconciled.current) return
+    reconciled.current = true
+    let saved: string | null = null
+    try { saved = localStorage.getItem(LLM_PROVIDER_STORAGE_KEY) } catch { /* ignore */ }
+    if (!saved || saved === data.active) return
+    const usable = data.providers.some(p => p.id === saved && p.configured)
+    if (usable) setProvider.mutate(saved)
+    else try { localStorage.removeItem(LLM_PROVIDER_STORAGE_KEY) } catch { /* ignore */ }
+  }, [data, setProvider])
 
-  useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
-    }
-    document.addEventListener('mousedown', handler)
-    return () => document.removeEventListener('mousedown', handler)
-  }, [])
-
-  const select = async (id: string) => {
-    setSaving(true)
-    setOpen(false)
-    try {
-      await settingsApi.setLlm(id)
-      setActive(id)
-      localStorage.setItem(LS_KEY, id)
-    } catch (e: any) {
-      alert(e.response?.data?.error ?? e.message)
-    } finally {
-      setSaving(false)
-    }
-  }
-
-  const activeInfo = providers.find(p => p.id === active)
+  const active = data?.providers.find(p => p.id === data.active)
 
   return (
-    <div ref={ref} className="relative">
-      <button
-        onClick={() => setOpen(o => !o)}
-        disabled={saving || providers.length === 0}
-        className="flex items-center gap-1.5 text-xs border border-gray-200 rounded-lg px-2.5 py-1.5 hover:bg-gray-50 transition-colors disabled:opacity-50"
-      >
-        <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
-        <span className="text-gray-700 font-medium">{activeInfo?.label ?? active}</span>
-        <span className="text-gray-400">▾</span>
-      </button>
-
-      {open && (
-        <div className="absolute right-0 mt-1 w-64 bg-white border border-gray-200 rounded-xl shadow-lg z-50 py-1">
-          <p className="text-xs text-gray-400 px-3 py-1.5 border-b border-gray-100">Select LLM Provider</p>
-          {providers.map(p => (
-            <button
-              key={p.id}
-              onClick={() => p.configured && select(p.id)}
-              disabled={!p.configured}
-              className={`w-full text-left px-3 py-2 hover:bg-gray-50 transition-colors ${!p.configured ? 'opacity-40 cursor-not-allowed' : ''}`}
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className={`w-1.5 h-1.5 rounded-full ${p.configured ? 'bg-green-500' : 'bg-gray-300'}`} />
-                  <span className={`text-sm font-medium ${p.id === active ? 'text-blue-600' : 'text-gray-800'}`}>{p.label}</span>
-                  {p.id === active && <span className="text-xs text-blue-500">✓</span>}
-                </div>
-                {!p.configured && <span className="text-xs text-gray-400">not configured</span>}
-              </div>
-              <p className="text-xs text-gray-400 ml-3.5">{p.model}{p.free ? ` · ${p.free}` : ''}</p>
-            </button>
-          ))}
+    <Popover
+      open={open}
+      onOpenChange={setOpen}
+      align="end"
+      role="menu"
+      panelClassName="w-64"
+      trigger={
+        <Button
+          variant="secondary"
+          size="xs"
+          loading={setProvider.isPending}
+          disabled={!data}
+          onClick={() => setOpen(o => !o)}
+          aria-haspopup="menu"
+          aria-expanded={open}
+        >
+          <span aria-hidden className={cn('h-1.5 w-1.5 rounded-full', TONE.success.dot)} />
+          {active?.label ?? 'LLM'}
+          <span aria-hidden className="text-fg-subtle">▾</span>
+        </Button>
+      }
+    >
+      <p className="border-b px-3 py-1.5 text-xs text-fg-subtle">Select LLM provider</p>
+      {setProvider.isError && (
+        <div className="p-2">
+          <Alert tone="danger">{getApiErrorMessage(setProvider.error)}</Alert>
         </div>
       )}
-    </div>
+      {data?.providers.map(p => (
+        <MenuItem
+          key={p.id}
+          selected={p.id === data.active}
+          disabled={!p.configured}
+          onSelect={() => { setOpen(false); setProvider.mutate(p.id) }}
+          className="flex-col items-stretch gap-0.5"
+        >
+          <span className="flex items-center justify-between">
+            <span className="flex items-center gap-2">
+              <span aria-hidden className={cn('h-1.5 w-1.5 rounded-full', p.configured ? TONE.success.dot : 'bg-line-strong')} />
+              {p.label}
+            </span>
+            {!p.configured && <span className="text-xs text-fg-subtle">not configured</span>}
+          </span>
+          <span className="pl-3.5 text-xs font-normal text-fg-subtle">{p.model} · {p.free}</span>
+        </MenuItem>
+      ))}
+    </Popover>
   )
 }

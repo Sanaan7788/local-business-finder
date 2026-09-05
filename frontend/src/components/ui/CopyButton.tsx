@@ -1,13 +1,18 @@
-import { useState } from 'react'
+import { useCopyToClipboard } from '../../hooks/useCopyToClipboard'
+import { Button, type ButtonProps } from './Button'
 
-export function CopyButton({ text }: { text: string }) {
-  const [copied, setCopied] = useState(false)
+export function CopyButton({
+  text,
+  label = 'Copy',
+  copiedLabel = 'Copied!',
+  variant = 'link',
+  size = 'xs',
+  ...rest
+}: { text: string; label?: string; copiedLabel?: string } & Omit<ButtonProps, 'onClick' | 'children'>) {
+  const { copied, copy } = useCopyToClipboard()
   return (
-    <button
-      onClick={() => { navigator.clipboard.writeText(text); setCopied(true); setTimeout(() => setCopied(false), 2000) }}
-      className="text-xs text-blue-600 hover:text-blue-800 transition-colors"
-    >
-      {copied ? 'Copied!' : 'Copy'}
-    </button>
+    <Button variant={variant} size={size} onClick={() => void copy(text)} {...rest}>
+      {copied ? copiedLabel : label}
+    </Button>
   )
 }

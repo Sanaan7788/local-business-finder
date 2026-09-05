@@ -1,24 +1,8 @@
-import { api, unwrap } from './client'
-
-// ---------------------------------------------------------------------------
-// Settings
-// ---------------------------------------------------------------------------
-
-export interface ProviderInfo {
-  id: string
-  label: string
-  model: string
-  configured: boolean
-  free?: string
-}
+import type { LlmSettings, TokenStats } from '../../types/api'
+import { api } from './client'
 
 export const settingsApi = {
-  getLlm: () =>
-    api.get<any>('/settings/llm').then(unwrap) as Promise<{ active: string; providers: ProviderInfo[] }>,
-
-  setLlm: (provider: string) =>
-    api.post<any>('/settings/llm', { provider }).then(unwrap) as Promise<{ active: string }>,
-
-  getStats: () =>
-    api.get<any>('/settings/stats').then(unwrap) as Promise<{ totalTokensUsed: number }>,
+  getLlm: () => api.get<LlmSettings>('/settings/llm'),
+  setLlm: (provider: string) => api.post<{ active: string }>('/settings/llm', { provider }),
+  getStats: () => api.get<TokenStats>('/settings/stats'),
 }

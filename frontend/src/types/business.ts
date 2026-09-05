@@ -1,207 +1,126 @@
 // ---------------------------------------------------------------------------
-// Frontend type definitions — kept in sync with backend business.types.ts
-// These are plain TypeScript types (no Zod dependency on the frontend).
+// Business types — mirror of backend/src/types/business.types.ts.
 // ---------------------------------------------------------------------------
 
-export type LeadStatus =
-  | 'new'
-  | 'qualified'
-  | 'contacted'
-  | 'interested'
-  | 'closed'
-  | 'rejected';
+export type LeadStatus = 'new' | 'qualified' | 'contacted' | 'interested' | 'closed' | 'rejected'
 
-export type Priority = 'high' | 'medium' | 'low';
+export type Priority = 'high' | 'medium' | 'low'
 
 export interface Insights {
-  whyNeedsWebsite: string;
-  whatsMissingOnline: string;
-  opportunities: string[];
+  whyNeedsWebsite: string
+  whatsMissingOnline: string
+  opportunities: string[]
+}
+
+export interface ContentBrief {
+  confirmedFacts: string
+  assumptions: string
+  generatedAt?: string
+}
+
+export interface Keywords {
+  serviceKeywords: string[]
+  locationKeywords: string[]
+  reputationKeywords: string[]
+  searchPhrases: string[]
+}
+
+export interface OutreachEmail {
+  subject: string
+  body: string
 }
 
 export interface Outreach {
-  email: {
-    subject: string;
-    body: string;
-  } | null;
-  callScript: {
-    opener: string;
-    valueProposition: string;
-    objectionHandlers: {
-      notInterested: string;
-      haveOne: string;
-    };
-    close: string;
-  } | null;
+  email: OutreachEmail | null
 }
 
 export interface CrawledPage {
-  url: string;
-  title: string;
-  headings: string[];
-  paragraphs: string[];
-  navLinks: string[];
-  images: number;
-  hasContactForm: boolean;
-  hasPhone: boolean;
-  hasEmail: boolean;
+  url: string
+  title: string
+  headings: string[]
+  paragraphs: string[]
+  navLinks: string[]
+  images: number
+  hasContactForm: boolean
+  hasPhone: boolean
+  hasEmail: boolean
+  emails: string[]
 }
 
 export interface WebsiteAnalysis {
-  crawledAt: string;
-  pagesVisited: number;
-  rawPages: CrawledPage[];
-  structured: string | null;
-  improvements: string[];
-  score: number | null;
-  scoreReason: string | null;
+  crawledAt: string
+  pagesVisited: number
+  rawPages: CrawledPage[]
+  structured: string | null
+  improvements: string[]
+  score: number | null
+  scoreReason: string | null
+}
+
+export interface MenuItem {
+  name: string
+  price: string | null
+  description: string | null
+}
+
+export interface MenuSection {
+  section: string
+  items: MenuItem[]
 }
 
 export interface Business {
   // Identity
-  id: string;
-  createdAt: string;
-  updatedAt: string;
+  id: string
+  createdAt: string
+  updatedAt: string
 
   // Discovery
-  name: string;
-  phone: string | null;
-  address: string;
-  zipcode: string;
-  category: string;
-  description: string | null;
-  website: boolean;
-  websiteUrl: string | null;
-  rating: number | null;
-  reviewCount: number | null;
-  googleMapsUrl: string | null;
+  name: string
+  phone: string | null
+  address: string
+  zipcode: string
+  category: string
+  description: string | null
+  website: boolean
+  websiteUrl: string | null
+  rating: number | null
+  reviewCount: number | null
+  googleMapsUrl: string | null
 
   // Scraper extras
-  reviewSnippets: string[];
-  scrapedEmails: string[];
-  menu: any[];
+  reviewSnippets: string[]
+  menu: MenuSection[]
+  scrapedEmails: string[]
 
   // AI outputs
-  keywords: string[];
-  keywordCategories: Record<string, string[]> | null;
-  summary: string | null;
-  businessContext: string | null;
-  insights: Insights | null;
-  contentBrief: { confirmedFacts: string; assumptions: string } | null;
+  keywords: string[]
+  keywordCategories: Keywords | null
+  summary: string | null
+  businessContext: string | null
+  insights: Insights | null
+  contentBrief: ContentBrief | null
 
   // Generated content
-  generatedWebsiteCode: string | null;
-  websitePrompt: string | null;
-  websiteAnalysis: WebsiteAnalysis | null;
-  outreach: Outreach | null;
-
-  // Deployment
-  githubUrl: string | null;
-  deployedUrl: string | null;
+  generatedWebsiteCode: string | null
+  websitePrompt: string | null
+  websiteAnalysis: WebsiteAnalysis | null
+  outreach: Outreach | null
 
   // Token tracking
-  tokensUsed: number;
+  tokensUsed: number
 
   // CRM / Lead
-  leadStatus: LeadStatus;
-  priority: Priority;
-  priorityScore: number;
-  notes: string | null;
-  lastContactedAt: string | null;
+  leadStatus: LeadStatus
+  priority: Priority
+  priorityScore: number
+  notes: string | null
+  lastContactedAt: string | null
 }
 
-// ---------------------------------------------------------------------------
-// API response shapes
-// ---------------------------------------------------------------------------
-
-export interface ApiSuccess<T> {
-  success: true;
-  data: T;
-}
-
-export interface ApiError {
-  success: false;
-  error: string;
-}
-
-export type ApiResponse<T> = ApiSuccess<T> | ApiError;
-
-export interface PaginatedData<T> {
-  items: T[];
-  total: number;
-  page: number;
-  pageSize: number;
-}
-
-export interface SavedEntry {
-  id: string;
-  name: string;
-  address: string;
-  phone: string | null;
-  priority: string;
-  priorityScore: number;
-  website: boolean;
-}
-
-export interface SkippedEntry {
-  name: string;
-  address: string;
-  reason: 'phone' | 'name+address';
-  existingId: string;
-}
-
-export interface ErrorEntry {
-  name: string;
-  message: string;
-}
-
-export interface BatchProgress {
-  totalJobs: number;
-  completedJobs: number;
-  pendingJobs: { zipcode: string; category: string; maxResults: number }[];
-}
-
-export interface ScraperStatus {
-  running: boolean;
-  zipcode: string | null;
-  category: string | null;
-  found: number;
-  saved: number;
-  skipped: number;
-  errors: number;
-  startedAt: string | null;
-  finishedAt: string | null;
-  savedList: SavedEntry[];
-  skippedList: SkippedEntry[];
-  errorList: ErrorEntry[];
-  foundNames: string[];
-  batch: BatchProgress;
-}
-
-// ---------------------------------------------------------------------------
-// UI helpers
-// ---------------------------------------------------------------------------
-
-export const LEAD_STATUS_LABELS: Record<LeadStatus, string> = {
-  new: 'New',
-  qualified: 'Shortlisted',
-  contacted: 'Contacted',
-  interested: 'Interested',
-  closed: 'Closed',
-  rejected: 'Rejected',
-};
-
-export const LEAD_STATUS_COLORS: Record<LeadStatus, string> = {
-  new: 'bg-blue-100 text-blue-800',
-  qualified: 'bg-purple-100 text-purple-800',
-  contacted: 'bg-yellow-100 text-yellow-800',
-  interested: 'bg-green-100 text-green-800',
-  closed: 'bg-gray-100 text-gray-800',
-  rejected: 'bg-red-100 text-red-800',
-};
-
-export const PRIORITY_COLORS: Record<Priority, string> = {
-  high: 'bg-red-100 text-red-800',
-  medium: 'bg-orange-100 text-orange-800',
-  low: 'bg-gray-100 text-gray-600',
-};
+/** The light projection returned by GET /businesses. */
+export type BusinessListItem = Pick<
+  Business,
+  | 'id' | 'createdAt' | 'updatedAt' | 'name' | 'phone' | 'address' | 'zipcode' | 'category'
+  | 'website' | 'websiteUrl' | 'rating' | 'reviewCount' | 'leadStatus' | 'priority'
+  | 'priorityScore' | 'notes' | 'lastContactedAt' | 'tokensUsed'
+>

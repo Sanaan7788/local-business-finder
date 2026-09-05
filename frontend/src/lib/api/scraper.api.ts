@@ -1,55 +1,15 @@
-import type { ScraperStatus } from '../../types/business.ts'
-import { api, unwrap } from './client'
-
-// ---------------------------------------------------------------------------
-// Scraper
-// ---------------------------------------------------------------------------
+import type { LookupResult, ScrapeHistoryEntry, ScrapeSessionSummary, ScraperStatus } from '../../types/scraper'
+import { api } from './client'
 
 export const scraperApi = {
-  importFromUrl: (websiteUrl: string) =>
-    api.post<any>('/scraper/import-url', { websiteUrl }).then(unwrap) as Promise<{
-      status: 'saved' | 'duplicate' | 'not_found' | 'error';
-      businessId?: string;
-      message: string;
-    }>,
-
-  lookup: (businessName: string, location: string) =>
-    api.post<any>('/scraper/lookup', { businessName, location }).then(unwrap) as Promise<{
-      status: 'saved' | 'duplicate' | 'not_found' | 'error';
-      businessId?: string;
-      message: string;
-    }>,
-
-  lookupByMapsUrl: (mapsUrl: string) =>
-    api.post<any>('/scraper/lookup-maps-url', { mapsUrl }).then(unwrap) as Promise<{
-      status: 'saved' | 'duplicate' | 'not_found' | 'error';
-      businessId?: string;
-      message: string;
-    }>,
-
+  importFromUrl: (websiteUrl: string) => api.post<LookupResult>('/scraper/import-url', { websiteUrl }),
+  lookupByMapsUrl: (mapsUrl: string) => api.post<LookupResult>('/scraper/lookup-maps-url', { mapsUrl }),
   start: (zipcode: string, category: string, maxResults: number) =>
-    api.post<any>('/scraper/start', { zipcode, category, maxResults }).then(unwrap),
-
+    api.post<{ message: string }>('/scraper/start', { zipcode, category, maxResults }),
   startBatch: (zipcode: string, categories: string[], maxResults: number) =>
-    api.post<any>('/scraper/batch', { zipcode, categories, maxResults }).then(unwrap),
-
-  stop: () =>
-    api.post<any>('/scraper/stop').then(unwrap),
-
-  status: () =>
-    api.get<any>('/scraper/status').then(unwrap) as Promise<ScraperStatus>,
-
-  history: () =>
-    api.get<any>('/scraper/history').then(unwrap) as Promise<any[]>,
-
-  historyById: (id: string) =>
-    api.get<any>(`/scraper/history/${id}`).then(unwrap) as Promise<any>,
-
-  zipcodes: () =>
-    api.get<any>('/scraper/zipcodes').then(unwrap) as Promise<{
-      zipcode: string
-      sessions: number
-      totalSaved: number
-      lastScrapedAt: string
-    }[]>,
+    api.post<{ message: string }>('/scraper/batch', { zipcode, categories, maxResults }),
+  stop: () => api.post<{ message: string }>('/scraper/stop'),
+  status: () => api.get<ScraperStatus>('/scraper/status'),
+  history: () => api.get<ScrapeSessionSummary[]>('/scraper/history'),
+  historyById: (id: string) => api.get<ScrapeHistoryEntry>(`/scraper/history/${id}`),
 }

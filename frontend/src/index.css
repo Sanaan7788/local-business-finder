@@ -2,35 +2,47 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+  Design tokens. Stored as RGB channels so Tailwind alpha modifiers work
+  (bg-primary/10). Components use the semantic utilities from
+  tailwind.config.js (bg-surface, text-fg-muted, border-line, ...) and never
+  raw palette colours; status hues live in src/lib/tones.ts.
+*/
 @layer base {
   :root {
-    --bg:        #f8fafc;
-    --bg-card:   #ffffff;
-    --bg-subtle: #f1f5f9;
-    --border:    #e2e8f0;
-    --border-md: #cbd5e1;
-    --text:      #0f172a;
-    --text-2:    #475569;
-    --text-3:    #94a3b8;
-    --accent:    #2563eb;
-    --accent-bg: #eff6ff;
+    color-scheme: light;
+    --c-bg:            248 250 252;  /* slate-50  */
+    --c-surface:       255 255 255;
+    --c-surface-2:     241 245 249;  /* slate-100 */
+    --c-line:          226 232 240;  /* slate-200 */
+    --c-line-strong:   203 213 225;  /* slate-300 */
+    --c-fg:             15  23  42;  /* slate-900 */
+    --c-fg-muted:       71  85 105;  /* slate-600 */
+    --c-fg-subtle:     148 163 184;  /* slate-400 */
+    --c-primary:        37  99 235;  /* blue-600  */
+    --c-primary-hover:  29  78 216;  /* blue-700  */
+    --c-primary-soft:  239 246 255;  /* blue-50   */
+    --c-primary-fg:    255 255 255;
+    --shadow-a: 0.06;
+    --shadow-a-lg: 0.12;
   }
 
   .dark {
-    --bg:        #0f172a;
-    --bg-card:   #1e293b;
-    --bg-subtle: #1e293b;
-    --border:    #334155;
-    --border-md: #475569;
-    --text:      #f1f5f9;
-    --text-2:    #94a3b8;
-    --text-3:    #64748b;
-    --accent:    #3b82f6;
-    --accent-bg: #1e3a5f;
-  }
-
-  *, *::before, *::after {
-    box-sizing: border-box;
+    color-scheme: dark;
+    --c-bg:             15  23  42;  /* slate-900 */
+    --c-surface:        30  41  59;  /* slate-800 */
+    --c-surface-2:      51  65  85;  /* slate-700 */
+    --c-line:           51  65  85;  /* slate-700 */
+    --c-line-strong:    71  85 105;  /* slate-600 */
+    --c-fg:            241 245 249;  /* slate-100 */
+    --c-fg-muted:      148 163 184;  /* slate-400 */
+    --c-fg-subtle:     100 116 139;  /* slate-500 */
+    --c-primary:        59 130 246;  /* blue-500  */
+    --c-primary-hover:  37  99 235;  /* blue-600  */
+    --c-primary-soft:   30  58  95;
+    --c-primary-fg:    255 255 255;
+    --shadow-a: 0.4;
+    --shadow-a-lg: 0.5;
   }
 
   html {
@@ -38,92 +50,14 @@
   }
 
   body {
-    margin: 0;
+    background-color: rgb(var(--c-bg));
+    color: rgb(var(--c-fg));
     font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: var(--bg);
-    color: var(--text);
-    transition: background-color 0.2s ease, color 0.2s ease;
   }
 
   #root {
     min-height: 100vh;
   }
-
-  /* ── Global overrides that use CSS vars ─────────────────────────────── */
-
-  /* Backgrounds */
-  .dark .bg-white        { background-color: var(--bg-card)   !important; }
-  .dark .bg-gray-50      { background-color: var(--bg)        !important; }
-  .dark .bg-gray-100     { background-color: var(--bg-subtle) !important; }
-  .dark .bg-gray-200     { background-color: #334155          !important; }
-
-  /* Borders */
-  .dark .border-gray-100,
-  .dark .border-gray-200 { border-color: var(--border)    !important; }
-  .dark .border-gray-300 { border-color: var(--border-md) !important; }
-
-  /* Text */
-  .dark .text-gray-900   { color: var(--text)   !important; }
-  .dark .text-gray-800   { color: #e2e8f0       !important; }
-  .dark .text-gray-700   { color: #cbd5e1       !important; }
-  .dark .text-gray-600   { color: var(--text-2) !important; }
-  .dark .text-gray-500   { color: var(--text-3) !important; }
-  .dark .text-gray-400   { color: #64748b       !important; }
-
-  /* Inputs */
-  .dark input,
-  .dark select,
-  .dark textarea {
-    background-color: #1e293b !important;
-    border-color:     #334155 !important;
-    color:            #f1f5f9 !important;
-  }
-  .dark input::placeholder,
-  .dark textarea::placeholder { color: #64748b; }
-
-  /* Table */
-  .dark thead           { background-color: #1e293b !important; }
-  .dark .divide-y > * + * { border-color: #334155 !important; }
-  .dark .divide-gray-100 > * + *,
-  .dark .divide-gray-200 > * + * { border-color: #334155 !important; }
-  .dark tr:hover        { background-color: rgba(59,130,246,0.08) !important; }
-
-  /* Hover states */
-  .dark .hover\:bg-gray-50:hover  { background-color: #1e293b !important; }
-  .dark .hover\:bg-gray-100:hover { background-color: #334155 !important; }
-  .dark .hover\:bg-blue-50:hover  { background-color: rgba(59,130,246,0.1) !important; }
-
-  /* Shadows */
-  .dark .shadow-sm { box-shadow: 0 1px 3px rgba(0,0,0,0.4) !important; }
-  .dark .shadow-lg { box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important; }
-
-  /* Badges — keep their hues but darken backgrounds */
-  .dark .bg-blue-50   { background-color: #1e3a5f !important; }
-  .dark .bg-green-50  { background-color: #14291f !important; }
-  .dark .bg-red-50    { background-color: #2d1515 !important; }
-  .dark .bg-yellow-50 { background-color: #2d2208 !important; }
-  .dark .bg-purple-50 { background-color: #1e1535 !important; }
-  .dark .bg-orange-50 { background-color: #2d1a08 !important; }
-
-  /* Specific text in badges — keep readable */
-  .dark .text-blue-600   { color: #60a5fa !important; }
-  .dark .text-blue-700   { color: #60a5fa !important; }
-  .dark .text-green-600  { color: #4ade80 !important; }
-  .dark .text-green-700  { color: #4ade80 !important; }
-  .dark .text-red-500    { color: #f87171 !important; }
-  .dark .text-red-600    { color: #f87171 !important; }
-  .dark .text-yellow-700 { color: #fbbf24 !important; }
-  .dark .text-yellow-800 { color: #fbbf24 !important; }
-  .dark .text-purple-700 { color: #c084fc !important; }
-  .dark .text-orange-600 { color: #fb923c !important; }
-  .dark .text-orange-500 { color: #fb923c !important; }
-  .dark .bg-purple-100   { background-color: #1e1535 !important; }
-  .dark .bg-blue-100     { background-color: #1e3a5f !important; }
-  .dark .text-blue-400   { color: #60a5fa !important; }
-  .dark .border-blue-200 { border-color: #1e3a5f !important; }
-  .dark .border-purple-200 { border-color: #2d1a5f !important; }
-  .dark .border-yellow-200 { border-color: #3d2e08 !important; }
-  .dark .bg-yellow-100   { background-color: #2d2208 !important; }
 }

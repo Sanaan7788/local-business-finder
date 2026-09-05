@@ -1,58 +1,53 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { businessApi, type BusinessListParams } from '../lib/api'
-import type { LeadStatus } from '../types/business'
-import { keys } from './queryKeys'
-export { keys } from './queryKeys'
+import { keepPreviousData, useMutation, useQuery, useQueryClient, type QueryClient } from '@tanstack/react-query'
+import { businessApi } from '../lib/api'
+import type { Business, LeadStatus } from '../types/business'
+import type { BusinessListParams, CreateBusinessInput, UpdateProfileInput } from '../types/api'
+import { qk } from './queryKeys'
 
 // ---------------------------------------------------------------------------
-// Businesses list
+// Queries
 // ---------------------------------------------------------------------------
-export function useBusinesses(params: BusinessListParams = {}) {
+
+export function useBusinessList(params: BusinessListParams) {
   return useQuery({
-    queryKey: keys.businesses(params),
+    queryKey: qk.businesses.list(params),
     queryFn: () => businessApi.list(params),
+    placeholderData: keepPreviousData, // paging/filtering keeps the old rows until the new ones arrive
   })
 }
 
-// ---------------------------------------------------------------------------
-// Single business
-// ---------------------------------------------------------------------------
 export function useBusiness(id: string) {
   return useQuery({
-    queryKey: keys.business(id),
+    queryKey: qk.businesses.detail(id),
     queryFn: () => businessApi.get(id),
     enabled: Boolean(id),
   })
 }
 
-// ---------------------------------------------------------------------------
-// Stats
-// ---------------------------------------------------------------------------
 export function useBusinessStats() {
-  return useQuery({
-    queryKey: keys.stats(),
-    queryFn: () => businessApi.stats(),
-    refetchInterval: 30_000,
-  })
+  return useQuery({ queryKey: qk.businesses.stats(), queryFn: businessApi.stats, staleTime: 60_000 })
 }
 
 export function useBusinessCategories() {
-  return useQuery({
-    queryKey: ['businesses', 'categories'],
-    queryFn: () => businessApi.categories(),
-    staleTime: 60_000,
-  })
+  return useQuery({ queryKey: qk.businesses.categories(), queryFn: businessApi.categories, staleTime: 5 * 60_000 })
 }
 
 // ---------------------------------------------------------------------------
-// Mutations
+// Mutations. When a call returns the full Business it is written straight into
+// the detail cache; partial responses invalidate the detail instead.
 // ---------------------------------------------------------------------------
+
+const setDetail = (qc: QueryClient, business: Business) => qc.setQueryData(qk.businesses.detail(business.id), business)
+const invalidate = (qc: QueryClient, ...keys: readonly (readonly string[])[]) =>
+  keys.forEach(queryKey => qc.invalidateQueries({ queryKey }))
+
 export function useCreateBusiness() {
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: (data: Parameters<typeof businessApi.create>[0]) => businessApi.create(data),
-    onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ['businesses'] })
+    mutationFn: (data: CreateBusinessInput) => businessApi.create(data),
+    onSuccess: business => {
+      setDetail(qc, business)
+      invalidate(qc, qk.businesses.lists(), qk.businesses.stats(), qk.businesses.categories())
     },
   })
 }
@@ -60,11 +55,10 @@ export function useCreateBusiness() {
 export function useUpdateProfile() {
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: ({ id, data }: { id: string; data: Parameters<typeof businessApi.updateProfile>[1] }) =>
-      businessApi.updateProfile(id, data),
-    onSuccess: (updated) => {
-      qc.setQueryData(keys.business(updated.id), updated)
-      qc.invalidateQueries({ queryKey: ['businesses'] })
+    mutationFn: ({ id, data }: { id: string; data: UpdateProfileInput }) => businessApi.updateProfile(id, data),
+    onSuccess: business => {
+      setDetail(qc, business)
+      invalidate(qc, qk.businesses.lists(), qk.businesses.stats(), qk.businesses.categories())
     },
   })
 }
@@ -72,12 +66,10 @@ export function useUpdateProfile() {
 export function useUpdateStatus() {
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: ({ id, status }: { id: string; status: LeadStatus }) =>
-      businessApi.updateStatus(id, status),
-    onSuccess: (updated) => {
-      qc.setQueryData(keys.business(updated.id), updated)
-      qc.invalidateQueries({ queryKey: ['businesses'] })
-      qc.invalidateQueries({ queryKey: keys.business(updated.id) })
+    mutationFn: ({ id, status }: { id: string; status: LeadStatus }) => businessApi.updateStatus(id, status),
+    onSuccess: business => {
+      setDetail(qc, business)
+      invalidate(qc, qk.businesses.lists(), qk.businesses.stats())
     },
   })
 }
@@ -85,10 +77,10 @@ export function useUpdateStatus() {
 export function useUpdateNotes() {
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: ({ id, notes }: { id: string; notes: string | null }) =>
-      businessApi.updateNotes(id, notes),
-    onSuccess: (updated) => {
-      qc.setQueryData(keys.business(updated.id), updated)
+    mutationFn: ({ id, notes }: { id: string; notes: string | null }) => businessApi.updateNotes(id, notes),
+    onSuccess: business => {
+      setDetail(qc, business)
+      invalidate(qc, qk.businesses.lists()) // the list flags "Scrape error" notes
     },
   })
 }
@@ -97,9 +89,9 @@ export function useAnalyze() {
   const qc = useQueryClient()
   return useMutation({
     mutationFn: (id: string) => businessApi.analyze(id),
-    onSuccess: (updated) => {
-      qc.setQueryData(keys.business(updated.id), updated)
-      qc.invalidateQueries({ queryKey: ['businesses'] })
+    onSuccess: business => {
+      setDetail(qc, business)
+      invalidate(qc, qk.businesses.lists(), qk.settings.tokens())
     },
   })
 }
@@ -108,40 +100,15 @@ export function useGenerateContentBrief() {
   const qc = useQueryClient()
   return useMutation({
     mutationFn: (id: string) => businessApi.generateContentBrief(id),
-    onSuccess: (_data, id) => {
-      qc.invalidateQueries({ queryKey: keys.business(id) })
-    },
+    onSuccess: (_data, id) => invalidate(qc, qk.businesses.detail(id), qk.settings.tokens()),
   })
 }
 
-export function useGenerateWebsite() {
+export function useGenerateWebsitePrompt() {
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: (id: string) => businessApi.generateWebsite(id),
-    onSuccess: (_data, id) => {
-      qc.invalidateQueries({ queryKey: keys.business(id) })
-    },
-  })
-}
-
-export function useAnalyzeWebsite() {
-  const qc = useQueryClient()
-  return useMutation({
-    mutationFn: (id: string) => businessApi.analyzeWebsite(id),
-    onSuccess: (_data, id) => {
-      qc.invalidateQueries({ queryKey: keys.business(id) })
-    },
-  })
-}
-
-export function useUpdateWebsiteAnalysis() {
-  const qc = useQueryClient()
-  return useMutation({
-    mutationFn: ({ id, data }: { id: string; data: { structured?: string; improvements?: string[] } }) =>
-      businessApi.updateWebsiteAnalysis(id, data),
-    onSuccess: (_data, { id }) => {
-      qc.invalidateQueries({ queryKey: keys.business(id) })
-    },
+    mutationFn: (id: string) => businessApi.generateWebsitePrompt(id),
+    onSuccess: business => setDetail(qc, business),
   })
 }
 
@@ -150,30 +117,32 @@ export function useUpdateWebsitePrompt() {
   return useMutation({
     mutationFn: ({ id, websitePrompt }: { id: string; websitePrompt: string | null }) =>
       businessApi.updateWebsitePrompt(id, websitePrompt),
-    onSuccess: (updated) => {
-      qc.setQueryData(keys.business(updated.id), updated)
-    },
+    onSuccess: business => setDetail(qc, business),
   })
 }
 
-export function useMenuFromImages() {
+export function useGenerateWebsite() {
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: ({ id, files }: { id: string; files: File[] }) => businessApi.menuFromImages(id, files),
-    onSuccess: (_data, { id }) => {
-      qc.invalidateQueries({ queryKey: keys.business(id) })
-    },
+    mutationFn: (id: string) => businessApi.generateWebsite(id),
+    onSuccess: (_data, id) => invalidate(qc, qk.businesses.detail(id), qk.settings.tokens()),
   })
 }
 
-export function useRescrape() {
+export function useAnalyzeWebsite() {
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: (id: string) => businessApi.rescrape(id),
-    onSuccess: (updated) => {
-      qc.setQueryData(keys.business(updated.id), updated)
-      qc.invalidateQueries({ queryKey: ['businesses'] })
-    },
+    mutationFn: (id: string) => businessApi.analyzeWebsite(id),
+    onSuccess: (_data, id) => invalidate(qc, qk.businesses.detail(id), qk.settings.tokens()),
+  })
+}
+
+export function useUpdateWebsiteAnalysis() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: ({ id, data }: { id: string; data: { structured?: string; improvements?: string[] } }) =>
+      businessApi.updateWebsiteAnalysis(id, data),
+    onSuccess: (_data, { id }) => invalidate(qc, qk.businesses.detail(id)),
   })
 }
 
@@ -181,8 +150,25 @@ export function useGenerateOutreachEmail() {
   const qc = useQueryClient()
   return useMutation({
     mutationFn: (id: string) => businessApi.generateOutreachEmail(id),
-    onSuccess: (_data, id) => {
-      qc.invalidateQueries({ queryKey: keys.business(id) })
+    onSuccess: (_data, id) => invalidate(qc, qk.businesses.detail(id), qk.settings.tokens()),
+  })
+}
+
+export function useMenuFromImages() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: ({ id, files }: { id: string; files: File[] }) => businessApi.menuFromImages(id, files),
+    onSuccess: (_data, { id }) => invalidate(qc, qk.businesses.detail(id), qk.settings.tokens()),
+  })
+}
+
+export function useRescrape() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: (id: string) => businessApi.rescrape(id),
+    onSuccess: business => {
+      setDetail(qc, business)
+      invalidate(qc, qk.businesses.lists(), qk.businesses.stats(), qk.settings.tokens())
     },
   })
 }
@@ -191,8 +177,9 @@ export function useDeleteBusiness() {
   const qc = useQueryClient()
   return useMutation({
     mutationFn: (id: string) => businessApi.delete(id),
-    onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ['businesses'] })
+    onSuccess: (_data, id) => {
+      qc.removeQueries({ queryKey: qk.businesses.detail(id) })
+      invalidate(qc, qk.businesses.lists(), qk.businesses.stats(), qk.businesses.categories())
     },
   })
 }
