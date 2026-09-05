@@ -1,6 +1,9 @@
-# Builds the static snapshot of the frontend (vite --mode static, data from
-# frontend/public/data) and publishes it to GitHub Pages.
-# One-time setup: Settings → Pages → Source: "GitHub Actions".
+# Exports a fresh snapshot from the database, builds the static frontend
+# (vite --mode static) and publishes it to GitHub Pages.
+#
+# Publish = run this workflow: Actions → "Deploy to GitHub Pages" → Run workflow
+# (or `npm run publish:site`). Pushes to main that touch the app deploy too.
+# Needs the DATABASE_URL repository secret.
 name: Deploy to GitHub Pages
 
 on:
@@ -8,6 +11,7 @@ on:
     branches: [main]
     paths:
       - 'frontend/**'
+      - 'backend/src/**'
       - '.github/workflows/deploy-pages.yml'
   workflow_dispatch:
 
@@ -23,9 +27,6 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: frontend
     steps:
       - uses: actions/checkout@v4
 
@@ -33,15 +34,26 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: frontend/package-lock.json
+          cache-dependency-path: |
+            backend/package-lock.json
+            frontend/package-lock.json
 
       - id: pages
         uses: actions/configure-pages@v5
 
+      # Snapshot straight from the database into frontend/public/data
       - run: npm ci
+        working-directory: backend
+      - run: npm run export:static
+        working-directory: backend
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       # configure-pages reports the base path without a trailing slash; Vite needs one.
+      - run: npm ci
+        working-directory: frontend
       - run: npm run build:static
+        working-directory: frontend
         env:
           VITE_BASE_PATH: ${{ steps.pages.outputs.base_path }}/
 

@@ -7,7 +7,8 @@
     "build:static": "npm run build:static --prefix frontend",
     "preview:static": "npm run preview:static --prefix frontend",
     "export:static": "npm run export:static --prefix backend --",
-    "import:changes": "npm run import:changes --prefix backend --"
+    "import:changes": "npm run import:changes --prefix backend --",
+    "publish:site": "gh workflow run deploy-pages.yml && echo \"Deploy started: https://github.com/Sanaan7788/local-business-finder/actions/workflows/deploy-pages.yml\""
   },
   "devDependencies": {
     "concurrently": "^9.0.0"

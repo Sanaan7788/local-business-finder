@@ -5,17 +5,22 @@
  *   npm run export:static -- --no-notes  (leave CRM notes out of the public snapshot)
  *
  * Writes frontend/public/data/{index.json, businesses/<id>.json, sessions.json}.
- * Reuses the Postgres mappers, which load config/env.ts, so the same
- * backend/.env that `npm run dev` needs must be present.
+ * Needs only DATABASE_URL (from the environment or backend/.env); it does not
+ * load the app config, so no LLM key is required — the deploy workflow runs
+ * it with the repository secret.
  */
 import * as fs from 'fs';
 import path from 'path';
+import * as dotenv from 'dotenv';
+import { neon } from '@neondatabase/serverless';
+import { drizzle } from 'drizzle-orm/neon-http';
 import { desc } from 'drizzle-orm';
-import { getDb } from '../data/postgres/postgres.connection';
 import { businesses, scrapeSessions } from '../data/schema';
 import { rowToBusiness, rowToListItem } from '../data/postgres/postgres.mappers';
-import { rowToEntry } from '../services/scraper/scrape.history';
+import { rowToEntry } from '../services/scraper/session.mappers';
 import { Business, BusinessListItem } from '../types/business.types';
+
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 const OUT_DIR = path.resolve(__dirname, '../../../frontend/public/data');
 const SNAPSHOT_VERSION = 1;
@@ -23,8 +28,10 @@ const SNAPSHOT_VERSION = 1;
 const writeJson = (file: string, data: unknown) => fs.writeFileSync(file, JSON.stringify(data, null, 2) + '\n');
 
 async function main() {
+  const url = process.env.DATABASE_URL;
+  if (!url) throw new Error('DATABASE_URL is not set');
   const includeNotes = !process.argv.includes('--no-notes');
-  const db = getDb();
+  const db = drizzle(neon(url));
 
   const businessRows = await db.select().from(businesses).orderBy(desc(businesses.createdAt));
   const sessionRows = await db.select().from(scrapeSessions).orderBy(desc(scrapeSessions.startedAt));
